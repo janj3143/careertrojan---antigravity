@@ -4,6 +4,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from services.backend_api.middleware.interaction_logger import InteractionLoggerMiddleware
 from services.backend_api.middleware.rate_limiter import RateLimitMiddleware
+from services.backend_api.middleware.request_correlation import RequestCorrelationMiddleware
+from services.backend_api.config.logging_config import configure_logging, get_logger
 # Addressing 1.3.2 Unified Config - verifying path later but assuming services.shared.config
 try:
     from services.shared.config import config as settings
@@ -22,9 +24,9 @@ from services.backend_api.routers import insights, touchpoints, mapping, analyti
 from services.backend_api.routers import admin_abuse, admin_parsing, admin_tokens, anti_gaming, logs, telemetry
 from services.backend_api.routers import gdpr
 
-# Setup Logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("backend")
+# Setup Structured Logging (structlog → JSON lines)
+configure_logging()
+logger = get_logger("backend")
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -54,6 +56,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ── Request Correlation — assigns unique request_id + structured logs ──
+app.add_middleware(RequestCorrelationMiddleware)
 
 # ── AI Enrichment Loop — logs every request as interaction ────
 app.add_middleware(InteractionLoggerMiddleware)

@@ -1,0 +1,41 @@
+{
+    "name": "CareerTrojan",
+    "short_name": "CareerTrojan",
+    "description": "AI-powered career coaching, resume analysis, and job matching",
+    "start_url": "/dashboard",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#ffffff",
+    "theme_color": "#312e81",
+    "lang": "en-GB",
+    "categories": ["business", "productivity", "education"],
+    "icons": [
+        { "src": "/icons/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any" },
+        { "src": "/icons/icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" },
+        { "src": "/icons/icon.svg",     "sizes": "any",     "type": "image/svg+xml", "purpose": "any maskable" }
+    ],
+    "shortcuts": [
+        {
+            "name": "Dashboard",
+            "url": "/dashboard",
+            "description": "Your career dashboard",
+            "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" }]
+        },
+        {
+            "name": "Upload CV",
+            "url": "/resume",
+            "description": "Upload and analyse your CV"
+        },
+        {
+            "name": "Job Market",
+            "url": "/umarketu",
+            "description": "Browse matched jobs"
+        },
+        {
+            "name": "AI Coach",
+            "url": "/coaching",
+            "description": "Career coaching with AI"
+        }
+    ]
+}

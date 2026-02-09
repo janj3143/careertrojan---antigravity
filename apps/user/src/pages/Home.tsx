@@ -70,7 +70,7 @@ export default function Home() {
                                         <span>3</span>
                                     </div>
                                     <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded text-amber-200 text-xs">
-                                        "Led project team" -> "Spearheaded cross-functional team of 12..."
+                                        {'"Led project team" → "Spearheaded cross-functional team of 12..."'}
                                     </div>
 
                                     <div className="flex justify-between items-center text-blue-400 mt-4">

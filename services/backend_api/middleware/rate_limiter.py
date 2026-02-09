@@ -28,7 +28,7 @@ MAX_REQUESTS = int(os.getenv("RATE_LIMIT_MAX_REQUESTS", "100"))
 WINDOW_SECONDS = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "60"))
 
 # Paths exempt from rate limiting (health checks, OpenAPI docs)
-EXEMPT_PATHS = {"/docs", "/redoc", "/openapi.json", "/api/shared/v1/health"}
+EXEMPT_PATHS = {"/docs", "/redoc", "/openapi.json", "/api/shared/v1/health", "/api/shared/v1/health/deep"}
 
 
 class RateLimitMiddleware(BaseHTTPMiddleware):

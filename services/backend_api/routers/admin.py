@@ -46,9 +46,7 @@ def _not_impl(msg: str):
 def system_health(_: bool = Depends(require_admin)):
     return {"status": "ok", "db": "connected"} # Upgraded to partial real
 
-@router.get("/tokens/config")
-def tokens_config(_: bool = Depends(require_admin)):
-    _not_impl("Implement token plan config")
+# tokens/config moved to admin_tokens.py (real implementation)
 
 @router.get("/compliance/summary")
 def compliance_summary(_: bool = Depends(require_admin)):
@@ -72,9 +70,7 @@ def system_activity(_: bool = Depends(require_admin)):
 def dashboard_snapshot(_: bool = Depends(require_admin)):
     _not_impl("Implement dashboard snapshot")
 
-@router.get("/tokens/usage")
-def tokens_usage(_: bool = Depends(require_admin)):
-    _not_impl("Implement token usage")
+# tokens/usage moved to admin_tokens.py (real implementation)
 
 @router.get("/tokens/users/{user_id}/ledger")
 def user_token_ledger(user_id: str, _: bool = Depends(require_admin)):

@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from services.backend_api.middleware.interaction_logger import InteractionLoggerMiddleware
+from services.backend_api.middleware.rate_limiter import RateLimitMiddleware
 # Addressing 1.3.2 Unified Config - verifying path later but assuming services.shared.config
 try:
     from services.shared.config import config as settings
@@ -55,6 +56,9 @@ app.add_middleware(
 
 # ── AI Enrichment Loop — logs every request as interaction ────
 app.add_middleware(InteractionLoggerMiddleware)
+
+# ── Rate Limiting — prevent API abuse (100 req / 60s per IP) ──
+app.add_middleware(RateLimitMiddleware)
 
 # ── Core Routers ──────────────────────────────────────────────
 app.include_router(auth.router)

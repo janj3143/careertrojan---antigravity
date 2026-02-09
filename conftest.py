@@ -18,11 +18,30 @@ os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")
 os.environ.setdefault("SECRET_KEY", "test-secret-key-not-for-production")
 
 
+def _clear_rate_limiter(app):
+    """Walk the ASGI middleware stack to find and reset the rate limiter."""
+    obj = getattr(app, "middleware_stack", app)
+    for _ in range(20):
+        if hasattr(obj, "_hits"):
+            obj._hits.clear()
+            return
+        obj = getattr(obj, "app", None)
+        if obj is None:
+            break
+
+
 @pytest.fixture(scope="session")
 def app():
     """Create the FastAPI app instance (session-scoped to avoid repeated boot)."""
     from services.backend_api.main import app as _app
     return _app
+
+
+@pytest.fixture(autouse=True)
+def _reset_rate_limiter():
+    """Auto-reset the rate limiter before every test so no test hits 429."""
+    from services.backend_api.main import app as _app
+    _clear_rate_limiter(_app)
 
 
 @pytest.fixture(scope="session")

@@ -3,7 +3,8 @@ Payment API Routes - CaReerTroJan
 =================================
 REST API endpoints for payment processing:
 - Subscription plans
-- Payment processing (Stripe integration)
+- Payment processing (Braintree integration — sandbox + production)
+- Payment methods (vault cards, PayPal via Drop-in UI)
 - Plan upgrades/downgrades
 - Payment history
 
@@ -13,8 +14,11 @@ Pricing Tiers:
 - Annual Pro: $149.99/year
 - Elite Pro: $299.99/year
 
+Gateway: Braintree (sandbox → production switchable via BRAINTREE_ENVIRONMENT)
+
 Author: CaReerTroJan System
 Date: February 2, 2026
+Updated: February 9, 2026 — Braintree integration
 """
 
 from fastapi import APIRouter, HTTPException, Depends, status
@@ -24,6 +28,14 @@ from datetime import datetime, timezone
 from enum import Enum
 import logging
 import uuid
+
+# Braintree service (lazy — only fails at call time if not configured)
+try:
+    from services.backend_api.services import braintree_service
+    BRAINTREE_AVAILABLE = True
+except ImportError:
+    braintree_service = None  # type: ignore
+    BRAINTREE_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -133,8 +145,8 @@ class PlansListOut(BaseModel):
 
 class PaymentProcessIn(BaseModel):
     plan_id: str = Field(..., description="Plan to purchase: free, monthly, annual, elitepro")
-    payment_method_id: Optional[str] = Field(None, description="Stripe payment method ID")
-    stripe_token: Optional[str] = Field(None, description="Stripe card token")
+    payment_method_nonce: Optional[str] = Field(None, description="Braintree payment method nonce (from Drop-in UI)")
+    payment_method_token: Optional[str] = Field(None, description="Vaulted payment method token")
     promo_code: Optional[str] = Field(None, description="Optional promo code")
 
 
@@ -186,18 +198,40 @@ def _get_user_id_from_token() -> str:
     return "user_demo"
 
 
-def _process_stripe_payment(amount: float, payment_method_id: str, customer_id: str) -> Dict[str, Any]:
+def _process_braintree_payment(
+    amount: float,
+    payment_method_nonce: Optional[str] = None,
+    payment_method_token: Optional[str] = None,
+    customer_id: Optional[str] = None,
+    order_id: Optional[str] = None,
+) -> Dict[str, Any]:
     """
-    Process payment via Stripe
-    
-    TODO: Implement actual Stripe integration
+    Process payment via Braintree.
+
+    Uses real Braintree SDK when configured, otherwise falls back to stub.
     """
-    # Placeholder - in production, use Stripe SDK
-    return {
-        "success": True,
-        "charge_id": f"ch_{uuid.uuid4().hex[:16]}",
-        "payment_intent_id": f"pi_{uuid.uuid4().hex[:16]}"
-    }
+    if BRAINTREE_AVAILABLE and braintree_service.is_configured():
+        # Ensure customer exists in Braintree vault
+        if customer_id:
+            braintree_service.find_or_create_customer(customer_id)
+
+        result = braintree_service.create_sale(
+            amount=f"{amount:.2f}",
+            payment_method_nonce=payment_method_nonce,
+            payment_method_token=payment_method_token,
+            customer_id=customer_id,
+            order_id=order_id,
+        )
+        return result
+    else:
+        # Fallback stub for testing without Braintree credentials
+        logger.warning("Braintree not configured — using payment stub")
+        return {
+            "success": True,
+            "transaction_id": f"stub_{uuid.uuid4().hex[:16]}",
+            "amount": f"{amount:.2f}",
+            "status": "submitted_for_settlement",
+        }
 
 
 # ============================================================================
@@ -234,10 +268,10 @@ async def get_plan(plan_id: str):
 @router.post("/process", response_model=PaymentProcessOut)
 async def process_payment(payload: PaymentProcessIn):
     """
-    Process a subscription payment
+    Process a subscription payment via Braintree.
     
     - For free tier: No payment required
-    - For paid tiers: Requires Stripe payment method or token
+    - For paid tiers: Requires Braintree nonce (from Drop-in UI) or vaulted token
     """
     if payload.plan_id not in PLANS:
         raise HTTPException(
@@ -265,10 +299,10 @@ async def process_payment(payload: PaymentProcessIn):
         )
     
     # Paid tier - require payment method
-    if not payload.payment_method_id and not payload.stripe_token:
+    if not payload.payment_method_nonce and not payload.payment_method_token:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Payment method required for paid plans"
+            detail="Payment method required for paid plans. Provide payment_method_nonce (from Drop-in UI) or payment_method_token (vaulted)."
         )
     
     # Apply promo code discount
@@ -282,11 +316,13 @@ async def process_payment(payload: PaymentProcessIn):
     
     final_amount = plan["price"] - discount
     
-    # Process payment
-    payment_result = _process_stripe_payment(
+    # Process payment via Braintree
+    payment_result = _process_braintree_payment(
         amount=final_amount,
-        payment_method_id=payload.payment_method_id or payload.stripe_token or "",
-        customer_id=user_id
+        payment_method_nonce=payload.payment_method_nonce,
+        payment_method_token=payload.payment_method_token,
+        customer_id=user_id,
+        order_id=f"order_{uuid.uuid4().hex[:8]}",
     )
     
     if not payment_result["success"]:
@@ -315,7 +351,7 @@ async def process_payment(payload: PaymentProcessIn):
         "subscription_id": subscription_id,
         "started_at": now.isoformat(),
         "next_billing": next_billing.isoformat() if next_billing else None,
-        "stripe_charge_id": payment_result["charge_id"]
+        "braintree_transaction_id": payment_result.get("transaction_id")
     }
     
     # Store payment history
@@ -323,7 +359,7 @@ async def process_payment(payload: PaymentProcessIn):
         _payment_history[user_id] = []
     
     _payment_history[user_id].append({
-        "transaction_id": payment_result["charge_id"],
+        "transaction_id": payment_result.get("transaction_id", f"tx_{uuid.uuid4().hex[:16]}"),
         "plan_id": payload.plan_id,
         "amount": final_amount,
         "currency": plan["currency"],
@@ -412,9 +448,121 @@ async def cancel_subscription():
 @router.get("/health")
 async def health_check():
     """Health check for payment service"""
+    bt_configured = BRAINTREE_AVAILABLE and braintree_service.is_configured()
     return {
         "status": "healthy",
         "service": "payment-api",
         "plans_available": len(PLANS),
-        "stripe_configured": False  # TODO: Check Stripe API key
+        "gateway": "braintree",
+        "braintree_configured": bt_configured,
+        "environment": os.getenv("BRAINTREE_ENVIRONMENT", "sandbox") if bt_configured else None,
+    }
+
+
+# ============================================================================
+# BRAINTREE-SPECIFIC ENDPOINTS
+# ============================================================================
+import os
+
+
+@router.get("/client-token")
+async def get_client_token():
+    """
+    Generate a Braintree client token for the Drop-in UI.
+
+    The frontend uses this token to render the payment form
+    (credit card, PayPal, Apple Pay, etc.).
+    """
+    if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Payment gateway not configured"
+        )
+    user_id = _get_user_id_from_token()
+    try:
+        # Try with customer_id for returning users (pre-fills saved methods)
+        try:
+            token = braintree_service.generate_client_token(customer_id=user_id)
+        except Exception:
+            token = braintree_service.generate_client_token()
+        return {"client_token": token}
+    except Exception as e:
+        logger.error("Client token generation failed: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to generate client token")
+
+
+@router.post("/methods")
+async def add_payment_method(nonce: str):
+    """
+    Vault a payment method (card, PayPal) using a nonce from the Drop-in UI.
+    """
+    if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
+        raise HTTPException(status_code=503, detail="Payment gateway not configured")
+
+    user_id = _get_user_id_from_token()
+    try:
+        braintree_service.find_or_create_customer(user_id)
+        method = braintree_service.create_payment_method(user_id, nonce)
+        return {"ok": True, "payment_method": method}
+    except Exception as e:
+        logger.error("Payment method creation failed: %s", e)
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get("/methods")
+async def list_payment_methods():
+    """List all saved payment methods for the current user."""
+    if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
+        return {"methods": []}
+
+    user_id = _get_user_id_from_token()
+    methods = braintree_service.list_payment_methods(user_id)
+    return {"methods": methods}
+
+
+@router.delete("/methods/{token}")
+async def remove_payment_method(token: str):
+    """Remove a vaulted payment method."""
+    if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
+        raise HTTPException(status_code=503, detail="Payment gateway not configured")
+    success = braintree_service.delete_payment_method(token)
+    if not success:
+        raise HTTPException(status_code=400, detail="Failed to remove payment method")
+    return {"ok": True, "message": "Payment method removed"}
+
+
+@router.get("/transactions/{transaction_id}")
+async def get_transaction(transaction_id: str):
+    """Look up a Braintree transaction by ID."""
+    if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
+        raise HTTPException(status_code=503, detail="Payment gateway not configured")
+    tx = braintree_service.find_transaction(transaction_id)
+    if not tx:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    return tx
+
+
+@router.post("/refund/{transaction_id}")
+async def refund_transaction(transaction_id: str, amount: Optional[str] = None):
+    """Refund a settled transaction (full or partial)."""
+    if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
+        raise HTTPException(status_code=503, detail="Payment gateway not configured")
+    result = braintree_service.refund_transaction(transaction_id, amount)
+    if not result["success"]:
+        raise HTTPException(status_code=400, detail=result.get("error", "Refund failed"))
+    return result
+
+
+@router.get("/gateway-info")
+async def gateway_info():
+    """
+    Return gateway configuration status (no secrets).
+    Useful for the frontend to know which environment we're running in.
+    """
+    bt_configured = BRAINTREE_AVAILABLE and braintree_service.is_configured()
+    return {
+        "gateway": "braintree",
+        "configured": bt_configured,
+        "environment": os.getenv("BRAINTREE_ENVIRONMENT", "sandbox") if bt_configured else None,
+        "merchant_id": os.getenv("BRAINTREE_MERCHANT_ID", "")[:6] + "..." if bt_configured else None,
     }

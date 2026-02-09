@@ -3,7 +3,7 @@
 **Domain**: careertrojan.com  
 **Objective**: Create the definitive runtime environment at `C:\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\VS ai_data final - version` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
 
-**Last Updated**: 2026-02-08 (Session 4 — clean runtime, AI enrichment loop, mobile, backup/SSL/GitHub/API strategy)
+**Last Updated**: 2026-02-09 (Session 5 — Braintree payment gateway integration, 136 tests green)
 
 ---
 
@@ -405,6 +405,57 @@ main              ← production-ready, tagged releases
 - [ ] **Webhook support (future)**: Allow external systems to subscribe to events (new match, coaching complete)
 - [ ] **Third-party API access (future)**: OAuth2 client credentials for partner integrations
 - [ ] **API analytics**: Track endpoint usage, latency, error rates — feed into admin dashboard
+
+---
+
+## 18.5 Payment Gateway — Braintree Integration (NEW — Session 5)
+
+### Status: ✅ COMPLETE — Sandbox Configured, 27 Endpoint/Service Tests Passing
+
+### Architecture
+- **Gateway**: Braintree (PayPal) — sandbox environment
+- **Service Layer**: `services/backend_api/services/braintree_service.py` (~300 lines)
+  - Gateway singleton with lazy init from env vars
+  - Customer management (find-or-create by email)
+  - Payment method CRUD (card, PayPal, vault)
+  - Transactions: sale / void / refund / find
+  - Subscriptions: create / cancel / find
+  - Plan mapping: `BRAINTREE_PLAN_MAP` — maps internal tiers (monthly/annual/enterprise) to Braintree plan IDs
+- **Router Endpoints**: `services/backend_api/routers/payment.py` — 7 new endpoints on top of existing plan/subscription flow
+  | Endpoint | Method | Description |
+  |----------|--------|-------------|
+  | `/api/payment/v1/client-token` | GET | Generates Braintree Drop-in UI client token |
+  | `/api/payment/v1/methods` | POST | Vault a payment method (card/PayPal nonce) |
+  | `/api/payment/v1/methods` | GET | List saved payment methods for user |
+  | `/api/payment/v1/methods/{token}` | DELETE | Remove a vaulted payment method |
+  | `/api/payment/v1/transactions/{id}` | GET | Look up transaction details |
+  | `/api/payment/v1/refund/{id}` | POST | Refund (full or partial amount) |
+  | `/api/payment/v1/gateway-info` | GET | Gateway config status (no secrets) |
+- **Graceful Degradation**: All Braintree-specific endpoints return 503 when gateway not configured; `/process` falls back to stub
+
+### Environment Variables (`.env`)
+```
+BRAINTREE_ENVIRONMENT=sandbox
+BRAINTREE_MERCHANT_ID=xtwfsxyf55m7rgn3
+BRAINTREE_PUBLIC_KEY=ch2crmy3fbgyg63p
+BRAINTREE_PRIVATE_KEY=<in .env, not committed>
+```
+
+### Test Coverage (`tests/unit/test_braintree.py` — 27 tests)
+- Configuration: `is_configured()`, environment detection, plan map validation
+- Endpoint Integration: All plan/subscription/history/health/gateway-info endpoints
+- Mocked Service: Client token, customer find, sale success/failure, payment methods, cancel subscription
+- Rate limiter auto-reset in root `conftest.py` (autouse fixture)
+
+### Production Checklist
+- [ ] Create Braintree production merchant account
+- [ ] Set up production plan IDs and update `BRAINTREE_PLAN_MAP`
+- [ ] Configure production webhook URL for transaction events
+- [ ] Switch `BRAINTREE_ENVIRONMENT=production` in deployment env
+- [ ] Add Braintree CSP headers for Drop-in UI script
+- [ ] Wire Drop-in UI component into React payment page
+- [ ] Add transaction receipt email via Resend/SendGrid
+- [ ] PCI compliance review (Braintree handles card data via Drop-in UI)
 
 ---
 

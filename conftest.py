@@ -11,6 +11,10 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+# Load .env file so tests pick up real credentials (Braintree, etc.)
+from dotenv import load_dotenv
+load_dotenv(PROJECT_ROOT / ".env", override=False)
+
 # Ensure sane env vars before any import touches the DB
 os.environ.setdefault("CAREERTROJAN_DB_URL", "sqlite:///./test_careertrojan.db")
 os.environ.setdefault("DATABASE_URL", "sqlite:///./test_careertrojan.db")

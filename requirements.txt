@@ -42,7 +42,4 @@ passlib[bcrypt]==1.7.4
 bcrypt==4.0.1  # pinned: 4.2+ breaks passlib's __about__ import
 
 # --- Payment Gateway ---
-braintree==4.29.0
-
-# --- Payment Gateway ---
-braintree>=4.27.0
+braintree>=4.29.0

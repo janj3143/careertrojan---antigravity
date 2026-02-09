@@ -188,22 +188,25 @@ def list_payment_methods(customer_id: str) -> List[Dict[str, Any]]:
     except braintree.exceptions.not_found_error.NotFoundError:
         return []
     methods = []
-    for pm in (customer.credit_cards or []):
-        methods.append({
+    for pm in (customer.payment_methods or []):
+        info: Dict[str, Any] = {
             "token": pm.token,
-            "type": "card",
-            "card_type": pm.card_type,
-            "last4": pm.last_4,
-            "expiration": f"{pm.expiration_month}/{pm.expiration_year}",
-            "default": pm.default,
-        })
-    for pm in (customer.paypal_accounts or []):
-        methods.append({
-            "token": pm.token,
-            "type": "paypal",
-            "email": pm.email,
-            "default": pm.default,
-        })
+            "default": getattr(pm, "default", False),
+        }
+        # Detect type by available attributes
+        if hasattr(pm, "card_type"):
+            info.update({
+                "type": "card",
+                "card_type": pm.card_type,
+                "last4": getattr(pm, "last_4", None),
+                "expiration": f"{pm.expiration_month}/{pm.expiration_year}"
+                    if hasattr(pm, "expiration_month") else None,
+            })
+        elif hasattr(pm, "email"):
+            info.update({"type": "paypal", "email": pm.email})
+        else:
+            info["type"] = "other"
+        methods.append(info)
     return methods
 
 

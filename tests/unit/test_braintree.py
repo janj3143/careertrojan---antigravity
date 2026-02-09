@@ -152,10 +152,12 @@ class TestPaymentEndpoints:
 
     def test_process_paid_plan_with_stub(self, client):
         """When Braintree is not configured, falls back to stub processor."""
-        resp = client.post("/api/payment/v1/process", json={
-            "plan_id": "monthly",
-            "payment_method_nonce": "fake-valid-nonce"
-        })
+        with patch("services.backend_api.routers.payment.braintree_service") as mock_bt:
+            mock_bt.is_configured.return_value = False
+            resp = client.post("/api/payment/v1/process", json={
+                "plan_id": "monthly",
+                "payment_method_nonce": "fake-valid-nonce"
+            })
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
@@ -163,16 +165,18 @@ class TestPaymentEndpoints:
         assert data["amount_charged"] == 15.99
 
     def test_process_paid_plan_with_promo_code(self, client):
-        resp = client.post("/api/payment/v1/process", json={
-            "plan_id": "annual",
-            "payment_method_nonce": "fake-nonce",
-            "promo_code": "LAUNCH20"
-        })
+        with patch("services.backend_api.routers.payment.braintree_service") as mock_bt:
+            mock_bt.is_configured.return_value = False
+            resp = client.post("/api/payment/v1/process", json={
+                "plan_id": "annual",
+                "payment_method_nonce": "fake-nonce",
+                "promo_code": "LAUNCH20"
+            })
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
-        # 149.99 - 20% = 119.992
-        assert data["amount_charged"] == pytest.approx(119.992, abs=0.01)
+        # 149.99 - 20% = 119.992 → rounded to 119.99
+        assert data["amount_charged"] == pytest.approx(119.99, abs=0.01)
 
     def test_invalid_plan_returns_400(self, client):
         resp = client.post("/api/payment/v1/process", json={

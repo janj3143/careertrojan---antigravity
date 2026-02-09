@@ -441,21 +441,81 @@ BRAINTREE_PUBLIC_KEY=ch2crmy3fbgyg63p
 BRAINTREE_PRIVATE_KEY=<in .env, not committed>
 ```
 
-### Test Coverage (`tests/unit/test_braintree.py` — 27 tests)
-- Configuration: `is_configured()`, environment detection, plan map validation
-- Endpoint Integration: All plan/subscription/history/health/gateway-info endpoints
-- Mocked Service: Client token, customer find, sale success/failure, payment methods, cancel subscription
-- Rate limiter auto-reset in root `conftest.py` (autouse fixture)
+### Test Coverage
+- **Unit Tests** (`tests/unit/test_braintree.py` — 27 tests): Config, endpoints, mocked service
+- **E2E Sandbox Tests** (`tests/e2e/test_braintree_sandbox.py` — 20 tests): Real Braintree API calls
+  - Client token generation (anonymous + customer)
+  - Customer create / find
+  - Sales: Visa, Mastercard, nonce → $1–$149.99
+  - Declined nonce handling
+  - Transaction find + void
+  - Vault card → list → delete → pay with vaulted token
+  - Full flow: nonce → sale → find → void
+  - Vault flow: create customer → vault card → pay → find → void → cleanup
+  - HTTP endpoint e2e: /client-token, /process, /process+promo, declined, /gateway-info
+- Rate limiter auto-reset in root `conftest.py` (autouse fixture + .env auto-loaded via dotenv)
+
+### Frontend Components (React)
+- `apps/user/src/components/payment/BraintreeDropIn.tsx` — Drop-in UI v1.46.0 (CDN loaded)
+  - Fetches client token from `/api/payment/v1/client-token`
+  - Renders Braintree Drop-in (cards, PayPal, Apple Pay)
+  - Returns payment method nonce on submission
+- `apps/user/src/components/payment/SavedPaymentMethods.tsx` — Vaulted methods list/select/delete
+- `apps/user/src/pages/PaymentPage.tsx` — Full checkout page
+  - Plan cards with pricing and features
+  - Sandbox mode indicator with test card info
+  - Promo code input (LAUNCH20, CAREER10)
+  - Saved method selection OR Drop-in for new payment
+  - Submit → backend processes → success/error feedback
+
+### Stripe Status
+- **Fully removed** from careertrojan codebase — zero references to Stripe
+- Braintree is the sole payment gateway (sandbox + production ready)
+- Stripe API key still in `.env` as reference but unused by any code
+
+### Braintree vs Stripe Comparison
+| Feature | Braintree | Stripe |
+|---------|-----------|--------|
+| Transaction fee | 2.89% + $0.29 | 2.9% + $0.30 |
+| Monthly fee | $0 | $0 |
+| Go-live cost | **$0** (apply via PayPal) | $0 |
+| PayPal built-in | ✅ Native | ❌ Separate integration |
+| Venmo | ✅ 3.49% + $0.49 | ❌ |
+| Apple Pay / Google Pay | ✅ Drop-in UI | ✅ Stripe Elements |
+| Card vaulting | ✅ | ✅ |
+| Recurring billing | ✅ | ✅ |
+| PCI compliance | Drop-in handles all card data | Elements handles all card data |
+| **Verdict** | **Optimal** — lower per-txn fee, PayPal+Venmo native | Good but no PayPal/Venmo |
+
+### Go-Live Steps (Zero Upfront Cost)
+1. [x] ~~Sandbox integration complete~~ ✅
+2. [x] ~~E2E tested against real sandbox API~~ ✅ (20/20 passing)
+3. [ ] **Apply for production account** → [braintreepayments.com/contact/sales](https://www.braintreepayments.com/contact/sales)
+   - No monthly fee, no setup fee — only pay per-transaction (2.89% + $0.29)
+4. [ ] **Create API user** in production control panel (dedicated user, not personal)
+5. [ ] **Get production credentials** (merchant_id, public_key, private_key)
+6. [ ] **Recreate plans** in production (monthly_pro, annual_pro, elite_pro) — sandbox plans don't transfer
+7. [ ] **Update `.env.production`**:
+   ```
+   BRAINTREE_ENVIRONMENT=production
+   BRAINTREE_MERCHANT_ID=<production_merchant_id>
+   BRAINTREE_PUBLIC_KEY=<production_public_key>
+   BRAINTREE_PRIVATE_KEY=<production_private_key>
+   ```
+8. [ ] **Test with real card** — run 2-3 low-value transactions ($0.50, $1.00), verify settlement in bank
+9. [ ] **Configure production webhooks** for transaction events (optional but recommended)
+10. [ ] **Add CSP headers** for `js.braintreegateway.com` in production nginx/reverse proxy
+11. [ ] **PCI SAQ-A** — Braintree Drop-in UI handles all card data, so SAQ-A (simplest) applies
 
 ### Production Checklist
-- [ ] Create Braintree production merchant account
+- [ ] Create Braintree production merchant account (free)
 - [ ] Set up production plan IDs and update `BRAINTREE_PLAN_MAP`
 - [ ] Configure production webhook URL for transaction events
 - [ ] Switch `BRAINTREE_ENVIRONMENT=production` in deployment env
 - [ ] Add Braintree CSP headers for Drop-in UI script
-- [ ] Wire Drop-in UI component into React payment page
+- [ ] ~~Wire Drop-in UI component into React payment page~~ ✅ (done)
 - [ ] Add transaction receipt email via Resend/SendGrid
-- [ ] PCI compliance review (Braintree handles card data via Drop-in UI)
+- [ ] PCI SAQ-A compliance review
 
 ---
 

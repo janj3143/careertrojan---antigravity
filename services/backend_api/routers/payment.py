@@ -314,7 +314,7 @@ async def process_payment(payload: PaymentProcessIn):
         elif payload.promo_code.upper() == "CAREER10":
             discount = plan["price"] * 0.10
     
-    final_amount = plan["price"] - discount
+    final_amount = round(plan["price"] - discount, 2)
     
     # Process payment via Braintree
     payment_result = _process_braintree_payment(

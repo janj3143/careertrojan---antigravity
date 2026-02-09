@@ -3,7 +3,7 @@
 **Domain**: careertrojan.com  
 **Objective**: Create the definitive runtime environment at `C:\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\VS ai_data final - version` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
 
-**Last Updated**: 2026-02-09 (Session 6 — All 29 routers mounted, middleware stack complete, Braintree integrated, 136 tests green)
+**Last Updated**: 2026-02-09 (Session 6 — Unified model config, LLM gateway, repo cleanup, Braintree CSE, 136 tests green)
 
 ---
 
@@ -89,18 +89,25 @@ Zustand store propagates selection to Touch-Points panel + other pinned visuals 
 | `GET /api/mapping/v1/endpoints` | Endpoint table data | To build |
 | `GET /api/mapping/v1/registry` | Visual registry | To build |
 
-## 7. AI Model Stack & Presentation (NEW)
+## 7. AI Model Stack & Presentation (UPDATED Session 6)
+
+### 7.0 Unified Model Configuration ✅ NEW
+- **Central config**: `config/models.yaml` — ALL model names, providers, paths, task pipelines
+- **Config loader**: `config/model_config.py` — thread-safe singleton, hot-reload support
+- **Unified LLM gateway**: `services/ai_engine/llm_gateway.py` — single entry point for all LLM providers (OpenAI, Anthropic, Gemini, Perplexity, Ollama, vLLM)
+- **Zero hardcoded model names**: All 7 files with hardcoded models updated to read from config
+- **"One click" model swap**: Change model name in `config/models.yaml` → all services pick it up automatically
 
 ### 7.1 Model Families in Use
-| Layer | Models | Purpose |
-|-------|--------|---------|
-| Rules / Inference | Weighted scoring, constraint solvers, Lockstep checks | Reliability + explainability |
-| Statistical | Regression, gradient boosting, PCA/UMAP, hypothesis tests | "Numbers you can defend" |
-| Bayesian | Bayesian updating, hierarchical Bayes | Uncertainty bounds, sparse evidence |
-| NLP / Embeddings | Sentence-transformers, keyword extraction, ESCO alignment | CV ↔ JD semantic matching |
-| Neural / Transformers | RoBERTa/DeBERTa for ranking, sequence labelling for entity extraction | Task-specific NLP |
-| Fuzzy Logic | Fuzzy inference (skill strength, recency, seniority), fuzzy clustering | Human-like scoring |
-| vLLM (future) | High-throughput LLM serving | Self-hosted open-weight models |
+| Layer | Models | Config Key | Purpose |
+|-------|--------|------------|---------|
+| Rules / Inference | Weighted scoring, constraint solvers, Lockstep checks | `inference.tasks` | Reliability + explainability |
+| Statistical | Regression, gradient boosting, PCA/UMAP, hypothesis tests | `ml_models.statistical` | "Numbers you can defend" |
+| Bayesian | Bayesian updating, hierarchical Bayes | `ml_models.bayesian` | Uncertainty bounds, sparse evidence |
+| NLP / Embeddings | Sentence-transformers, keyword extraction, ESCO alignment | `embeddings` + `ml_models.nlp` | CV ↔ JD semantic matching |
+| Neural / Transformers | RoBERTa/DeBERTa for ranking, sequence labelling | `ml_models.neural` | Task-specific NLP |
+| Fuzzy Logic | Fuzzy inference (skill strength, recency, seniority) | `ml_models.fuzzy` | Human-like scoring |
+| vLLM (future) | High-throughput LLM serving | `llm.providers.vllm` | Self-hosted open-weight models |
 
 ### 7.2 Presentation Mechanisms
 - **Visual overlays**: Green/amber/red inline highlights on resume + JD
@@ -122,8 +129,11 @@ Zustand store propagates selection to Touch-Points panel + other pinned visuals 
 - [x] **Existing launcher pack**: `Q:\CareerTrojan_Ubuntu_LauncherPack_2026-01-15\` — bash scripts, GNOME .desktop files, careertrojan.env.
 - [ ] **Test on Ubuntu**: Deploy to dedicated machine, verify all services start.
 
-## 9. Cleanup & Script Hygiene
-- [ ] **Audit scripts/**: Remove legacy scripts not part of the runtime.
+## 9. Cleanup & Script Hygiene (UPDATED Session 6)
+- [x] **Repo data cleanup**: Removed 9 `.db` files + 26 `.json` data files + credentials from git tracking
+- [x] **`.gitignore` hardened**: `*.json` (with allowlist), `*.db`, `*credentials*`, `*.csv`, `*.xlsx`
+- [x] **Deprecated file removed**: `_braintree_gateway_DEPRECATED.py` deleted
+- [x] **Scripts audit**: All 23 scripts in `scripts/` verified — all are operational (none legacy)
 - [ ] **Remove `.backup.*` files** across portal directories.
 - [ ] **Remove duplicate docker-compose** files in app subdirectories.
 
@@ -538,8 +548,10 @@ BRAINTREE_PRIVATE_KEY=<in .env, not committed>
 10. ~~GDPR router~~ ✅
 
 ### Phase C — Frontend & Integration 🔨 CURRENT PRIORITY
-11. [ ] **Create root `.gitignore`** — CRITICAL (no `.gitignore` exists, risk of committing node_modules/secrets)
-12. [ ] **Create root `.env`** from env vars in compose.yaml (no `.env` at project root)
+11. [x] **Root `.gitignore` hardened** — ✅ `*.json`/`*.db`/`*credentials*` excluded, allowlist for package.json etc.
+12. [x] **Root `.env` verified + `.env.example` updated** — ✅ 104 vars, all keys populated, example has 100+ lines
+12b. [x] **Unified model config created** — ✅ `config/models.yaml` + `config/model_config.py` + `services/ai_engine/llm_gateway.py`
+12c. [x] **All hardcoded model names eliminated** — ✅ 7 files fixed, zero remaining in codebase
 13. [ ] **Run endpoint introspection pipeline** (`tools/`) — verify full endpoint count
 14. [ ] **Update ~25 React API callsites** to new `/api/.../v1` prefixes
 15. [ ] **Wire visualisation components** into `/insights/visuals` (Phase 05–12 components ready)

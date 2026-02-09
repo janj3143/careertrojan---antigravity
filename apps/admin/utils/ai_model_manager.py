@@ -25,6 +25,12 @@ from pathlib import Path
 import streamlit as st
 
 try:
+    from config.model_config import model_config
+    _CONFIG_AVAILABLE = True
+except ImportError:
+    _CONFIG_AVAILABLE = False
+
+try:
     import openai
     OPENAI_AVAILABLE = True
 except ImportError:
@@ -48,14 +54,29 @@ class AIModelManager:
         self.cache_file = self.cache_dir / "model_availability_cache.json"
         self.cache_duration = timedelta(hours=6)  # Refresh every 6 hours
         
-        # Model preferences by use case
-        self.model_preferences = {
-            "chat": ["gpt-5", "gpt-4-turbo", "gpt-4", "gpt-3.5-turbo"],
-            "code": ["gpt-5-code", "gpt-4-turbo", "gpt-4", "code-davinci-002"],
-            "analysis": ["gpt-5-analysis", "gpt-4-turbo", "gpt-4", "gpt-3.5-turbo"],
-            "vision": ["gpt-5-vision", "gpt-4-vision-preview", "gpt-4-turbo-vision"],
-            "embedding": ["text-embedding-3-large", "text-embedding-3-small", "text-embedding-ada-002"]
-        }
+        # Model preferences by use case — driven by config/models.yaml
+        if _CONFIG_AVAILABLE:
+            cfg = model_config.config
+            oai = cfg.get("llm", {}).get("providers", {}).get("openai", {})
+            default_model = oai.get("default_model", "gpt-4")
+            fallbacks = oai.get("fallback_models", ["gpt-4-turbo", "gpt-3.5-turbo"])
+            emb = cfg.get("embeddings", {}).get("sentence_transformers", {})
+            emb_model = emb.get("default", "text-embedding-3-large")
+            self.model_preferences = {
+                "chat": [default_model] + fallbacks,
+                "code": [default_model] + fallbacks,
+                "analysis": [default_model] + fallbacks,
+                "vision": ["gpt-4-vision-preview", "gpt-4-turbo"],
+                "embedding": [emb_model, "text-embedding-3-small", "text-embedding-ada-002"]
+            }
+        else:
+            self.model_preferences = {
+                "chat": ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo"],
+                "code": ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo"],
+                "analysis": ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo"],
+                "vision": ["gpt-4-vision-preview", "gpt-4-turbo"],
+                "embedding": ["text-embedding-3-large", "text-embedding-3-small", "text-embedding-ada-002"]
+            }
         
         # Provider configurations
         self.providers = {
@@ -118,29 +139,28 @@ class AIModelManager:
                 all_models["openai"] = sorted(gpt_models, reverse=True) + embedding_models
                 
             except Exception as e:
-                # Fallback to known models if API fails
-                all_models["openai"] = [
-                    "gpt-4-turbo-preview",
-                    "gpt-4-turbo",
-                    "gpt-4",
-                    "gpt-3.5-turbo",
-                    "text-embedding-3-large",
-                    "text-embedding-3-small"
-                ]
+                # Fallback to known models if API fails — pull from config
+                chat_prefs = self.model_preferences.get("chat", ["gpt-4", "gpt-3.5-turbo"])
+                emb_prefs = self.model_preferences.get("embedding", ["text-embedding-3-large"])
+                all_models["openai"] = chat_prefs + emb_prefs
         
         # Anthropic Models (Claude)
         if ANTHROPIC_AVAILABLE and os.getenv("ANTHROPIC_API_KEY"):
             try:
-                # Anthropic doesn't have a models list endpoint, use known models
-                all_models["anthropic"] = [
-                    "claude-3-opus-20240229",
-                    "claude-3-sonnet-20240229",
-                    "claude-3-haiku-20240307",
-                    "claude-2.1",
-                    "claude-2.0"
-                ]
+                # Anthropic — pull from config/models.yaml
+                if _CONFIG_AVAILABLE:
+                    anth = model_config.config.get("llm", {}).get("providers", {}).get("anthropic", {})
+                    default_claude = anth.get("default_model", "claude-sonnet-4-20250514")
+                    fallback_claudes = anth.get("fallback_models", ["claude-3-5-sonnet-20241022"])
+                    all_models["anthropic"] = [default_claude] + fallback_claudes
+                else:
+                    all_models["anthropic"] = [
+                        "claude-sonnet-4-20250514",
+                        "claude-3-5-sonnet-20241022",
+                        "claude-3-haiku-20240307"
+                    ]
             except Exception:
-                all_models["anthropic"] = ["claude-3-opus-20240229"]
+                all_models["anthropic"] = ["claude-sonnet-4-20250514"]
         
         # Cache the results
         cache_data = {

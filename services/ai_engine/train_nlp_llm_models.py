@@ -274,8 +274,13 @@ class NLPLLMTrainer:
         try:
             from sentence_transformers import SentenceTransformer
 
-            # Load pre-trained model
-            model = SentenceTransformer('all-MiniLM-L6-v2')
+            # Load pre-trained model — name from config/models.yaml
+            try:
+                from config.model_config import model_config
+                emb_name = model_config.get_embedding_model("sentence_transformers")
+            except ImportError:
+                emb_name = 'all-MiniLM-L6-v2'
+            model = SentenceTransformer(emb_name)
 
             # Save configuration
             bert_dir = self.models_path / "bert_embeddings"
@@ -285,7 +290,7 @@ class NLPLLMTrainer:
             model.save(str(bert_dir))
 
             logger.info("✅ BERT Embeddings configured")
-            return {'model': 'all-MiniLM-L6-v2', 'status': 'ready'}
+            return {'model': emb_name, 'status': 'ready'}
 
         except Exception as e:
             logger.error(f"❌ BERT setup failed: {e}")
@@ -324,9 +329,15 @@ class NLPLLMTrainer:
         logger.info("\n🔤 Setting up GPT Configuration...")
 
         try:
+            # Pull default model from config/models.yaml
+            try:
+                from config.model_config import model_config
+                _gpt_model = model_config.get_llm_model("openai")
+            except ImportError:
+                _gpt_model = 'gpt-4'
             gpt_config = {
                 'model_type': 'gpt',
-                'model_name': 'gpt-3.5-turbo',
+                'model_name': _gpt_model,
                 'temperature': 0.7,
                 'max_tokens': 500,
                 'use_case': 'text_generation',

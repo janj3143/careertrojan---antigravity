@@ -70,7 +70,7 @@ class AIConfig:
     openai_api_key: str = ""
     anthropic_api_key: str = ""
     google_api_key: str = ""
-    default_model: str = "gpt-3.5-turbo"
+    default_model: str = "gpt-4"  # Updated via config/models.yaml at runtime
     max_tokens: int = 2000
     temperature: float = 0.7
     enable_ai_features: bool = True

@@ -8,3 +8,4 @@ export { default as CardView } from './CardView';
 export { default as ResponsiveTable } from './ResponsiveTable';
 export { default as PWAInstallBanner } from './PWAInstallBanner';
 export { default as PullToRefresh } from './PullToRefresh';
+export { default as NetworkBanner } from './NetworkBanner';

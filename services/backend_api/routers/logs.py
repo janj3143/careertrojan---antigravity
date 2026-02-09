@@ -21,7 +21,7 @@ def tail_log(
     error_pattern: str = Query("ERROR|Traceback"),
 ):
     # Default log folder: sibling 'logs' next to your data_root
-    log_dir = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "L:\\antigravity_version_ai_data_final")).parent / "logs"
+    log_dir = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")).parent / "logs"
     fp = (log_dir / file).resolve()
 
     if not fp.exists():

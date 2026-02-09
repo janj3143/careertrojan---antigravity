@@ -15,8 +15,8 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
-    # Paths
-    CAREERTROJAN_DATA_ROOT: str = r"L:\antigravity_version_ai_data_final"
+    # Paths (portable: override via .env or env var)
+    CAREERTROJAN_DATA_ROOT: str = "./data/ai_data_final"
     AI_DATA_PATH: Optional[str] = None
     PARSER_OUTPUT_PATH: Optional[str] = None
     

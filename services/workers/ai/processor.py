@@ -20,8 +20,11 @@ class ResumeProcessor:
             # Try to recover or create if allowed (usually read-only mount though)
             logger.warning(f"Parser directory not found at {self.parser_dir}. Checking for local override...")
             # Fallback for dev environment without full mounts
-            if os.path.exists("c:\\careertrojan\\working\\automated_parser"):
-                 self.parser_dir = "c:\\careertrojan\\working\\automated_parser"
+            local_fallback = os.path.join(
+                os.getenv("CAREERTROJAN_ROOT", os.getcwd()), "working", "automated_parser"
+            )
+            if os.path.exists(local_fallback):
+                 self.parser_dir = local_fallback
 
         if not os.path.exists(self.parser_dir):
             logger.error(f"Parser directory NOT FOUND: {self.parser_dir}")

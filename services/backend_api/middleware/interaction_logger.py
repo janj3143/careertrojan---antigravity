@@ -31,11 +31,8 @@ from starlette.responses import Response
 
 logger = logging.getLogger("interaction_logger")
 
-# ── Resolve data root (Windows vs Linux) ──────────────────────
-if sys.platform == "win32":
-    _DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\VS ai_data final - version"))
-else:
-    _DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "/mnt/careertrojan/user_data"))
+# ── Resolve data root (portable) ──────────────────────────────
+_DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
 
 INTERACTIONS_DIR = _DATA_ROOT / "USER DATA" / "interactions"
 

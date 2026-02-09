@@ -6,7 +6,7 @@ from pathlib import Path
 
 # Configuration
 API_URL = "http://localhost:8500"
-DATA_ROOT = Path("L:/antigravity_version_ai_data_final/ai_data_final")
+DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")) / "ai_data_final"
 
 def get_json(url):
     try:

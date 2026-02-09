@@ -15,7 +15,7 @@ except ImportError:
         APP_NAME = "CareerTrojan"
         VERSION = "1.0.0"
         DEBUG = True
-        CAREERTROJAN_DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "L:\\VS ai_data final - version")
+        CAREERTROJAN_DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
     settings = Settings()
 
 # Import Routers

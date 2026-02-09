@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import MobileNav from './components/mobile/MobileNav';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
 import PWAInstallBanner from './components/mobile/PWAInstallBanner';
+import NetworkBanner from './components/mobile/NetworkBanner';
 
 // ── Eager: public pages (first paint) ────────────────────
 import Home from './pages/Home';
@@ -54,6 +55,7 @@ export default function App() {
     return (
         <AuthProvider>
             <BrowserRouter>
+                <NetworkBanner />
                 <MobileNav />
                 <main className="mobile-safe-content">
                     <Suspense fallback={<PageLoader />}>

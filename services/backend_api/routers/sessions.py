@@ -7,7 +7,7 @@ Provides endpoints for:
   - Consolidated user data view
   - Data sync status
 
-All writes to USER DATA are trapped and mirrored to E:\\CareerTrojan\\USER_DATA_COPY
+All writes to USER DATA are trapped and mirrored to a configurable backup path.
 """
 import os
 import json
@@ -28,11 +28,11 @@ router = APIRouter(
 # ── Data Paths ────────────────────────────────────────────────
 USER_DATA_ROOT = Path(os.getenv(
     "CAREERTROJAN_USER_DATA",
-    r"L:\VS ai_data final - version\USER DATA"
+    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"), "USER DATA")
 ))
 USER_DATA_MIRROR = Path(os.getenv(
     "CAREERTROJAN_USER_DATA_MIRROR",
-    r"E:\CareerTrojan\USER_DATA_COPY"
+    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"), "USER_DATA_COPY")
 ))
 
 

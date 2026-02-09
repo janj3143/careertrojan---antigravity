@@ -8,7 +8,8 @@ try:
     import security_policy
 except ImportError:
     # Fallback for manual run location
-    sys.path.append(os.path.join("C:\\careertrojan", "services", "shared"))
+    _project_root = os.getenv("CAREERTROJAN_ROOT", os.path.join(os.path.dirname(__file__), ".."))
+    sys.path.append(os.path.join(_project_root, "services", "shared"))
     import security_policy
 
 def run_test():
@@ -31,7 +32,8 @@ def run_test():
 
     # 2. Test Log Immutability
     print("\n[TEST 3] Testing Log Immutability...")
-    test_log = "C:\\careertrojan\\logs\\test_security_event.log"
+    _project_root2 = os.getenv("CAREERTROJAN_ROOT", os.path.join(os.path.dirname(__file__), ".."))
+    test_log = os.path.join(_project_root2, "logs", "test_security_event.log")
     
     # Ensure dir exists
     os.makedirs(os.path.dirname(test_log), exist_ok=True)

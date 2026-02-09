@@ -122,8 +122,8 @@ class IndustryTaxonomyService:
         naics_structure_path: Optional[Path] = None,
         naics_desc_path: Optional[Path] = None,
     ) -> None:
-        # Default to L: Drive if not provided and env var not set
-        default_root = "L:\\antigravity_version_ai_data_final\\ai_data_final"
+        # Default to env var or portable local path
+        default_root = os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final/ai_data_final")
         
         self.data_root = (
             Path(data_root)

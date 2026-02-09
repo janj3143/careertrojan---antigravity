@@ -14,9 +14,10 @@ import os
 router = APIRouter(prefix="/api/ai-data/v1", tags=["ai-data"])
 
 # Base path to AI data
-AI_DATA_PATH = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "L:\\antigravity_version_ai_data_final")) / "ai_data_final"
-AUTOMATED_PARSER_PATH = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "L:\\antigravity_version_ai_data_final")) / "automated_parser"
-USER_DATA_PATH = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "L:\\antigravity_version_ai_data_final")) / "USER DATA"
+_DATA_ROOT = os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
+AI_DATA_PATH = Path(_DATA_ROOT) / "ai_data_final"
+AUTOMATED_PARSER_PATH = Path(_DATA_ROOT) / "automated_parser"
+USER_DATA_PATH = Path(_DATA_ROOT) / "USER DATA"
 
 @router.get("/parsed_resumes")
 async def get_parsed_resumes() -> Dict[str, Any]:

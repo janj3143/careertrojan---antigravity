@@ -4,8 +4,11 @@ IntelliCV Shared Configuration Layer (Runtime Optimized)
 =============================================================================
 
 Central configuration for all data paths and directory structures.
-Hardcoded to use L: drive for AI Data as per runtime requirements.
+All paths are driven by environment variables for cross-platform portability.
 
+Env vars:
+  CAREERTROJAN_ROOT      – project root (default: parent of this package)
+  CAREERTROJAN_DATA_ROOT – AI data directory
 """
 
 from pathlib import Path
@@ -16,13 +19,18 @@ from typing import Dict, List, Optional
 # CORE DIRECTORY STRUCTURE
 # =============================================================================
 
-# Base IntelliCV directory (C:\careertrojan)
-INTELLICV_ROOT = Path("C:/careertrojan")
+# Base IntelliCV directory — auto-detect from env or from file location
+INTELLICV_ROOT = Path(os.getenv(
+    "CAREERTROJAN_ROOT",
+    str(Path(__file__).resolve().parents[2])  # …/services/shared → project root
+))
 
-# Core data directories
-# CRITICAL: AI Data must come from L: drive
-AI_DATA_DIR = Path("L:/antigravity_version_ai_data_final")
-RAW_DATA_DIR = INTELLICV_ROOT / "raw_data" # Fallback or local
+# Core data directories — driven by CAREERTROJAN_DATA_ROOT env var
+AI_DATA_DIR = Path(os.getenv(
+    "CAREERTROJAN_DATA_ROOT",
+    str(INTELLICV_ROOT / "data" / "ai_data_final")
+))
+RAW_DATA_DIR = INTELLICV_ROOT / "raw_data"
 WORKING_COPY_DIR = INTELLICV_ROOT / "working"
 
 AI_DATA_ROOT = AI_DATA_DIR

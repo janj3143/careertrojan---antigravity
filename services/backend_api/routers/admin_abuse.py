@@ -9,7 +9,7 @@ from fastapi import APIRouter
 router = APIRouter(prefix="/api/admin/v1/abuse", tags=["admin-abuse"])
 
 import os
-PROJECT_ROOT = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "L:\\antigravity_version_ai_data_final"))
+PROJECT_ROOT = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
 STORE = PROJECT_ROOT / "resume_store"
 
 

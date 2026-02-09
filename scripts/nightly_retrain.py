@@ -19,9 +19,8 @@ Workflow:
 Usage:
   python scripts/nightly_retrain.py [--dry-run] [--data-dir PATH] [--models-dir PATH]
 
-Schedule (Windows Task Scheduler):
-  Action: C:\\Python\\python.exe
-  Arguments: C:\\careertrojan\\scripts\\nightly_retrain.py
+Schedule (Windows Task Scheduler / cron):
+  Action: python scripts/nightly_retrain.py
   Trigger: Daily 02:00
 """
 

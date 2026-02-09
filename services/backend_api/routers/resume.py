@@ -15,10 +15,10 @@ router = APIRouter(prefix="/api/resume/v1", tags=["resume"])
 # ============================================================================
 # Persistent Storage Setup
 # ============================================================================
-# Use the L: drive or a local persistent folder if L: is unavailable
-STORAGE_ROOT = Path("L:/antigravity_version_ai_data_final")
+# Portable: driven by CAREERTROJAN_DATA_ROOT env var
+STORAGE_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
 if not STORAGE_ROOT.exists():
-    STORAGE_ROOT = Path("storage/data") # Fallback
+    STORAGE_ROOT = Path("storage/data")  # Fallback for local dev
     STORAGE_ROOT.mkdir(parents=True, exist_ok=True)
 
 RESUME_DIR = STORAGE_ROOT / "user_uploads/resumes"

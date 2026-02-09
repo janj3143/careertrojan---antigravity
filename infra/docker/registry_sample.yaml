@@ -1,0 +1,32 @@
+version: "1.0"
+last_updated: "2026-01-30"
+
+capabilities:
+  portals:
+    user_portal:
+      features:
+        - "resume_upload"
+        - "job_match"
+        - "career_map"
+        - "profile_edit"
+      theme:
+        primary_color: "#1A1A2E" # Dark Navy
+        accent_color: "#E94560"  # CareerTrojan Red
+        
+    admin_portal:
+      features:
+        - "user_management"
+        - "system_monitor"
+        - "masquerade_mode"
+        - "database_reset"
+      theme:
+        primary_color: "#0F3460"
+        accent_color: "#E94560"
+
+    mentor_portal:
+      features:
+        - "mentee_list"
+        - "schedule_chat"
+      theme:
+        primary_color: "#16213E"
+        accent_color: "#00ADB5"

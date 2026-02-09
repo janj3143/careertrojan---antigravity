@@ -1,0 +1,1367 @@
+{
+  "generated": "2026-02-09",
+  "source": "services.backend_api.main:app",
+  "count": 170,
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/abuse/queue",
+      "name": "queue",
+      "tags": [
+        "admin-abuse"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/jobs",
+      "name": "content_jobs",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/content/run",
+      "name": "content_run",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/status",
+      "name": "content_status",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/jobs",
+      "name": "enrichment_jobs",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/enrichment/run",
+      "name": "enrichment_run",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/status",
+      "name": "enrichment_status",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/anti-gaming/check",
+      "name": "check",
+      "tags": [
+        "anti-gaming"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/jobs",
+      "name": "batch_jobs",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/batch/run",
+      "name": "batch_run",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/status",
+      "name": "batch_status",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/audit/events",
+      "name": "audit_events",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/summary",
+      "name": "compliance_summary",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/dashboard/snapshot",
+      "name": "dashboard_snapshot",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/jobs",
+      "name": "email_jobs",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/status",
+      "name": "email_status",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/sync",
+      "name": "email_sync",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/logs/tail",
+      "name": "tail_log",
+      "tags": [
+        "admin-logs"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/jobs",
+      "name": "parsers_jobs",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsers/run",
+      "name": "parsers_run",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/status",
+      "name": "parsers_status",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "list_admin_parses",
+      "tags": [
+        "admin-parsing"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "admin_parse_file",
+      "tags": [
+        "admin-parsing"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse/{parse_id}",
+      "name": "get_admin_parse",
+      "tags": [
+        "admin-parsing"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/activity",
+      "name": "system_activity",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/health",
+      "name": "system_health",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "tokens_config",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "get_token_config",
+      "tags": [
+        "admin-tokens"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "put_token_config",
+      "tags": [
+        "admin-tokens"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/usage",
+      "name": "tokens_usage",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/usage",
+      "name": "get_token_usage",
+      "tags": [
+        "admin-tokens"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/users/{user_id}/ledger",
+      "name": "user_token_ledger",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/user_subscriptions",
+      "name": "user_subscriptions",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users",
+      "name": "list_users",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/metrics",
+      "name": "user_metrics",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/security",
+      "name": "user_security",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/{user_id}",
+      "name": "get_user",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/disable",
+      "name": "disable_user",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/plan",
+      "name": "set_user_plan",
+      "tags": [
+        "admin"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/automated/candidates",
+      "name": "get_automated_candidates",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/companies",
+      "name": "get_companies",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/email_extracted",
+      "name": "get_email_extracted",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_descriptions",
+      "name": "get_job_descriptions",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_titles",
+      "name": "get_job_titles",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/locations",
+      "name": "get_locations",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/metadata",
+      "name": "get_metadata",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/normalized",
+      "name": "get_normalized_data",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes",
+      "name": "get_parsed_resumes",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes/{doc_id}",
+      "name": "get_parsed_resume",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/status",
+      "name": "get_ai_data_status",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/user_data/files",
+      "name": "list_user_data_files",
+      "tags": [
+        "ai-data"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/dashboard",
+      "name": "get_dashboard_data",
+      "tags": [
+        "analytics"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_jobs",
+      "name": "get_recent_jobs",
+      "tags": [
+        "analytics"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_resumes",
+      "name": "get_recent_resumes",
+      "tags": [
+        "analytics"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/statistics",
+      "name": "get_statistics",
+      "tags": [
+        "analytics"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/system_health",
+      "name": "get_system_health",
+      "tags": [
+        "analytics"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/generate",
+      "name": "generate_2fa",
+      "tags": [
+        "auth"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/verify",
+      "name": "verify_2fa",
+      "tags": [
+        "auth"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/login",
+      "name": "login",
+      "tags": [
+        "auth"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/register",
+      "name": "register",
+      "tags": [
+        "auth"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/detect",
+      "name": "detect_blockers",
+      "tags": [
+        "blockers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/improvement-plans/generate",
+      "name": "generate_plans",
+      "tags": [
+        "blockers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/blockers/v1/user/{user_id}",
+      "name": "get_user_blockers",
+      "tags": [
+        "blockers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/answers/review",
+      "name": "review_answer",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/bundle",
+      "name": "get_coaching_bundle",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/health",
+      "name": "coaching_health",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/questions/generate",
+      "name": "generate_questions",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/stories/generate",
+      "name": "generate_stories",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/actions",
+      "name": "get_action_costs",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/balance",
+      "name": "get_balance",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/can-perform/{action_id}",
+      "name": "can_perform_action",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/consume",
+      "name": "consume_credits",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/health",
+      "name": "health_check",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/plans",
+      "name": "get_plans",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/teaser",
+      "name": "get_teaser",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/upgrade/{plan_tier}",
+      "name": "upgrade_plan",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/usage",
+      "name": "get_usage_details",
+      "tags": [
+        "credits"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/insights/v1/cohort/resolve",
+      "name": "resolve_cohort",
+      "tags": [
+        "insights"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/graph",
+      "name": "get_graph_data",
+      "tags": [
+        "insights"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/quadrant",
+      "name": "get_quadrant_data",
+      "tags": [
+        "insights"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cloud",
+      "name": "get_term_cloud",
+      "tags": [
+        "insights"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cooccurrence",
+      "name": "get_cooccurrence",
+      "tags": [
+        "insights"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/enrich",
+      "name": "enrich_resume",
+      "tags": [
+        "intelligence"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/market",
+      "name": "market_intel",
+      "tags": [
+        "intelligence"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/descriptive",
+      "name": "get_stats",
+      "tags": [
+        "intelligence"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/regression",
+      "name": "regression",
+      "tags": [
+        "intelligence"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/index",
+      "name": "get_job_index",
+      "tags": [
+        "jobs"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/search",
+      "name": "search_jobs",
+      "tags": [
+        "jobs"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/endpoints",
+      "name": "endpoints",
+      "tags": [
+        "mapping"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/graph",
+      "name": "graph",
+      "tags": [
+        "mapping"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/registry",
+      "name": "registry",
+      "tags": [
+        "mapping"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/health",
+      "name": "health_check",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/list",
+      "name": "list_mentors",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/profile-by-user/{user_id}",
+      "name": "get_mentor_profile_by_user",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/availability",
+      "name": "update_availability",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/dashboard-stats",
+      "name": "get_dashboard_stats",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "name": "get_mentor_packages",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "name": "create_package",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "delete_package",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "get_package",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "update_package",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/profile",
+      "name": "get_mentor_profile",
+      "tags": [
+        "mentor"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications",
+      "name": "submit_mentor_application",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/applications/pending",
+      "name": "get_pending_applications",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications/{application_id}/approve",
+      "name": "approve_mentor_application",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents",
+      "name": "create_requirement_document",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/documents/{doc_id}",
+      "name": "get_requirement_document",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/reject",
+      "name": "reject_document",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/sign",
+      "name": "sign_document",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/health",
+      "name": "health_check",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices",
+      "name": "create_invoice",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/invoices/mentor/{mentor_id}",
+      "name": "get_mentor_invoices",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/confirm-completion",
+      "name": "confirm_service_completion",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/dispute",
+      "name": "raise_dispute",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/mark-paid",
+      "name": "mark_invoice_paid",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/service-delivered",
+      "name": "mark_service_delivered",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/links",
+      "name": "create_mentorship_link",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/mentor/{mentor_id}",
+      "name": "get_mentor_connections",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/user/{user_id}",
+      "name": "get_user_connections",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/links/{link_id}/status",
+      "name": "update_link_status",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/notes",
+      "name": "create_note",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/notes/{link_id}",
+      "name": "get_notes_for_link",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/notes/{note_id}",
+      "name": "update_note",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/anti-gaming/check",
+      "name": "check_abuse",
+      "tags": [
+        "ops"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/logs/lock",
+      "name": "lock_audit_logs",
+      "tags": [
+        "ops"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/processing/start",
+      "name": "start_processing",
+      "tags": [
+        "ops"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/processing/status",
+      "name": "processing_status",
+      "tags": [
+        "ops"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/stats/public",
+      "name": "get_public_stats",
+      "tags": [
+        "ops"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/tokens/config",
+      "name": "get_token_config",
+      "tags": [
+        "ops"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/cancel",
+      "name": "cancel_subscription",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/health",
+      "name": "health_check",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/history",
+      "name": "get_payment_history",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans",
+      "name": "get_plans",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans/{plan_id}",
+      "name": "get_plan",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/process",
+      "name": "process_payment",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/subscription",
+      "name": "get_current_subscription",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1",
+      "name": "list_resumes",
+      "tags": [
+        "resume"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/enrich",
+      "name": "enrich",
+      "tags": [
+        "resume"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/parse",
+      "name": "parse",
+      "tags": [
+        "resume"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/upload",
+      "name": "upload_resume",
+      "tags": [
+        "resume"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1/{resume_id}",
+      "name": "get_resume",
+      "tags": [
+        "resume"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/health",
+      "name": "health_check",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/leaderboard",
+      "name": "get_leaderboard",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/ownership-stats",
+      "name": "get_ownership_stats",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/referral",
+      "name": "get_referral_code",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/referral/claim",
+      "name": "claim_referral",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards",
+      "name": "get_rewards",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards/available",
+      "name": "get_available_rewards",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/redeem",
+      "name": "redeem_rewards",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "get_my_suggestions",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "submit_suggestion",
+      "tags": [
+        "rewards"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/consolidated/{user_id}",
+      "name": "get_consolidated_user_data",
+      "tags": [
+        "sessions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/sessions/v1/log",
+      "name": "log_session_event",
+      "tags": [
+        "sessions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/summary/{user_id}",
+      "name": "get_session_summary",
+      "tags": [
+        "sessions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/sync-status",
+      "name": "get_sync_status",
+      "tags": [
+        "sessions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/shared/v1/health",
+      "name": "health_check",
+      "tags": [
+        "shared"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries",
+      "name": "list_industries",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries/{high_level}/subindustries",
+      "name": "list_subindustries",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/infer-industries",
+      "name": "infer_industries",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/metadata",
+      "name": "job_title_metadata",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/naics-mapping",
+      "name": "job_title_to_naics",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/search",
+      "name": "search_job_titles",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/search",
+      "name": "search_naics",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/title",
+      "name": "naics_title",
+      "tags": [
+        "taxonomy"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/v1/status",
+      "name": "status",
+      "tags": [
+        "telemetry"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/evidence",
+      "name": "get_evidence",
+      "tags": [
+        "touchpoints"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/touchnots",
+      "name": "get_touchnots",
+      "tags": [
+        "touchpoints"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/me",
+      "name": "read_users_me",
+      "tags": [
+        "user"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/profile",
+      "name": "get_profile",
+      "tags": [
+        "user"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/user/v1/profile",
+      "name": "update_profile",
+      "tags": [
+        "user"
+      ]
+    }
+  ]
+}

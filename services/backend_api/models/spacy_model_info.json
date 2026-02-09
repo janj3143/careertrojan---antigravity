@@ -1,0 +1,15 @@
+{
+  "model_name": "en_core_web_sm",
+  "version": "3.8.0",
+  "installed": true,
+  "test_entities": [
+    [
+      "John Smith",
+      "PERSON"
+    ],
+    [
+      "5 years",
+      "DATE"
+    ]
+  ]
+}

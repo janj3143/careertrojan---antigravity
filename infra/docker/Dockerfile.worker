@@ -1,0 +1,42 @@
+# Stage 1: Builder
+FROM python:3.11-slim as builder
+
+WORKDIR /build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy individual requirement files based on service name if needed, 
+# for now using a combined approach or specific ones.
+COPY requirements.parsers.txt requirements.ai.txt ./
+RUN pip install --user --no-cache-dir -r requirements.parsers.txt -r requirements.ai.txt
+
+# Stage 2: Runtime
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies for parsers (LibreOffice headless, etc.)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libreoffice-writer \
+    libreoffice-java-common \
+    poppler-utils \
+    tesseract-ocr \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+
+# Copy installed packages from builder
+COPY --from=builder /root/.local /home/appuser/.local
+ENV PATH=/home/appuser/.local/bin:$PATH
+
+# Copy worker code
+COPY services/ ./services/
+
+# Ownership and User switch
+RUN chown -R appuser:appgroup /app
+USER appuser
+
+CMD ["python", "-m", "services.worker_entry"]

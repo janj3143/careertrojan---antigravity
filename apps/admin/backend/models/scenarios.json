@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "job_title_classifier",
+    "name": "Job Title Classification",
+    "description": "Classify and standardize job titles from resumes",
+    "task_type": "job_title",
+    "config": {
+      "model_type": "neural_network",
+      "embedding_dim": 768,
+      "num_classes": "dynamic",
+      "confidence_threshold": 0.75,
+      "enable_admin_review": true
+    },
+    "created_at": "2025-12-07T11:56:48.813915",
+    "trained_at": "2025-12-07T11:56:48.825511",
+    "model_version": "v1.0_20251207_115648",
+    "performance_metrics": {
+      "accuracy": 0.89,
+      "precision": 0.87,
+      "recall": 0.91,
+      "f1_score": 0.89,
+      "loss": 0.23
+    },
+    "status": "trained"
+  },
+  {
+    "scenario_id": "skills_extractor",
+    "name": "Skills Extraction",
+    "description": "Extract and categorize technical and soft skills",
+    "task_type": "skills",
+    "config": {
+      "model_type": "hybrid",
+      "use_ner": true,
+      "confidence_threshold": 0.7,
+      "enable_admin_review": true
+    },
+    "created_at": "2025-12-07T11:56:48.813915",
+    "trained_at": null,
+    "model_version": null,
+    "performance_metrics": {},
+    "status": "created"
+  },
+  {
+    "scenario_id": "company_classifier",
+    "name": "Company Classification",
+    "description": "Identify and classify companies by industry/size",
+    "task_type": "company",
+    "config": {
+      "model_type": "neural_network",
+      "include_industry": true,
+      "include_size": true,
+      "confidence_threshold": 0.65,
+      "enable_admin_review": true
+    },
+    "created_at": "2025-12-07T11:56:48.813915",
+    "trained_at": null,
+    "model_version": null,
+    "performance_metrics": {},
+    "status": "created"
+  },
+  {
+    "scenario_id": "industry_classifier",
+    "name": "Industry Classification",
+    "description": "Classify industries from job descriptions",
+    "task_type": "industry",
+    "config": {
+      "model_type": "bayesian",
+      "linkedin_taxonomy": true,
+      "confidence_threshold": 0.8,
+      "enable_admin_review": false
+    },
+    "created_at": "2025-12-07T11:56:48.813915",
+    "trained_at": null,
+    "model_version": null,
+    "performance_metrics": {},
+    "status": "created"
+  },
+  {
+    "scenario_id": "experience_analyzer",
+    "name": "Experience Analysis",
+    "description": "Analyze and score work experience relevance",
+    "task_type": "experience",
+    "config": {
+      "model_type": "neural_network",
+      "scoring_method": "weighted",
+      "confidence_threshold": 0.7,
+      "enable_admin_review": true
+    },
+    "created_at": "2025-12-07T11:56:48.813915",
+    "trained_at": null,
+    "model_version": null,
+    "performance_metrics": {},
+    "status": "created"
+  }
+]

@@ -1,0 +1,12 @@
+# Additional requirements for Priority 1-2 features
+
+# Email Verification (Priority 1)
+# Note: smtplib is built-in to Python
+
+# Two-Factor Authentication (Priority 2)
+pyotp==2.9.0          # TOTP library for 2FA
+qrcode[pil]==7.4.2    # QR code generation
+Pillow==10.1.0        # Image processing for QR codes
+
+# Optional: For SMS backup (Twilio)
+# twilio==8.10.0      # Uncomment if implementing SMS 2FA backup

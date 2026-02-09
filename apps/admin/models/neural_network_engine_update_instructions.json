@@ -1,0 +1,7 @@
+{
+  "file": "admin_portal\\backend\\ai_services\\neural_network_engine.py",
+  "action": "Replace get_embedding() method",
+  "new_code": "\n# Replace placeholder get_embedding() method with:\n\ndef get_embedding(self, text: str) -> np.ndarray:\n    \"\"\"Generate semantic embedding using Sentence-BERT\"\"\"\n    try:\n        if not hasattr(self, 'embedding_model'):\n            from sentence_transformers import SentenceTransformer\n            self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')\n            logger.info(\"\u2705 Loaded Sentence-BERT model\")\n\n        # Real embeddings!\n        embedding = self.embedding_model.encode(text)\n\n        # Store for future use\n        self.embedding_cache[text] = embedding\n\n        return embedding\n\n    except ImportError:\n        logger.warning(\"sentence-transformers not installed, using fallback\")\n        # Fallback to random (placeholder)\n        return np.random.randn(self.config['embedding_dim'])\n\n    except Exception as e:\n        logger.error(f\"Embedding generation failed: {e}\")\n        return np.random.randn(self.config['embedding_dim'])\n",
+  "find": "def get_embedding(self, text: str) -> np.ndarray:",
+  "replace_until": "return embedding"
+}

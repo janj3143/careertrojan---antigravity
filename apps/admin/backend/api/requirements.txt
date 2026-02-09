@@ -1,0 +1,15 @@
+# Backend API Requirements
+# Install with: pip install -r requirements.txt
+
+# FastAPI - Modern web framework
+fastapi==0.104.1
+
+# ASGI server
+uvicorn[standard]==0.24.0
+
+# Pydantic - Data validation
+pydantic==2.5.0
+
+# Additional dependencies for AI engines
+numpy>=1.24.0
+pandas>=2.0.0

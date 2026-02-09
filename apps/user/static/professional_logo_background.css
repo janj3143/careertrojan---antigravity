@@ -1,0 +1,176 @@
+/* IntelliCV-AI Professional Background Logo Styling */
+
+/* Global application background with professional technology logo */
+.stApp {
+    background: 
+        linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%),
+        url('logo1.png') center/cover no-repeat fixed !important;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Main content area with logo background */
+.main .block-container {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 2rem auto;
+    padding: 2rem !important;
+}
+
+/* Professional logo watermark for content areas */
+.logo-watermark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%),
+        url('logo1.png') center/cover no-repeat fixed;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Enhanced sidebar with logo backdrop */
+.css-1d391kg {
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%),
+        url('logo1.png') right/contain no-repeat;
+    backdrop-filter: blur(15px);
+    border-right: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Header areas with subtle logo integration */
+.header-with-logo {
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%),
+        url('logo1.png') right/contain no-repeat;
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Card elements with logo accent */
+.card-with-logo {
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%),
+        url('logo1.png') bottom right/30% no-repeat;
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-with-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('logo1.png') bottom right/30% no-repeat;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+/* Authentication forms with professional styling */
+.auth-form-container {
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-form-container::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 150px;
+    height: 150px;
+    background: url('logo1.png') center/contain no-repeat;
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+/* Professional hexagonal pattern overlay inspired by the logo */
+.tech-pattern {
+    position: relative;
+}
+
+.tech-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Responsive adjustments for logo background */
+@media (max-width: 768px) {
+    .stApp {
+        background-size: contain;
+        background-position: center top;
+    }
+    
+    .card-with-logo {
+        background-size: 50%;
+        background-position: bottom center;
+    }
+    
+    .header-with-logo {
+        background-size: contain;
+        background-position: center right;
+    }
+}
+
+@media (max-width: 480px) {
+    .stApp {
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .card-with-logo {
+        background-size: 60%;
+    }
+}
+
+/* Animation for subtle logo effects */
+@keyframes logoGlow {
+    0% { opacity: 0.05; }
+    50% { opacity: 0.15; }
+    100% { opacity: 0.05; }
+}
+
+.logo-animate::after {
+    animation: logoGlow 6s ease-in-out infinite;
+}
+
+/* Professional color scheme inspired by the logo */
+:root {
+    --intellicv-primary: #667eea;
+    --intellicv-secondary: #764ba2;
+    --intellicv-accent: #4299e1;
+    --intellicv-bg-light: rgba(255, 255, 255, 0.95);
+    --intellicv-bg-card: rgba(248, 250, 252, 0.98);
+    --intellicv-shadow: rgba(0, 0, 0, 0.1);
+    --intellicv-border: rgba(102, 126, 234, 0.2);
+}

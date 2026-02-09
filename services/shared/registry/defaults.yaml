@@ -1,0 +1,18 @@
+# CareerTrojan Capability Registry - Defaults
+# This file controls feature flags and system behaviors.
+
+parsing:
+  resume_parsing: true
+  mock_data_fallback: false # STRICT NO for Production
+  
+enrichment:
+  linkedin_enrichment: true
+  git_scraping: true
+
+ui:
+  show_admin_impersonation: true
+  show_debug_banner: false
+
+system:
+  maintenance_mode: false
+  version: "2.0.0-Phase2"

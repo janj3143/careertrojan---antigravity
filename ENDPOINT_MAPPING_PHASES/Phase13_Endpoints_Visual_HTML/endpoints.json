@@ -1,0 +1,19 @@
+{
+  "generated": "2026-02-06",
+  "endpoints": [
+    {
+      "id": "touchpoints.evidence.get",
+      "method": "GET",
+      "path": "/api/touchpoints/evidence",
+      "service": "backend_api",
+      "category": "touchpoints",
+      "auth": "user",
+      "token_cost": 0,
+      "description": "Returns evidence for touchpoint ids",
+      "params": ["touchpoint_id"],
+      "produces": ["TouchpointEvidence[]"],
+      "consumed_by": ["user_portal:TouchpointsOverlayPanel"],
+      "notes": "Populated dynamically once you run Phase14/15/16"
+    }
+  ]
+}

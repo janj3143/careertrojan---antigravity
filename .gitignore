@@ -1,0 +1,78 @@
+# ── CareerTrojan .gitignore ──────────────────────────────────────────
+
+# ── Python ───────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.whl
+
+# ── Virtual environments ─────────────────────────────────────────────
+venv/
+.venv/
+env/
+infra/venv-py311/
+infra/python/
+
+# ── Node / React ─────────────────────────────────────────────────────
+node_modules/
+.next/
+.turbo/
+*.tsbuildinfo
+
+# ── Build artifacts ──────────────────────────────────────────────────
+apps/admin/dist/
+apps/user/dist/
+apps/mentor/dist/
+
+# ── Environment & secrets ────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ── Data mounts (junctions to L: drive — never commit raw data) ─────
+data-mounts/ai-data/
+data-mounts/parser/
+data-mounts/user-data/
+data-mounts/logs/
+data-mounts/models/
+
+# ── User data ────────────────────────────────────────────────────────
+user_data/
+ai_data_final/
+trained_models/
+working/
+
+# ── Logs ─────────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ── IDE / Editor ─────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Docker ───────────────────────────────────────────────────────────
+*.tar
+docker-compose.override.yml
+
+# ── OS files ─────────────────────────────────────────────────────────
+*.lnk
+
+# ── Misc ─────────────────────────────────────────────────────────────
+*.pkl
+*.pickle
+*.h5
+*.pt
+*.onnx

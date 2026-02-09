@@ -1,0 +1,71 @@
+# ═══════════════════════════════════════════════════════════════
+# CareerTrojan — Unified Runtime Requirements
+# ═══════════════════════════════════════════════════════════════
+# This is the single source of truth for all Python dependencies.
+# Works on both Windows and Ubuntu (Python 3.11+).
+#
+# Install:  pip install -r requirements.lock.txt
+# ═══════════════════════════════════════════════════════════════
+
+# ── Core API Framework ───────────────────────────────────────
+fastapi==0.115.0
+uvicorn[standard]==0.31.0
+pydantic==2.9.0
+pydantic-settings==2.5.2
+python-multipart==0.0.9
+httpx==0.27.0
+requests==2.32.3
+jinja2==3.1.3
+PyYAML==6.0.2
+
+# ── Authentication & Security ────────────────────────────────
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# ── Database ─────────────────────────────────────────────────
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+sqlalchemy==2.0.25
+redis==5.0.1
+
+# ── Document Parsing ─────────────────────────────────────────
+python-docx==1.1.0
+pypdf==3.17.1
+pdfplumber==0.10.3
+pdfminer.six==20231228
+openpyxl==3.1.2
+extract-msg==0.45.0
+beautifulsoup4==4.12.3
+lxml==5.1.0
+markdown==3.5.2
+
+# ── Data Processing ──────────────────────────────────────────
+pandas==2.2.2
+numpy==1.26.4
+
+# ── AI & Machine Learning ────────────────────────────────────
+scikit-learn==1.3.2
+spacy==3.7.2
+sentence-transformers==2.2.2
+gensim==4.3.2
+networkx==3.2.1
+# torch — install separately: CPU or CUDA variant
+#   CPU:   pip install torch==2.1.2 --index-url https://download.pytorch.org/whl/cpu
+#   CUDA:  pip install torch==2.1.2 --index-url https://download.pytorch.org/whl/cu121
+
+# ── Visualisation (server-side chart generation) ─────────────
+matplotlib==3.8.2
+
+# ── OCR (optional, requires Tesseract binary) ────────────────
+pytesseract==0.3.10
+
+# ── Utilities ────────────────────────────────────────────────
+python-dotenv==1.0.0
+structlog==24.4.0
+watchdog==4.0.0          # Filesystem watcher for sync traps
+
+# ── Testing (dev only) ──────────────────────────────────────
+# pytest==8.0.0
+# pytest-asyncio==0.23.0
+# httpx==0.27.0  (already above)
+# schemathesis==3.25.0

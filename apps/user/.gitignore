@@ -1,0 +1,77 @@
+# Environment and sensitive files
+.env
+.env.local
+.env.*
+*.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+env310/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Credentials and secrets
+*credentials*.json
+*secrets*.json
+*sessions*.json
+admin_credentials.json
+secure_credentials.json
+secure_sessions.json
+sandbox_sessions.json
+
+# Large data files
+*.csv
+*.xlsx
+*.xls
+data/
+*.json.bak
+*.backup
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Build and dist
+build/
+dist/
+*.egg-info/
+
+# Documentation exports (if large)
+*.pdf
+*.docx

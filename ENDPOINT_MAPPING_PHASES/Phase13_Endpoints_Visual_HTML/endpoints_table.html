@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Endpoints Table</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 14px; }
+    h1 { margin-top: 0; }
+    .muted { color:#666; font-size:12px; }
+    table { width:100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border:1px solid #ddd; padding: 8px; vertical-align: top; }
+    th { background:#f5f5f5; text-align:left; position: sticky; top: 0; }
+    code { background:#fafafa; border:1px solid #eee; padding: 1px 6px; border-radius: 8px; }
+    input { padding:8px; width: 420px; border:1px solid #ccc; border-radius:10px; }
+    .pill { display:inline-block; border:1px solid #ccc; border-radius:999px; padding:2px 8px; font-size:12px; margin-right:6px; }
+  </style>
+</head>
+<body>
+  <h1>Endpoints Table</h1>
+  <div class="muted">Search by method/path/service/category/consumer.</div>
+  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <input id="q" placeholder="Search… (e.g. /touchpoints, peers, billing, workspace)"/>
+    <a href="./endpoints_visual.html">Open visual map</a>
+  </div>
+
+  <table id="t">
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Path</th>
+        <th>Service</th>
+        <th>Auth</th>
+        <th>Token cost</th>
+        <th>Category</th>
+        <th>Produces</th>
+        <th>Consumed by</th>
+        <th>Description / Notes</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+<script>
+(async function(){
+  const q = document.getElementById("q");
+  const tbody = document.querySelector("#t tbody");
+  const data = await fetch("./endpoints.json").then(r=>r.json());
+  const eps = data.endpoints || [];
+
+  function render(list){
+    tbody.innerHTML = "";
+    list.forEach(e => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="pill"><b>${e.method||""}</b></span></td>
+        <td><code>${e.path||""}</code><div class="muted">${e.id||""}</div></td>
+        <td>${e.service||""}</td>
+        <td>${e.auth||""}</td>
+        <td>${(e.token_cost ?? 0)}</td>
+        <td>${e.category||""}</td>
+        <td>${(e.produces||[]).map(x=>`<div><code>${x}</code></div>`).join("")}</td>
+        <td>${(e.consumed_by||[]).map(x=>`<div>${x}</div>`).join("")}</td>
+        <td><div>${e.description||""}</div><div class="muted">${e.notes||""}</div></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function apply(){
+    const s = (q.value||"").toLowerCase();
+    if (!s) return render(eps);
+    render(eps.filter(e => JSON.stringify(e).toLowerCase().includes(s)));
+  }
+
+  q.addEventListener("input", apply);
+  render(eps);
+})();
+</script>
+</body>
+</html>

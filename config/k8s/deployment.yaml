@@ -1,0 +1,310 @@
+# CareerTrojan Kubernetes Deployment
+# Deploys User Portal, Admin Portal, Mentor Portal, and Backend API
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: careertrojan
+
+---
+# Backend API Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-api
+  namespace: careertrojan
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-api
+  template:
+    metadata:
+      labels:
+        app: backend-api
+    spec:
+      containers:
+      - name: backend-api
+        image: careertrojan/backend-api:latest
+        ports:
+        - containerPort: 8500
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: database-url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: jwt-secret
+        - name: AI_DATA_ROOT
+          value: "/mnt/ai_data"
+        volumeMounts:
+        - name: ai-data
+          mountPath: /mnt/ai_data
+          readOnly: true
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /shared/health
+            port: 8500
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /shared/health
+            port: 8500
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: ai-data
+        persistentVolumeClaim:
+          claimName: ai-data-pvc
+
+---
+# Backend API Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-api
+  namespace: careertrojan
+spec:
+  selector:
+    app: backend-api
+  ports:
+  - protocol: TCP
+    port: 8500
+    targetPort: 8500
+  type: ClusterIP
+
+---
+# User Portal Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-portal
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-portal
+  template:
+    metadata:
+      labels:
+        app: user-portal
+    spec:
+      containers:
+      - name: user-portal
+        image: careertrojan/user-portal:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: VITE_API_URL
+          value: "http://backend-api:8500"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
+---
+# User Portal Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-portal
+  namespace: careertrojan
+spec:
+  selector:
+    app: user-portal
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP
+
+---
+# Admin Portal Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-portal
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: admin-portal
+  template:
+    metadata:
+      labels:
+        app: admin-portal
+    spec:
+      containers:
+      - name: admin-portal
+        image: careertrojan/admin-portal:latest
+        ports:
+        - containerPort: 3001
+        env:
+        - name: VITE_API_URL
+          value: "http://backend-api:8500"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
+---
+# Admin Portal Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-portal
+  namespace: careertrojan
+spec:
+  selector:
+    app: admin-portal
+  ports:
+  - protocol: TCP
+    port: 3001
+    targetPort: 3001
+  type: ClusterIP
+
+---
+# Mentor Portal Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mentor-portal
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mentor-portal
+  template:
+    metadata:
+      labels:
+        app: mentor-portal
+    spec:
+      containers:
+      - name: mentor-portal
+        image: careertrojan/mentor-portal:latest
+        ports:
+        - containerPort: 3002
+        env:
+        - name: VITE_API_URL
+          value: "http://backend-api:8500"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
+---
+# Mentor Portal Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mentor-portal
+  namespace: careertrojan
+spec:
+  selector:
+    app: mentor-portal
+  ports:
+  - protocol: TCP
+    port: 3002
+    targetPort: 3002
+  type: ClusterIP
+
+---
+# Ingress Configuration
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: careertrojan-ingress
+  namespace: careertrojan
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - careertrojan.com
+    secretName: careertrojan-tls
+  rules:
+  - host: careertrojan.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-api
+            port:
+              number: 8500
+      - path: /admin
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-portal
+            port:
+              number: 3001
+      - path: /mentor
+        pathType: Prefix
+        backend:
+          service:
+            name: mentor-portal
+            port:
+              number: 3002
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: user-portal
+            port:
+              number: 3000
+
+---
+# Persistent Volume Claim for AI Data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-data-pvc
+  namespace: careertrojan
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: standard
+
+---
+# Secrets (template - populate with actual values)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: careertrojan-secrets
+  namespace: careertrojan
+type: Opaque
+stringData:
+  database-url: "postgresql://user:pass@postgres:5432/careertrojan"
+  jwt-secret: "CHANGE_ME_IN_PRODUCTION"

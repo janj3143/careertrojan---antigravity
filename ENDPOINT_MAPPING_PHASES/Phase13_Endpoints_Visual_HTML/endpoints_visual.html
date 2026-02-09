@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Endpoints Visual Map</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; }
+    header { padding: 14px 16px; border-bottom: 1px solid #ddd; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .pill { border:1px solid #ccc; border-radius:999px; padding:6px 10px; font-size:12px; }
+    #wrap { display:grid; grid-template-columns: 1fr 420px; height: calc(100vh - 62px); }
+    #graph { position:relative; }
+    #side { border-left:1px solid #ddd; padding:12px; overflow:auto; }
+    #side pre { white-space: pre-wrap; background:#fafafa; border:1px solid #eee; padding:10px; border-radius:10px; }
+    .legend { display:flex; gap:8px; flex-wrap:wrap; }
+    .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+    .btn { cursor:pointer; padding:7px 10px; border:1px solid #ccc; border-radius:10px; background:white; }
+    .btn:hover { background:#f3f3f3; }
+    .muted { color:#666; font-size:12px; }
+    svg { width:100%; height:100%; }
+  </style>
+</head>
+<body>
+<header>
+  <b>Endpoints Visual Map</b>
+  <span class="pill" id="stats">Loading…</span>
+  <button class="btn" id="resetBtn">Reset</button>
+
+  <span class="muted">Filter:</span>
+  <select id="typeFilter" class="btn">
+    <option value="all">All node types</option>
+    <option value="portal">Portals</option>
+    <option value="service">Services</option>
+    <option value="endpoint">Endpoints</option>
+    <option value="data">Data</option>
+  </select>
+
+  <div class="legend">
+    <span><span class="dot" style="background:#1f77b4"></span>portal</span>
+    <span><span class="dot" style="background:#ff7f0e"></span>service</span>
+    <span><span class="dot" style="background:#2ca02c"></span>endpoint</span>
+    <span><span class="dot" style="background:#d62728"></span>data</span>
+  </div>
+</header>
+
+<div id="wrap">
+  <div id="graph"></div>
+  <div id="side">
+    <b>Details</b>
+    <div class="muted" style="margin:6px 0">Click a node to inspect it.</div>
+    <pre id="details">{}</pre>
+
+    <hr/>
+    <b>Quick links</b>
+    <ul>
+      <li><a href="./endpoints_table.html">Open endpoints table</a></li>
+    </ul>
+    <div class="muted">
+      Data sources: <code>connections.json</code> + <code>endpoints.json</code>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+(async function(){
+  const typeFilter = document.getElementById("typeFilter");
+  const resetBtn = document.getElementById("resetBtn");
+  const stats = document.getElementById("stats");
+  const details = document.getElementById("details");
+
+  const [graphData, endpointData] = await Promise.all([
+    fetch("./connections.json").then(r=>r.json()),
+    fetch("./endpoints.json").then(r=>r.json())
+  ]);
+
+  const epById = new Map((endpointData.endpoints||[]).map(e => [e.id, e]));
+
+  const width = document.getElementById("graph").clientWidth;
+  const height = document.getElementById("graph").clientHeight;
+
+  const svg = d3.select("#graph").append("svg").attr("viewBox", [0,0,width,height]);
+
+  const color = (t) => ({
+    portal:"#1f77b4", service:"#ff7f0e", endpoint:"#2ca02c", data:"#d62728"
+  }[t] || "#999");
+
+  let nodes = (graphData.nodes||[]).map(n => ({...n}));
+  let edges = (graphData.edges||[]).map(e => ({...e}));
+
+  stats.textContent = `${nodes.length} nodes • ${edges.length} connections`;
+
+  const link = svg.append("g").attr("stroke","#bbb").attr("stroke-opacity",0.9)
+    .selectAll("line").data(edges).join("line").attr("stroke-width", 1.4);
+
+  const node = svg.append("g")
+    .selectAll("circle").data(nodes).join("circle")
+    .attr("r", d => d.type==="endpoint" ? 10 : (d.type==="service" ? 9 : 8))
+    .attr("fill", d => color(d.type))
+    .attr("stroke", "#fff").attr("stroke-width", 1.5)
+    .call(d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended));
+
+  const label = svg.append("g")
+    .selectAll("text").data(nodes).join("text")
+    .attr("font-size", 12).attr("dx", 12).attr("dy", 4)
+    .text(d => d.label || d.id);
+
+  function applyFilter(){
+    const val = typeFilter.value;
+    const visible = new Set(nodes.filter(n => val==="all" || n.type===val).map(n=>n.id));
+    node.attr("display", d => visible.has(d.id) ? null : "none");
+    label.attr("display", d => visible.has(d.id) ? null : "none");
+    link.attr("display", d => (visible.has(d.from) && visible.has(d.to)) ? null : "none");
+  }
+
+  typeFilter.addEventListener("change", applyFilter);
+  resetBtn.addEventListener("click", ()=>{
+    node.attr("stroke","#fff").attr("stroke-width",1.5).attr("opacity",1);
+    link.attr("stroke","#bbb").attr("opacity",1);
+    details.textContent = "{}";
+  });
+
+  node.on("click", (event, d) => {
+    node.attr("opacity", 0.25);
+    link.attr("opacity", 0.1);
+
+    const connected = new Set([d.id]);
+    edges.forEach(e => { if (e.from===d.id) connected.add(e.to); if (e.to===d.id) connected.add(e.from); });
+
+    node.attr("opacity", n => connected.has(n.id) ? 1 : 0.15);
+    link.attr("opacity", e => (e.from===d.id || e.to===d.id) ? 1 : 0.08)
+        .attr("stroke", e => (e.from===d.id || e.to===d.id) ? "#666" : "#bbb");
+
+    const extra = (d.type==="endpoint" && epById.has(d.id)) ? epById.get(d.id) : null;
+    details.textContent = JSON.stringify({ node: d, endpoint_meta: extra }, null, 2);
+  });
+
+  const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(edges).id(d=>d.id).distance(90))
+    .force("charge", d3.forceManyBody().strength(-320))
+    .force("center", d3.forceCenter(width/2, height/2))
+    .force("collide", d3.forceCollide().radius(18));
+
+  simulation.on("tick", () => {
+    link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+    node.attr("cx", d => d.x).attr("cy", d => d.y);
+    label.attr("x", d => d.x).attr("y", d => d.y);
+  });
+
+  function dragstarted(event) { if (!event.active) simulation.alphaTarget(0.2).restart(); event.subject.fx = event.subject.x; event.subject.fy = event.subject.y; }
+  function dragged(event) { event.subject.fx = event.x; event.subject.fy = event.y; }
+  function dragended(event) { if (!event.active) simulation.alphaTarget(0); event.subject.fx = null; event.subject.fy = null; }
+
+  applyFilter();
+})();
+</script>
+</body>
+</html>

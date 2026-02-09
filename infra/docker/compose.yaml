@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  reverse-proxy:
+    image: nginx:alpine
+    container_name: CaReerTroJan-Antigravity
+    ports:
+      - "8500:80"
+      - "8643:443"
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../../apps/user-portal/dist:/usr/share/nginx/html/user:ro
+      - ../../apps/admin-portal/dist:/usr/share/nginx/html/admin:ro
+      - ../../apps/mentor-portal/dist:/usr/share/nginx/html/mentor:ro
+    depends_on:
+      - shared-backend-api
+      - portal-bridge
+    networks:
+      - careertrojan-net
+
+  portal-bridge:
+    container_name: CaReerTroJan-Antigravity-Bridge
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.bridge
+    environment:
+      - CAREERTROJAN_DATA_ROOT=/data/ai_data_final
+      - CAREERTROJAN_WORKING_ROOT=/data/working_copy
+      - ALLOW_MOCK_DATA=false
+      - SERVICE_NAME=portal-bridge
+    volumes:
+      - ${CAREERTROJAN_WORKING_ROOT}:/data/working_copy:rw
+    networks:
+      - careertrojan-net
+    ports:
+      - "8001:8001"
+
+
+  shared-backend-api:
+    container_name: CaReerTroJan-Antigravity-Backend
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.api
+    environment:
+      - CAREERTROJAN_DATA_ROOT=/data/ai_data_final
+      - CAREERTROJAN_WORKING_ROOT=/data/working_copy
+      - ALLOW_MOCK_DATA=false
+      - ALLOW_FALLBACKS=false
+      - DATABASE_URL=postgresql://user:pass@postgres:5432/careertrojan
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ${CAREERTROJAN_DATA_ROOT}:/data/ai_data_final:ro
+      - ${CAREERTROJAN_WORKING_ROOT}:/data/working_copy:rw
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - careertrojan-net
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  parser-worker:
+    container_name: CaReerTroJan-Antigravity-Parser
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.worker
+    environment:
+      - SERVICE_NAME=parser-worker
+      - CAREERTROJAN_WORKING_ROOT=/data/working_copy
+    volumes:
+      - ${CAREERTROJAN_WORKING_ROOT}:/data/working_copy:rw
+    depends_on:
+      - redis
+    networks:
+      - careertrojan-net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  enrichment-worker:
+    container_name: CaReerTroJan-Antigravity-Enrichment
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.worker
+    environment:
+      - SERVICE_NAME=enrichment-worker
+      - CAREERTROJAN_DATA_ROOT=/data/ai_data_final
+      - CAREERTROJAN_WORKING_ROOT=/data/working_copy
+    volumes:
+      - ${CAREERTROJAN_DATA_ROOT}:/data/ai_data_final:ro
+      - ${CAREERTROJAN_WORKING_ROOT}:/data/working_copy:rw
+    depends_on:
+      - redis
+    networks:
+      - careertrojan-net
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=careertrojan
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - careertrojan-net
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - careertrojan-net
+
+networks:
+  careertrojan-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

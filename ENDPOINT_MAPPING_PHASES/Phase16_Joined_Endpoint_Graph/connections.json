@@ -1,0 +1,1706 @@
+{
+  "nodes": [
+    {
+      "id": "user_portal",
+      "type": "portal",
+      "label": "User Portal (React)"
+    },
+    {
+      "id": "admin_portal",
+      "type": "portal",
+      "label": "Admin Portal (React)"
+    },
+    {
+      "id": "mentor_portal",
+      "type": "portal",
+      "label": "Mentor Portal (React)"
+    },
+    {
+      "id": "backend_api",
+      "type": "service",
+      "label": "FastAPI Backend"
+    },
+    {
+      "id": "queue.get.97265252",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/abuse/queue"
+    },
+    {
+      "id": "content_jobs.get.485963",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/ai/content/jobs"
+    },
+    {
+      "id": "content_run.post.25812438",
+      "type": "endpoint",
+      "label": "POST /api/admin/v1/ai/content/run"
+    },
+    {
+      "id": "content_status.get.922322",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/ai/content/status"
+    },
+    {
+      "id": "enrichment_jobs.get.9707700",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/ai/enrichment/jobs"
+    },
+    {
+      "id": "enrichment_run.post.12252286",
+      "type": "endpoint",
+      "label": "POST /api/admin/v1/ai/enrichment/run"
+    },
+    {
+      "id": "enrichment_status.get.5232958",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/ai/enrichment/status"
+    },
+    {
+      "id": "check.post.82538055",
+      "type": "endpoint",
+      "label": "POST /api/admin/v1/anti-gaming/check"
+    },
+    {
+      "id": "batch_jobs.get.73654062",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/batch/jobs"
+    },
+    {
+      "id": "batch_run.post.91656548",
+      "type": "endpoint",
+      "label": "POST /api/admin/v1/batch/run"
+    },
+    {
+      "id": "batch_status.get.62928165",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/batch/status"
+    },
+    {
+      "id": "audit_events.get.85122968",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/compliance/audit/events"
+    },
+    {
+      "id": "compliance_summary.get.13268652",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/compliance/summary"
+    },
+    {
+      "id": "dashboard_snapshot.get.47667168",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/dashboard/snapshot"
+    },
+    {
+      "id": "email_jobs.get.76139210",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/email/jobs"
+    },
+    {
+      "id": "email_status.get.73272739",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/email/status"
+    },
+    {
+      "id": "email_sync.post.4345404",
+      "type": "endpoint",
+      "label": "POST /api/admin/v1/email/sync"
+    },
+    {
+      "id": "tail_log.get.50663972",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/logs/tail"
+    },
+    {
+      "id": "parsers_jobs.get.93133451",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/parsers/jobs"
+    },
+    {
+      "id": "parsers_run.post.47900435",
+      "type": "endpoint",
+      "label": "POST /api/admin/v1/parsers/run"
+    },
+    {
+      "id": "parsers_status.get.65917725",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/parsers/status"
+    },
+    {
+      "id": "list_admin_parses.get.57570809",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/parsing/parse"
+    },
+    {
+      "id": "admin_parse_file.post.57570809",
+      "type": "endpoint",
+      "label": "POST /api/admin/v1/parsing/parse"
+    },
+    {
+      "id": "get_admin_parse.get.86327221",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/parsing/parse/{parse_id}"
+    },
+    {
+      "id": "system_activity.get.45528953",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/system/activity"
+    },
+    {
+      "id": "system_health.get.66006320",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/system/health"
+    },
+    {
+      "id": "get_token_config.get.47467184",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/tokens/config"
+    },
+    {
+      "id": "put_token_config.put.47467184",
+      "type": "endpoint",
+      "label": "PUT /api/admin/v1/tokens/config"
+    },
+    {
+      "id": "get_token_usage.get.67540512",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/tokens/usage"
+    },
+    {
+      "id": "user_token_ledger.get.80985665",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/tokens/users/{user_id}/ledger"
+    },
+    {
+      "id": "user_subscriptions.get.3753677",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/user_subscriptions"
+    },
+    {
+      "id": "list_users.get.51722688",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/users"
+    },
+    {
+      "id": "user_metrics.get.8626547",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/users/metrics"
+    },
+    {
+      "id": "user_security.get.55275996",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/users/security"
+    },
+    {
+      "id": "get_user.get.83649989",
+      "type": "endpoint",
+      "label": "GET /api/admin/v1/users/{user_id}"
+    },
+    {
+      "id": "disable_user.put.18699534",
+      "type": "endpoint",
+      "label": "PUT /api/admin/v1/users/{user_id}/disable"
+    },
+    {
+      "id": "set_user_plan.put.16406184",
+      "type": "endpoint",
+      "label": "PUT /api/admin/v1/users/{user_id}/plan"
+    },
+    {
+      "id": "get_automated_candidates.get.73923724",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/automated/candidates"
+    },
+    {
+      "id": "get_companies.get.58462202",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/companies"
+    },
+    {
+      "id": "get_email_extracted.get.14089815",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/email_extracted"
+    },
+    {
+      "id": "get_job_descriptions.get.19457536",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/job_descriptions"
+    },
+    {
+      "id": "get_job_titles.get.13649018",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/job_titles"
+    },
+    {
+      "id": "get_locations.get.69191181",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/locations"
+    },
+    {
+      "id": "get_metadata.get.28121149",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/metadata"
+    },
+    {
+      "id": "get_normalized_data.get.55126136",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/normalized"
+    },
+    {
+      "id": "get_parsed_resumes.get.25895326",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/parsed_resumes"
+    },
+    {
+      "id": "get_parsed_resume.get.43238922",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/parsed_resumes/{doc_id}"
+    },
+    {
+      "id": "get_ai_data_status.get.99166394",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/status"
+    },
+    {
+      "id": "list_user_data_files.get.18381828",
+      "type": "endpoint",
+      "label": "GET /api/ai-data/v1/user_data/files"
+    },
+    {
+      "id": "get_dashboard_data.get.48457250",
+      "type": "endpoint",
+      "label": "GET /api/analytics/v1/dashboard"
+    },
+    {
+      "id": "get_recent_jobs.get.83792205",
+      "type": "endpoint",
+      "label": "GET /api/analytics/v1/recent_jobs"
+    },
+    {
+      "id": "get_recent_resumes.get.45892209",
+      "type": "endpoint",
+      "label": "GET /api/analytics/v1/recent_resumes"
+    },
+    {
+      "id": "get_statistics.get.41964424",
+      "type": "endpoint",
+      "label": "GET /api/analytics/v1/statistics"
+    },
+    {
+      "id": "get_system_health.get.3496082",
+      "type": "endpoint",
+      "label": "GET /api/analytics/v1/system_health"
+    },
+    {
+      "id": "generate_2fa.post.70076144",
+      "type": "endpoint",
+      "label": "POST /api/auth/v1/2fa/generate"
+    },
+    {
+      "id": "verify_2fa.post.71550796",
+      "type": "endpoint",
+      "label": "POST /api/auth/v1/2fa/verify"
+    },
+    {
+      "id": "login.post.55586975",
+      "type": "endpoint",
+      "label": "POST /api/auth/v1/login"
+    },
+    {
+      "id": "register.post.85218539",
+      "type": "endpoint",
+      "label": "POST /api/auth/v1/register"
+    },
+    {
+      "id": "detect_blockers.post.18881250",
+      "type": "endpoint",
+      "label": "POST /api/blockers/v1/detect"
+    },
+    {
+      "id": "generate_plans.post.12531053",
+      "type": "endpoint",
+      "label": "POST /api/blockers/v1/improvement-plans/generate"
+    },
+    {
+      "id": "get_user_blockers.get.76228528",
+      "type": "endpoint",
+      "label": "GET /api/blockers/v1/user/{user_id}"
+    },
+    {
+      "id": "review_answer.post.98292074",
+      "type": "endpoint",
+      "label": "POST /api/coaching/v1/answers/review"
+    },
+    {
+      "id": "get_coaching_bundle.post.16468505",
+      "type": "endpoint",
+      "label": "POST /api/coaching/v1/bundle"
+    },
+    {
+      "id": "coaching_health.get.18887655",
+      "type": "endpoint",
+      "label": "GET /api/coaching/v1/health"
+    },
+    {
+      "id": "generate_questions.post.88897066",
+      "type": "endpoint",
+      "label": "POST /api/coaching/v1/questions/generate"
+    },
+    {
+      "id": "generate_stories.post.59394244",
+      "type": "endpoint",
+      "label": "POST /api/coaching/v1/stories/generate"
+    },
+    {
+      "id": "get_action_costs.get.85570660",
+      "type": "endpoint",
+      "label": "GET /api/credits/v1/actions"
+    },
+    {
+      "id": "get_balance.get.15498582",
+      "type": "endpoint",
+      "label": "GET /api/credits/v1/balance"
+    },
+    {
+      "id": "can_perform_action.get.97405475",
+      "type": "endpoint",
+      "label": "GET /api/credits/v1/can-perform/{action_id}"
+    },
+    {
+      "id": "consume_credits.post.15642319",
+      "type": "endpoint",
+      "label": "POST /api/credits/v1/consume"
+    },
+    {
+      "id": "health_check.get.2320439",
+      "type": "endpoint",
+      "label": "GET /api/credits/v1/health"
+    },
+    {
+      "id": "get_plans.get.9765355",
+      "type": "endpoint",
+      "label": "GET /api/credits/v1/plans"
+    },
+    {
+      "id": "get_teaser.post.26769803",
+      "type": "endpoint",
+      "label": "POST /api/credits/v1/teaser"
+    },
+    {
+      "id": "upgrade_plan.post.91068047",
+      "type": "endpoint",
+      "label": "POST /api/credits/v1/upgrade/{plan_tier}"
+    },
+    {
+      "id": "get_usage_details.get.74084305",
+      "type": "endpoint",
+      "label": "GET /api/credits/v1/usage"
+    },
+    {
+      "id": "resolve_cohort.post.64703009",
+      "type": "endpoint",
+      "label": "POST /api/insights/v1/cohort/resolve"
+    },
+    {
+      "id": "get_graph_data.get.74639216",
+      "type": "endpoint",
+      "label": "GET /api/insights/v1/graph"
+    },
+    {
+      "id": "get_quadrant_data.get.90452994",
+      "type": "endpoint",
+      "label": "GET /api/insights/v1/quadrant"
+    },
+    {
+      "id": "get_term_cloud.get.74612663",
+      "type": "endpoint",
+      "label": "GET /api/insights/v1/terms/cloud"
+    },
+    {
+      "id": "get_cooccurrence.get.67178965",
+      "type": "endpoint",
+      "label": "GET /api/insights/v1/terms/cooccurrence"
+    },
+    {
+      "id": "enrich_resume.post.46206312",
+      "type": "endpoint",
+      "label": "POST /api/intelligence/v1/enrich"
+    },
+    {
+      "id": "market_intel.get.22439546",
+      "type": "endpoint",
+      "label": "GET /api/intelligence/v1/market"
+    },
+    {
+      "id": "get_stats.post.18031140",
+      "type": "endpoint",
+      "label": "POST /api/intelligence/v1/stats/descriptive"
+    },
+    {
+      "id": "regression.post.31725569",
+      "type": "endpoint",
+      "label": "POST /api/intelligence/v1/stats/regression"
+    },
+    {
+      "id": "get_job_index.get.41576051",
+      "type": "endpoint",
+      "label": "GET /api/jobs/v1/index"
+    },
+    {
+      "id": "search_jobs.get.93882072",
+      "type": "endpoint",
+      "label": "GET /api/jobs/v1/search"
+    },
+    {
+      "id": "endpoints.get.66457666",
+      "type": "endpoint",
+      "label": "GET /api/mapping/v1/endpoints"
+    },
+    {
+      "id": "graph.get.98194714",
+      "type": "endpoint",
+      "label": "GET /api/mapping/v1/graph"
+    },
+    {
+      "id": "registry.get.71048991",
+      "type": "endpoint",
+      "label": "GET /api/mapping/v1/registry"
+    },
+    {
+      "id": "health_check.get.69967763",
+      "type": "endpoint",
+      "label": "GET /api/mentor/v1/health"
+    },
+    {
+      "id": "list_mentors.get.80001582",
+      "type": "endpoint",
+      "label": "GET /api/mentor/v1/list"
+    },
+    {
+      "id": "get_mentor_profile_by_user.get.91352943",
+      "type": "endpoint",
+      "label": "GET /api/mentor/v1/profile-by-user/{user_id}"
+    },
+    {
+      "id": "update_availability.put.43788256",
+      "type": "endpoint",
+      "label": "PUT /api/mentor/v1/{mentor_profile_id}/availability"
+    },
+    {
+      "id": "get_dashboard_stats.get.64773371",
+      "type": "endpoint",
+      "label": "GET /api/mentor/v1/{mentor_profile_id}/dashboard-stats"
+    },
+    {
+      "id": "get_mentor_packages.get.86545373",
+      "type": "endpoint",
+      "label": "GET /api/mentor/v1/{mentor_profile_id}/packages"
+    },
+    {
+      "id": "create_package.post.86545373",
+      "type": "endpoint",
+      "label": "POST /api/mentor/v1/{mentor_profile_id}/packages"
+    },
+    {
+      "id": "delete_package.delete.28041018",
+      "type": "endpoint",
+      "label": "DELETE /api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
+    },
+    {
+      "id": "get_package.get.28041018",
+      "type": "endpoint",
+      "label": "GET /api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
+    },
+    {
+      "id": "update_package.put.28041018",
+      "type": "endpoint",
+      "label": "PUT /api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
+    },
+    {
+      "id": "get_mentor_profile.get.83075700",
+      "type": "endpoint",
+      "label": "GET /api/mentor/v1/{mentor_profile_id}/profile"
+    },
+    {
+      "id": "submit_mentor_application.post.60084912",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/applications"
+    },
+    {
+      "id": "get_pending_applications.get.48319924",
+      "type": "endpoint",
+      "label": "GET /api/mentorship/v1/applications/pending"
+    },
+    {
+      "id": "approve_mentor_application.post.93449160",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/applications/{application_id}/approve"
+    },
+    {
+      "id": "create_requirement_document.post.42717547",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/documents"
+    },
+    {
+      "id": "get_requirement_document.get.84140072",
+      "type": "endpoint",
+      "label": "GET /api/mentorship/v1/documents/{doc_id}"
+    },
+    {
+      "id": "reject_document.post.68087242",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/documents/{doc_id}/reject"
+    },
+    {
+      "id": "sign_document.post.60177791",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/documents/{doc_id}/sign"
+    },
+    {
+      "id": "health_check.get.60124858",
+      "type": "endpoint",
+      "label": "GET /api/mentorship/v1/health"
+    },
+    {
+      "id": "create_invoice.post.66088405",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/invoices"
+    },
+    {
+      "id": "get_mentor_invoices.get.13359159",
+      "type": "endpoint",
+      "label": "GET /api/mentorship/v1/invoices/mentor/{mentor_id}"
+    },
+    {
+      "id": "confirm_service_completion.post.6354687",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/invoices/{invoice_id}/confirm-completion"
+    },
+    {
+      "id": "raise_dispute.post.35497860",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/invoices/{invoice_id}/dispute"
+    },
+    {
+      "id": "mark_invoice_paid.post.84033758",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/invoices/{invoice_id}/mark-paid"
+    },
+    {
+      "id": "mark_service_delivered.post.14674007",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/invoices/{invoice_id}/service-delivered"
+    },
+    {
+      "id": "create_mentorship_link.post.15808573",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/links"
+    },
+    {
+      "id": "get_mentor_connections.get.86297583",
+      "type": "endpoint",
+      "label": "GET /api/mentorship/v1/links/mentor/{mentor_id}"
+    },
+    {
+      "id": "get_user_connections.get.2259864",
+      "type": "endpoint",
+      "label": "GET /api/mentorship/v1/links/user/{user_id}"
+    },
+    {
+      "id": "update_link_status.patch.7145256",
+      "type": "endpoint",
+      "label": "PATCH /api/mentorship/v1/links/{link_id}/status"
+    },
+    {
+      "id": "create_note.post.91621080",
+      "type": "endpoint",
+      "label": "POST /api/mentorship/v1/notes"
+    },
+    {
+      "id": "get_notes_for_link.get.55663988",
+      "type": "endpoint",
+      "label": "GET /api/mentorship/v1/notes/{link_id}"
+    },
+    {
+      "id": "update_note.patch.58342759",
+      "type": "endpoint",
+      "label": "PATCH /api/mentorship/v1/notes/{note_id}"
+    },
+    {
+      "id": "check_abuse.post.45268151",
+      "type": "endpoint",
+      "label": "POST /api/ops/v1/anti-gaming/check"
+    },
+    {
+      "id": "lock_audit_logs.post.46697532",
+      "type": "endpoint",
+      "label": "POST /api/ops/v1/logs/lock"
+    },
+    {
+      "id": "start_processing.post.6497905",
+      "type": "endpoint",
+      "label": "POST /api/ops/v1/processing/start"
+    },
+    {
+      "id": "processing_status.get.33599494",
+      "type": "endpoint",
+      "label": "GET /api/ops/v1/processing/status"
+    },
+    {
+      "id": "get_public_stats.get.683598",
+      "type": "endpoint",
+      "label": "GET /api/ops/v1/stats/public"
+    },
+    {
+      "id": "get_token_config.get.77011301",
+      "type": "endpoint",
+      "label": "GET /api/ops/v1/tokens/config"
+    },
+    {
+      "id": "cancel_subscription.post.3752940",
+      "type": "endpoint",
+      "label": "POST /api/payment/v1/cancel"
+    },
+    {
+      "id": "health_check.get.49799242",
+      "type": "endpoint",
+      "label": "GET /api/payment/v1/health"
+    },
+    {
+      "id": "get_payment_history.get.72512810",
+      "type": "endpoint",
+      "label": "GET /api/payment/v1/history"
+    },
+    {
+      "id": "get_plans.get.46027493",
+      "type": "endpoint",
+      "label": "GET /api/payment/v1/plans"
+    },
+    {
+      "id": "get_plan.get.3453224",
+      "type": "endpoint",
+      "label": "GET /api/payment/v1/plans/{plan_id}"
+    },
+    {
+      "id": "process_payment.post.82012890",
+      "type": "endpoint",
+      "label": "POST /api/payment/v1/process"
+    },
+    {
+      "id": "get_current_subscription.get.94759115",
+      "type": "endpoint",
+      "label": "GET /api/payment/v1/subscription"
+    },
+    {
+      "id": "list_resumes.get.79663496",
+      "type": "endpoint",
+      "label": "GET /api/resume/v1"
+    },
+    {
+      "id": "enrich.post.62181050",
+      "type": "endpoint",
+      "label": "POST /api/resume/v1/enrich"
+    },
+    {
+      "id": "parse.post.46825025",
+      "type": "endpoint",
+      "label": "POST /api/resume/v1/parse"
+    },
+    {
+      "id": "upload_resume.post.28140479",
+      "type": "endpoint",
+      "label": "POST /api/resume/v1/upload"
+    },
+    {
+      "id": "get_resume.get.28564150",
+      "type": "endpoint",
+      "label": "GET /api/resume/v1/{resume_id}"
+    },
+    {
+      "id": "health_check.get.90154042",
+      "type": "endpoint",
+      "label": "GET /api/rewards/v1/health"
+    },
+    {
+      "id": "get_leaderboard.get.77033214",
+      "type": "endpoint",
+      "label": "GET /api/rewards/v1/leaderboard"
+    },
+    {
+      "id": "get_ownership_stats.get.55842144",
+      "type": "endpoint",
+      "label": "GET /api/rewards/v1/ownership-stats"
+    },
+    {
+      "id": "get_referral_code.get.53316753",
+      "type": "endpoint",
+      "label": "GET /api/rewards/v1/referral"
+    },
+    {
+      "id": "claim_referral.post.76311096",
+      "type": "endpoint",
+      "label": "POST /api/rewards/v1/referral/claim"
+    },
+    {
+      "id": "get_rewards.get.15496384",
+      "type": "endpoint",
+      "label": "GET /api/rewards/v1/rewards"
+    },
+    {
+      "id": "get_available_rewards.get.66970259",
+      "type": "endpoint",
+      "label": "GET /api/rewards/v1/rewards/available"
+    },
+    {
+      "id": "redeem_rewards.post.73323283",
+      "type": "endpoint",
+      "label": "POST /api/rewards/v1/rewards/redeem"
+    },
+    {
+      "id": "get_my_suggestions.get.75964904",
+      "type": "endpoint",
+      "label": "GET /api/rewards/v1/suggestions"
+    },
+    {
+      "id": "submit_suggestion.post.75964904",
+      "type": "endpoint",
+      "label": "POST /api/rewards/v1/suggestions"
+    },
+    {
+      "id": "get_consolidated_user_data.get.19373996",
+      "type": "endpoint",
+      "label": "GET /api/sessions/v1/consolidated/{user_id}"
+    },
+    {
+      "id": "log_session_event.post.51611943",
+      "type": "endpoint",
+      "label": "POST /api/sessions/v1/log"
+    },
+    {
+      "id": "get_session_summary.get.28878642",
+      "type": "endpoint",
+      "label": "GET /api/sessions/v1/summary/{user_id}"
+    },
+    {
+      "id": "get_sync_status.get.12465596",
+      "type": "endpoint",
+      "label": "GET /api/sessions/v1/sync-status"
+    },
+    {
+      "id": "health_check.get.49233530",
+      "type": "endpoint",
+      "label": "GET /api/shared/v1/health"
+    },
+    {
+      "id": "list_industries.get.37654732",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/industries"
+    },
+    {
+      "id": "list_subindustries.get.46367242",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/industries/{high_level}/subindustries"
+    },
+    {
+      "id": "infer_industries.get.34200137",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/job-titles/infer-industries"
+    },
+    {
+      "id": "job_title_metadata.get.22538169",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/job-titles/metadata"
+    },
+    {
+      "id": "job_title_to_naics.get.58202260",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/job-titles/naics-mapping"
+    },
+    {
+      "id": "search_job_titles.get.1738029",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/job-titles/search"
+    },
+    {
+      "id": "search_naics.get.19423953",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/naics/search"
+    },
+    {
+      "id": "naics_title.get.29275467",
+      "type": "endpoint",
+      "label": "GET /api/taxonomy/v1/naics/title"
+    },
+    {
+      "id": "status.get.8893823",
+      "type": "endpoint",
+      "label": "GET /api/telemetry/v1/status"
+    },
+    {
+      "id": "get_evidence.get.28527475",
+      "type": "endpoint",
+      "label": "GET /api/touchpoints/v1/evidence"
+    },
+    {
+      "id": "get_touchnots.get.28156728",
+      "type": "endpoint",
+      "label": "GET /api/touchpoints/v1/touchnots"
+    },
+    {
+      "id": "read_users_me.get.3278992",
+      "type": "endpoint",
+      "label": "GET /api/user/v1/me"
+    },
+    {
+      "id": "get_profile.get.40645832",
+      "type": "endpoint",
+      "label": "GET /api/user/v1/profile"
+    },
+    {
+      "id": "update_profile.put.40645832",
+      "type": "endpoint",
+      "label": "PUT /api/user/v1/profile"
+    }
+  ],
+  "edges": [
+    {
+      "from": "backend_api",
+      "to": "queue.get.97265252",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "content_jobs.get.485963",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "content_run.post.25812438",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "content_status.get.922322",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "enrichment_jobs.get.9707700",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "enrichment_run.post.12252286",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "enrichment_status.get.5232958",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "check.post.82538055",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "batch_jobs.get.73654062",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "batch_run.post.91656548",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "batch_status.get.62928165",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "audit_events.get.85122968",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "compliance_summary.get.13268652",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "dashboard_snapshot.get.47667168",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "email_jobs.get.76139210",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "email_status.get.73272739",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "email_sync.post.4345404",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "tail_log.get.50663972",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "parsers_jobs.get.93133451",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "parsers_run.post.47900435",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "parsers_status.get.65917725",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "list_admin_parses.get.57570809",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "admin_parse_file.post.57570809",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_admin_parse.get.86327221",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "system_activity.get.45528953",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "system_health.get.66006320",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_token_config.get.47467184",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "put_token_config.put.47467184",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_token_usage.get.67540512",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "user_token_ledger.get.80985665",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "user_subscriptions.get.3753677",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "list_users.get.51722688",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "user_metrics.get.8626547",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "user_security.get.55275996",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_user.get.83649989",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "disable_user.put.18699534",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "set_user_plan.put.16406184",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_automated_candidates.get.73923724",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_companies.get.58462202",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_email_extracted.get.14089815",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_job_descriptions.get.19457536",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_job_titles.get.13649018",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_locations.get.69191181",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_metadata.get.28121149",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_normalized_data.get.55126136",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_parsed_resumes.get.25895326",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_parsed_resume.get.43238922",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_ai_data_status.get.99166394",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "list_user_data_files.get.18381828",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_dashboard_data.get.48457250",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_recent_jobs.get.83792205",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_recent_resumes.get.45892209",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_statistics.get.41964424",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_system_health.get.3496082",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "generate_2fa.post.70076144",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "verify_2fa.post.71550796",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "login.post.55586975",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "register.post.85218539",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "detect_blockers.post.18881250",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "generate_plans.post.12531053",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_user_blockers.get.76228528",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "review_answer.post.98292074",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_coaching_bundle.post.16468505",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "coaching_health.get.18887655",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "generate_questions.post.88897066",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "generate_stories.post.59394244",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_action_costs.get.85570660",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_balance.get.15498582",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "can_perform_action.get.97405475",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "consume_credits.post.15642319",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "health_check.get.2320439",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_plans.get.9765355",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_teaser.post.26769803",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "upgrade_plan.post.91068047",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_usage_details.get.74084305",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "resolve_cohort.post.64703009",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_graph_data.get.74639216",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_quadrant_data.get.90452994",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_term_cloud.get.74612663",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_cooccurrence.get.67178965",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "enrich_resume.post.46206312",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "market_intel.get.22439546",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_stats.post.18031140",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "regression.post.31725569",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_job_index.get.41576051",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "search_jobs.get.93882072",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "endpoints.get.66457666",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "graph.get.98194714",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "registry.get.71048991",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "health_check.get.69967763",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "list_mentors.get.80001582",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_mentor_profile_by_user.get.91352943",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "update_availability.put.43788256",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_dashboard_stats.get.64773371",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_mentor_packages.get.86545373",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "create_package.post.86545373",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "delete_package.delete.28041018",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_package.get.28041018",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "update_package.put.28041018",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_mentor_profile.get.83075700",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "submit_mentor_application.post.60084912",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_pending_applications.get.48319924",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "approve_mentor_application.post.93449160",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "create_requirement_document.post.42717547",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_requirement_document.get.84140072",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "reject_document.post.68087242",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "sign_document.post.60177791",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "health_check.get.60124858",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "create_invoice.post.66088405",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_mentor_invoices.get.13359159",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "confirm_service_completion.post.6354687",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "raise_dispute.post.35497860",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "mark_invoice_paid.post.84033758",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "mark_service_delivered.post.14674007",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "create_mentorship_link.post.15808573",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_mentor_connections.get.86297583",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_user_connections.get.2259864",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "update_link_status.patch.7145256",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "create_note.post.91621080",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_notes_for_link.get.55663988",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "update_note.patch.58342759",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "check_abuse.post.45268151",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "lock_audit_logs.post.46697532",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "start_processing.post.6497905",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "processing_status.get.33599494",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_public_stats.get.683598",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_token_config.get.77011301",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "cancel_subscription.post.3752940",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "health_check.get.49799242",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_payment_history.get.72512810",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_plans.get.46027493",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_plan.get.3453224",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "process_payment.post.82012890",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_current_subscription.get.94759115",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "list_resumes.get.79663496",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "enrich.post.62181050",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "parse.post.46825025",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "upload_resume.post.28140479",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_resume.get.28564150",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "health_check.get.90154042",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_leaderboard.get.77033214",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_ownership_stats.get.55842144",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_referral_code.get.53316753",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "claim_referral.post.76311096",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_rewards.get.15496384",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_available_rewards.get.66970259",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "redeem_rewards.post.73323283",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_my_suggestions.get.75964904",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "submit_suggestion.post.75964904",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_consolidated_user_data.get.19373996",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "log_session_event.post.51611943",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_session_summary.get.28878642",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_sync_status.get.12465596",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "health_check.get.49233530",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "list_industries.get.37654732",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "list_subindustries.get.46367242",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "infer_industries.get.34200137",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "job_title_metadata.get.22538169",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "job_title_to_naics.get.58202260",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "search_job_titles.get.1738029",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "search_naics.get.19423953",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "naics_title.get.29275467",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "status.get.8893823",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_evidence.get.28527475",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_touchnots.get.28156728",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "read_users_me.get.3278992",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "get_profile.get.40645832",
+      "label": "exposes"
+    },
+    {
+      "from": "backend_api",
+      "to": "update_profile.put.40645832",
+      "label": "exposes"
+    }
+  ]
+}

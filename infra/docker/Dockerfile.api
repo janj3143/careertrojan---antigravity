@@ -1,0 +1,37 @@
+# Stage 1: Builder
+FROM python:3.11-slim as builder
+
+WORKDIR /build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.runtime.txt .
+RUN pip install --user --no-cache-dir -r requirements.runtime.txt
+
+# Stage 2: Runtime
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Create non-root user
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+
+# Copy installed packages from builder
+COPY --from=builder /root/.local /home/appuser/.local
+ENV PATH=/home/appuser/.local/bin:$PATH
+
+# Copy application code
+COPY shared_backend/ ./shared_backend/
+
+# Metadata labeling
+LABEL project="CareerTrojan" service="api" python_version="3.11"
+
+# Ownership and User switch
+RUN chown -R appuser:appgroup /app
+USER appuser
+
+EXPOSE 8000
+
+CMD ["uvicorn", "shared_backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

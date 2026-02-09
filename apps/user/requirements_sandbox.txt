@@ -1,0 +1,251 @@
+# IntelliCV-AI Sandbox User Portal Final - Complete Requirements
+# Comprehensive dependencies for testing and production deployment
+# Version: Sandbox Final v1.0
+# Date: September 29, 2025
+
+# Core Streamlit and Web Framework
+streamlit>=1.28.0
+fastapi>=0.104.0
+uvicorn>=0.24.0
+requests>=2.31.0
+httpx>=0.25.0
+
+# Authentication and Security
+hashlib2>=1.0.1
+secrets>=3.3.2
+cryptography>=41.0.0
+pyotp>=2.9.0
+qrcode>=7.4.2
+Pillow>=10.0.0
+PyJWT>=2.8.0
+
+# Database and Data Management
+sqlalchemy>=2.0.0
+alembic>=1.12.0
+psycopg2-binary>=2.9.7
+redis>=5.0.0
+sqlite3>=3.40.0  
+
+# Data Processing and Analysis
+pandas>=2.1.0
+numpy>=1.24.0
+openpyxl>=3.1.0
+xlsxwriter>=3.1.0
+python-docx>=0.8.11
+PyPDF2>=3.0.1
+pdfplumber>=0.9.0
+
+# AI and Machine Learning
+openai>=1.0.0
+anthropic>=0.7.0
+transformers>=4.35.0
+torch>=2.1.0
+scikit-learn>=1.3.0
+spacy>=3.7.0
+nltk>=3.8.1
+textblob>=0.17.1
+
+# Visualization and Charts
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+altair>=5.1.0
+graphviz>=0.20.0
+
+# Web Scraping and APIs
+beautifulsoup4>=4.12.0
+selenium>=4.15.0
+scrapy>=2.11.0
+feedparser>=6.0.10
+
+# File Processing and I/O
+python-magic>=0.4.27
+python-multipart>=0.0.6
+aiofiles>=23.2.0
+watchdog>=3.0.0
+
+# Testing and Development
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+black>=23.9.0
+flake8>=6.1.0
+mypy>=1.6.0
+pre-commit>=3.5.0
+
+# Performance and Monitoring
+psutil>=5.9.0
+memory-profiler>=0.61.0
+line-profiler>=4.1.0
+py-spy>=0.3.14
+
+# Utilities and Helpers
+python-dotenv>=1.0.0
+click>=8.1.0
+tqdm>=4.66.0
+colorama>=0.4.6
+rich>=13.6.0
+tabulate>=0.9.0
+
+# Date and Time
+python-dateutil>=2.8.2
+pytz>=2023.3
+arrow>=1.3.0
+
+# Email and Communications
+yagmail>=0.15.293
+smtplib2>=0.2.1
+sendgrid>=6.10.0
+
+# Environment and Configuration
+pydantic>=2.4.0
+pydantic-settings>=2.0.0
+python-decouple>=3.8
+
+# Image Processing
+opencv-python>=4.8.0
+imageio>=2.31.0
+Pillow>=10.0.0
+
+# Natural Language Processing
+langchain>=0.0.350
+tiktoken>=0.5.0
+sentence-transformers>=2.2.2
+
+# Data Validation
+cerberus>=1.3.5
+marshmallow>=3.20.0
+jsonschema>=4.19.0
+
+# Networking and HTTP
+aiohttp>=3.8.0
+websockets>=11.0.0
+socketio>=5.9.0
+
+# Additional Streamlit Components
+streamlit-authenticator>=0.2.3
+streamlit-option-menu>=0.3.6
+streamlit-aggrid>=0.3.4
+streamlit-lottie>=0.0.5
+streamlit-echarts>=0.4.0
+streamlit-extras>=0.3.0
+
+# Job Market APIs and Integrations
+linkedin-api>=2.2.0
+indeed-api>=0.1.0
+glassdoor-api>=0.1.0
+
+# Resume Parsing and Processing
+pyresparser>=1.0.6
+resume-parser>=0.8.4
+pdfminer.six>=20221105
+
+# Machine Learning for HR/Recruitment
+catboost>=1.2.0
+xgboost>=1.7.0
+lightgbm>=4.1.0
+
+# Cloud Storage and APIs
+boto3>=1.29.0
+google-cloud-storage>=2.10.0
+azure-storage-blob>=12.19.0
+
+# Logging and Monitoring
+loguru>=0.7.0
+structlog>=23.2.0
+sentry-sdk>=1.38.0
+
+# Caching and Session Management
+diskcache>=5.6.0
+joblib>=1.3.0
+pickle5>=0.0.12
+
+# Development Tools
+jupyter>=1.0.0
+notebook>=7.0.0
+ipython>=8.16.0
+
+# API Documentation
+swagger-ui-bundle>=0.0.9
+redoc>=2.1.0
+
+# Task Queue and Background Jobs
+celery>=5.3.0
+redis-py-cluster>=2.1.3
+
+# Geolocation and Maps
+geopy>=2.4.0
+folium>=0.14.0
+geopandas>=0.14.0
+
+# Financial and Market Data
+yfinance>=0.2.0
+alpha-vantage>=2.3.1
+quandl>=3.7.0
+
+# Social Media Integration
+tweepy>=4.14.0
+facebook-sdk>=3.1.0
+instagram-private-api>=1.6.0
+
+# Additional Utilities for Sandbox Testing
+faker>=19.12.0  # Generate test data
+factory-boy>=3.3.0  # Test data factories
+hypothesis>=6.88.0  # Property-based testing
+mimesis>=11.1.0  # Advanced fake data generation
+
+# Performance Testing
+locust>=2.17.0  # Load testing
+py-cpuinfo>=9.0.0  # CPU information
+GPUtil>=1.4.0  # GPU monitoring
+
+# Security Testing
+bandit>=1.7.5  # Security linting
+safety>=2.3.0  # Security vulnerabilities check
+
+# Code Quality
+coverage>=7.3.0  # Code coverage
+radon>=6.0.1  # Code complexity analysis
+vulture>=2.10  # Dead code detection
+
+# Documentation
+sphinx>=7.2.0
+mkdocs>=1.5.0
+mkdocs-material>=9.4.0
+
+# Experimental and Advanced Features
+streamlit-webrtc>=0.47.0  # WebRTC for real-time features
+streamlit-ace>=0.1.1  # Code editor component
+streamlit-folium>=0.15.0  # Interactive maps
+streamlit-plotly-events>=0.0.6  # Interactive plots
+
+# API Rate Limiting and Throttling
+slowapi>=0.1.9
+ratelimit>=2.2.1
+
+# Advanced Analytics
+prophet>=1.1.4  # Time series forecasting
+networkx>=3.2.0  # Network analysis
+igraph>=0.10.8  # Graph analysis
+
+# Internationalization
+babel>=2.13.0
+gettext>=0.1.0
+
+# Additional Database Support
+pymongo>=4.5.0  # MongoDB
+elasticsearch>=8.10.0  # Elasticsearch
+neo4j>=5.13.0  # Neo4j graph database
+
+# Environment Variables and Secrets Management
+keyring>=24.2.0
+python-keyring>=24.2.0
+
+# Advanced File Formats
+h5py>=3.9.0  # HDF5 files
+pytables>=3.8.0  # HDF5 tables
+parquet>=1.3.1  # Parquet files
+
+# Backup and Recovery
+boto3>=1.29.0  # AWS S3 backup
+duplicity>=2.1.0  # Incremental backups

@@ -1,0 +1,10 @@
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+div img, div h1, div h3, div ul, div button, div label, .stButton {
+    animation: fadeIn 1.5s ease-in;
+}
+</style>

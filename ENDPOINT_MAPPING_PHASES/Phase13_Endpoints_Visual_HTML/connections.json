@@ -1,0 +1,18 @@
+{
+  "nodes": [
+    { "id": "user_portal", "type": "portal", "label": "User Portal (React)" },
+    { "id": "admin_portal", "type": "portal", "label": "Admin Portal (React)" },
+    { "id": "mentor_portal", "type": "portal", "label": "Mentor Portal (React)" },
+
+    { "id": "backend_api", "type": "service", "label": "FastAPI Backend" },
+    { "id": "ai_orchestrator", "type": "service", "label": "AI Orchestrator" },
+    { "id": "ai_data_final", "type": "data", "label": "ai_data_final (data lake)" },
+
+    { "id": "touchpoints.evidence.get", "type": "endpoint", "label": "GET /touchpoints/evidence" }
+  ],
+  "edges": [
+    { "from": "user_portal", "to": "backend_api", "label": "calls" },
+    { "from": "backend_api", "to": "touchpoints.evidence.get", "label": "exposes" },
+    { "from": "touchpoints.evidence.get", "to": "ai_data_final", "label": "reads" }
+  ]
+}

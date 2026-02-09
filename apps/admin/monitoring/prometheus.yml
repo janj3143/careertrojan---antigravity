@@ -1,0 +1,45 @@
+# Prometheus Configuration for IntelliCV-AI Admin Portal
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # Admin Portal Application Metrics
+  - job_name: "admin-portal"
+    static_configs:
+      - targets: ["admin-portal:8501"]
+    scrape_interval: 30s
+    metrics_path: "/metrics"
+    
+  # PostgreSQL Database Metrics
+  - job_name: "postgres"
+    static_configs:
+      - targets: ["postgres:5432"]
+    scrape_interval: 30s
+    
+  # Redis Metrics
+  - job_name: "redis"
+    static_configs:
+      - targets: ["redis:6379"]
+    scrape_interval: 30s
+    
+  # System Metrics from Node Exporter (if available)
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["admin-portal:9100"]
+    scrape_interval: 30s
+    
+  # Prometheus itself
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093

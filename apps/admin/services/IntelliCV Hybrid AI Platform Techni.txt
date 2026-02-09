@@ -1,0 +1,42 @@
+IntelliCV Hybrid AI Platform: Technical Roadmap
+1. Architecture Overview
+Backend: Python (FastAPI for APIs, background workers for analysis, modular enrichment/ML/Bayes services)
+Frontend: Streamlit (user/admin dashboards), React/Next.js (optional for richer UI)
+Data: Postgres (+pgvector), Redis (caching), JSON for intermediate parser outputs
+AI/ML: spaCy, sentence-transformers, BM25, PyMC/NumPyro (Bayesian), OpenAI/vLLM (LLMs), Guardrails, Presidio, Fairlearn
+Observability: Langfuse, logging, metrics, A/B testing
+2. Recommended Folder Structure
+
+admin_portal_final/    services/        enrichment/                # All enrichment modules (NLP, ML, Bayesian, LLM, etc.)        parsers/                   # All parser modules (resume, salary, job title, glossary, etc.)        bayes_service/             # Bayesian models, bandit logic, posterior updates        api/                       # FastAPI endpoints (recommend, bandit, posterior, etc.)        utils/                     # Shared utilities (PII masking, text cleanup, etc.)        data/                      # Static data, glossaries, config files    data_parsers/                  # PowerShell/Python scripts for batch/integration    ai_data/                       # User/intermediate JSON, embeddings, event logs    logs/                          # All logs (parser, enrichment, analysis, errors)    frontend/                      # Streamlit/React UI, fragments, telemetry    tests/                         # Unit/integration tests for all modules
+3. Integration & Data Flow
+Parsing Layer: All raw resumes/JDs are parsed by modules in services/parsers/ (e.g., job_title_parser.py, salary_parser.py). Output is normalized JSON, written to ai_data or a DB.
+Enrichment Layer: enrichment modules consume parser JSON, run NLP/ML/LLM/Bayes analysis, and write enriched results (with provenance) back to ai_data or DB.
+Bayesian Layer: services/bayes_service/ consumes user events, parser/enrichment outputs, and updates per-user/role posteriors. Exposes recommendations and confidence intervals via API.
+API Layer: services/api/ exposes endpoints for the frontend to fetch recommendations, explanations, and analysis results.
+Frontend: Dashboards poll APIs for up-to-date analysis, show actionable insights, and allow user/admin feedback.
+4. Background Analysis & Automation
+Background Workers: Use Celery/Arq or FastAPI background tasks to run enrichment and Bayesian analysis as soon as new parser JSON is available.
+Event Hooks: Every time a new resume/JD is parsed or user feedback is received, trigger enrichment and Bayesian updates automatically.
+Deduplication: Use strong user/session IDs, hash-based file checks, and canonical fact tables to avoid duplicate users and redundant analysis.
+Determinism & Reproducibility: All engine-based scoring and enrichment must be deterministic (seeded random, versioned models, provenance tags). LLM outputs are post-checked and tagged with generation metadata.
+5. Lockstep & User Feedback
+Lockstep Mechanism: When user input is required (e.g., low confidence, ambiguous data), surface prompts in the UI and pause further automation until resolved.
+Feedback Loops: All user/admin actions (accept/reject, edits, A/B choices) are logged and fed back into Bayesian/posterior updates for continuous improvement.
+6. Parser Integration & Expansion
+All parser modules in services/parsers/ must:
+Output normalized, schema-compliant JSON (with unique IDs, timestamps, provenance)
+Register new files/users in a canonical index to prevent duplication
+Emit events/logs for downstream enrichment and Bayesian services
+Missing Elements: Review and add any missing parser modules (e.g., for new data types, formats, or sources). Ensure all are discoverable and callable by the integration/orchestration scripts in data_parsers.
+7. Operational Best Practices
+Automated Runs: Use orchestration scripts (integrate_parsers.ps1, etc.) to batch process and monitor all parsing/enrichment.
+Observability: Log all steps, errors, and outcomes. Use Langfuse or similar for prompt/version tracking.
+Rate Limiting & Caching: Use Redis to cache results and avoid redundant LLM/ML calls. Rate-limit per user/session.
+A/B Testing & Drift Monitoring: Integrate A/B arms and drift checks in the Bayesian layer; expose dashboards for admin review.
+8. Next Steps
+Audit and complete all parser modules in services/parsers/.
+Scaffold the enrichment and Bayesian layers to consume parser JSON and run in the background.
+Implement event hooks and deduplication logic.
+Expose APIs for frontend consumption and feedback.
+Iterate on UI/UX to surface actionable, explainable insights to users/admins.
+This roadmap ensures a modular, scalable, and user-friendly hybrid AI platform—where all complex analysis runs in the background, results are deterministic and reproducible, and the user/admin only sees actionable, explainable insights.

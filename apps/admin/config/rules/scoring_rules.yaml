@@ -1,0 +1,28 @@
+must_have_skills:
+  data_scientist:
+    - python
+    - machine learning
+    - statistics
+  project_manager:
+    - stakeholder management
+    - project planning
+    - risk analysis
+  software_engineer:
+    - python
+    - git
+    - unit testing
+
+penalties:
+  missing_must_have: -0.15
+  outdated_skills_years: 5
+  outdated_skill_penalty: -0.1
+  many_short_jobs: -0.1
+
+boosts:
+  matching_industry: 0.05
+  matching_seniority: 0.07
+  advanced_degree: 0.04
+
+other_rules:
+  min_years_experience: 2
+  bonus_for_certification: 0.03

@@ -1,17 +1,19 @@
 # CareerTrojan Runtime Build Plan
 
-This document outlines the strategy for building the **CareerTrojan Runtime Version**, emerging from the **IntelliCV-AI** system. The goal is to create a high-performance, unified platform that links seamlessly with the `L:\antigravity_version_ai_data_final` dataset.
+**Last Updated**: 2026-02-09 (Session 6 — All routers mounted, middleware stack complete, 136 tests green)
+
+This document outlines the strategy for building the **CareerTrojan Runtime Version**, emerging from the **IntelliCV-AI** system. The goal is to create a high-performance, unified platform that links seamlessly with the `L:\VS ai_data final - version` dataset.
 
 ## User Review Required
 
 > [!IMPORTANT]
 > **Global Renaming:** Every instance of "Intellicv-AI" will be rebranded to **CareerTrojan**. This includes headers, titles, logging, and metadata across all portals.
 >
-> **Python 3.11 Environment:** We will standardise on **Python 3.11** (located at `C:\careertrojan\infra\python`) to ensure a self-contained runtime on the C: drive.
+> **Python 3.11 Environment:** Standardised on **Python 3.11.9** at `C:\Python\python.exe`. All ghost versions removed (2026-02-08).
 >
 > **Consolidation:** We are moving from a "per-page" fragmented React structure to three unified portals: **Admin**, **User**, and **Mentor**.
 >
-> **Data & AI Linking:** The runtime will expect `ai_data_final` to be mounted at a canonical path: `L:\antigravity_version_ai_data_final`. This folder will also host AI toolsets and scripts required for local model execution and parsing.
+> **Data & AI Linking:** The runtime uses junction mounts at `C:\careertrojan\data-mounts\` pointing to `L:\VS ai_data final - version`. Tandem sync to `E:\CareerTrojan\USER_DATA_COPY\`.
 >
 > **Configuration Phase 1 (Testing):** A Premium Test User (`janj3143`) will be auto-seeded.
 >
@@ -73,26 +75,34 @@ careertrojan/
 
 ### 2. Implementation Phases
 
-#### Phase 1: Foundation & Renaming
-- [ ] Initialize `c:\careertrojan` and create a **Python 3.11** virtual environment.
-- [ ] Install mandatory packages from `d:\IntelliCV\requirements_lock_full.txt`.
-- [ ] Run a global search-and-replace to change "Intellicv-AI" to "CareerTrojan".
-- [ ] Set up the `portal-bridge` to handle unified authentication and API requests.
+#### Phase 1: Foundation & Renaming ✅ COMPLETE
+- [x] Initialize `c:\careertrojan` and create a **Python 3.11** virtual environment.
+- [x] Install mandatory packages from requirements files.
+- [x] Run a global search-and-replace to change "Intellicv-AI" to "CareerTrojan".
+- [x] Set up the `portal-bridge` to handle unified authentication and API requests.
 
-#### Phase 2: Flexible Mapping & Consolidation
-- [ ] **Capability Registry:** Implement a dynamic registry in `shared/registry` to allow "flexing" capabilities (toggling AI models, parsers, or UI modules) without code changes.
-- [ ] **Admin Portal:** Merge existing admin fragments from `ADMIN PAGES` into a single React application.
-- [ ] **User Portal:** Merge `USER PAGES` and `user_portal_react` into a responsive unified portal.
-- [ ] **Mentor Portal:** Consolodate `MENTOR pages` into the mentorship dashboard.
+#### Phase 2: Flexible Mapping & Consolidation ✅ COMPLETE
+- [x] **Capability Registry:** Dynamic registry in `shared/registry` for toggling AI models, parsers, or UI modules.
+- [x] **Admin Portal:** 31 pages (00–31) + 29 tools + 10 ops pages in `apps/admin/src/pages/`.
+- [x] **User Portal:** 15 pages + ConsolidationPage in `apps/user/src/pages/`.
+- [x] **Mentor Portal:** 12 pages in `apps/mentor/src/pages/`.
 
-#### Phase 3: Backend & Data Linking
-- [ ] Deploy the FastAPI `backend-api` with versioned routes (`/api/v1/*`).
-- [ ] Wire the `L:\antigravity_version_ai_data_final` path to the backend config.
-- [ ] Implement the `ai-workers` to process files in the `automated_parser` directory.
+#### Phase 3: Backend & Data Linking ✅ COMPLETE
+- [x] Deploy the FastAPI `backend-api` with versioned routes (`/api/{domain}/v1/*`).
+- [x] Wire the `L:\VS ai_data final - version` path via junction mounts in `data-mounts/`.
+- [x] Implement the `ai-workers` to process files in the `automated_parser` directory.
+- [x] **29 routers** registered — all mounted (10 via try/except for graceful degradation).
+- [x] **Middleware stack**: RequestCorrelationMiddleware → InteractionLoggerMiddleware → RateLimitMiddleware.
+- [x] **Braintree payment gateway** — sandbox integration complete, 27 unit + 20 e2e tests passing.
+- [x] **GDPR router** — data export/deletion endpoints.
 
-#### Phase 4: Page-by-Page Testing & Validation
-- [ ] map every route defined in `MAPPING.md` to a functioning React page.
-- [ ] Verify API connectivity for every interaction (Resume Upload, Enrichment, etc.).
+#### Phase 4: Page-by-Page Testing & Validation — IN PROGRESS
+- [x] Map every route defined in `MAPPING.md` to a functioning React page.
+- [x] Verify API connectivity for core interactions (Resume Upload, Enrichment, etc.).
+- [x] **136 tests green** across unit/integration/e2e tiers.
+- [ ] **Run endpoint introspection pipeline** to verify full endpoint count (~160-300 estimated).
+- [ ] **Update ~25 React API callsites** still referencing old prefixes to new `/api/.../v1` paths.
+- [ ] **Full validation deep-dive** — contamination traps, live data checks, sync verification.
 
 ## Visual Diagram (Runtime Architecture)
 
@@ -149,13 +159,13 @@ graph TD
     FastAPI --> Logs
 ```
 
-## Phase 5: React Page Reconciliation (Feb 2026)
+## Phase 5: React Page Reconciliation ✅ COMPLETE (Feb 2026)
 > Canonical source: `E:\Archive Scripts\pages order\`
 
 ### Admin Portal — 31 Pages + Tools + Ops
-All 30 original pages (00–30) from the archive are **enacted** in `apps/admin/src/pages/`.
+All 31 pages (00–31) from the archive are **enacted** in `apps/admin/src/pages/`.
 - [x] Pages 00–30 verified present in React routes
-- [ ] **Page 31: Admin Portal Entry Point** — NEW — Must be added
+- [x] **Page 31: Admin Portal Entry Point** — `AdminPortalEntry.tsx`, route `/admin/portal-entry`
 - [x] Tools pages (29 tools) wired under `/admin/tools/*`
 - [x] Operations pages (10 ops) wired under `/admin/ops/*`
 
@@ -163,13 +173,13 @@ All 30 original pages (00–30) from the archive are **enacted** in `apps/admin/
 Pages 01–15 (skipping 06) from the archive are enacted in `apps/user/src/pages/`.
 - [x] Pages 01–15 verified present in React routes
 - [x] Visualisations Hub added (beyond archive scope)
-- [ ] **Consolidation Page** — NEW — Must be added (thread requirement)
+- [x] **Consolidation Page** — `ConsolidationPage.tsx`, route `/consolidation`
 
 ### Mentor Portal — 12 Pages
 All 12 pages from the archive are enacted in `apps/mentor/src/pages/` with React routes.
 - [x] Pages 01–12 verified present and routed
 
-## Phase 6: Data Architecture & Duplication Strategy (Feb 2026)
+## Phase 6: Data Architecture & Duplication Strategy ✅ COMPLETE (Feb 2026)
 
 ### Source of Truth
 - **Primary Data Store**: `L:\VS ai_data final - version\`
@@ -213,14 +223,21 @@ User Login/Action → USER DATA (L:)
 - User resume uploads, match results, coaching interactions, and enrichment outputs feed back into `ai_data_final` via the AI orchestrator.
 - The orchestrator reads from `USER DATA/interactions/` and writes enriched entries to `ai_data_final/`.
 
-## Phase 7: Endpoint & API Reconciliation (Feb 2026)
-- 16 routers registered in FastAPI backend (+ `shared` router imported but **not mounted**)
-- Endpoint mapping pipeline: Phase 14 (introspect) → Phase 15 (React scan) → Phase 16 (join) → Phase 13 (visual)
-- **Known Issues**:
-  - `shared.router` is imported but never `include_router()`'d — must be mounted
-  - Mixed prefix conventions across routers — needs standardisation
-  - `rewards.router` prefix overlaps with `user.router` at `/api/user/v1`
+## Phase 7: Endpoint & API Reconciliation ✅ COMPLETE (Feb 2026)
+- **29 routers** registered in FastAPI backend — ALL mounted
+  - 19 core routers mounted directly
+  - 10 supplementary routers mounted via try/except (graceful degradation)
+- `shared.router` — ✅ Fixed and mounted (2026-02-08)
+- `rewards.router` — ✅ Collision fixed, moved to `/api/rewards/v1`
+- All prefixes standardised to `/api/{domain}/v1`
+- **Braintree payment** integrated (7 new endpoints, sandbox tested)
+- **GDPR router** added (data export/deletion)
+- **Middleware stack** complete: correlation IDs → interaction logging → rate limiting
+- Endpoint mapping pipeline tools exist: `fastapi_introspect_routes.py` → `react_api_scan.py` → `join_endpoint_graph.py`
 - **Portal Bridge** (`config/nginx/portal-bridge.conf`): Routes `/` → user, `/admin` → admin, `/mentor` → mentor, `/api` → backend
+- **Known remaining work**:
+  - Run endpoint introspection pipeline to generate visual map
+  - Update ~25 React frontend API callsites to new `/api/.../v1` prefixes
 
 ## Phase 8: Cleanup & Script Hygiene (Feb 2026)
 Remove from `C:\careertrojan\`:
@@ -232,12 +249,15 @@ Remove from `C:\careertrojan\`:
 
 ## Verification Plan
 
-### Automated Tests
-- **Backend Health:** Run `pytest` on `services/backend-api` to ensure all endpoints return 200 OK.
+### Automated Tests — 136 Passing ✅
+- **Unit** (`tests/unit/`): 7 test files — bootstrap, braintree, endpoints, GDPR, models, observability, security
+- **Integration** (`tests/integration/`): 4 test files — contamination trap, GDPR endpoints, HTTP endpoints, observability
+- **E2E** (`tests/e2e/`): 1 test file — Braintree sandbox (20 tests against real API)
+- **Root conftest.py**: Auto-loads .env, session-scoped app/client/db fixtures, auto-resets rate limiter
 - **Contract Validation:** Use `schemathesis` to verify FastAPI matches the OpenAPI spec.
-- **Renaming Integrity:** Scripted grep to ensure zero instances of "Intellicv-AI" remain in the `/apps` and `/services` directories.
+- **Renaming Integrity:** Scripted grep to ensure zero instances of "Intellicv-AI" remain.
 - **Sync Trap Validation:** Write a test file to `L:\...\USER DATA\test\` and verify it appears in `E:\CareerTrojan\USER_DATA_COPY\test\` within 5 seconds.
-- **Endpoint Coverage:** Run Phase 14 introspection and verify count matches expected routers.
+- **Endpoint Coverage:** Run endpoint introspection pipeline and verify count matches 29 registered routers.
 
 ### Manual Verification
 1. **Login Flow:** Verify "CareerTrojan" branding on the login page and successful JWT acquisition.

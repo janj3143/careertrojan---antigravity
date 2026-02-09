@@ -3,7 +3,7 @@
 **Domain**: careertrojan.com  
 **Objective**: Create the definitive runtime environment at `C:\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\VS ai_data final - version` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
 
-**Last Updated**: 2026-02-09 (Session 5 — Braintree payment gateway integration, 136 tests green)
+**Last Updated**: 2026-02-09 (Session 6 — All 29 routers mounted, middleware stack complete, Braintree integrated, 136 tests green)
 
 ---
 
@@ -31,18 +31,20 @@
 - [x] **Session History**: `services/backend_api/routers/sessions.py` — 234 lines, logging + sync-status + consolidated-user endpoints with `_write_with_mirror()`.
 - [x] **AI Orchestrator Feedback**: `services/workers/ai_orchestrator_enrichment.py` — watches interactions/, routes by action type to ai_data_final enrichment.
 - [ ] **Model Training**: Verify `scripts/train_models.py` uses L: dataset, saves to `trained_models/`.
-- [ ] **FastAPI Middleware**: Add automatic user action logging middleware so every request creates an interaction record.
+- [x] **FastAPI Middleware**: `InteractionLoggerMiddleware` added to main.py — captures every request with user_id, endpoint, timestamp, response_time.
+- [x] **Middleware Stack Complete**: RequestCorrelationMiddleware → InteractionLoggerMiddleware → RateLimitMiddleware.
 
 ## 4. Endpoint & API Reconciliation
-- [x] **17 Routers registered** in FastAPI backend (auth, user, admin, shared, mentorship, intelligence, coaching, ops, resume, blockers, credits, ai_data, jobs, taxonomy, sessions + payment/rewards/mentor optional).
+- [x] **29 Routers registered & mounted** in FastAPI backend — 19 core + 10 via try/except graceful degradation.
 - [x] **shared.router mounted**: Fixed — was imported but never `include_router()`'d.
 - [x] **sessions.router created**: New router for session logging, sync status, consolidated user data.
 - [x] **All prefixes standardised to `/api/{domain}/v1`**: coaching, resume, credits, ai_data, jobs, taxonomy, payment, mentor — all updated.
 - [x] **rewards.router collision fixed**: Changed from `/user` (collision with user.router) to `/api/rewards/v1`.
+- [x] **All 10 previously-unmounted routers now mounted**: admin_abuse, admin_parsing, admin_tokens, analytics, anti_gaming, insights, logs, mapping, telemetry — all via try/except for graceful degradation.
+- [x] **GDPR router added**: Data export/deletion endpoints mounted.
 - [ ] **Run endpoint pipeline**: `tools/fastapi_introspect_routes.py` → `tools/react_api_scan.py` → `tools/join_endpoint_graph.py` to generate visual endpoint map.
 - [ ] **Update React API calls**: ~25 frontend callsites still reference old prefixes (/coaching, /resume, /jobs, /payment, etc.) — need updating to new `/api/.../v1` paths.
 - [ ] **Portal Bridge**: Verify nginx config routes correctly to all portals + backend.
-- [ ] **Mount unmounted routers**: 10 router files exist but are NOT mounted in main.py (admin_abuse, admin_parsing, admin_tokens, analytics, anti_gaming, insights, logs, mapping, telemetry).
 
 ## 5. Endpoint Introspection & Tracking (NEW — keeps endpoint map current)
 - [x] **FastAPI Introspection Exporter**: `tools/fastapi_introspect_routes.py` — imports the app, walks `app.routes`, exports `endpoints_from_fastapi.json`.
@@ -236,10 +238,10 @@ C:\Tesseract-OCR\
 
 ### 13.3 Implementation TODO
 - [x] **ai_orchestrator_enrichment.py**: Watchdog-based router exists at `services/workers/`
-- [ ] **FastAPI Middleware Logger**: Add `InteractionLoggerMiddleware` to `main.py` — captures every request with user_id, endpoint, timestamp, response_time, payload_hash
-- [ ] **Embedding Pipeline Worker**: `services/workers/embedding_pipeline.py` — on new CV upload, generate sentence-transformer embeddings, store in `ai_data_final/embeddings/`
-- [ ] **Ranking Feedback Ingester**: `services/workers/ranking_feedback.py` — on match accept/reject, update implicit labels for gradient boosting ranker
-- [ ] **Nightly Retrain Scheduler**: `scripts/nightly_retrain.py` — cron/task-scheduler job that reads enriched data, retrains models, saves to `trained_models/`
+- [x] **FastAPI Middleware Logger**: `InteractionLoggerMiddleware` in `main.py` — captures every request with user_id, endpoint, timestamp, response_time, payload_hash
+- [x] **Embedding Pipeline Worker**: `scripts/embedding_pipeline.py` — on new CV upload, generate sentence-transformer embeddings, store in `ai_data_final/embeddings/`
+- [x] **Ranking Feedback Ingester**: `scripts/ranking_feedback.py` — on match accept/reject, update implicit labels for gradient boosting ranker
+- [x] **Nightly Retrain Scheduler**: `scripts/nightly_retrain.py` — cron/task-scheduler job that reads enriched data, retrains models, saves to `trained_models/`
 - [ ] **Model Hot-Reload**: FastAPI endpoint `/api/ai_data/v1/model/reload` — admin-only, reloads model weights without restart
 - [ ] **Data Volume Monitoring**: Dashboard widget showing enrichment pipeline throughput, data growth rate, model freshness
 - [ ] **Privacy Guardrails**: PII scrubbing before enrichment, GDPR-compliant data retention policy, user opt-out mechanism
@@ -398,7 +400,7 @@ main              ← production-ready, tagged releases
 ```
 
 ### 18.3 API Lifecycle TODO
-- [ ] **Mount all 10 unmounted routers** in `main.py` (admin_abuse, admin_parsing, admin_tokens, analytics, anti_gaming, insights, logs, mapping, telemetry)
+- [x] **Mount all 10 previously-unmounted routers** in `main.py` — admin_abuse, admin_parsing, admin_tokens, analytics, anti_gaming, insights, logs, mapping, telemetry — all via try/except
 - [ ] **OpenAPI spec export**: `scripts/export_openapi.py` — saves `docs/openapi.json` for client generation
 - [ ] **API client SDK**: Auto-generate TypeScript client from OpenAPI spec for React frontends
 - [ ] **API versioning strategy**: v1 is current; v2 only when breaking changes, old version deprecated with 6-month sunset
@@ -519,9 +521,9 @@ BRAINTREE_PRIVATE_KEY=<in .env, not committed>
 
 ---
 
-## 19. Next Actions — Priority Queue (Updated 2026-02-08)
+## 19. Next Actions — Priority Queue (Updated 2026-02-09)
 
-### Phase A — Immediate (This Session)
+### Phase A — Environment & Infra ✅ COMPLETE
 1. ~~Clean Python runtime to single 3.11.9~~ ✅
 2. ~~Remove ghost PATH entries (Python314)~~ ✅
 3. ~~Verify pip, Node, Docker, Git working~~ ✅
@@ -529,24 +531,32 @@ BRAINTREE_PRIVATE_KEY=<in .env, not committed>
 5. [ ] Add `C:\Posgres\bin\` to Machine PATH
 6. [ ] Configure VS Code Python interpreter → `C:\Python\python.exe`
 
-### Phase B — Next (Build Continuation)
-7. [ ] Mount all 10 unmounted routers in `main.py`
-8. [ ] Run endpoint introspection pipeline (`tools/`)
-9. [ ] Update ~25 React API callsites to new `/api/.../v1` prefixes
-10. [ ] Add `InteractionLoggerMiddleware` to FastAPI (Section 13.3)
-11. [ ] Create `.gitignore` + push initial commit to GitHub
+### Phase B — Backend Completion ✅ MOSTLY COMPLETE
+7. ~~Mount all 10 unmounted routers in `main.py`~~ ✅ (29 routers, all mounted)
+8. ~~Add `InteractionLoggerMiddleware` to FastAPI~~ ✅
+9. ~~Braintree payment gateway integration~~ ✅ (sandbox, 47 tests)
+10. ~~GDPR router~~ ✅
 
-### Phase C — Near-Term
-12. [ ] Wire visualisation components into `/insights/visuals`
-13. [ ] Build insights/touchpoints endpoints (Section 6.4 table)
-14. [ ] PWA manifest + service worker (Section 14.2)
-15. [ ] Responsive breakpoint audit for mobile (Section 14.2)
-16. [ ] nightly_retrain.py + backup scripts (Sections 13.3, 15.2)
+### Phase C — Frontend & Integration 🔨 CURRENT PRIORITY
+11. [ ] **Create root `.gitignore`** — CRITICAL (no `.gitignore` exists, risk of committing node_modules/secrets)
+12. [ ] **Create root `.env`** from env vars in compose.yaml (no `.env` at project root)
+13. [ ] **Run endpoint introspection pipeline** (`tools/`) — verify full endpoint count
+14. [ ] **Update ~25 React API callsites** to new `/api/.../v1` prefixes
+15. [ ] **Wire visualisation components** into `/insights/visuals` (Phase 05–12 components ready)
+16. [ ] **Build insights/touchpoints API endpoints** (Section 6.4 — 11 endpoints to build)
+17. [ ] **Push initial commit to GitHub** — create `careertrojan/runtime` repo
 
-### Phase D — Pre-Launch
-17. [ ] SSL/TLS setup with mkcert (local) + Certbot (staging)
-18. [ ] GitHub Actions CI pipeline
-19. [ ] OWASP security audit
-20. [ ] Lighthouse PWA audit (target > 90)
-21. [ ] Ubuntu deployment test
-22. [ ] Full validation deep-dive (Section 11)
+### Phase D — Polish & Mobile
+18. [ ] PWA manifest + service worker (Section 14.2)
+19. [ ] Responsive breakpoint audit for mobile (Section 14.2)
+20. [ ] Backup scripts: `backup_runtime.ps1`, `backup_postgres.ps1` (Section 15.2)
+21. [ ] Verify nginx portal bridge routes correctly to all portals + backend
+
+### Phase E — Pre-Launch
+22. [ ] SSL/TLS setup with mkcert (local) + Certbot (staging)
+23. [ ] GitHub Actions CI pipeline (lint → typecheck → test → build)
+24. [ ] OWASP security audit (Section 16)
+25. [ ] Lighthouse PWA audit (target > 90)
+26. [ ] Ubuntu deployment test
+27. [ ] Full validation deep-dive — contamination traps, live data checks, sync verification (Section 11)
+28. [ ] Braintree production merchant account + go-live (Section 18.5)

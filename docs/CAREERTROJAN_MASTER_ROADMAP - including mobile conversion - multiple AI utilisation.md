@@ -16,7 +16,8 @@
   - **CO** = Claude Opus 4.6 (VS Code) — code, APIs, infrastructure
   - **CS** = Claude Sonnet — copy, marketing, pitch decks, polish
   - **YOU** = requires your decision or a human acti
-  - **STRIPE** = Stripe dashboard (web browser)
+  - **BT** = Braintree dashboard (primary payment gateway)
+  - **STRIPE** = Stripe dashboard (dormant fallback)
   - **DNS** = Domain registrar (web browser)
 
 ---
@@ -33,7 +34,7 @@
  │     ↓                                                       │
  │  TRACK C: Website (careertrojan.com)                        │
  │     ↓                                                       │
- │  TRACK D: Payments (Stripe)                                 │
+ │  TRACK D: Payments (Braintree + Stripe fallback) ✅ SANDBOX  │
  │     ↓                                                       │
  │  TRACK E: User Data + AI Learning Loop                      │
  │     ↓                                                       │
@@ -254,70 +255,124 @@ https://careertrojan.com loads, looks professional, and you can sign up and log 
 ---
 ---
 
-# TRACK D: PAYMENTS (Stripe)
-**Where**: Stripe dashboard + your FastAPI backend
+# TRACK D: PAYMENTS (Braintree Primary + Stripe Fallback)
+**Where**: Braintree dashboard + FastAPI backend + React frontend
 **AI**: CO
 **Timeline**: After Track C (or in parallel with C5–C8)
+**Updated**: 9 February 2026
 
-### Why Stripe
-- Industry standard for SaaS subscriptions
-- Handles PCI compliance (you NEVER touch card numbers)
-- Python SDK plugs directly into FastAPI
-- Handles invoicing, receipts, tax, and refunds
+### Why Braintree (over Stripe)
+- Native PayPal integration — 430M+ active accounts, huge reach for students/grads
+- Apple Pay, Google Pay, Venmo baked into a single Drop-in UI widget
+- PCI SAQ-A compliance via Drop-in (you NEVER touch card numbers)
+- PayPal-owned — trusted brand recognition on checkout pages
+- Free sandbox → production toggle (same as Stripe)
+- Stripe kept as dormant fallback — fully tested, SDK installed, switchable via env var
+
+### Pricing Tiers (Defined)
+| Tier | Price | Interval | Braintree Plan ID |
+|------|-------|----------|------------------|
+| Free Trial | $0 | — | — |
+| Monthly Pro | $15.99 | /month | monthly_pro |
+| Annual Pro | $149.99 | /year | annual_pro |
+| Elite Pro | $299.99 | /year | elite_pro |
 
 ### Steps
 
 ```
-D1. ⬜ Create a Stripe account
+D1. ✅ Create Braintree sandbox account
         WHO: YOU
-        URL: https://stripe.com
-        NOTE: Start in TEST MODE (fake money, fake cards)
+        URL: https://sandbox.braintreegateway.com
+        DONE: Merchant ID xtwfsxyf55m7rgn3 active
 
-D2. ⬜ Define your pricing
-        WHO: YOU
-        DECISION NEEDED:
-            Free tier?    → Yes/No, what's included
-            Monthly price → e.g., £9.99/month
-            Annual price  → e.g., £89.99/year (save ~25%)
-            Premium tier? → e.g., £29.99/month with AI coaching
-        NOTE: You can change this later. Just pick something to start.
-
-D3. ⬜ Create Products and Prices in Stripe dashboard
-        WHO: YOU (in Stripe dashboard, click Products → Add Product)
-        RESULT: You get Price IDs like "price_1ABC..." — you'll need these
-
-D4. ⬜ Install Stripe Python SDK
+D2. ✅ Install Braintree Python SDK
         WHO: CO
-        COMMAND: pip install stripe
-        ADD TO: requirements.txt
+        RESULT: braintree 4.42.0 installed (J:\Python311)
+        FILE: requirements.txt updated
 
-D5. ⬜ Add payment endpoints to FastAPI
+D3. ✅ Build braintree_service.py (384 lines)
         WHO: CO
-        NEW ENDPOINTS:
-            POST /api/v1/payments/create-checkout    → starts a Stripe checkout
-            POST /api/v1/payments/webhook             → Stripe tells you when someone pays
-            GET  /api/v1/payments/portal               → customer manages their subscription
-        FILES: New router at services/backend_api/routers/payments.py
-        EFFORT: ~100 lines of code. CO can scaffold this.
+        COVERS: Gateway config, client tokens, customer CRUD,
+                payment methods (create/list/delete), transactions
+                (sale/void/refund/find), subscriptions (create/cancel)
 
-D6. ⬜ Add "Subscribe" button to the website
+D4. ✅ Build payment router (569 lines)
         WHO: CO
-        WHAT: Button on pricing page → calls /create-checkout → redirects to Stripe
-        USER FLOW: Click Subscribe → Stripe payment page → success → back to your app
+        ENDPOINTS:
+            GET  /api/payment/v1/plans              → list all plans
+            GET  /api/payment/v1/plans/{id}         → single plan detail
+            POST /api/payment/v1/process            → charge via Braintree nonce/token
+            GET  /api/payment/v1/history             → user payment history
+            GET  /api/payment/v1/subscription        → current subscription
+            POST /api/payment/v1/cancel              → cancel subscription
+            GET  /api/payment/v1/client-token        → Braintree Drop-in auth token
+            POST /api/payment/v1/methods             → vault a card/PayPal
+            GET  /api/payment/v1/methods             → list saved methods
+            DELETE /api/payment/v1/methods/{token}   → remove saved method
+            GET  /api/payment/v1/transactions/{id}   → lookup transaction
+            POST /api/payment/v1/refund/{id}         → refund transaction
+            GET  /api/payment/v1/gateway-info         → gateway status (no secrets)
+            GET  /api/payment/v1/health               → health check
 
-D7. ⬜ Test the full flow with Stripe test cards
-        WHO: YOU
-        TEST CARD: 4242 4242 4242 4242 (any expiry, any CVC)
-        VERIFY: Payment appears in Stripe dashboard, user gets access
+D5. ✅ Build frontend payment UI (React)
+        WHO: CO
+        COMPONENTS:
+            BraintreeDropIn.tsx  → Drop-in UI (cards, PayPal, Apple Pay, Google Pay)
+            SavedPaymentMethods.tsx → list/select/delete vaulted methods
+            PaymentPage.tsx      → plan selection + checkout flow
+        FEATURES: Sandbox indicator, promo codes (LAUNCH20, CAREER10)
 
-D8. ⬜ Go live (flip from test to live mode)
+D6. ✅ Sandbox integration test — Braintree (15/15 passed)
+        WHO: CO
+        FILE: tests/test_braintree_sandbox.py
+        TESTED: Client tokens, customers, vault cards, transactions,
+                lookup, void, refund, delete methods
+
+D7. ✅ Sandbox integration test — Stripe (11/11 passed)
+        WHO: CO
+        FILE: tests/test_stripe_sandbox.py
+        RESULT: Stripe works, kept as dormant fallback
+        SWITCH: Set PAYMENT_GATEWAY=stripe in .env to activate
+
+D8. ⬜ Configure PayPal in Braintree dashboard
+        WHO: YOU (in Braintree Control Panel → Processing → PayPal)
+        WHAT: Link your PayPal business account to enable PayPal in Drop-in
+        NOTE: Drop-in code already includes paypal config — just needs dashboard link
+
+D9. ⬜ Enable Apple Pay in Braintree dashboard
+        WHO: YOU (Braintree Control Panel → Processing → Apple Pay)
+        WHAT: Verify domain, upload Apple Pay certificate
+        NOTE: Requires Apple Developer account ($99/year)
+
+D10. ⬜ Enable Google Pay in Braintree dashboard
+        WHO: YOU (Braintree Control Panel → Processing → Google Pay)
+        WHAT: Link Google Pay merchant ID
+        NOTE: Free to set up, just needs Google Pay merchant registration
+
+D11. ⬜ Create subscription plans in Braintree dashboard
+        WHO: YOU (Braintree Control Panel → Plans)
+        CREATE:
+            Plan ID: monthly_pro, Price: $15.99, Billing: Monthly
+            Plan ID: annual_pro, Price: $149.99, Billing: Yearly
+            Plan ID: elite_pro, Price: $299.99, Billing: Yearly
+        NOTE: Required for recurring billing — one-off charges work without plans
+
+D12. ⬜ Add Braintree webhooks endpoint
+        WHO: CO
+        WHAT: POST /api/payment/v1/webhooks → handle subscription events,
+              disputes, payment method updates
+        EFFORT: ~80 lines
+
+D13. ⬜ Go live (sandbox → production)
         WHO: YOU
-        WHAT: In Stripe dashboard, toggle to Live mode
-        NOTE: You'll need to verify your business details first
+        WHAT: Apply for Braintree production account, swap keys in .env
+        UPDATE: BRAINTREE_ENVIRONMENT=production + production keys
+        COST: $0 — pay-as-you-go (1.9% + 20p per UK card transaction)
 ```
 
 ### Done when
-A user can visit your site, click Subscribe, pay with a real card, and get access.
+A user can visit the site, select a plan, pay with card/PayPal/Apple Pay/Google Pay,
+and get immediate access to their tier. Subscriptions auto-renew via Braintree.
 
 ---
 ---

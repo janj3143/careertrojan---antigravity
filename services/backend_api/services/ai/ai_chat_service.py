@@ -26,14 +26,27 @@ class AIChatService:
     """Unified interface for Perplexity and Gemini AI chat services"""
 
     def __init__(self):
-        """Initialize AI chat service with API keys"""
+        """Initialize AI chat service with API keys — reads config from models.yaml"""
+        # Load config-driven settings
+        try:
+            from config.model_config import model_config
+            pplx_cfg = model_config.get_llm_config("perplexity")
+            gemini_cfg = model_config.get_llm_config("gemini")
+            self._perplexity_model = pplx_cfg.get("default_model", "llama-3.1-sonar-large-128k-online")
+            self._gemini_model = gemini_cfg.get("default_model", "gemini-pro")
+            gemini_base = gemini_cfg.get("base_url", "https://generativelanguage.googleapis.com/v1beta/models")
+        except Exception:
+            self._perplexity_model = "llama-3.1-sonar-large-128k-online"
+            self._gemini_model = "gemini-pro"
+            gemini_base = "https://generativelanguage.googleapis.com/v1beta/models"
+
         # Perplexity API (primary - for web-grounded answers)
         self.perplexity_api_key = os.getenv('PERPLEXITY_API_KEY')
         self.perplexity_base_url = "https://api.perplexity.ai/chat/completions"
 
         # Gemini API (secondary - for analysis)
         self.gemini_api_key = os.getenv('GEMINI_API_KEY')
-        self.gemini_base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+        self.gemini_base_url = f"{gemini_base}/{self._gemini_model}:generateContent"
 
         # Service availability
         self.perplexity_available = bool(self.perplexity_api_key)
@@ -141,7 +154,7 @@ class AIChatService:
         # Try Perplexity (will include current market resources)
         if self.perplexity_available:
             try:
-                response = self._query_perplexity(prompt, model="pplx-70b-online")
+                response = self._query_perplexity(prompt)
                 if response:
                     return {
                         'plan': response,
@@ -209,7 +222,7 @@ class AIChatService:
         # Perplexity is ideal for this (web search)
         if self.perplexity_available:
             try:
-                response = self._query_perplexity(prompt, model="pplx-70b-online")
+                response = self._query_perplexity(prompt)
                 if response:
                     return {
                         'insights': response,
@@ -227,10 +240,12 @@ class AIChatService:
             'timestamp': datetime.now().isoformat()
         }
 
-    def _query_perplexity(self, prompt: str, model: str = "pplx-70b-online") -> Optional[str]:
-        """Query Perplexity API"""
+    def _query_perplexity(self, prompt: str, model: Optional[str] = None) -> Optional[str]:
+        """Query Perplexity API — model from config/models.yaml"""
         if not self.perplexity_api_key:
             return None
+
+        model = model or self._perplexity_model
 
         try:
             headers = {

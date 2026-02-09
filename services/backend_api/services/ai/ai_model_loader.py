@@ -11,11 +11,27 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def _get_embedding_model() -> str:
+    """Read embedding model name from config/models.yaml."""
+    try:
+        from config.model_config import model_config
+        return model_config.get_embedding_model()
+    except Exception:
+        return "all-MiniLM-L6-v2"
+
+def _get_models_dir() -> Path:
+    """Read trained models dir from config/models.yaml."""
+    try:
+        from config.model_config import model_config
+        return model_config.get_ml_base_dir()
+    except Exception:
+        return Path(__file__).parent.parent / "models"
+
 class AIModelLoader:
-    """Central model loading and caching"""
+    """Central model loading and caching — reads paths from config/models.yaml"""
 
     def __init__(self):
-        self.models_dir = Path(__file__).parent.parent / "models"
+        self.models_dir = _get_models_dir()
         self.models = {}
         self.loaded = False
 
@@ -38,11 +54,12 @@ class AIModelLoader:
         except Exception as e:
             logger.warning(f"Failed to load Bayesian: {e}")
 
-        # Sentence-BERT
+        # Sentence-BERT (model name from config/models.yaml)
         try:
             from sentence_transformers import SentenceTransformer
-            self.models['embedder'] = SentenceTransformer('all-MiniLM-L6-v2')
-            logger.info("✅ Loaded Sentence-BERT embedder")
+            emb_model = _get_embedding_model()
+            self.models['embedder'] = SentenceTransformer(emb_model)
+            logger.info(f"✅ Loaded Sentence-BERT embedder: {emb_model}")
         except ImportError:
             logger.warning("sentence-transformers not installed")
         except Exception as e:

@@ -1,0 +1,264 @@
+# ============================================================================
+# CareerTrojan — Unified Model Configuration
+# ============================================================================
+# Change ANY model here — zero code changes required.
+# Every AI service reads from this file at startup.
+# Hot-reload: POST /api/ai_data/v1/model/reload triggers a re-read.
+# ============================================================================
+
+# ── LLM Providers ──────────────────────────────────────────────────────────
+llm:
+  # Which provider to use by default: openai | anthropic | gemini | perplexity | ollama | vllm
+  default_provider: openai
+
+  providers:
+    openai:
+      enabled: true
+      api_key_env: OPENAI_API_KEY
+      default_model: gpt-4
+      fallback_models:
+        - gpt-4-turbo
+        - gpt-4o
+        - gpt-3.5-turbo
+      max_tokens: 1000
+      temperature: 0.7
+      timeout: 30
+
+    anthropic:
+      enabled: true
+      api_key_env: ANTHROPIC_API_KEY
+      default_model: claude-sonnet-4-20250514
+      fallback_models:
+        - claude-3-5-sonnet-20241022
+        - claude-3-opus-20240229
+        - claude-3-haiku-20240307
+      max_tokens: 1000
+      temperature: 0.7
+      timeout: 30
+
+    gemini:
+      enabled: true
+      api_key_env: GEMINI_API_KEY
+      default_model: gemini-pro
+      fallback_models:
+        - gemini-1.5-pro
+        - gemini-1.5-flash
+      base_url: https://generativelanguage.googleapis.com/v1beta/models
+      timeout: 30
+
+    perplexity:
+      enabled: true
+      api_key_env: PERPLEXITY_API_KEY
+      default_model: llama-3.1-sonar-large-128k-online
+      fallback_models:
+        - llama-3.1-sonar-small-128k-online
+      base_url: https://api.perplexity.ai/chat/completions
+      timeout: 30
+
+    ollama:
+      enabled: false
+      base_url: http://localhost:11434
+      default_model: llama3
+      embedding_model: nomic-embed-text
+      timeout: 60
+
+    vllm:
+      enabled: false
+      base_url: http://localhost:8000/v1
+      default_model: llama-3-8b-instruct
+      timeout: 30
+
+  # Fallback chain: if default_provider fails, try these in order
+  fallback_chain:
+    - openai
+    - anthropic
+    - gemini
+    - perplexity
+    - ollama
+
+# ── Embedding Models ───────────────────────────────────────────────────────
+embeddings:
+  # Provider: sentence_transformers | openai | ollama
+  provider: sentence_transformers
+  models:
+    sentence_transformers:
+      model_name: all-MiniLM-L6-v2
+      fallback: paraphrase-MiniLM-L6-v2
+      device: cpu    # cpu | cuda | mps
+      batch_size: 32
+    openai:
+      model_name: text-embedding-3-small
+      fallback: text-embedding-ada-002
+    ollama:
+      model_name: nomic-embed-text
+
+# ── ML Model Families (locally-trained) ────────────────────────────────────
+ml_models:
+  base_dir_env: ML_MODELS_PATH  # reads from .env
+  fallback_dir: trained_models
+
+  bayesian:
+    enabled: true
+    models:
+      - name: bayesian_classifier
+        type: gaussian_nb
+        file: bayesian_classifier.pkl
+        version: latest
+      - name: multinomial_nb
+        type: multinomial_nb
+        file: multinomial_nb.pkl
+        version: latest
+      - name: bayesian_network
+        type: bayesian_network
+        file: bayesian_network.pkl
+        version: latest
+    training_script: services/ai_engine/train_bayesian_models.py
+
+  neural:
+    enabled: true
+    models:
+      - name: dnn_classifier
+        type: keras_dnn
+        file: dnn_classifier.h5
+        version: latest
+      - name: cnn_classifier
+        type: keras_cnn
+        file: cnn_classifier.h5
+        version: latest
+      - name: lstm_classifier
+        type: keras_lstm
+        file: lstm_classifier.h5
+        version: latest
+      - name: transformer_encoder
+        type: keras_transformer
+        file: transformer_encoder.h5
+        version: latest
+      - name: autoencoder
+        type: keras_autoencoder
+        file: autoencoder.h5
+        version: latest
+    training_script: services/ai_engine/train_neural_networks.py
+
+  fuzzy:
+    enabled: true
+    models:
+      - name: mamdani_fis
+        type: fuzzy_mamdani
+        file: mamdani_fis.json
+        version: latest
+      - name: sugeno_fis
+        type: fuzzy_sugeno
+        file: sugeno_fis.json
+        version: latest
+      - name: fuzzy_cmeans
+        type: fuzzy_clustering
+        file: fuzzy_cmeans.pkl
+        version: latest
+    training_script: services/ai_engine/train_fuzzy_logic.py
+
+  statistical:
+    enabled: true
+    models:
+      - name: logistic_regression
+        type: sklearn_logistic
+        file: logistic_regression.pkl
+        version: latest
+      - name: gradient_booster
+        type: sklearn_gbm
+        file: gradient_booster.pkl
+        version: latest
+      - name: pca_reducer
+        type: sklearn_pca
+        file: pca_reducer.pkl
+        version: latest
+      - name: kmeans_cluster
+        type: sklearn_kmeans
+        file: kmeans_cluster.pkl
+        version: latest
+      - name: salary_predictor
+        type: sklearn_regression
+        file: salary_predictor.pkl
+        version: latest
+    training_script: services/ai_engine/train_statistical_methods.py
+
+  nlp:
+    enabled: true
+    models:
+      - name: tfidf_sentiment
+        type: sklearn_tfidf
+        file: tfidf_sentiment.pkl
+        version: latest
+      - name: word2vec
+        type: gensim_w2v
+        file: word2vec.model
+        version: latest
+      - name: lda_topics
+        type: gensim_lda
+        file: lda_topics.pkl
+        version: latest
+      - name: spacy_ner
+        type: spacy
+        file: spacy_ner_model
+        version: latest
+    training_script: services/ai_engine/train_nlp_llm_models.py
+
+  expert_system:
+    enabled: true
+    models:
+      - name: career_rules
+        type: rule_engine
+        file: career_rules.yaml
+        version: latest
+      - name: skill_matcher
+        type: weighted_scoring
+        file: skill_matcher.yaml
+        version: latest
+    rules_dir: config/expert_rules
+
+# ── Inference Orchestration ────────────────────────────────────────────────
+inference:
+  # Which model families to use for each task (ordered by priority)
+  tasks:
+    cv_matching:
+      pipeline:
+        - nlp.tfidf_sentiment     # Quick keyword match
+        - embeddings              # Semantic similarity
+        - bayesian.bayesian_classifier  # Probabilistic ranking
+        - fuzzy.mamdani_fis       # Confidence scoring
+      llm_augment: true           # Also use LLM for final ranking explanation
+      llm_provider: null          # null = use default_provider
+
+    career_advice:
+      pipeline:
+        - statistical.logistic_regression
+        - bayesian.bayesian_network
+        - expert_system.career_rules
+      llm_augment: true
+      llm_provider: perplexity    # Web-grounded advice
+
+    skill_gap_analysis:
+      pipeline:
+        - nlp.tfidf_sentiment
+        - statistical.pca_reducer
+        - fuzzy.sugeno_fis
+      llm_augment: false
+
+    salary_prediction:
+      pipeline:
+        - statistical.salary_predictor
+        - bayesian.bayesian_classifier
+      llm_augment: false
+
+    resume_parsing:
+      pipeline:
+        - nlp.spacy_ner
+        - embeddings
+      llm_augment: true
+      llm_provider: openai
+
+# ── Hot Reload Settings ────────────────────────────────────────────────────
+hot_reload:
+  enabled: true
+  watch_config: true        # Re-read this YAML on change
+  watch_models: true        # Reload .pkl/.h5 when updated
+  check_interval_seconds: 60

@@ -48,7 +48,30 @@ user_data/
 ai_data_final/
 trained_models/
 working/
+# ── Data files (never commit — generated or user data) ───────────────
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!tsconfig.*.json
+!vite.config.json
+!.vscode/*.json
+!apps/**/tsconfig.json
+!apps/**/tsconfig.*.json
+!apps/**/package.json
+!apps/**/package-lock.json
+*.csv
+*.xlsx
 
+# ── Database files ────────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Credentials / secrets ─────────────────────────────────────────────────────
+*credentials*
+*secrets*.json
+*sessions*.json
 # ── Logs ─────────────────────────────────────────────────────────────
 logs/
 *.log

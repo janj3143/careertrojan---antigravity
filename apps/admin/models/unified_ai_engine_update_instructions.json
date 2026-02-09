@@ -1,6 +1,0 @@
-{
-  "file": "admin_portal\\services\\unified_ai_engine.py",
-  "action": "Add model loading to BayesianInferenceEngine.__init__",
-  "code_to_add": "\n        # Load trained models if available\n        models_dir = Path(__file__).parent.parent / \"models\"\n        bayesian_file = models_dir / \"bayesian_classifier.pkl\"\n        vectorizer_file = models_dir / \"tfidf_vectorizer.pkl\"\n\n        if bayesian_file.exists() and vectorizer_file.exists():\n            import pickle\n            try:\n                self.models['job_classification'] = pickle.load(open(bayesian_file, 'rb'))\n                self.vectorizers['job_classification'] = pickle.load(open(vectorizer_file, 'rb'))\n                self.is_trained = True\n                logger.info(\"\u2705 Loaded trained Bayesian models\")\n            except Exception as e:\n                logger.warning(f\"Failed to load trained models: {e}\")\n                self.is_trained = False\n        else:\n            logger.info(\"\u2139\ufe0f  No trained models found, using fallback mode\")\n",
-  "location": "After self.is_trained = False line"
-}

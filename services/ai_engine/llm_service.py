@@ -1,8 +1,26 @@
+"""
+LLM Service — Legacy Interface
+==============================
+NOTE: New code should use services.ai_engine.llm_gateway instead.
+This module is retained for backward compatibility.
+All model names are now read from config/models.yaml.
+"""
 
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Dict, Any, Optional
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+
+def _get_model_default(provider: str, fallback: str) -> str:
+    """Read default model from config/models.yaml, fallback to hardcoded."""
+    try:
+        from config.model_config import model_config
+        return model_config.get_llm_model(provider)
+    except Exception:
+        return fallback
 
 class LLMBackendType(Enum):
     OPENAI = "openai"
@@ -51,7 +69,7 @@ class OpenAIService(BaseLLMService):
         
         try:
             response = self.client.chat.completions.create(
-                model=kwargs.get("model", "gpt-4"),
+                model=kwargs.get("model", _get_model_default("openai", "gpt-4")),
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=kwargs.get("max_tokens", 1000),
                 temperature=kwargs.get("temperature", 0.7)
@@ -86,7 +104,7 @@ class AnthropicService(BaseLLMService):
         
         try:
             response = self.client.messages.create(
-                model=kwargs.get("model", "claude-3-opus-20240229"),
+                model=kwargs.get("model", _get_model_default("anthropic", "claude-sonnet-4-20250514")),
                 max_tokens=kwargs.get("max_tokens", 1000),
                 temperature=kwargs.get("temperature", 0.7),
                 messages=[{"role": "user", "content": prompt}]
@@ -112,7 +130,7 @@ class VLLMService(BaseLLMService):
         try:
             # Real vLLM / OpenAI-compatible endpoint
             payload = {
-                "model": "llama-3-8b-instruct", # Configurable
+                "model": _get_model_default("vllm", "llama-3-8b-instruct"),
                 "messages": [{"role": "user", "content": prompt}],
                 "max_tokens": kwargs.get("max_tokens", 1000),
                 "temperature": kwargs.get("temperature", 0.7)

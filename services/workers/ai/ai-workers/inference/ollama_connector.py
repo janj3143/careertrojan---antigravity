@@ -21,9 +21,25 @@ from typing import Dict, List, Any, Optional
 
 logger = logging.getLogger(__name__)
 
+def _get_ollama_defaults() -> Dict[str, str]:
+    """Read Ollama model defaults from config/models.yaml."""
+    try:
+        from config.model_config import model_config
+        cfg = model_config.get_llm_config("ollama")
+        return {
+            "default_model": cfg.get("default_model", "llama3"),
+            "embedding_model": cfg.get("embedding_model", "nomic-embed-text"),
+            "base_url": cfg.get("base_url", "http://localhost:11434"),
+        }
+    except Exception:
+        return {"default_model": "llama3", "embedding_model": "nomic-embed-text", "base_url": "http://localhost:11434"}
+
 class OllamaConnector:
-    def __init__(self, base_url: str = "http://localhost:11434"):
-        self.base_url = base_url
+    def __init__(self, base_url: Optional[str] = None):
+        defaults = _get_ollama_defaults()
+        self.base_url = base_url or defaults["base_url"]
+        self._default_model = defaults["default_model"]
+        self._default_embed_model = defaults["embedding_model"]
         self.headers = {"Content-Type": "application/json"}
         
     def is_alive(self) -> bool:
@@ -46,8 +62,9 @@ class OllamaConnector:
             logger.error(f"Failed to list models: {e}")
             return []
 
-    def generate(self, prompt: str, model: str = "llama3", system: str = "") -> str:
-        """Generate text completion"""
+    def generate(self, prompt: str, model: Optional[str] = None, system: str = "") -> str:
+        """Generate text completion — model from config/models.yaml"""
+        model = model or self._default_model
         payload = {
             "model": model,
             "prompt": prompt,
@@ -67,8 +84,9 @@ class OllamaConnector:
             logger.error(f"Ollama generation exception: {e}")
             return ""
 
-    def get_embeddings(self, text: str, model: str = "nomic-embed-text") -> List[float]:
-        """Generate embeddings for text"""
+    def get_embeddings(self, text: str, model: Optional[str] = None) -> List[float]:
+        """Generate embeddings — model from config/models.yaml"""
+        model = model or self._default_embed_model
         payload = {
             "model": model,
             "prompt": text

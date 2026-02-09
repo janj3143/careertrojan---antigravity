@@ -101,12 +101,46 @@ export default function BraintreeDropIn({
                     instanceRef.current = null;
                 }
 
-                // 4. Create Drop-in
+                // 4. Create Drop-in with all payment methods
                 const instance = await window.braintree!.dropin.create({
                     authorization: client_token,
                     container: containerRef.current,
-                    card: { cardholderName: true },
-                    // PayPal is auto-enabled when configured in Braintree dashboard
+                    card: {
+                        cardholderName: { required: true },
+                        overrides: {
+                            fields: {
+                                postalCode: { prefill: '' },
+                            },
+                        },
+                    },
+                    // PayPal — enabled automatically when linked in Braintree dashboard
+                    paypal: {
+                        flow: 'vault',              // save for recurring
+                        buttonStyle: {
+                            color: 'blue',
+                            shape: 'rect',
+                            size: 'responsive',
+                        },
+                    },
+                    // Apple Pay — requires verified domain in Braintree dashboard
+                    applePay: {
+                        displayName: 'CareerTrojan',
+                        paymentRequest: {
+                            total: { label: 'CareerTrojan', amount: amount || '0.00' },
+                            requiredBillingContactFields: ['postalAddress'],
+                        },
+                    },
+                    // Google Pay — requires merchant ID in Braintree dashboard
+                    googlePay: {
+                        merchantId: 'CareerTrojan',
+                        transactionInfo: {
+                            totalPriceStatus: 'FINAL',
+                            totalPrice: amount || '0.00',
+                            currencyCode: 'GBP',
+                        },
+                    },
+                    // Venmo (US users)
+                    venmo: { allowNewBrowserTab: false },
                 });
 
                 if (cancelled) {
@@ -174,7 +208,15 @@ export default function BraintreeDropIn({
                 </button>
             )}
 
-            <p className="text-xs text-gray-500 text-center mt-3 flex items-center justify-center gap-1">
+            <div className="mt-4 flex items-center justify-center gap-3 text-gray-400 text-xs">
+                <span>Visa</span>
+                <span>Mastercard</span>
+                <span>Amex</span>
+                <span>PayPal</span>
+                <span>Apple Pay</span>
+                <span>Google Pay</span>
+            </div>
+            <p className="text-xs text-gray-500 text-center mt-2 flex items-center justify-center gap-1">
                 <span>🔒</span> Secured by Braintree (a PayPal service). Your details are encrypted.
             </p>
         </div>

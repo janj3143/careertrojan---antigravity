@@ -28,14 +28,26 @@ from datetime import datetime, timezone
 from enum import Enum
 import logging
 import uuid
+import os
 
-# Braintree service (lazy — only fails at call time if not configured)
+# Gateway selection — Braintree is primary, Stripe is dormant fallback
+PAYMENT_GATEWAY = os.getenv("PAYMENT_GATEWAY", "braintree").lower()
+
 try:
     from services.backend_api.services import braintree_service
     BRAINTREE_AVAILABLE = True
 except ImportError:
     braintree_service = None  # type: ignore
     BRAINTREE_AVAILABLE = False
+
+# Stripe is installed but dormant — kept as tested fallback
+try:
+    import stripe as _stripe_sdk
+    _stripe_sdk.api_key = os.getenv("STRIPE_SECRET_KEY", "")
+    STRIPE_AVAILABLE = bool(_stripe_sdk.api_key)
+except ImportError:
+    _stripe_sdk = None  # type: ignore
+    STRIPE_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -453,8 +465,9 @@ async def health_check():
         "status": "healthy",
         "service": "payment-api",
         "plans_available": len(PLANS),
-        "gateway": "braintree",
+        "primary_gateway": PAYMENT_GATEWAY,
         "braintree_configured": bt_configured,
+        "stripe_available": STRIPE_AVAILABLE,
         "environment": os.getenv("BRAINTREE_ENVIRONMENT", "sandbox") if bt_configured else None,
     }
 
@@ -561,8 +574,17 @@ async def gateway_info():
     """
     bt_configured = BRAINTREE_AVAILABLE and braintree_service.is_configured()
     return {
-        "gateway": "braintree",
-        "configured": bt_configured,
+        "primary_gateway": PAYMENT_GATEWAY,
+        "braintree": {
+            "configured": bt_configured,
+            "environment": os.getenv("BRAINTREE_ENVIRONMENT", "sandbox") if bt_configured else None,
+            "merchant_id": os.getenv("BRAINTREE_MERCHANT_ID", "")[:6] + "..." if bt_configured else None,
+            "methods": ["card", "paypal", "apple_pay", "google_pay", "venmo"] if bt_configured else [],
+        },
+        "stripe": {
+            "available": STRIPE_AVAILABLE,
+            "status": "dormant_fallback",
+        },
+        # For frontend sandbox indicator
         "environment": os.getenv("BRAINTREE_ENVIRONMENT", "sandbox") if bt_configured else None,
-        "merchant_id": os.getenv("BRAINTREE_MERCHANT_ID", "")[:6] + "..." if bt_configured else None,
     }

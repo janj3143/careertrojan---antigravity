@@ -1,38 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { VISUAL_COMPONENTS } from "../components/visuals/registry";
 
-// Hardcoded registry for now as backend endpoint is missing
-const REGISTRY = [
-    {
-        id: "quadrant-fit",
-        title: "Market Fit Quadrant",
-        category: "Strategic",
-        react_component: "QuadrantFitD3View"
-    },
-    {
-        id: "word-cloud",
-        title: "Skill Cloud Analysis",
-        category: "Text Analysis",
-        react_component: "ConnectedWordCloudD3View"
-    },
-    {
-        id: "network-graph",
-        title: "Network Touchpoints",
-        category: "Graph",
-        react_component: "TouchpointNetworkCytoscapeView"
-    },
-    {
-        id: "mind-map",
-        title: "Career Path Mind Map",
-        category: "Planning",
-        react_component: "MindMapReactFlowView"
-    }
+const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8500";
+
+interface VisualEntry {
+    id: string;
+    title: string;
+    category: string;
+    react_component: string;
+}
+
+// Inline fallback if backend is unreachable
+const FALLBACK_REGISTRY: VisualEntry[] = [
+    { id: "quadrant_fit_d3", title: "Market Fit Quadrant", category: "Positioning", react_component: "QuadrantFitD3View" },
+    { id: "wordcloud_connected_d3", title: "Skill Cloud Analysis", category: "Market Trends", react_component: "ConnectedWordCloudD3View" },
+    { id: "touchpoint_network_cytoscape", title: "Network Touchpoints", category: "Explainability", react_component: "TouchpointNetworkCytoscapeView" },
+    { id: "mindmap_reactflow", title: "Career Path Mind Map", category: "User Directed", react_component: "MindMapReactFlowView" },
 ];
 
 export default function VisualisationsHub() {
-    const [selectedVisual, setSelectedVisual] = useState<string>(REGISTRY[0].id);
+    const [registry, setRegistry] = useState<VisualEntry[]>(FALLBACK_REGISTRY);
+    const [selectedVisual, setSelectedVisual] = useState<string>(FALLBACK_REGISTRY[0].id);
+    const [loading, setLoading] = useState(true);
 
-    const activeVisual = REGISTRY.find(v => v.id === selectedVisual);
+    useEffect(() => {
+        fetch(`${API_BASE}/api/insights/v1/visuals`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.visuals && data.visuals.length > 0) {
+                    setRegistry(data.visuals);
+                    setSelectedVisual(data.visuals[0].id);
+                }
+            })
+            .catch(() => { /* keep fallback */ })
+            .finally(() => setLoading(false));
+    }, []);
+
+    const activeVisual = registry.find(v => v.id === selectedVisual);
     const Component = activeVisual ? VISUAL_COMPONENTS[activeVisual.react_component] : null;
 
     return (
@@ -41,10 +45,12 @@ export default function VisualisationsHub() {
             <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
                 <div className="p-4 border-b border-gray-200">
                     <h3 className="font-bold text-gray-900">Visuals Registry</h3>
-                    <p className="text-xs text-gray-500 mt-1">Advanced Analytics Views</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                        {loading ? "Loading…" : `${registry.length} visualisations`}
+                    </p>
                 </div>
                 <div className="flex-1 overflow-y-auto p-4 space-y-2">
-                    {REGISTRY.map(v => (
+                    {registry.map(v => (
                         <div
                             key={v.id}
                             onClick={() => setSelectedVisual(v.id)}

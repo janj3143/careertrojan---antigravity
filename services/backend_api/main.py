@@ -20,6 +20,7 @@ except ImportError:
 from services.backend_api.routers import admin, user, mentor, shared, auth, mentorship, intelligence, coaching, ops, resume, blockers, payment, rewards, credits, ai_data, jobs, taxonomy, sessions
 from services.backend_api.routers import insights, touchpoints, mapping, analytics
 from services.backend_api.routers import admin_abuse, admin_parsing, admin_tokens, anti_gaming, logs, telemetry
+from services.backend_api.routers import gdpr
 
 # Setup Logging
 logging.basicConfig(level=logging.INFO)
@@ -90,6 +91,9 @@ app.include_router(insights.router)       # Quadrant, word-cloud, graph, cohort
 app.include_router(touchpoints.router)    # Evidence & touch-not lookups
 app.include_router(mapping.router)        # Live endpoint map, visual registry
 app.include_router(analytics.router)      # System statistics & dashboard data
+
+# ── GDPR / Data Rights ──────────────────────────────────────
+app.include_router(gdpr.router)           # Consent, data export, account deletion, audit log
 
 # ── Admin Extension Routers ──────────────────────────────────
 try: app.include_router(admin_abuse.router)

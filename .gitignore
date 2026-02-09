@@ -76,3 +76,4 @@ docker-compose.override.yml
 *.h5
 *.pt
 *.onnx
+*.db

@@ -1,8 +1,80 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, Text, Float, JSON
 from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
+import uuid
 
 Base = declarative_base()
+
+
+# ── GDPR & Audit Models ──────────────────────────────────────
+
+class ConsentRecord(Base):
+    """Tracks explicit user consent for data processing (GDPR Art. 7)."""
+    __tablename__ = "consent_records"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    consent_type = Column(String, nullable=False)   # "terms", "marketing", "data_processing", "cookies"
+    granted = Column(Boolean, nullable=False)
+    ip_address = Column(String)
+    user_agent = Column(String)
+    version = Column(String, default="1.0")         # policy version consented to
+    created_at = Column(DateTime, default=datetime.utcnow)
+    revoked_at = Column(DateTime, nullable=True)
+
+    user = relationship("User", backref="consent_records")
+
+
+class AuditLog(Base):
+    """Immutable audit trail for data-sensitive operations (GDPR Art. 30)."""
+    __tablename__ = "audit_log"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    actor_id = Column(Integer, ForeignKey("users.id"), nullable=True)   # who triggered it (admin or user)
+    action = Column(String, nullable=False, index=True)    # "data_export", "account_delete", "consent_grant", etc.
+    resource_type = Column(String)                          # "user", "resume", "profile", etc.
+    resource_id = Column(String)
+    detail = Column(Text)
+    ip_address = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class DataExportRequest(Base):
+    """Tracks data export requests (GDPR Art. 20 — right to data portability)."""
+    __tablename__ = "data_export_requests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    status = Column(String, default="pending")  # "pending", "processing", "completed", "failed"
+    file_path = Column(String, nullable=True)   # path to generated export file
+    requested_at = Column(DateTime, default=datetime.utcnow)
+    completed_at = Column(DateTime, nullable=True)
+    expires_at = Column(DateTime, nullable=True)  # export link expiry
+
+    user = relationship("User", backref="export_requests")
+
+
+class Interaction(Base):
+    """Database-backed interaction log for queryable analytics.
+    Supplements the file-based interaction logger middleware."""
+    __tablename__ = "interactions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    session_id = Column(String, index=True)
+    action_type = Column(String, index=True)   # "cv_upload", "job_search", "coaching_session", "login", etc.
+    method = Column(String)                     # HTTP method
+    path = Column(String)                       # request path
+    status_code = Column(Integer)
+    response_time_ms = Column(Float)
+    ip_address = Column(String)
+    user_agent = Column(String)
+    metadata_json = Column(Text)                # extra context as JSON
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+
+# ── Core Application Models ──────────────────────────────────
 
 class User(Base):
     __tablename__ = "users"
@@ -126,7 +198,6 @@ class MentorApplication(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 # --- Blocker System Models ---
-import uuid
 
 class ApplicationBlocker(Base):
     __tablename__ = "application_blockers"

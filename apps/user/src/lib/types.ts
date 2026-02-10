@@ -21,4 +21,7 @@ export type TermCloudResponse = {
     terms: Array<{ text: string; value: number; touchpoint_ids?: string[] }>;
 };
 
-export type CooccurrenceResponse = { edges: Array<{ source: string; target: string; weight: number }> };
+export type CooccurrenceResponse = {
+    nodes: Array<{ id: string; group: number; freq?: number }>;
+    edges: Array<{ source: string; target: string; weight: number }>;
+};

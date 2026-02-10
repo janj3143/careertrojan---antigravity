@@ -22,6 +22,8 @@ export const API = {
   mentorship: `${API_BASE}/api/mentorship/v1`,
   mentor: `${API_BASE}/api/mentor/v1`,
   insights: `${API_BASE}/api/insights/v1`,
+  touchpoints: `${API_BASE}/api/touchpoints/v1`,
+  mapping: `${API_BASE}/api/mapping/v1`,
   taxonomy: `${API_BASE}/api/taxonomy/v1`,
   credits: `${API_BASE}/api/credits/v1`,
   sessions: `${API_BASE}/api/sessions/v1`,

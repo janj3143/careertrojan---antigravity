@@ -64,7 +64,7 @@ export default function CoachingHub() {
 
     const analyzeBlockers = async () => {
         try {
-            const result = await detectBlockers(API_CONFIG, {
+            const result = await detectBlockers({
                 jd_text: jobContext.description,
                 resume_data: resumeContext || {}
             });
@@ -82,7 +82,7 @@ export default function CoachingHub() {
     const handleGenerateQuestions = async () => {
         setLoading(true);
         try {
-            const qs = await generateQuestions(API_CONFIG, {
+            const qs = await generateQuestions({
                 question_type: qType,
                 count: 5,
                 resume: resumeContext || {},
@@ -100,7 +100,7 @@ export default function CoachingHub() {
         if (!practiceQ || !practiceA) return;
         setLoading(true);
         try {
-            const fb = await reviewAnswer(API_CONFIG, {
+            const fb = await reviewAnswer({
                 question: practiceQ,
                 answer: practiceA,
                 resume: resumeContext,

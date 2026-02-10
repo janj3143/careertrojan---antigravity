@@ -136,20 +136,55 @@ def get_term_cloud(loader: DataLoader = Depends(get_loader)):
     return {"terms": terms[:100]}
 
 @router.get("/terms/cooccurrence")
-def get_cooccurrence(term: Optional[str] = None):
+def get_cooccurrence(
+    term: Optional[str] = None,
+    limit: int = Query(default=30, le=100),
+    loader=Depends(get_loader),
+):
     """
-    Returns dummy co-occurrence data for the graph view.
-    Real impl would analyze profile skill sets.
+    Returns co-occurrence data for skills that appear together in profiles.
+    If `term` is given, returns co-occurring skills for that term.
+    Otherwise returns the top global co-occurrence pairs.
     """
-    # Mock data for phase 2 demo
-    nodes = []
-    edges = []
+    profiles = loader.get_profiles() if loader else []
+
+    # Build co-occurrence matrix  {(a, b): count}
+    from collections import Counter
+    pair_counts: Counter = Counter()
+    term_counts: Counter = Counter()
+
+    for p in profiles:
+        skills = list({s.lower().strip() for s in p.get("skills", [])})
+        for s in skills:
+            term_counts[s] += 1
+        # Count every unique pair per profile
+        for i in range(len(skills)):
+            for j in range(i + 1, len(skills)):
+                a, b = sorted([skills[i], skills[j]])
+                pair_counts[(a, b)] += 1
+
+    nodes_set: set = set()
+    edges: list = []
+
     if term:
-        # Generate some related terms
-        related = [f"{term}_{i}" for i in range(5)]
-        nodes = [{"id": term, "group": 1}] + [{"id": r, "group": 2} for r in related]
-        edges = [{"source": term, "target": r, "weight": random.randint(1, 10)} for r in related]
-    
+        t = term.lower().strip()
+        # Get pairs involving this term
+        relevant = [(pair, cnt) for pair, cnt in pair_counts.most_common() if t in pair]
+        relevant = relevant[:limit]
+        nodes_set.add(t)
+        for (a, b), cnt in relevant:
+            partner = b if a == t else a
+            nodes_set.add(partner)
+            edges.append({"source": t, "target": partner, "weight": cnt})
+    else:
+        # Top global co-occurring pairs
+        for (a, b), cnt in pair_counts.most_common(limit):
+            nodes_set.add(a)
+            nodes_set.add(b)
+            edges.append({"source": a, "target": b, "weight": cnt})
+
+    nodes = [{"id": n, "group": 1 if n == (term or "").lower().strip() else 2, "freq": term_counts.get(n, 0)} for n in nodes_set]
+
     return {"nodes": nodes, "edges": edges}
 
 @router.get("/graph")
@@ -161,22 +196,71 @@ def get_graph_data(loader: DataLoader = Depends(get_loader)):
     """
     profiles = loader.get_profiles()[:20] # Limit for graph readability
     
-    nodes = []
+    nodes_map: Dict[str, dict] = {}
     edges = []
     
     # Add Profile Nodes
     for p in profiles:
-        nodes.append({"data": {"id": p["id"], "label": p["role"], "type": "profile"}})
+        pid = p["id"]
+        nodes_map[pid] = {"data": {"id": pid, "label": p["role"], "type": "profile"}}
         
         # Add Skill Nodes and Edges
         for s in p.get("skills", [])[:5]:
-            sid = f"skill_{s}"
-            # Check if node exists (simple dedupe logic needed in prod, here we rely on cytoscape handling duplicates or just overwrite)
-            nodes.append({"data": {"id": sid, "label": s, "type": "skill"}})
-            edges.append({"data": {"source": p["id"], "target": sid, "label": "has_skill"}})
+            sid = f"skill_{s.lower().strip()}"
+            if sid not in nodes_map:
+                nodes_map[sid] = {"data": {"id": sid, "label": s, "type": "skill"}}
+            edges.append({"data": {"source": pid, "target": sid, "label": "has_skill"}})
 
-    return list({v['data']['id']:v for v in nodes}.values()) + edges # Dedupe nodes by ID
+    return {"nodes": list(nodes_map.values()), "edges": edges}
 
 @router.post("/cohort/resolve")
-def resolve_cohort(filters: Dict[str, Any]):
-    return {"cohort_id": "CH_001", "count": 125}
+def resolve_cohort(
+    filters: Dict[str, Any],
+    loader=Depends(get_loader),
+):
+    """
+    Resolve a peer cohort from the profile store based on the given filters.
+    Filters can include: industry, seniority, min_experience, max_experience,
+    skills (list), match_score_min.
+    Returns cohort_id, matching count, and summary stats.
+    """
+    profiles = loader.get_profiles() if loader else []
+    matched = profiles  # start with all
+
+    if "industry" in filters:
+        matched = [p for p in matched if p.get("industry", "").lower() == filters["industry"].lower()]
+    if "seniority" in filters:
+        matched = [p for p in matched if p.get("seniority", "").lower() == filters["seniority"].lower()]
+    if "min_experience" in filters:
+        matched = [p for p in matched if p.get("experience_years", 0) >= filters["min_experience"]]
+    if "max_experience" in filters:
+        matched = [p for p in matched if p.get("experience_years", 0) <= filters["max_experience"]]
+    if "skills" in filters and isinstance(filters["skills"], list):
+        required = {s.lower() for s in filters["skills"]}
+        matched = [p for p in matched if required & {s.lower() for s in p.get("skills", [])}]
+    if "match_score_min" in filters:
+        matched = [p for p in matched if p.get("match_score", 0) >= filters["match_score_min"]]
+
+    # Build a deterministic cohort ID from filter hash
+    import hashlib
+    filter_sig = hashlib.md5(json.dumps(filters, sort_keys=True).encode()).hexdigest()[:8]
+    cohort_id = f"CH_{filter_sig}"
+
+    # Summary stats
+    scores = [p.get("match_score", 0) for p in matched]
+    avg_score = round(sum(scores) / max(len(scores), 1), 1)
+    exp_years = [p.get("experience_years", 0) for p in matched]
+    avg_exp = round(sum(exp_years) / max(len(exp_years), 1), 1)
+
+    return {
+        "cohort_id": cohort_id,
+        "count": len(matched),
+        "filters_applied": filters,
+        "summary": {
+            "avg_match_score": avg_score,
+            "avg_experience_years": avg_exp,
+            "industries": list({p.get("industry", "Unknown") for p in matched}),
+            "seniorities": list({p.get("seniority", "Unknown") for p in matched}),
+        },
+        "profile_ids": [p["id"] for p in matched[:50]],  # cap at 50 for response size
+    }

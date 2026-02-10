@@ -1,13 +1,12 @@
 
 import React from "react";
 import * as d3 from "d3";
-import type { ApiConfig } from "../../lib/api";
 import { getQuadrant } from "../../lib/api";
 import type { CohortFilters, QuadrantResponse } from "../../lib/types";
 import { useSelectionStore } from "../../lib/selection_store";
 
-export function QuadrantFitD3View({ api, filters, width = 860, height = 520 }: {
-    api: ApiConfig; filters: CohortFilters; width?: number; height?: number;
+export function QuadrantFitD3View({ filters = {}, width = 860, height = 520 }: {
+    filters?: CohortFilters; width?: number; height?: number;
 }) {
     const ref = React.useRef<SVGSVGElement | null>(null);
     const { setSelection } = useSelectionStore();
@@ -15,9 +14,9 @@ export function QuadrantFitD3View({ api, filters, width = 860, height = 520 }: {
 
     React.useEffect(() => {
         let cancel = false;
-        getQuadrant(api, filters).then(r => !cancel && setData(r));
+        getQuadrant(filters).then(r => !cancel && setData(r)).catch(() => {});
         return () => { cancel = true; };
-    }, [api.baseUrl, JSON.stringify(filters)]);
+    }, [JSON.stringify(filters)]);
 
     React.useEffect(() => {
         if (!data || !ref.current) return;

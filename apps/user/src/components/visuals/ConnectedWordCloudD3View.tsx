@@ -2,13 +2,12 @@
 import React from "react";
 import * as d3 from "d3";
 import cloud from "d3-cloud";
-import type { ApiConfig } from "../../lib/api";
 import { getTermCloud, getCooccurrence } from "../../lib/api";
 import type { CohortFilters, TermCloudResponse, CooccurrenceResponse } from "../../lib/types";
 import { useSelectionStore } from "../../lib/selection_store";
 
-export function ConnectedWordCloudD3View({ api, filters, width = 860, height = 520 }: {
-    api: ApiConfig; filters: CohortFilters; width?: number; height?: number;
+export function ConnectedWordCloudD3View({ filters = {}, width = 860, height = 520 }: {
+    filters?: CohortFilters; width?: number; height?: number;
 }) {
     const ref = React.useRef<SVGSVGElement | null>(null);
     const { setSelection } = useSelectionStore();
@@ -18,16 +17,16 @@ export function ConnectedWordCloudD3View({ api, filters, width = 860, height = 5
 
     React.useEffect(() => {
         let cancel = false;
-        getTermCloud(api, filters).then(r => !cancel && setCloudData(r));
+        getTermCloud(filters).then(r => !cancel && setCloudData(r)).catch(() => {});
         return () => { cancel = true; };
-    }, [api.baseUrl, JSON.stringify(filters)]);
+    }, [JSON.stringify(filters)]);
 
     React.useEffect(() => {
         if (!selected) { setEdges(null); return; }
         let cancel = false;
-        getCooccurrence(api, filters, selected).then(r => !cancel && setEdges(r)).catch(() => !cancel && setEdges(null));
+        getCooccurrence(filters, selected).then(r => !cancel && setEdges(r)).catch(() => !cancel && setEdges(null));
         return () => { cancel = true; };
-    }, [selected, api.baseUrl, JSON.stringify(filters)]);
+    }, [selected, JSON.stringify(filters)]);
 
     React.useEffect(() => {
         if (!cloudData || !ref.current) return;

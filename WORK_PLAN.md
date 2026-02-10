@@ -20,9 +20,9 @@
 - [x] **User Portal**: 15 pages + consolidation page enacted with React routing.
 - [x] **User Consolidation Page**: `ConsolidationPage.tsx` — profile, sessions, resume, AI matches, coaching, mentorship. Route: `/consolidation`.
 - [x] **Mentor Portal**: 12 pages enacted with protected React routes.
-- [ ] **Visualisations Hub**: `/insights/visuals` — pinned multi-view workspace with crossfilter (Phase 05–12 components ready, to wire in).
-- [ ] **Chart Integration**: D3 quadrant, D3-cloud word cloud, Cytoscape network, React Flow mind-map, radar, heatmap, Venn/UpSet, Sankey, timeline — components generated, to drop in.
-- [ ] **Touch-Points Overlay Panel**: Linked selection store (Zustand) drives evidence + touch-nots panel on every chart click.
+- [x] **Visualisations Hub**: `/insights/visuals` — pinned multi-view workspace with crossfilter, sidebar registry, Touch-Points overlay panel. ✅ Session 6
+- [x] **Chart Integration**: D3 quadrant, D3-cloud word cloud, Cytoscape network, React Flow mind-map — all self-fetching from `/api/insights/v1` endpoints. ✅ Session 6
+- [x] **Touch-Points Overlay Panel**: Zustand selection store drives evidence + touch-nots panel on every chart click. ✅ Session 6
 
 ## 3. Data & Training Loop Verification
 - [x] **Data Mounts**: `ai-data` junction → `L:\VS ai_data final - version`, `parser` junction → automated_parser.
@@ -42,15 +42,15 @@
 - [x] **rewards.router collision fixed**: Changed from `/user` (collision with user.router) to `/api/rewards/v1`.
 - [x] **All 10 previously-unmounted routers now mounted**: admin_abuse, admin_parsing, admin_tokens, analytics, anti_gaming, insights, logs, mapping, telemetry — all via try/except for graceful degradation.
 - [x] **GDPR router added**: Data export/deletion endpoints mounted.
-- [ ] **Run endpoint pipeline**: `tools/fastapi_introspect_routes.py` → `tools/react_api_scan.py` → `tools/join_endpoint_graph.py` to generate visual endpoint map.
-- [ ] **Update React API calls**: ~25 frontend callsites still reference old prefixes (/coaching, /resume, /jobs, /payment, etc.) — need updating to new `/api/.../v1` paths.
+- [x] **Run endpoint pipeline**: `tools/fastapi_introspect_routes.py` → `tools/react_api_scan.py` → `tools/join_endpoint_graph.py` — 185 routes, 72 callsites, 189 nodes, 198 edges. ✅ Session 6
+- [x] **Update React API calls**: Centralized `apiConfig.ts` created in all 3 portals. All 72 callsites updated — zero hardcoded localhost URLs remain. ✅ Session 6
 - [ ] **Portal Bridge**: Verify nginx config routes correctly to all portals + backend.
 
 ## 5. Endpoint Introspection & Tracking (NEW — keeps endpoint map current)
 - [x] **FastAPI Introspection Exporter**: `tools/fastapi_introspect_routes.py` — imports the app, walks `app.routes`, exports `endpoints_from_fastapi.json`.
 - [x] **React API Scan Exporter**: `tools/react_api_scan.py` — regex scans React src for fetch/axios calls, exports `react_api_calls.json`.
 - [x] **Joiner**: `tools/join_endpoint_graph.py` — merges FastAPI + React exports into `endpoints.json` + `connections.json` for the visual map.
-- [ ] **Run the full pipeline** and verify counts (~160–300 endpoints estimated across all services).
+- [x] **Run the full pipeline**: 185 routes exported, 72 callsites scanned, 189 nodes + 198 edges joined. ✅ Session 6
 - [ ] **Wire to Phase 13 visual HTML**: Drop joined JSON into visual HTML pack so the endpoint map + table are always current.
 - [ ] **Automate**: Add introspection run to CI/CD so endpoint map regenerates on every deploy.
 
@@ -77,17 +77,17 @@ Zustand store propagates selection to Touch-Points panel + other pinned visuals 
 ### 6.4 Backend Endpoints Required for Visuals
 | Endpoint | Purpose | Status |
 |----------|---------|--------|
-| `POST /api/insights/v1/cohort/resolve` | Resolve peer cohort | To build |
-| `GET /api/insights/v1/skills/radar` | Radar data | To build |
-| `GET /api/insights/v1/quadrant` | Quadrant scatter data | To build |
-| `GET /api/insights/v1/graph` | Network graph nodes/edges | To build |
-| `GET /api/insights/v1/terms/cloud` | Word cloud terms + weights | To build |
-| `GET /api/insights/v1/terms/cooccurrence` | Co-occurrence edges | To build |
-| `GET /api/touchpoints/v1/evidence` | Evidence for touchpoint IDs | To build |
-| `GET /api/touchpoints/v1/touchnots` | Missing/weak evidence | To build |
-| `GET /api/mapping/v1/graph` | Live endpoint map (Phase 13) | To build |
-| `GET /api/mapping/v1/endpoints` | Endpoint table data | To build |
-| `GET /api/mapping/v1/registry` | Visual registry | To build |
+| `POST /api/insights/v1/cohort/resolve` | Resolve peer cohort | ✅ Hardened Session 6 |
+| `GET /api/insights/v1/skills/radar` | Radar data | ✅ Built |
+| `GET /api/insights/v1/quadrant` | Quadrant scatter data | ✅ Built |
+| `GET /api/insights/v1/graph` | Network graph nodes/edges | ✅ Built |
+| `GET /api/insights/v1/terms/cloud` | Word cloud terms + weights | ✅ Built |
+| `GET /api/insights/v1/terms/cooccurrence` | Co-occurrence edges | ✅ Hardened Session 6 |
+| `GET /api/touchpoints/v1/evidence` | Evidence for touchpoint IDs | ✅ Built |
+| `GET /api/touchpoints/v1/touchnots` | Missing/weak evidence | ✅ Built |
+| `GET /api/mapping/v1/graph` | Live endpoint map (Phase 13) | ✅ Built |
+| `GET /api/mapping/v1/endpoints` | Endpoint table data | ✅ Built |
+| `GET /api/mapping/v1/registry` | Visual registry | ✅ Built |
 
 ## 7. AI Model Stack & Presentation (UPDATED Session 6)
 

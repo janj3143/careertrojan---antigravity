@@ -36,7 +36,7 @@
  │     ↓                                                       │
  │  TRACK D: Payments (Braintree + Stripe fallback) ✅ SANDBOX  │
  │     ↓                                                       │
- │  TRACK E: User Data + AI Learning Loop                      │
+ │  TRACK E: User Data + AI Learning Loop   ✅ PIPELINE BUILT │
  │     ↓                                                       │
  │  TRACK F: Email Campaign (60K contacts)                     │
  │     ↓                                                       │
@@ -357,11 +357,13 @@ D11. ⬜ Create subscription plans in Braintree dashboard
             Plan ID: elite_pro, Price: $299.99, Billing: Yearly
         NOTE: Required for recurring billing — one-off charges work without plans
 
-D12. ⬜ Add Braintree webhooks endpoint
+D12. ✅ Add Braintree webhooks endpoint
         WHO: CO
-        WHAT: POST /api/payment/v1/webhooks → handle subscription events,
-              disputes, payment method updates
-        EFFORT: ~80 lines
+        FILE: services/backend_api/routers/webhooks.py (~210 lines)
+        HANDLES: subscription_charged_ok/fail, canceled, past_due,
+                 dispute_opened/won/lost, payment_method_revoked, check
+        MOUNTED: main.py → /api/payment/v1/webhooks
+        NOTE: Braintree dashboard setup still needed (D8 prerequisite)
 
 D13. ⬜ Go live (sandbox → production)
         WHO: YOU
@@ -418,69 +420,105 @@ Every user interaction feeds back into the AI → better results → more users 
 ### Steps
 
 ```
-E1. ⬜ Set up the production database
-        WHAT: PostgreSQL (you already have this in compose.yaml)
-        WHERE: careertrojan-postgres container
+E1. ✅ Set up the production database
+        WHAT: PostgreSQL in compose.yaml + SQLAlchemy models
+        WHERE: services/backend_api/db/models.py (265+ lines)
+        MODELS: User, UserProfile, Resume, Job, Mentor, Mentorship,
+                Interaction, Subscription, PaymentTransaction,
+                ConsentRecord, AuditLog, DataExportRequest,
+                ApplicationBlocker, BlockerImprovementPlan
+        DB: SQLite dev / PostgreSQL production (CAREERTROJAN_DB_URL)
+
+E2. ✅ Define what user data you capture
         WHO: CO
-        NOTE: User data in production lives in PostgreSQL, NOT flat files
-              The L: drive / file-based approach is for AI training data only
+        FILE: services/backend_api/services/data_capture_policy.py
+        DEFINES: 9 data categories with full GDPR Article 30 records:
+            → Profile Data (contract, until deletion)
+            → CV / Resume Uploads (contract, until deletion)
+            → Job Search Queries (contract, 365 days)
+            → AI Match Results (legitimate interest, 365 days)
+            → Coaching Interactions (contract, 365 days)
+            → Session Logs (legitimate interest, 90 days)
+            → Feedback Signals (legitimate interest, 730 days)
+            → Payment Data (contract, 7 years — tax)
+            → Consent Records (legal obligation, 7 years)
+        HELPERS: get_retention_summary(), get_ai_pipeline_sources(),
+                 get_gdpr_article30_records()
 
-E2. ⬜ Define what user data you capture
-        WHO: YOU + CO
-        MUST CAPTURE:
-            → Profile data (name, skills, experience, location)
-            → CV uploads (stored in object storage, e.g., S3 or local volume)
-            → Search queries (what jobs they look for)
-            → Match results (what AI suggested)
-            → Coaching interactions (questions asked, advice given)
-            → Session logs (login times, pages visited, time on page)
-            → Feedback signals (did they apply? did they click? did they dismiss?)
-
-E3. ⬜ Build the data capture pipeline
+E3. ✅ Build the data capture pipeline
         WHO: CO
-        HOW: FastAPI middleware that logs interactions to a queue (Redis)
-             → Background worker reads queue
-             → Writes structured data to PostgreSQL
-             → Copies anonymised interaction data to AI training directory
+        FILE: services/backend_api/middleware/interaction_logger.py (210+ lines)
+        HOW: FastAPI middleware logs every request to:
+             1. Disk (JSON files) → ai_data_final/USER DATA/interactions/
+             2. Redis queue (careertrojan:interactions) → AI enrichment worker
+             3. PostgreSQL interactions table → analytics + GDPR queryable
+        CAPTURES: user_id, action_type, method, path, status, response_time,
+                  IP, user-agent, payload hash
 
-E4. ⬜ Build the AI enrichment worker
+E4. ✅ Build the AI enrichment worker
         WHO: CO
-        WHAT: Background service that:
-            1. Reads new interaction data from the queue
-            2. Anonymises it (strips names, emails, personal identifiers)
-            3. Extracts patterns (skill clusters, job-title mappings, industry trends)
-            4. Writes enriched entries to the AI knowledge base
-        WHERE: services/workers/ai/ (you already have this container)
+        FILE: services/workers/ai_orchestrator_enrichment.py (274 lines)
+        WHAT: Watchdog-based service that:
+            1. Monitors interactions/ directory for new JSON files
+            2. Routes to enrichment pipelines (embedding, ranking, coaching)
+            3. Updates ai_data_final knowledge base categories
+        TRIGGERS: cv_upload → parsed_resumes/, job_search → job_matching/,
+                  coaching → learning_library/, profile → profiles/
 
-E5. ⬜ Set up backup / mirror strategy for production
+E5. ✅ Set up backup / mirror strategy for production
         WHO: CO
-        WHAT: PostgreSQL automated daily backups
-              AI training data replicated to a second location
-        OPTIONS:
-            → Cloud: S3 bucket (pennies per GB)
-            → Local: second drive or NAS
-        NOTE: The L: ↔ E: tandem sync from Windows is replaced by proper
-              database backups + object storage replication in production
+        FILE: scripts/backup_all.py (230+ lines)
+        BACKS UP:
+            1. PostgreSQL (pg_dump → .sql.gz) or SQLite (.backup API)
+            2. ai_data_final/ → tar.gz
+            3. data/user_uploads/ → tar.gz
+            4. trained_models/ → tar.gz
+            5. Interaction logs → tar.gz
+        FEATURES:
+            → Timestamped archives in ./backups/
+            → SHA-256 manifest per run
+            → Configurable retention (BACKUP_RETENTION_DAYS, default 30)
+            → Auto-cleanup of old archives
+            → Cron / Windows Task Scheduler / Docker examples included
 
-E6. ⬜ GDPR compliance for user data
-        WHO: YOU + CS
-        MUST HAVE:
-            → Privacy policy page on the website
-            → Cookie consent banner
-            → Right to deletion endpoint (user can delete their data)
-            → Data export endpoint (user can download their data)
-            → Clear consent at sign-up ("I agree to...")
-            → Data processing records (what you collect, why, how long you keep it)
-        NOTE: UK GDPR is law. Getting this wrong = fines. Get it right before launch.
+E6. ✅ GDPR compliance for user data
+        WHO: CO + YOU
+        FILE: services/backend_api/routers/gdpr.py (338 lines)
+        ENDPOINTS:
+            GET  /api/gdpr/v1/data        → View personal data (Art. 15)
+            POST /api/gdpr/v1/export      → Download data as JSON (Art. 20)
+            POST /api/gdpr/v1/delete      → Delete account + all data (Art. 17)
+            GET  /api/gdpr/v1/consent     → View consent records (Art. 7)
+            POST /api/gdpr/v1/consent     → Grant/revoke consent
+        DB MODELS: ConsentRecord, AuditLog, DataExportRequest
+        FRONTEND (NOW COMPLETE):
+            ✅ Privacy policy page: apps/user/src/pages/PrivacyPolicy.tsx
+               Route: /privacy (public, no auth)
+               12 sections, UK GDPR compliant, retention tables, AI usage explained
+            ✅ Cookie consent banner: apps/user/src/components/CookieConsent.tsx
+               Accept All / Reject Optional / Customise
+               Stores consent in localStorage + reports to POST /api/gdpr/v1/consent
+               Necessary (always on) + Functional (opt-in) + Analytics (opt-in)
+            ✅ Data processing records: services/backend_api/services/data_capture_policy.py
+               get_gdpr_article30_records() generates full Art. 30 records
 
-E7. ⬜ Add admin monitoring dashboard for the AI loop
+E7. ✅ Add admin monitoring dashboard for the AI loop
         WHO: CO
-        WHAT: Admin Portal page showing:
-            → Number of interactions processed today
-            → Queue depth (how many pending)
-            → AI knowledge base size
+        ENDPOINT: GET /api/admin/v1/ai/monitoring
+        RETURNS:
+            → Pipeline status (healthy/degraded/unhealthy)
+            → Interactions processed (1h, 24h)
+            → Action breakdown by type
+            → Queue depth (Redis)
+            → AI knowledge base size by category
             → Last enrichment run timestamp
-            → Error rate
+            → Error rate %
+            → Avg response time
+            → Payment stats (count, revenue 24h)
+        ALSO BUILT:
+            → GET /api/admin/v1/user_subscriptions (live sub listing)
+            → GET /api/admin/v1/system/activity (existing, DB-backed)
+            → GET /api/admin/v1/dashboard/snapshot (existing, with AI stats)
 ```
 
 ### Done when

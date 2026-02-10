@@ -5,6 +5,7 @@ import MobileNav from './components/mobile/MobileNav';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
 import PWAInstallBanner from './components/mobile/PWAInstallBanner';
 import NetworkBanner from './components/mobile/NetworkBanner';
+import CookieConsent from './components/CookieConsent';
 
 // ── Eager: public pages (first paint) ────────────────────
 import Home from './pages/Home';
@@ -25,6 +26,7 @@ const DualCareer             = lazy(() => import('./pages/DualCareer'));
 const RewardsPage            = lazy(() => import('./pages/RewardsPage'));
 const VisualisationsHub      = lazy(() => import('./pages/VisualisationsHub'));
 const ConsolidationPage      = lazy(() => import('./pages/ConsolidationPage'));
+const PrivacyPolicy          = lazy(() => import('./pages/PrivacyPolicy'));
 
 // ── Lazy: mobile-only pages ──────────────────────────────
 const MobileQuickDash  = lazy(() => import('./components/mobile/MobileQuickDash'));
@@ -64,6 +66,7 @@ export default function App() {
                             <Route path="/" element={<Home />} />
                             <Route path="/login" element={<LoginPage />} />
                             <Route path="/register" element={<RegisterPage />} />
+                            <Route path="/privacy" element={<PrivacyPolicy />} />
 
                             {/* Mobile-specific routes */}
                             <Route path="/quick" element={<PrivateRoute><MobileQuickDash /></PrivateRoute>} />
@@ -89,6 +92,7 @@ export default function App() {
                 </main>
                 <MobileBottomBar />
                 <PWAInstallBanner />
+                <CookieConsent />
             </BrowserRouter>
         </AuthProvider>
     );

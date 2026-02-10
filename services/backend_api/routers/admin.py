@@ -154,8 +154,159 @@ def user_token_ledger(user_id: str, _: bool = Depends(require_admin)):
     _not_impl(f"Implement token ledger for {user_id}")
 
 @router.get("/user_subscriptions")
-def user_subscriptions(_: bool = Depends(require_admin)):
-    _not_impl("Implement user subscriptions store (plan keys from user portal)")
+def user_subscriptions(_: bool = Depends(require_admin), db: Session = Depends(get_db)):
+    """List all active subscriptions with user details."""
+    subs = (
+        db.query(models.Subscription)
+        .filter(models.Subscription.status.in_(["active", "past_due"]))
+        .order_by(models.Subscription.created_at.desc())
+        .limit(100)
+        .all()
+    )
+    result = []
+    for s in subs:
+        user = db.query(models.User).filter(models.User.id == s.user_id).first()
+        result.append({
+            "user_id": s.user_id,
+            "email": user.email if user else None,
+            "plan_id": s.plan_id,
+            "gateway": s.gateway,
+            "status": s.status,
+            "amount": s.amount,
+            "interval": s.interval,
+            "next_billing": s.next_billing_date.isoformat() if s.next_billing_date else None,
+            "started_at": s.started_at.isoformat() if s.started_at else None,
+        })
+    return {"subscriptions": result, "total": len(result)}
+
+
+@router.get("/ai/monitoring")
+def ai_loop_monitoring(_: bool = Depends(require_admin), db: Session = Depends(get_db)):
+    """
+    AI Learning Loop Monitoring Dashboard (Track E, Step E7).
+
+    Returns: interaction counts, queue depth, AI knowledge base size,
+    last enrichment timestamp, error rate, and pipeline health.
+    """
+    now = datetime.utcnow()
+    day_ago = now - timedelta(hours=24)
+    hour_ago = now - timedelta(hours=1)
+
+    # Interaction counts (from DB)
+    interactions_24h = (
+        db.query(func.count(models.Interaction.id))
+        .filter(models.Interaction.created_at >= day_ago)
+        .scalar() or 0
+    )
+    interactions_1h = (
+        db.query(func.count(models.Interaction.id))
+        .filter(models.Interaction.created_at >= hour_ago)
+        .scalar() or 0
+    )
+
+    # Interaction breakdown by action_type (last 24h)
+    action_breakdown = (
+        db.query(models.Interaction.action_type, func.count(models.Interaction.id))
+        .filter(models.Interaction.created_at >= day_ago)
+        .group_by(models.Interaction.action_type)
+        .all()
+    )
+    actions = {action: count for action, count in action_breakdown}
+
+    # Avg response time
+    avg_response = (
+        db.query(func.avg(models.Interaction.response_time_ms))
+        .filter(models.Interaction.created_at >= day_ago)
+        .scalar()
+    )
+
+    # Error rate (5xx responses in last 24h)
+    error_count = (
+        db.query(func.count(models.Interaction.id))
+        .filter(
+            models.Interaction.created_at >= day_ago,
+            models.Interaction.status_code >= 500,
+        )
+        .scalar() or 0
+    )
+    error_rate_pct = round((error_count / max(interactions_24h, 1)) * 100, 2)
+
+    # Redis queue depth (if available)
+    queue_depth = 0
+    try:
+        from services.backend_api.middleware.interaction_logger import _redis_client, REDIS_AVAILABLE, INTERACTION_QUEUE
+        if REDIS_AVAILABLE and _redis_client:
+            queue_depth = _redis_client.llen(INTERACTION_QUEUE)
+    except Exception:
+        pass
+
+    # AI knowledge base size (file-based)
+    ai_data_root = os.path.join(os.getcwd(), "ai_data_final")
+    ai_kb_stats = {}
+    total_kb_files = 0
+    if os.path.isdir(ai_data_root):
+        for subdir in ["parsed_resumes", "job_matching", "learning_library",
+                       "profiles", "trained_models", "coaching", "industry_insights"]:
+            subpath = os.path.join(ai_data_root, subdir)
+            if os.path.isdir(subpath):
+                count = len(os.listdir(subpath))
+                ai_kb_stats[subdir] = count
+                total_kb_files += count
+
+    # Last enrichment run (check enrichment worker log)
+    last_enrichment = None
+    log_path = os.path.join(os.getcwd(), "logs", "ai_orchestrator.log")
+    if os.path.isfile(log_path):
+        try:
+            stat = os.stat(log_path)
+            last_enrichment = datetime.fromtimestamp(stat.st_mtime).isoformat()
+        except Exception:
+            pass
+
+    # File-based interactions today
+    interactions_dir = os.path.join(os.getcwd(), "data", "ai_data_final", "USER DATA", "interactions")
+    today_dir = os.path.join(interactions_dir, now.strftime("%Y-%m-%d"))
+    file_interactions_today = len(glob.glob(os.path.join(today_dir, "*.json"))) if os.path.isdir(today_dir) else 0
+
+    # Payment stats (last 24h)
+    payments_24h = (
+        db.query(func.count(models.PaymentTransaction.id))
+        .filter(models.PaymentTransaction.created_at >= day_ago)
+        .scalar() or 0
+    )
+    revenue_24h = (
+        db.query(func.sum(models.PaymentTransaction.amount))
+        .filter(
+            models.PaymentTransaction.created_at >= day_ago,
+            models.PaymentTransaction.transaction_type == "charge",
+            models.PaymentTransaction.status.in_(["submitted_for_settlement", "settled"]),
+        )
+        .scalar() or 0.0
+    )
+
+    return {
+        "pipeline": {
+            "status": "healthy" if error_rate_pct < 5 else "degraded" if error_rate_pct < 15 else "unhealthy",
+            "interactions_1h": interactions_1h,
+            "interactions_24h": interactions_24h,
+            "file_interactions_today": file_interactions_today,
+            "queue_depth": queue_depth,
+            "error_rate_pct": error_rate_pct,
+            "avg_response_ms": round(avg_response, 1) if avg_response else None,
+        },
+        "action_breakdown": actions,
+        "ai_knowledge_base": {
+            "total_files": total_kb_files,
+            "categories": ai_kb_stats,
+            "last_enrichment_run": last_enrichment,
+        },
+        "payments_24h": {
+            "count": payments_24h,
+            "revenue": round(revenue_24h, 2),
+        },
+        "timestamp": now.isoformat(),
+    }
+
 
 @router.get("/users/metrics")
 def user_metrics(_: bool = Depends(require_admin)):

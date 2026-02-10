@@ -36,6 +36,20 @@ _DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
 
 INTERACTIONS_DIR = _DATA_ROOT / "USER DATA" / "interactions"
 
+# ── Redis queue (optional — degrades gracefully) ─────────────
+INTERACTION_QUEUE = "careertrojan:interactions"
+_redis_client = None
+REDIS_AVAILABLE = False
+try:
+    import redis as _redis_mod
+    _redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    _redis_client = _redis_mod.from_url(_redis_url, decode_responses=True)
+    _redis_client.ping()
+    REDIS_AVAILABLE = True
+    logger.info("Redis connected — interaction queue enabled")
+except Exception:
+    logger.debug("Redis not available — file + DB logging only")
+
 # ── Endpoints to SKIP (health checks, static, docs) ──────────
 SKIP_PREFIXES = (
     "/docs", "/redoc", "/openapi.json",
@@ -155,7 +169,7 @@ class InteractionLoggerMiddleware(BaseHTTPMiddleware):
             "ip": request.client.host if request.client else None,
         }
 
-        # Write async to disk (non-blocking best-effort)
+        # 1. Write to disk (for AI orchestrator watchdog)
         try:
             day_dir = INTERACTIONS_DIR / now.strftime("%Y-%m-%d")
             day_dir.mkdir(parents=True, exist_ok=True)
@@ -163,6 +177,44 @@ class InteractionLoggerMiddleware(BaseHTTPMiddleware):
             filepath = day_dir / filename
             filepath.write_text(json.dumps(record, indent=2), encoding="utf-8")
         except Exception as e:
-            logger.warning(f"InteractionLogger: failed to write record: {e}")
+            logger.warning(f"InteractionLogger: disk write failed: {e}")
+
+        # 2. Push to Redis queue (for real-time AI enrichment worker)
+        if REDIS_AVAILABLE and _redis_client:
+            try:
+                _redis_client.lpush(INTERACTION_QUEUE, json.dumps(record))
+            except Exception as e:
+                logger.debug(f"InteractionLogger: Redis push failed: {e}")
+
+        # 3. Write to database (for analytics + GDPR queryable history)
+        try:
+            from services.backend_api.db.connection import SessionLocal
+            from services.backend_api.db.models import Interaction
+            db = SessionLocal()
+            try:
+                uid = None
+                if user_id and user_id != "anonymous":
+                    try:
+                        uid = int(user_id)
+                    except (ValueError, TypeError):
+                        pass
+                db_record = Interaction(
+                    user_id=uid,
+                    session_id=None,
+                    action_type=record["action_type"],
+                    method=record["method"],
+                    path=record["path"],
+                    status_code=record["status_code"],
+                    response_time_ms=record["response_time_ms"],
+                    ip_address=record.get("ip"),
+                    user_agent=record.get("user_agent"),
+                    metadata_json=json.dumps({"payload_hash": record["payload_hash"], "query": record.get("query")}),
+                )
+                db.add(db_record)
+                db.commit()
+            finally:
+                db.close()
+        except Exception as e:
+            logger.debug(f"InteractionLogger: DB write failed: {e}")
 
         return response

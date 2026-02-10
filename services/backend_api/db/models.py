@@ -74,6 +74,52 @@ class Interaction(Base):
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
 
 
+# ── Payment & Subscription Models (Track D) ──────────────────
+
+class Subscription(Base):
+    """Tracks active user subscriptions managed by Braintree."""
+    __tablename__ = "subscriptions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    plan_id = Column(String, nullable=False, index=True)   # free, monthly, annual, elitepro
+    gateway = Column(String, default="braintree")           # braintree | stripe
+    gateway_subscription_id = Column(String, nullable=True, index=True)  # Braintree/Stripe sub ID
+    gateway_customer_id = Column(String, nullable=True)
+    status = Column(String, default="active", index=True)   # active, past_due, canceled, expired
+    amount = Column(Float)
+    currency = Column(String, default="GBP")
+    interval = Column(String)                                # month, year, null
+    started_at = Column(DateTime, default=datetime.utcnow)
+    next_billing_date = Column(DateTime, nullable=True)
+    canceled_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = relationship("User", backref="subscriptions")
+
+
+class PaymentTransaction(Base):
+    """Records all payment transactions (charges, refunds, voids)."""
+    __tablename__ = "payment_transactions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    gateway = Column(String, default="braintree")           # braintree | stripe
+    gateway_transaction_id = Column(String, index=True)     # Braintree/Stripe TX ID
+    transaction_type = Column(String, default="charge")     # charge, refund, void
+    amount = Column(Float, nullable=False)
+    currency = Column(String, default="GBP")
+    status = Column(String, index=True)                     # submitted_for_settlement, settled, refunded, voided, failed
+    plan_id = Column(String, nullable=True)
+    promo_code = Column(String, nullable=True)
+    description = Column(String, nullable=True)
+    metadata_json = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+    user = relationship("User", backref="payment_transactions")
+
+
 # ── Core Application Models ──────────────────────────────────
 
 class User(Base):

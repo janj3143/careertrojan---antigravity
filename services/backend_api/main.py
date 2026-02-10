@@ -23,6 +23,7 @@ from services.backend_api.routers import admin, user, mentor, shared, auth, ment
 from services.backend_api.routers import insights, touchpoints, mapping, analytics
 from services.backend_api.routers import admin_abuse, admin_parsing, admin_tokens, anti_gaming, logs, telemetry
 from services.backend_api.routers import gdpr
+from services.backend_api.routers import webhooks
 
 # Setup Structured Logging (structlog → JSON lines)
 configure_logging()
@@ -99,6 +100,10 @@ app.include_router(analytics.router)      # System statistics & dashboard data
 
 # ── GDPR / Data Rights ──────────────────────────────────────
 app.include_router(gdpr.router)           # Consent, data export, account deletion, audit log
+
+# ── Payment Webhooks ─────────────────────────────────────────
+try: app.include_router(webhooks.router)     # Braintree webhook notifications
+except Exception: pass
 
 # ── Admin Extension Routers ──────────────────────────────────
 try: app.include_router(admin_abuse.router)

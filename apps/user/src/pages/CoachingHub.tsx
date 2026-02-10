@@ -1,10 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { ApiConfig, generateQuestions, reviewAnswer, generateStarStories, detectBlockers } from '../lib/api';
+import { generateQuestions, reviewAnswer, generateStarStories, detectBlockers } from '../lib/api';
 import { AlertCircle, Plus, CheckCircle, Brain, Target, MessageSquare } from 'lucide-react';
-
-// Configuration
-const API_CONFIG: ApiConfig = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 type Tab = 'overview' | 'questions' | 'practice' | 'star';
 
@@ -40,7 +38,7 @@ export default function CoachingHub() {
             const token = localStorage.getItem("token");
             if (!token) return; // Wait for login
 
-            const res = await fetch(`${API_CONFIG.baseUrl}/resume`, {
+            const res = await fetch(`${API.resume}/latest`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             if (res.ok) {

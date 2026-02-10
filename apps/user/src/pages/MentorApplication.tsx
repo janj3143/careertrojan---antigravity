@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { User, Mail, Linkedin, Briefcase, FileText, Send, CheckCircle } from 'lucide-react';
-
-const API_CONFIG = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 export default function MentorApplication() {
     const [formData, setFormData] = useState({
@@ -25,7 +24,7 @@ export default function MentorApplication() {
 
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`${API_CONFIG.baseUrl}/mentorship/applications`, {
+            const res = await fetch(`${API.mentorship}/applications`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

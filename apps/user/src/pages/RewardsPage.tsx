@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Gift, Award, TrendingUp, CheckCircle, Lock } from 'lucide-react';
-
-const API_CONFIG = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 export default function RewardsPage() {
     const [rewards, setRewards] = useState<any>(null);
@@ -19,8 +18,8 @@ export default function RewardsPage() {
             if (token) headers["Authorization"] = `Bearer ${token}`;
 
             const [rewRes, availRes] = await Promise.all([
-                fetch(`${API_CONFIG.baseUrl}/api/rewards/v1/rewards`, { headers }),
-                fetch(`${API_CONFIG.baseUrl}/api/rewards/v1/rewards/available`, { headers })
+                fetch(`${API.rewards}/rewards`, { headers }),
+                fetch(`${API.rewards}/rewards/available`, { headers })
             ]);
 
             if (rewRes.ok) setRewards(await rewRes.json());

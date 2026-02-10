@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
+import { API_BASE } from '../lib/apiConfig';
 
 interface PageTemplateProps {
     title: string;
@@ -21,7 +22,7 @@ export default function PageTemplate({ title, subtitle, endpoint, children }: Pa
 
         try {
             const token = localStorage.getItem('admin_token');
-            const response = await fetch(`http://localhost:8500${endpoint}`, {
+            const response = await fetch(`${API_BASE}${endpoint}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

@@ -1,9 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { ApiConfig } from '../lib/api';
 import { User, Mail, Briefcase, MapPin, Linkedin, Github, Save, CheckCircle } from 'lucide-react';
-
-const API_CONFIG: ApiConfig = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 // Helper to interact with the profile endpoint
 async function userProfile(method: "GET" | "PUT", body?: any) {
@@ -15,7 +13,7 @@ async function userProfile(method: "GET" | "PUT", body?: any) {
         "Content-Type": "application/json"
     };
 
-    const res = await fetch(`${API_CONFIG.baseUrl}/api/user/v1/profile`, {
+    const res = await fetch(`${API.user}/profile`, {
         method, headers, body: body ? JSON.stringify(body) : undefined
     });
 

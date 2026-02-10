@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-const API_CONFIG = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 export default function VerificationPage() {
     const navigate = useNavigate();
@@ -23,13 +22,13 @@ export default function VerificationPage() {
             if (!token) return navigate('/login');
 
             // 1. Check User details for email verification (simulated for now as true effectively if logged in)
-            const userRes = await fetch(`${API_CONFIG.baseUrl}/api/user/v1/me`, {
+            const userRes = await fetch(`${API.user}/me`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             const userData = await userRes.json();
 
             // 2. Check Subscription for payment verification
-            const subRes = await fetch(`${API_CONFIG.baseUrl}/api/payment/v1/subscription`, {
+            const subRes = await fetch(`${API.payment}/subscription`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             const subData = await subRes.json();

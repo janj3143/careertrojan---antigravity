@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BraintreeDropIn from '../components/payment/BraintreeDropIn';
 import SavedPaymentMethods from '../components/payment/SavedPaymentMethods';
-
-const API_CONFIG = {
-    baseUrl: "/api/payment/v1",
-};
+import { API } from '../lib/apiConfig';
 
 interface Plan {
     id: string;
@@ -38,7 +35,7 @@ export default function PaymentPage() {
             const token = localStorage.getItem("token");
             if (!token) return;
 
-            const res = await fetch(`${API_CONFIG.baseUrl}/plans`, {
+            const res = await fetch(`${API.payment}/plans`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             if (res.ok) {
@@ -55,7 +52,7 @@ export default function PaymentPage() {
 
     const fetchGatewayInfo = async () => {
         try {
-            const res = await fetch(`${API_CONFIG.baseUrl}/gateway-info`);
+            const res = await fetch(`${API.payment}/gateway-info`);
             if (res.ok) {
                 const data = await res.json();
                 setGatewayEnv(data.environment);
@@ -92,7 +89,7 @@ export default function PaymentPage() {
                 paymentData = {};
             }
 
-            const res = await fetch(`${API_CONFIG.baseUrl}/process`, {
+            const res = await fetch(`${API.payment}/process`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

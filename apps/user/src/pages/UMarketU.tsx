@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Briefcase, MapPin, DollarSign, Search, TrendingUp, Clock, ArrowRight } from 'lucide-react';
-
-const API_CONFIG = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 export default function UMarketU() {
     const [jobs, setJobs] = useState<any[]>([]);
@@ -21,8 +20,8 @@ export default function UMarketU() {
 
             // Parallel fetch
             const [jobsRes, indRes] = await Promise.all([
-                fetch(`${API_CONFIG.baseUrl}/api/jobs/v1/index`, { headers }),
-                fetch(`${API_CONFIG.baseUrl}/api/taxonomy/v1/industries`, { headers })
+                fetch(`${API.jobs}/index`, { headers }),
+                fetch(`${API.taxonomy}/industries`, { headers })
             ]);
 
             if (jobsRes.ok) {

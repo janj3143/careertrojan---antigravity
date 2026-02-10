@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-
-const API_CONFIG = {
-    baseUrl: "http://localhost:8500", // Update port if needed
-};
+import { API } from '../lib/apiConfig';
 
 export default function ResumeUpload() {
     const [file, setFile] = useState<File | null>(null);
@@ -32,7 +29,7 @@ export default function ResumeUpload() {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("Not logged in");
 
-            const res = await fetch(`${API_CONFIG.baseUrl}/api/resume/v1/upload`, {
+            const res = await fetch(`${API.resume}/upload`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`

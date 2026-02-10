@@ -7,7 +7,7 @@
 
 export const API_CONFIG = {
   // Backend API base URL
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || '/api',
   
   // AI Chat endpoint
   CHAT_ENDPOINT: '/chat',

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { User, Star, Clock, DollarSign, ArrowRight } from 'lucide-react';
-
-const API_CONFIG = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 export default function MentorshipMarketplace() {
     const [mentors, setMentors] = useState<any[]>([]);
@@ -14,7 +13,7 @@ export default function MentorshipMarketplace() {
     const fetchMentors = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`${API_CONFIG.baseUrl}/mentor/list`, {
+            const res = await fetch(`${API.mentor}/list`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             if (res.ok) {

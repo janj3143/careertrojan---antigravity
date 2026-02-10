@@ -1,10 +1,7 @@
 
 import React, { useState } from 'react';
-import { ApiConfig } from '../lib/api';
 import { Link } from 'react-router-dom';
-
-// Updated to runtime port
-const API: ApiConfig = { baseUrl: "http://localhost:8500" };
+import { API } from '../lib/apiConfig';
 
 export default function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -16,7 +13,7 @@ export default function RegisterPage() {
         e.preventDefault();
         setError(null);
         try {
-            const res = await fetch(`${API.baseUrl}/auth/register`, {
+            const res = await fetch(`${API.auth}/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { VISUAL_COMPONENTS } from "../components/visuals/registry";
-
-const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8500";
+import { API } from '../lib/apiConfig';
 
 interface VisualEntry {
     id: string;
@@ -24,7 +23,7 @@ export default function VisualisationsHub() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${API_BASE}/api/insights/v1/visuals`)
+        fetch(`${API.insights}/visuals`)
             .then(res => res.json())
             .then(data => {
                 if (data.visuals && data.visuals.length > 0) {

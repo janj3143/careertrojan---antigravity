@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API } from '../lib/apiConfig';
 
 interface UserProfile {
     id: string;
@@ -41,8 +42,6 @@ interface MentorshipSummary {
     nextSession: string | null;
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8500';
-
 export default function ConsolidationPage() {
     const { user, token } = useAuth();
     const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -63,12 +62,12 @@ export default function ConsolidationPage() {
         setLoading(true);
         try {
             const [profileRes, sessionsRes, resumeRes, matchesRes, coachingRes, mentorRes] = await Promise.all([
-                fetch(`${API_BASE}/api/user/v1/profile`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch(`${API_BASE}/api/user/v1/sessions/summary`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch(`${API_BASE}/api/user/v1/resume/latest`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch(`${API_BASE}/api/user/v1/matches/summary`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch(`${API_BASE}/api/coaching/v1/history`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch(`${API_BASE}/api/mentorship/v1/summary`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`${API.user}/profile`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`${API.user}/sessions/summary`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`${API.user}/resume/latest`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`${API.user}/matches/summary`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`${API.coaching}/history`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`${API.mentorship}/summary`, { headers }).then(r => r.ok ? r.json() : null).catch(() => null),
             ]);
             setProfile(profileRes);
             setSessions(sessionsRes);

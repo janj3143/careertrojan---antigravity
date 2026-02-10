@@ -1,8 +1,6 @@
 
 import React, { useState } from 'react';
-import { ApiConfig } from '../lib/api';
-
-const API: ApiConfig = { baseUrl: "http://localhost:8500" }; // Updated to runtime port
+import { API } from '../lib/apiConfig';
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -17,7 +15,7 @@ export default function LoginPage() {
             formData.append('username', email); // FastAPI OAuth2 expects 'username' (which is our email)
             formData.append('password', password);
 
-            const res = await fetch(`${API.baseUrl}/auth/login`, {
+            const res = await fetch(`${API.auth}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formData

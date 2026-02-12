@@ -25,14 +25,14 @@ router = APIRouter(
     tags=["sessions"],
 )
 
-# ── Data Paths ────────────────────────────────────────────────
+# ── Data Paths — L: drive is source of truth ─────────────────
 USER_DATA_ROOT = Path(os.getenv(
     "CAREERTROJAN_USER_DATA",
-    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"), "USER DATA")
+    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"), "USER DATA")
 ))
 USER_DATA_MIRROR = Path(os.getenv(
     "CAREERTROJAN_USER_DATA_MIRROR",
-    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"), "USER_DATA_COPY")
+    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"), "USER_DATA_COPY")
 ))
 
 

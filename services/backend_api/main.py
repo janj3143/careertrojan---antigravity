@@ -24,6 +24,7 @@ from services.backend_api.routers import insights, touchpoints, mapping, analyti
 from services.backend_api.routers import admin_abuse, admin_parsing, admin_tokens, anti_gaming, logs, telemetry
 from services.backend_api.routers import gdpr
 from services.backend_api.routers import webhooks
+from services.backend_api.routers import api_health
 
 # Setup Structured Logging (structlog → JSON lines)
 configure_logging()
@@ -101,6 +102,9 @@ app.include_router(analytics.router)      # System statistics & dashboard data
 # ── GDPR / Data Rights ──────────────────────────────────────
 app.include_router(gdpr.router)           # Consent, data export, account deletion, audit log
 
+# ── API Health Check ─────────────────────────────────────────
+app.include_router(api_health.router)     # Live endpoint probing, run-all, summary
+
 # ── Payment Webhooks ─────────────────────────────────────────
 try: app.include_router(webhooks.router)     # Braintree webhook notifications
 except Exception: pass
@@ -118,6 +122,38 @@ try: app.include_router(logs.router)
 except Exception: pass
 try: app.include_router(telemetry.router)
 except Exception: pass
+
+# ── Collocation Engine Bootstrap + Enrichment Watchdog ────────────────
+@app.on_event("startup")
+async def _bootstrap_collocation_engine():
+    """Load all 1,979 gazetteer terms into the collocation engine at startup."""
+    try:
+        from services.ai_engine.collocation_data_loader import bootstrap_collocation_engine
+        stats = bootstrap_collocation_engine(sync_local=True)
+        logger.info(
+            "Collocation engine bootstrapped: %d total phrases across %d categories",
+            stats.get("total_known_phrases", 0),
+            stats.get("gazetteer_categories", 0),
+        )
+    except Exception as e:
+        logger.warning("Collocation engine bootstrap failed (non-fatal): %s", e)
+
+@app.on_event("startup")
+async def _start_enrichment_watchdog():
+    try:
+        from services.ai_engine.enrichment_watchdog import start_enrichment_loop
+        start_enrichment_loop(interval_seconds=300)  # every 5 minutes
+        logger.info("Enrichment watchdog started (5-min interval)")
+    except Exception as e:
+        logger.warning("Enrichment watchdog failed to start: %s", e)
+
+@app.on_event("shutdown")
+async def _stop_enrichment_watchdog():
+    try:
+        from services.ai_engine.enrichment_watchdog import stop_enrichment_loop
+        stop_enrichment_loop()
+    except Exception:
+        pass
 
 if __name__ == "__main__":
     import uvicorn

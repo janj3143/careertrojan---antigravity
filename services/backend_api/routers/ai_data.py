@@ -13,8 +13,8 @@ from typing import List, Dict, Any
 import os
 router = APIRouter(prefix="/api/ai-data/v1", tags=["ai-data"])
 
-# Base path to AI data
-_DATA_ROOT = os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
+# Base path to AI data  (CAREERTROJAN_DATA_ROOT = L:\antigravity_version_ai_data_final)
+_DATA_ROOT = os.environ.get("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final")
 AI_DATA_PATH = Path(_DATA_ROOT) / "ai_data_final"
 AUTOMATED_PARSER_PATH = Path(_DATA_ROOT) / "automated_parser"
 USER_DATA_PATH = Path(_DATA_ROOT) / "USER DATA"
@@ -450,3 +450,155 @@ async def list_user_data_files() -> Dict[str, Any]:
         "count": count,
         "files": file_list # Already limited
     }
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Model Management — Hot-Reload, Switch, Status
+# ═══════════════════════════════════════════════════════════════════
+
+@router.post("/model/reload")
+async def reload_models():
+    """
+    Admin-only: Hot-reload all model configs + LLM gateway without restart.
+    Reloads config/models.yaml and refreshes the DataLoader profile cache.
+    """
+    results = {}
+
+    # 1. Reload model config (models.yaml)
+    try:
+        from config.model_config import model_config
+        model_config.reload()
+        results["model_config"] = "reloaded"
+    except Exception as e:
+        results["model_config"] = f"error: {e}"
+
+    # 2. Reload LLM gateway (picks up new provider/model from config)
+    try:
+        from services.ai_engine.llm_gateway import llm_gateway
+        llm_gateway.reload()
+        results["llm_gateway"] = "reloaded"
+    except Exception as e:
+        results["llm_gateway"] = f"error: {e}"
+
+    # 3. Reload DataLoader profile cache
+    try:
+        from services.ai_engine.data_loader import DataLoader
+        loader = DataLoader.get_instance()
+        loader.load_sample_profiles()
+        results["data_loader"] = f"reloaded ({len(loader.get_profiles())} profiles)"
+    except Exception as e:
+        results["data_loader"] = f"error: {e}"
+
+    return {"ok": True, "reloaded": results}
+
+
+@router.post("/model/switch")
+async def switch_llm_model(payload: Dict[str, Any]):
+    """
+    Admin-only: Switch the active LLM provider/model at runtime.
+    Body: { "provider": "openai", "model": "gpt-4o" }
+    Writes to config/models.yaml and reloads.
+    """
+    import yaml
+
+    provider = payload.get("provider")
+    model = payload.get("model")
+    if not provider or not model:
+        raise HTTPException(status_code=400, detail="Both 'provider' and 'model' are required")
+
+    config_path = Path(os.environ.get("MODEL_CONFIG_PATH", "config/models.yaml"))
+    if not config_path.exists():
+        raise HTTPException(status_code=404, detail="config/models.yaml not found")
+
+    try:
+        with config_path.open("r", encoding="utf-8") as f:
+            cfg = yaml.safe_load(f)
+
+        # Validate the provider exists in config
+        if provider not in cfg.get("llm", {}).get("providers", {}):
+            available = list(cfg.get("llm", {}).get("providers", {}).keys())
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unknown provider '{provider}'. Available: {available}"
+            )
+
+        # Update active provider + model
+        cfg["llm"]["active_provider"] = provider
+        cfg["llm"]["providers"][provider]["model"] = model
+
+        with config_path.open("w", encoding="utf-8") as f:
+            yaml.dump(cfg, f, default_flow_style=False, sort_keys=False)
+
+        # Hot-reload
+        from config.model_config import model_config
+        model_config.reload()
+        try:
+            from services.ai_engine.llm_gateway import llm_gateway
+            llm_gateway.reload()
+        except Exception:
+            pass
+
+        return {
+            "ok": True,
+            "active_provider": provider,
+            "active_model": model,
+            "message": f"Switched to {provider}/{model} — config reloaded"
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to switch model: {e}")
+
+
+@router.get("/model/status")
+async def model_status():
+    """
+    Returns current model configuration status — active provider, model,
+    available providers, config file path, and health of each component.
+    """
+    import yaml
+
+    status: Dict[str, Any] = {"ok": True}
+
+    # Config file
+    config_path = Path(os.environ.get("MODEL_CONFIG_PATH", "config/models.yaml"))
+    status["config_path"] = str(config_path)
+    status["config_exists"] = config_path.exists()
+
+    if config_path.exists():
+        try:
+            with config_path.open("r", encoding="utf-8") as f:
+                cfg = yaml.safe_load(f)
+            llm = cfg.get("llm", {})
+            status["active_provider"] = llm.get("active_provider", "unknown")
+            status["providers"] = {
+                name: {
+                    "model": p.get("model"),
+                    "has_api_key": bool(os.environ.get(p.get("api_key_env", ""), "")),
+                }
+                for name, p in llm.get("providers", {}).items()
+            }
+        except Exception as e:
+            status["config_error"] = str(e)
+
+    # LLM gateway health
+    try:
+        from services.ai_engine.llm_gateway import llm_gateway
+        health = llm_gateway.health_check()
+        status["llm_gateway"] = health
+    except Exception as e:
+        status["llm_gateway"] = {"status": "unavailable", "error": str(e)}
+
+    # DataLoader status
+    try:
+        from services.ai_engine.data_loader import DataLoader
+        loader = DataLoader.get_instance()
+        status["data_loader"] = {
+            "profiles_loaded": len(loader.get_profiles()),
+            "terms_count": len(loader.get_terms()),
+        }
+    except Exception as e:
+        status["data_loader"] = {"status": "unavailable", "error": str(e)}
+
+    return status

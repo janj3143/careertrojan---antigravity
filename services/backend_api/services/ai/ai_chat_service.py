@@ -1,59 +1,57 @@
 """
 ai_chat_service.py
 ==================
-Unified AI Chat Service for Perplexity and Gemini APIs
+Unified AI Chat Service — Delegates all LLM calls through llm_gateway.
 
-Provides intelligent career guidance, job market insights, and personalized recommendations
-using external AI services (Perplexity for web search, Gemini for analysis).
+Provides intelligent career guidance, job market insights, and personalized
+recommendations.  Instead of managing API keys and HTTP calls itself, this
+service calls ``llm_gateway.generate()`` which reads config/models.yaml,
+handles fallback chains, and returns a unified ``LLMResponse``.
 
-Priority order: Perplexity → Gemini → Unavailable
+Priority order (configurable in models.yaml):
+  Perplexity → Gemini → OpenAI → Anthropic → Ollama
 
 Author: IntelliCV Platform
 Created: November 17, 2025
+Refactored: Wired through llm_gateway
 """
 
-import os
 import json
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
-import requests
 
 logger = logging.getLogger(__name__)
 
+# ── Single import: ALL LLM calls go through this gateway ──────────────
+try:
+    from services.ai_engine.llm_gateway import llm_gateway, LLMResponse
+except ImportError:
+    # Fallback for direct-module execution
+    import sys, os
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
+    from services.ai_engine.llm_gateway import llm_gateway, LLMResponse
+
+# System prompt shared across career-related queries
+_CAREER_SYSTEM_PROMPT = (
+    "You are a career advisor with deep knowledge of job markets, skill development, "
+    "and career transitions. Provide specific, actionable advice grounded in current "
+    "market data."
+)
+
 
 class AIChatService:
-    """Unified interface for Perplexity and Gemini AI chat services"""
+    """Unified interface for AI-powered career chat — all calls via llm_gateway."""
 
     def __init__(self):
-        """Initialize AI chat service with API keys — reads config from models.yaml"""
-        # Load config-driven settings
-        try:
-            from config.model_config import model_config
-            pplx_cfg = model_config.get_llm_config("perplexity")
-            gemini_cfg = model_config.get_llm_config("gemini")
-            self._perplexity_model = pplx_cfg.get("default_model", "llama-3.1-sonar-large-128k-online")
-            self._gemini_model = gemini_cfg.get("default_model", "gemini-pro")
-            gemini_base = gemini_cfg.get("base_url", "https://generativelanguage.googleapis.com/v1beta/models")
-        except Exception:
-            self._perplexity_model = "llama-3.1-sonar-large-128k-online"
-            self._gemini_model = "gemini-pro"
-            gemini_base = "https://generativelanguage.googleapis.com/v1beta/models"
+        """Initialize — availability is determined by the gateway's provider health."""
+        health = llm_gateway.health_check()
+        self.perplexity_available = health.get("perplexity", False)
+        self.gemini_available = health.get("gemini", False)
+        self._any_available = any(health.values())
 
-        # Perplexity API (primary - for web-grounded answers)
-        self.perplexity_api_key = os.getenv('PERPLEXITY_API_KEY')
-        self.perplexity_base_url = "https://api.perplexity.ai/chat/completions"
-
-        # Gemini API (secondary - for analysis)
-        self.gemini_api_key = os.getenv('GEMINI_API_KEY')
-        self.gemini_base_url = f"{gemini_base}/{self._gemini_model}:generateContent"
-
-        # Service availability
-        self.perplexity_available = bool(self.perplexity_api_key)
-        self.gemini_available = bool(self.gemini_api_key)
-
-        if not self.perplexity_available and not self.gemini_available:
-            logger.warning("⚠️ No AI chat services available - check API keys in .env")
+        if not self._any_available:
+            logger.warning("No AI chat providers reachable — check API keys in .env")
 
     def get_career_advice(self,
                           user_skills: Dict,
@@ -241,99 +239,34 @@ class AIChatService:
         }
 
     def _query_perplexity(self, prompt: str, model: Optional[str] = None) -> Optional[str]:
-        """Query Perplexity API — model from config/models.yaml"""
-        if not self.perplexity_api_key:
-            return None
-
-        model = model or self._perplexity_model
-
-        try:
-            headers = {
-                "Authorization": f"Bearer {self.perplexity_api_key}",
-                "Content-Type": "application/json"
-            }
-
-            data = {
-                "model": model,
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": "You are a career advisor with deep knowledge of job markets, skill development, and career transitions. Provide specific, actionable advice grounded in current market data."
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ],
-                "max_tokens": 1500,
-                "temperature": 0.7
-            }
-
-            response = requests.post(
-                self.perplexity_base_url,
-                headers=headers,
-                json=data,
-                timeout=30
-            )
-
-            if response.status_code == 200:
-                result = response.json()
-                return result['choices'][0]['message']['content']
-            else:
-                logger.error(f"Perplexity API error: {response.status_code} - {response.text}")
-                return None
-
-        except Exception as e:
-            logger.error(f"Perplexity query error: {e}")
-            return None
+        """Query Perplexity via llm_gateway (web-grounded answers)."""
+        messages = [
+            {"role": "system", "content": _CAREER_SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ]
+        resp: LLMResponse = llm_gateway.generate(
+            prompt, provider="perplexity", messages=messages, max_tokens=1500, temperature=0.7,
+        )
+        if resp.success and resp.text:
+            return resp.text
+        logger.warning("Perplexity via gateway failed: %s", resp.error)
+        return None
 
     def _query_gemini(self, prompt: str) -> Optional[str]:
-        """Query Gemini API"""
-        if not self.gemini_api_key:
-            return None
-
-        try:
-            url = f"{self.gemini_base_url}?key={self.gemini_api_key}"
-
-            headers = {
-                "Content-Type": "application/json"
-            }
-
-            data = {
-                "contents": [{
-                    "parts": [{
-                        "text": f"""You are a career advisor. {prompt}
-
-Provide practical, actionable advice focusing on:
-- Specific next steps
-- Resource recommendations
-- Realistic timelines
-- Market-relevant skills"""
-                    }]
-                }],
-                "generationConfig": {
-                    "temperature": 0.7,
-                    "maxOutputTokens": 1500
-                }
-            }
-
-            response = requests.post(
-                url,
-                headers=headers,
-                json=data,
-                timeout=30
-            )
-
-            if response.status_code == 200:
-                result = response.json()
-                return result['candidates'][0]['content']['parts'][0]['text']
-            else:
-                logger.error(f"Gemini API error: {response.status_code} - {response.text}")
-                return None
-
-        except Exception as e:
-            logger.error(f"Gemini query error: {e}")
-            return None
+        """Query Gemini via llm_gateway."""
+        full_prompt = (
+            f"You are a career advisor. {prompt}\n\n"
+            "Provide practical, actionable advice focusing on:\n"
+            "- Specific next steps\n- Resource recommendations\n"
+            "- Realistic timelines\n- Market-relevant skills"
+        )
+        resp: LLMResponse = llm_gateway.generate(
+            full_prompt, provider="gemini", max_tokens=1500, temperature=0.7,
+        )
+        if resp.success and resp.text:
+            return resp.text
+        logger.warning("Gemini via gateway failed: %s", resp.error)
+        return None
 
     def _build_career_advice_prompt(self,
                                      user_skills: Dict,

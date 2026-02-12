@@ -402,7 +402,7 @@ class TestHTTPEndpoints:
         resp = client.get("/api/payment/v1/gateway-info")
         assert resp.status_code == 200
         data = resp.json()
-        assert data["gateway"] == "braintree"
-        assert data["configured"] is True
+        assert data["primary_gateway"] == "braintree"
+        assert data["braintree"]["configured"] is True
         assert data["environment"] == "sandbox"
-        print(f"  ✓ /gateway-info → {data['environment']}, merchant={data['merchant_id']}")
+        print(f"  ✓ /gateway-info → {data['environment']}, gateway={data['primary_gateway']}")

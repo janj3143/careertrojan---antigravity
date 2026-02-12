@@ -13,7 +13,9 @@ from datetime import datetime
 import os
 router = APIRouter(prefix="/api/analytics/v1", tags=["analytics"])
 
-AI_DATA_PATH = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
+# Source of truth: L: drive → ai_data_final subdirectory
+_DATA_ROOT = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"))
+AI_DATA_PATH = _DATA_ROOT / "ai_data_final"
 
 @router.get("/statistics")
 async def get_statistics() -> Dict[str, Any]:

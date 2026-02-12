@@ -32,13 +32,22 @@ logger = logging.getLogger(__name__)
 class NLPLLMTrainer:
     """Comprehensive NLP & LLM trainer"""
 
-    def __init__(self, base_path: str):
-        self.base_path = Path(base_path)
-        self.data_path = self.base_path / "ai_data_final"
-        self.models_path = self.base_path / "trained_models" / "nlp"
+    def __init__(self, base_path: str = None):
+        # Use centralized config for data paths (L: drive source of truth)
+        try:
+            from services.ai_engine.config import AI_DATA_DIR, models_path as _cfg_models
+            self.data_path = AI_DATA_DIR
+            self.models_path = _cfg_models / "nlp"
+        except ImportError:
+            import os
+            _data_root = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"))
+            self.data_path = _data_root / "ai_data_final"
+            self.models_path = Path(base_path or Path(__file__).parent) / "trained_models" / "nlp"
+        self.base_path = Path(base_path) if base_path else Path(__file__).parent
         self.models_path.mkdir(parents=True, exist_ok=True)
 
         logger.info(f"NLP & LLM Trainer initialized")
+        logger.info(f"Data path: {self.data_path}")
         logger.info(f"Models will be saved to: {self.models_path}")
 
     def load_text_data(self):

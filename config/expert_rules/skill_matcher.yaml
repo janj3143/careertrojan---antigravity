@@ -1,0 +1,78 @@
+# Skill matching rules — used by the expert system inference pipeline
+# referenced as: expert_system.skill_matcher
+#
+# Weighted scoring system for matching user skills to role requirements
+
+scoring:
+  # How much each factor contributes to the final match score (must sum to 1.0)
+  weights:
+    exact_skill_match: 0.35        # User has exact skill name
+    semantic_similarity: 0.25      # Embedding distance < threshold
+    transferable_skills: 0.15      # Related skills that transfer
+    certification_bonus: 0.10      # Relevant certs boost score
+    experience_depth: 0.15         # Years in skill area
+
+  thresholds:
+    strong_match: 0.80             # Above this = "Strong Match"
+    moderate_match: 0.55           # Above this = "Good Match"
+    weak_match: 0.30               # Above this = "Possible Match"
+    # Below weak_match = "Skill Gap"
+
+# Transferable skill mappings: if user has skill A, they get partial credit for B
+transferable_skills:
+  python:
+    - { skill: "data science", weight: 0.7 }
+    - { skill: "machine learning", weight: 0.6 }
+    - { skill: "automation", weight: 0.5 }
+    - { skill: "scripting", weight: 0.8 }
+
+  javascript:
+    - { skill: "typescript", weight: 0.85 }
+    - { skill: "front end", weight: 0.65 }
+    - { skill: "react", weight: 0.4 }
+    - { skill: "node.js", weight: 0.5 }
+
+  project_management:
+    - { skill: "team leadership", weight: 0.7 }
+    - { skill: "stakeholder management", weight: 0.6 }
+    - { skill: "agile methodology", weight: 0.5 }
+
+  data_analysis:
+    - { skill: "business intelligence", weight: 0.65 }
+    - { skill: "data science", weight: 0.5 }
+    - { skill: "sql", weight: 0.6 }
+    - { skill: "excel", weight: 0.4 }
+
+  cloud_computing:
+    - { skill: "devops", weight: 0.6 }
+    - { skill: "infrastructure as code", weight: 0.55 }
+    - { skill: "kubernetes", weight: 0.5 }
+
+  machine_learning:
+    - { skill: "deep learning", weight: 0.75 }
+    - { skill: "data science", weight: 0.65 }
+    - { skill: "natural language processing", weight: 0.6 }
+    - { skill: "computer vision", weight: 0.55 }
+
+  leadership:
+    - { skill: "project management", weight: 0.6 }
+    - { skill: "stakeholder management", weight: 0.55 }
+    - { skill: "change management", weight: 0.5 }
+
+# Certification → skill equivalence (partial credit)
+certification_mappings:
+  aws_certified:
+    - { skill: "cloud computing", credit: 0.7 }
+    - { skill: "amazon web services", credit: 0.9 }
+  azure_fundamentals:
+    - { skill: "cloud computing", credit: 0.6 }
+    - { skill: "microsoft azure", credit: 0.85 }
+  pmp:
+    - { skill: "project management", credit: 0.8 }
+    - { skill: "stakeholder management", credit: 0.5 }
+  csm:
+    - { skill: "agile methodology", credit: 0.75 }
+    - { skill: "scrum framework", credit: 0.85 }
+  six_sigma:
+    - { skill: "continuous improvement", credit: 0.7 }
+    - { skill: "lean manufacturing", credit: 0.6 }

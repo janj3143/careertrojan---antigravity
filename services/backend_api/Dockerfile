@@ -15,6 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+LABEL project="CareerTrojan-Antigravity" service="backend-api"
+
 # Expose port
 EXPOSE 8000
 

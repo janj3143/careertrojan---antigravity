@@ -1,0 +1,81 @@
+# Career advice rules — used by the expert system inference pipeline
+# referenced as: expert_system.career_rules
+#
+# Each rule has: condition (evaluated against context dict), action, priority
+
+rules:
+  - id: CR001
+    name: Senior Requires Experience
+    description: "Senior titles require 5+ years experience"
+    condition: "'senior' in target_role.lower() and years_experience < 5"
+    action: adjust_confidence_down
+    adjustment: 0.3
+    message: "Senior roles typically require 5+ years. Consider mid-level targets first."
+    priority: 8
+    category: career_path
+
+  - id: CR002
+    name: Career Pivot Skill Gap
+    description: "Flag when target role is in a different industry with no transferable skills"
+    condition: "career_pivot and transferable_skill_count < 2"
+    action: recommend_upskilling
+    message: "Career pivots succeed when you can demonstrate 2+ transferable skills."
+    priority: 7
+    category: career_path
+
+  - id: CR003
+    name: Technical Lead Requires Management
+    description: "Lead/manager roles need evidence of team leadership"
+    condition: "'lead' in target_role.lower() or 'manager' in target_role.lower()"
+    action: check_skill_present
+    required_skill: leadership
+    message: "Leadership or team management experience is essential for this role."
+    priority: 8
+    category: career_path
+
+  - id: CR004
+    name: Entry Level Salary Expectation
+    description: "Flag unrealistic salary expectations for junior roles"
+    condition: "years_experience < 2 and expected_salary_percentile > 75"
+    action: adjust_expectation
+    message: "Salary expectations may be above market for this experience level."
+    priority: 5
+    category: salary
+
+  - id: CR005
+    name: CTO Requires Broad Tech Skills
+    description: "CTO/VP Eng need breadth across infrastructure, architecture, team"
+    condition: "'cto' in target_role.lower() or 'vp engineering' in target_role.lower()"
+    action: check_skill_breadth
+    required_categories: ["infrastructure", "architecture", "team_management"]
+    message: "Executive tech roles need demonstrated breadth across infra, architecture, and people management."
+    priority: 9
+    category: career_path
+
+  - id: CR006
+    name: Certification Boost
+    description: "Boost confidence when relevant certifications are present"
+    condition: "has_relevant_certifications"
+    action: adjust_confidence_up
+    adjustment: 0.15
+    message: "Relevant certifications strengthen this career path recommendation."
+    priority: 4
+    category: qualifications
+
+  - id: CR007
+    name: Industry Switch Warning
+    description: "Switching industries reduces initial match confidence"
+    condition: "industry_switch and years_in_current_industry > 5"
+    action: add_transition_plan
+    message: "Long tenure in current industry — include a transition strategy."
+    priority: 6
+    category: career_path
+
+  - id: CR008
+    name: Remote Work Compatibility
+    description: "Flag roles requiring relocation when user prefers remote"
+    condition: "prefers_remote and not role_supports_remote"
+    action: flag_location_mismatch
+    message: "This role may require relocation or on-site presence."
+    priority: 5
+    category: logistics

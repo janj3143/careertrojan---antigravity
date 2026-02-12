@@ -1,0 +1,219 @@
+[NAICS] L:\antigravity_version_ai_data_final\automated_parser\2022_NAICS_Descriptions.xlsx
+  Headers: ['code', 'title', 'description']
+  >> 4117 NAICS terms
+[SOC-DESC] L:\antigravity_version_ai_data_final\automated_parser\extendedsoc2020structureanddescriptionsexcel03122025.xlsx
+  Sheet: Extended SOC framework
+  Sheet: Extended SOC descriptions
+  >> 1706 SOC description terms
+[SOC-INDEX] L:\antigravity_version_ai_data_final\automated_parser\soc2020volume2thecodingindexexcel03122025.xlsx
+  Sheet: SOC2020 coding index
+    ...10000 rows
+    ...20000 rows
+    ...30000 rows
+    32376 rows done
+  Sheet: SOC2020 framework
+    793 rows done
+  >> 46411 SOC index terms
+
+================================================================================
+EXTRACTION COMPLETE
+================================================================================
+
+  BIOTECH_PHARMA: 1624 terms
+    ÔÇó 111 health adviser
+    ÔÇó Acupuncturist, medical
+    ÔÇó Administration of Public Health Programs
+    ÔÇó Administrator, act, health, mental
+    ÔÇó Administrator, clinical
+    ÔÇó Administrator, dental
+    ÔÇó Administrator, experience, patient
+    ÔÇó Administrator, health and safety
+    ÔÇó Administrator, hospital
+    ÔÇó Administrator, medical
+    ÔÇó Administrator, patient
+    ÔÇó Administrator, records, medical
+    ÔÇó Administrator, trial, clinical
+    ÔÇó Administrator, trials, clinical
+    ÔÇó Adult nurse
+    ÔÇó Advanced clinical practitioner
+    ÔÇó Advanced neonatal nurse practitioner
+    ÔÇó Advanced nurse practitioner
+    ÔÇó Advanced practitioner
+    ÔÇó Advanced practitioner radiographer
+    ÔÇó Advanced practitioner sonographer
+    ÔÇó Advanced primary care nurse
+    ÔÇó Adviser, care, patient
+    ÔÇó Adviser, environmental, health and safety
+    ÔÇó Adviser, health
+    ... (1599 more)
+
+  FINANCIAL_SERVICES: 758 terms
+    ÔÇó Accountant, treasury
+    ÔÇó Accounting analyst
+    ÔÇó Accounting and Bookkeeping Clerks
+    ÔÇó Accounting assistant
+    ÔÇó Accounting Associate Professionals
+    ÔÇó Accounting clerks and bookkeepers
+    ÔÇó Accounting consultant
+    ÔÇó accounting for one-half of the establishment's agricultural production
+    ÔÇó Accounting group manager
+    ÔÇó Accounting machinist
+    ÔÇó Accounting supervisor
+    ÔÇó Accounting technician
+    ÔÇó Accounting technicians
+    ÔÇó accounting, bookkeeping, and payroll services
+    ÔÇó Accounting, Tax Preparation, Bookkeeping, and Payroll ServicesT
+    ÔÇó accounting, tax preparation, bookkeeping, and related services
+    ÔÇó Activities Related to Credit Intermediation
+    ÔÇó ADD term was revenue
+    ÔÇó Adjuster, claims, insurance
+    ÔÇó Administrator, banking
+    ÔÇó Administrator, compliance
+    ÔÇó Administrator, control, credit
+    ÔÇó Administrator, credit
+    ÔÇó Administrator, insurance
+    ÔÇó Administrator, mortgage
+    ... (733 more)
+
+  INDUSTRY_TERM: 3655 terms
+    ÔÇó 24-hour home care
+    ÔÇó <dt style='padding-left: 10px
+    ÔÇó a general line of groceries
+    ÔÇó a location designated by the customer
+    ÔÇó Abrasive Product Manufacturing
+    ÔÇó Abrasive Product ManufacturingT
+    ÔÇó abrasive products
+    ÔÇó accessories for metalworking machinery
+    ÔÇó Accommodation and Food ServicesT
+    ÔÇó acidizing and chemically treating wells
+    ÔÇó acting as agents
+    ÔÇó acting as agents for goods distribution
+    ÔÇó acting as agents for wireless telecommunications services
+    ÔÇó Activities Related to Real EstateT
+    ÔÇó Adhesive Manufacturing
+    ÔÇó Adhesive ManufacturingT
+    ÔÇó Administration of Conservation Programs
+    ÔÇó Administration of Economic Programs
+    ÔÇó Administration of Education Programs
+    ÔÇó Administration of Environmental Quality Programs
+    ÔÇó Administration of General Economic Programs
+    ÔÇó Administration of Housing Programs
+    ÔÇó Administration of Human Resource Programs
+    ÔÇó Administration of Veterans' Affairs
+    ÔÇó Administrative and Support ServicesT
+    ... (3630 more)
+
+  JOB_TITLE: 41930 terms
+    ÔÇó 1 technician
+    ÔÇó 111 call handler
+    ÔÇó 1:1 teaching assistant
+    ÔÇó 1st Class
+    ÔÇó 2a technician
+    ÔÇó 2b technician
+    ÔÇó 2d animator
+    ÔÇó 360 operator
+    ÔÇó 3d animator
+    ÔÇó 3d artist
+    ÔÇó 3d designer
+    ÔÇó 3d modeller
+    ÔÇó 3d visualiser
+    ÔÇó A&E receptionist
+    ÔÇó ABA tutor
+    ÔÇó Abattoir foreman
+    ÔÇó Abattoir manager
+    ÔÇó Abattoir operative
+    ÔÇó Abattoir worker
+    ÔÇó Able rate
+    ÔÇó Above ground worker
+    ÔÇó Abrasive goods maker
+    ÔÇó Abrasive moulder
+    ÔÇó Abrasive paper maker
+    ÔÇó abrasive paper, cloth mfr
+    ... (41905 more)
+
+  MANUFACTURING: 1588 terms
+    ÔÇó 3d printing engineer
+    ÔÇó 3d printing technician
+    ÔÇó Accounts machinist
+    ÔÇó Action machinist
+    ÔÇó Adding machinist
+    ÔÇó Addressing machinist
+    ÔÇó Administrator, logistics
+    ÔÇó Adviser, textile
+    ÔÇó Aerospace design engineer
+    ÔÇó Aerospace engineer
+    ÔÇó Aerospace engineering technician
+    ÔÇó Aerospace engineers
+    ÔÇó Aerospace engineers n.e.c
+    ÔÇó Aerospace Product and Parts ManufacturingT
+    ÔÇó Aerospace systems engineer
+    ÔÇó Aerospace technicians
+    ÔÇó Ageing machinist
+    ÔÇó Agent, textile
+    ÔÇó Agricultural machinist
+    ÔÇó All Other Miscellaneous Textile Product Mills
+    ÔÇó All Other Textile Product MillsT
+    ÔÇó Alumina and Aluminum Production and ProcessingT
+    ÔÇó Alumina Refining and Primary Aluminum Production
+    ÔÇó Aluminum Foundries
+    ÔÇó aluminum from alumina
+    ... (1563 more)
+
+  OIL_GAS: 710 terms
+    ÔÇó Adviser, energy
+    ÔÇó Agriculture, Construction, and Mining Machinery ManufacturingT
+    ÔÇó Air and Gas Compressor Manufacturing
+    ÔÇó All Other Miscellaneous Nonmetallic Mineral Product Manufacturing
+    ÔÇó All Other Nonmetallic Mineral Product ManufacturingT
+    ÔÇó All Other Petroleum and Coal Products Manufacturing
+    ÔÇó All Other Pipeline Transportation
+    ÔÇó All Other Pipeline TransportationT
+    ÔÇó Analyst, energy
+    ÔÇó and coal, coke, metal ores, and/or nonmetallic minerals
+    ÔÇó and for the extraction of nonmetallic minerals
+    ÔÇó and mineral wool
+    ÔÇó and oil and gas field derricks, and
+    ÔÇó Assembler, cooker, gas
+    ÔÇó Assessor, energy
+    ÔÇó Assessor, energy, domestic
+    ÔÇó Assistant gas man
+    ÔÇó Assistant, driver's, turbine
+    ÔÇó Assistant, regulator's, gas
+    ÔÇó atomic energy establishment
+    ÔÇó Attendant, coal
+    ÔÇó Attendant, expeller, oil
+    ÔÇó Attendant, gas
+    ÔÇó Attendant, oven, gas
+    ÔÇó Attendant, plant, coal
+    ... (685 more)
+
+  TECH_SKILL: 380 terms
+    ÔÇó ADD term added. ADD term was computing
+    ÔÇó ADD term was computing
+    ÔÇó ADD term was computing. SOC-ext code was 2133/06
+    ÔÇó ADD term was computing. SOC-ext code was 2134/02
+    ÔÇó ADD term was computing. SOC-ext code was 2134/99
+    ÔÇó ADD term was computing. SOC-ext code was 2135/99
+    ÔÇó ADD term was computing: project management
+    ÔÇó ADD term was professional, computing
+    ÔÇó Agile coach
+    ÔÇó Agile coaches and scrum masters
+    ÔÇó Analyst, intelligence, cyber
+    ÔÇó Analyst, intelligence, threat, cyber
+    ÔÇó Analyst, security, cyber
+    ÔÇó Analyst, software
+    ÔÇó Analyst, support, software
+    ÔÇó Analyst, test, software
+    ÔÇó and Computer Aided Design
+    ÔÇó and computers and computer peripheral equipment and software
+    ÔÇó and user experience
+    ÔÇó Application software author
+    ÔÇó Architect, security, cyber
+    ÔÇó Architect, software
+    ÔÇó audio and video programming distribution
+    ÔÇó Auditor, cyber security and IT
+    ÔÇó Auditor, security, cyber
+    ... (355 more)
+
+  GRAND TOTAL: 50645 unique terms
+  Output: C:\careertrojan\data\ai_data_final\gazetteers\classification_collocations.json

@@ -1,0 +1,1 @@
+Reading NAICS file: L:\antigravity_version_ai_data_final\automated_parser\2022_NAICS_Descriptions.xlsx

@@ -31,8 +31,8 @@ from starlette.responses import Response
 
 logger = logging.getLogger("interaction_logger")
 
-# ── Resolve data root (portable) ──────────────────────────────
-_DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
+# ── Resolve data root (portable) — L: drive is source of truth ─
+_DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"))
 
 INTERACTIONS_DIR = _DATA_ROOT / "USER DATA" / "interactions"
 

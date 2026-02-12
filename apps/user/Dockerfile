@@ -21,6 +21,8 @@ RUN npm run build
 # ── Production Stage ─────────────────────────────────────────────────────
 FROM nginx:alpine
 
+LABEL project="CareerTrojan-Antigravity" service="user-portal"
+
 # Copy built assets
 COPY --from=build /app/dist /usr/share/nginx/html
 

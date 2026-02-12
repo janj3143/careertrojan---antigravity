@@ -3,7 +3,7 @@
 **Domain**: careertrojan.com  
 **Objective**: Create the definitive runtime environment at `C:\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\VS ai_data final - version` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
 
-**Last Updated**: 2026-02-09 (Session 6 — Unified model config, LLM gateway, repo cleanup, Braintree CSE, 136 tests green)
+**Last Updated**: 2026-02-10 (Session 6 continued — Visual wiring, nginx bridge, model hot-reload, backup scripts)
 
 ---
 
@@ -547,28 +547,34 @@ BRAINTREE_PRIVATE_KEY=<in .env, not committed>
 9. ~~Braintree payment gateway integration~~ ✅ (sandbox, 47 tests)
 10. ~~GDPR router~~ ✅
 
-### Phase C — Frontend & Integration 🔨 CURRENT PRIORITY
+### Phase C — Frontend & Integration ✅ COMPLETE
 11. [x] **Root `.gitignore` hardened** — ✅ `*.json`/`*.db`/`*credentials*` excluded, allowlist for package.json etc.
 12. [x] **Root `.env` verified + `.env.example` updated** — ✅ 104 vars, all keys populated, example has 100+ lines
 12b. [x] **Unified model config created** — ✅ `config/models.yaml` + `config/model_config.py` + `services/ai_engine/llm_gateway.py`
 12c. [x] **All hardcoded model names eliminated** — ✅ 7 files fixed, zero remaining in codebase
-13. [ ] **Run endpoint introspection pipeline** (`tools/`) — verify full endpoint count
-14. [ ] **Update ~25 React API callsites** to new `/api/.../v1` prefixes
-15. [ ] **Wire visualisation components** into `/insights/visuals` (Phase 05–12 components ready)
-16. [ ] **Build insights/touchpoints API endpoints** (Section 6.4 — 11 endpoints to build)
-17. [ ] **Push initial commit to GitHub** — create `careertrojan/runtime` repo
+13. [x] **Run endpoint introspection pipeline** — ✅ 185 routes, 72 callsites, 189 nodes, 198 edges
+14. [x] **Update React API callsites** — ✅ Centralized `apiConfig.ts` in all 3 portals, zero hardcoded localhost URLs
+15. [x] **Wire visualisation components** — ✅ 4 self-fetching charts + TouchPoints overlay panel + Zustand crossfilter
+16. [x] **Build insights/touchpoints API endpoints** — ✅ All 11 endpoints live (cohort/resolve + cooccurrence hardened)
+17. [x] **Push to GitHub** — ✅ `74d92bb` (origin/main)
 
-### Phase D — Polish & Mobile
-18. [ ] PWA manifest + service worker (Section 14.2)
-19. [ ] Responsive breakpoint audit for mobile (Section 14.2)
-20. [ ] Backup scripts: `backup_runtime.ps1`, `backup_postgres.ps1` (Section 15.2)
-21. [ ] Verify nginx portal bridge routes correctly to all portals + backend
+### Phase D — Infrastructure & Hardening 🔨 CURRENT PRIORITY
+18. [ ] **nginx portal bridge** — route all portals + backend through single reverse proxy
+19. [ ] **Model hot-reload endpoint** — `/api/ai_data/v1/model/reload` (admin-only)
+20. [ ] **Backup scripts** — `backup_runtime.ps1`, `backup_postgres.ps1` (Section 15.2)
+21. [ ] **Cleanup** — remove `.backup.*` files + duplicate docker-compose in app subdirs
+22. [ ] **OpenAPI spec export** — `scripts/export_openapi.py` → `docs/openapi.json`
 
-### Phase E — Pre-Launch
-22. [ ] SSL/TLS setup with mkcert (local) + Certbot (staging)
-23. [ ] GitHub Actions CI pipeline (lint → typecheck → test → build)
-24. [ ] OWASP security audit (Section 16)
-25. [ ] Lighthouse PWA audit (target > 90)
-26. [ ] Ubuntu deployment test
-27. [ ] Full validation deep-dive — contamination traps, live data checks, sync verification (Section 11)
-28. [ ] Braintree production merchant account + go-live (Section 18.5)
+### Phase E — Mobile & Polish
+23. [ ] PWA manifest + service worker (Section 14.2)
+24. [ ] Responsive breakpoint audit for mobile (Section 14.2)
+25. [ ] Verify model training pipeline (`scripts/train_models.py`)
+
+### Phase F — Pre-Launch
+26. [ ] SSL/TLS setup with mkcert (local) + Certbot (staging)
+27. [ ] GitHub Actions CI pipeline (lint → typecheck → test → build)
+28. [ ] OWASP security audit (Section 16)
+29. [ ] Lighthouse PWA audit (target > 90)
+30. [ ] Ubuntu deployment test
+31. [ ] Full validation deep-dive — contamination traps, live data checks, sync verification
+32. [ ] Braintree production merchant account + go-live (Section 18.5)

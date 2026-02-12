@@ -54,9 +54,16 @@ except ImportError:
 class IntelliCVModelTrainer:
     """Complete AI model training pipeline"""
 
-    def __init__(self, data_dir: str = "ai_data_final"):
-        self.data_dir = Path(data_dir)
-        self.models_dir = Path("admin_portal/models")
+    def __init__(self, data_dir: str = None):
+        # Use centralized config for data paths (L: drive source of truth)
+        import os
+        if data_dir:
+            self.data_dir = Path(data_dir)
+        else:
+            _data_root = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"))
+            self.data_dir = _data_root / "ai_data_final"
+        _models_root = Path(os.getenv("ML_MODELS_PATH", r"C:\careertrojan\services\ai_engine\trained_models"))
+        self.models_dir = _models_root
         self.models_dir.mkdir(parents=True, exist_ok=True)
 
         self.training_report = {

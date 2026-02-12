@@ -34,6 +34,7 @@ import ExaWebIntel from './pages/ExaWebIntel';
 import UnifiedAnalytics from './pages/UnifiedAnalytics';
 import MentorAppReview from './pages/MentorAppReview';
 import ConnectivityAudit from './pages/ConnectivityAudit';
+import APIHealthDashboard from './pages/APIHealthDashboard';
 import BlockerDetectionTest from './pages/BlockerDetectionTest';
 import AdminPortalEntry from './pages/AdminPortalEntry';
 
@@ -127,6 +128,7 @@ export default function App() {
                     <Route path="/admin/unified-analytics" element={<PrivateRoute><UnifiedAnalytics /></PrivateRoute>} />
                     <Route path="/admin/mentor-review" element={<PrivateRoute><MentorAppReview /></PrivateRoute>} />
                     <Route path="/admin/connectivity" element={<PrivateRoute><ConnectivityAudit /></PrivateRoute>} />
+                    <Route path="/admin/api-health" element={<PrivateRoute><APIHealthDashboard /></PrivateRoute>} />
                     <Route path="/admin/blocker-test" element={<PrivateRoute><BlockerDetectionTest /></PrivateRoute>} />
                     <Route path="/admin/portal-entry" element={<PrivateRoute><AdminPortalEntry /></PrivateRoute>} />
 

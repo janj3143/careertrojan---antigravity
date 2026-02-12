@@ -1,0 +1,29 @@
+# =============================================================================
+# CareerTrojan-Antigravity — Nginx Gateway (Reverse Proxy)
+# =============================================================================
+# Routes all traffic through a single entry point:
+#   /        → User Portal          (port 80 → user-portal:80)
+#   /admin   → Admin Portal         (port 80 → admin-portal:80)
+#   /mentor  → Mentor Portal        (port 80 → mentor-portal:80)
+#   /api/*   → FastAPI Backend      (port 80 → backend-api:8000)
+#   /docs    → OpenAPI Docs         (port 80 → backend-api:8000)
+# =============================================================================
+
+FROM nginx:alpine
+
+LABEL project="CareerTrojan-Antigravity" service="gateway"
+
+# Copy the full nginx config
+COPY infra/nginx/nginx.conf /etc/nginx/nginx.conf
+
+# Create dirs for portal static files (populated at runtime via volumes)
+RUN mkdir -p /usr/share/nginx/html/user \
+             /usr/share/nginx/html/admin \
+             /usr/share/nginx/html/mentor
+
+EXPOSE 80 443
+
+HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3 \
+    CMD wget -qO- http://localhost:80/health || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]

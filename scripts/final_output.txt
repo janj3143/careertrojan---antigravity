@@ -1,0 +1,443 @@
+
+========== BIOTECH_PHARMA (1378 terms) ==========
+  Acupuncturist, medical
+  Administration of Public Health Programs
+  Administrator, act, health, mental
+  Administrator, clinical
+  Administrator, dental
+  Administrator, health and safety
+  Administrator, hospital
+  Administrator, medical
+  Administrator, records, medical
+  Administrator, trial, clinical
+  Administrator, trials, clinical
+  Adult nurse
+  Advanced clinical practitioner
+  Advanced neonatal nurse practitioner
+  Advanced nurse practitioner
+  Advanced practitioner
+  Advanced practitioner radiographer
+  Advanced practitioner sonographer
+  Advanced primary care nurse
+  Adviser, environmental, health and safety
+  Adviser, health
+  Adviser, health and safety
+  Adviser, health, 111
+  Adviser, health, IUC
+  Adviser, health, mental
+  Adviser, health, occupational
+  Adviser, health, public
+  Adviser, health, school
+  Adviser, health, sexual
+  Adviser, healthcare
+  Adviser, medical
+  Adviser, medical, emergency
+  Adviser, nurse
+  Adviser, nurse, health, occupational
+  Adviser, occupational health and wellbeing
+  Adviser, promotion, health
+  Advocate, health, mental
+  Aesthetic nurse
+  Aesthetic nurse practitioner
+  Aesthetic practitioner
+  Aesthetician, medical
+  Aid, laboratory
+  Aid, nurse's
+  Aide, laboratory
+  Aide, nurse's
+  Alexander technique practitioner
+  All Other Ambulatory Health Care Services
+  All Other Health and Personal Care Retailers
+  All Other Miscellaneous Ambulatory Health Care Services
+  Ambulance builder
+  Ambulance controller
+  Ambulance crew
+  Ambulance driver
+  Ambulance officer
+  Ambulance paramedic
+  Ambulance patient carer
+  ambulance service
+  Ambulance service make ready operative
+  Ambulance service preparation operative
+  Ambulance Services
+  ... (1318 more)
+
+========== FINANCIAL_SERVICES (607 terms) ==========
+  Accountant, treasury
+  Accounting and Bookkeeping Clerks
+  Accounting Associate Professionals
+  Accounting clerks and bookkeepers
+  Accounting group manager
+  Accounting supervisor
+  Accounting technician
+  Accounting technicians
+  accounting, bookkeeping, and payroll services
+  Accounting, Tax Preparation, Bookkeeping, and Payroll Services
+  accounting, tax preparation, bookkeeping, and related services
+  Activities Related to Credit Intermediation
+  Adjuster, claims, insurance
+  Administrator, banking
+  Administrator, compliance
+  Administrator, insurance
+  Administrator, mortgage
+  Administrator, payroll
+  Administrator, pension
+  Adviser, banking
+  Adviser, banking, telephone
+  Adviser, insurance
+  Adviser, management, wealth
+  Adviser, mortgage
+  Adviser, mortgage and protection
+  Adviser, payroll
+  Adviser, pension
+  Adviser, sales, insurance
+  Adviser, wealth, personal
+  Agencies, Brokerages, and Other Insurance Related Activities
+  Agent, insurance
+  Agent, mortgage
+  Agent, sales, insurance
+  Air broker
+  All Other Insurance Related Activities
+  Analyst, accounting
+  Analyst, compliance
+  Analyst, equity
+  Analyst, insurance
+  Analyst, research, equity
+  Analyst, surveillance, compliance
+  Analyst, treasury
+  annuities and insurance policies or
+  Arranger, mortgage
+  Assessor, insurance
+  Assistant tax collector
+  Assistant, accounting
+  Assistant, compliance
+  Assistant, insurance
+  Assistant, mortgage
+  Assistant, payroll
+  Assistant, protection, revenue
+  Assistant, revenue
+  Assistant, Revenue, Inland
+  Assistant, services, payroll
+  Assistant, treasury
+  Associate, banking
+  Associate, insurance
+  Associate, securities
+  Audit associate
+  ... (547 more)
+
+========== INDUSTRY_TERM (2701 terms) ==========
+  24-hour home care
+  Abrasive Product Manufacturing
+  abrasive products
+  accessories for metalworking machinery
+  Accommodation and Food Services
+  acidizing and chemically treating wells
+  Activities Related to Real Estate
+  Adhesive Manufacturing
+  Administration of Conservation Programs
+  Administration of Economic Programs
+  Administration of Education Programs
+  Administration of Environmental Quality Programs
+  Administration of General Economic Programs
+  Administration of Housing Programs
+  Administration of Human Resource Programs
+  Administration of Veterans' Affairs
+  Administrative and Support Services
+  Administrative Management and General Management Consulting Services
+  Advertising Agencies
+  Advertising Material Distribution Services
+  advertising services
+  advertising, public relations, and related services
+  Advertising, Public Relations, and Related Services
+  advocate various social and political causes
+  Agents for Wireless Telecommunications Services
+  Agricultural Implement Manufacturing
+  Agriculture, Forestry, Fishing and Hunting
+  Air Traffic Control
+  Air Transportation
+  aircraft conversion
+  Aircraft Engine and Engine Parts Manufacturing
+  Aircraft Manufacturing
+  aircraft propulsion system conversion
+  aircraft propulsion systems overhaul and rebuilding
+  Airport Operations
+  Alcoholic Beverages
+  all materials
+  All Other Amusement and Recreation Industries
+  All Other Animal Production
+  All Other Automotive Repair and Maintenance
+  All Other Basic Organic Chemical Manufacturing
+  All Other Business Support Services
+  All Other Chemical Product and Preparation Manufacturing
+  All Other Consumer Goods Rental
+  All Other Converted Paper Product Manufacturing
+  All Other Crop Farming
+  All Other Electrical Equipment and Component Manufacturing
+  All Other Fabricated Metal Product Manufacturing
+  All Other Financial Investment Activities
+  All Other Food Manufacturing
+  All Other General Merchandise Retailers
+  All Other General Purpose Machinery Manufacturing
+  All Other Grain Farming
+  All Other Home Furnishings Retailers
+  All Other Industrial Machinery Manufacturing
+  All Other Legal Services
+  All Other Miscellaneous Chemical Product and Preparation Manufacturing
+  All Other Miscellaneous Crop Farming
+  All Other Miscellaneous Electrical Equipment and Component Manufacturing
+  All Other Miscellaneous Fabricated Metal Product Manufacturing
+  ... (2641 more)
+
+========== JOB_TITLE (36752 terms) ==========
+  2a technician
+  2b technician
+  2d animator
+  3d animator
+  3d designer
+  3d modeller
+  3d visualiser
+  ABA tutor
+  Abattoir foreman
+  Abattoir manager
+  Abattoir operative
+  Abattoir worker
+  Able rate
+  Above ground worker
+  Abrasive goods maker
+  Abrasive moulder
+  Abrasive paper maker
+  abrasive paper, cloth mfr
+  abrasive wheel mfr
+  Abrasive wheel moulder
+  abrasives mfr
+  Academic adviser
+  Academic coordinator
+  Academic director
+  Academic manager
+  Academic mentor
+  Academic registrar
+  Academic skills adviser
+  Academic tutor
+  Accent removed from cafe
+  Accent removed from creche
+  Acceptance house manager
+  Access field technician
+  Access officer
+  Accessory designer
+  Accident investigator
+  Accident prevention officer
+  Accommodation manager
+  Accommodation officer
+  Accommodation warden
+  Accommodations manager
+  Accommodations officer
+  Accordion pleater
+  Account administrator
+  Account clerk
+  Account controller
+  Account coordinator
+  Account development manager
+  Account director
+  Account executive
+  Account handler
+  Account manager
+  Account representative
+  Account supervisor
+  Account technician
+  Accountancy clerk
+  accountancy services
+  Accountant and auditor
+  Accountant's clerk
+  Accountant, bank
+  ... (36692 more)
+
+========== MANUFACTURING (984 terms) ==========
+  3d printing engineer
+  3d printing technician
+  Administrator, logistics
+  Adviser, textile
+  Aerospace design engineer
+  Aerospace engineer
+  Aerospace engineering technician
+  Aerospace engineers
+  Aerospace Product and Parts Manufacturing
+  Aerospace systems engineer
+  Aerospace technicians
+  Agent, textile
+  All Other Miscellaneous Textile Product Mills
+  All Other Textile Product Mills
+  Alumina and Aluminum Production and Processing
+  Alumina Refining and Primary Aluminum Production
+  Aluminum Foundries
+  aluminum from alumina
+  Aluminum Sheet, Plate, and Foil Manufacturing
+  An establishment that primarily performs factory
+  Analyst, logistics
+  Arc welder
+  arc welding electrode mfr
+  art metal work mfr
+  Artist, textile
+  assembling and installing other steel construction products
+  Assistant, design, textile
+  Assistant, extrusion
+  Assistant, factory
+  Assistant, logistics
+  Assistant, plating
+  Assistant, welder's
+  Attendant, belt, casting
+  Attendant, plant, welding
+  Barbenders, steel fixers
+  Bid production manager
+  Blacksmith welder
+  Blacksmiths, Hammersmiths and Forging Press Workers
+  blow molding
+  Boilermaker's holder-up
+  Casting cleaner
+  Casting director
+  Casting dresser
+  Casting man
+  Casting shop foreman
+  Chain welder
+  Chemist, textile
+  Cleaner, casting
+  Cleaner, factory
+  Clerk, logistics
+  CNC engineer
+  CNC grinder
+  CNC lathe turner
+  CNC machine operator
+  CNC machine setter
+  CNC machine setter operator
+  CNC machine setter-operator
+  CNC miller
+  CNC operative
+  CNC operator
+  ... (924 more)
+
+========== OIL_GAS (631 terms) ==========
+  Adviser, energy
+  Agriculture, Construction, and Mining Machinery Manufacturing
+  Air and Gas Compressor Manufacturing
+  All Other Miscellaneous Nonmetallic Mineral Product Manufacturing
+  All Other Nonmetallic Mineral Product Manufacturing
+  All Other Petroleum and Coal Products Manufacturing
+  All Other Pipeline Transportation
+  Analyst, energy
+  Assembler, cooker, gas
+  Assessor, energy
+  Assessor, energy, domestic
+  Assistant gas man
+  Assistant, driver's, turbine
+  Assistant, regulator's, gas
+  Attendant, coal
+  Attendant, expeller, oil
+  Attendant, gas
+  Attendant, oven, gas
+  Attendant, plant, coal
+  Attendant, plant, crushing, ore
+  Attendant, plant, gas
+  Attendant, producer, gas
+  Attendant, reservoir
+  Attendant, turbine
+  Attendant, wharf, oil
+  Auditor, energy
+  Automotive Oil Change and Lubrication Shops
+  Bagger, coal
+  Bailiff, reservoir
+  Biomass Electric Power Generation
+  Blender, coal
+  Blender, oil
+  Boiler, oil
+  Booster, gas
+  Boring and drilling machine setters and setter-operators
+  Breaker, coal
+  Breaker, ore
+  Brightener, oil
+  British gas engineer
+  Broker, energy
+  Broker, oil
+  Building, land, mining and `general practice' surveyors
+  Burner, gas
+  Carrier, coal
+  Carter, coal
+  Cellarman, oil
+  Cement, Stone and Other Mineral Products Machine Operators
+  Charger, coal
+  Charger, ore
+  Chemical, gas and petroleum process plant operatives
+  Chemist, nuclear
+  Chlorine gas worker
+  Civil, structural, municipal, mining and quarrying engineers
+  clay extraction
+  Cleaner, coal
+  Coal and Other Mineral and Ore Merchant Wholesalers
+  Coal bagger
+  Coal blender
+  Coal breaker
+  Coal carrier
+  ... (571 more)
+
+========== TECH_SKILL (300 terms) ==========
+  Agile coach
+  Agile coaches and scrum masters
+  Analyst, intelligence, cyber
+  Analyst, intelligence, threat, cyber
+  Analyst, security, cyber
+  Analyst, software
+  Analyst, support, software
+  Analyst, test, software
+  Application software author
+  Architect, security, cyber
+  Architect, software
+  audio and video programming distribution
+  Auditor, security, cyber
+  Author, software
+  Author, software, application
+  Author, technical, software
+  Automation engineer
+  Back end man
+  Back-end man
+  Big data engineer
+  Broadband engineer
+  Business Schools and Computer and Management Training
+  Cloud engineer
+  Computer 2d animator
+  Computer 3d animator
+  Computer administration manager
+  Computer administrator
+  Computer aided design designer
+  Computer aided design draughtsman
+  Computer aided design engineer
+  Computer aided designer
+  Computer aided despatch operator
+  Computer analyst programmer
+  Computer analyst/programmers
+  Computer analysts and scientists
+  Computer and Electronic Product Manufacturing
+  Computer and Peripheral Equipment Manufacturing
+  Computer animator
+  Computer assembler
+  Computer assisted design engineer
+  Computer auditor
+  Computer clerk
+  Computer control supervisor
+  Computer controller
+  Computer coordinator
+  Computer data controller
+  Computer design engineer
+  Computer designer
+  Computer developer
+  Computer engineer
+  Computer engineers, installation and maintenance
+  computer equipment repair
+  Computer Facilities Management Services
+  Computer forensic investigator
+  Computer games designer
+  Computer games designers
+  Computer games tester
+  Computer hardware engineer
+  Computer help desk worker
+  Computer inputter
+  ... (240 more)
+
+GRAND TOTAL: 43353 terms

@@ -61,10 +61,12 @@ class StatisticalMethodsTrainer:
     """Execute comprehensive statistical analysis."""
 
     def __init__(self, base_path: str = None):
-        self.base_path = Path(base_path or ".")
-        self.ai_data_path = self.base_path / "ai_data_final"
+        # Use centralized config for data paths (L: drive source of truth)
+        _data_root = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"))
+        self.base_path = Path(base_path) if base_path else Path(__file__).parent
+        self.ai_data_path = _data_root / "ai_data_final"
         self.analytics_path = self.ai_data_path / "analytics"
-        self.models_path = self.base_path / "trained_models"
+        self.models_path = self.base_path / "trained_models" / "statistical"
 
         self.analytics_path.mkdir(parents=True, exist_ok=True)
 

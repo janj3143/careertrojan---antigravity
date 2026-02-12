@@ -1,6 +1,6 @@
 # CareerTrojan Runtime Build Plan
 
-**Last Updated**: 2026-02-09 (Session 6 — All routers mounted, middleware stack complete, 136 tests green)
+**Last Updated**: 2026-02-11 (Session 9 — Data path corrected to L:\antigravity_version_ai_data_final, layout confirmed)
 
 This document outlines the strategy for building the **CareerTrojan Runtime Version**, emerging from the **IntelliCV-AI** system. The goal is to create a high-performance, unified platform that links seamlessly with the `L:\VS ai_data final - version` dataset.
 
@@ -13,7 +13,7 @@ This document outlines the strategy for building the **CareerTrojan Runtime Vers
 >
 > **Consolidation:** We are moving from a "per-page" fragmented React structure to three unified portals: **Admin**, **User**, and **Mentor**.
 >
-> **Data & AI Linking:** The runtime uses junction mounts at `C:\careertrojan\data-mounts\` pointing to `L:\VS ai_data final - version`. Tandem sync to `E:\CareerTrojan\USER_DATA_COPY\`.
+> **Data & AI Linking:** Runtime lives at `C:\careertrojan`; all production data lives at `L:\antigravity_version_ai_data_final` via junctions under `C:\careertrojan\data-mounts\`. Tandem sync to `E:\CareerTrojan\USER_DATA_COPY\`.
 >
 > **Configuration Phase 1 (Testing):** A Premium Test User (`janj3143`) will be auto-seeded.
 >
@@ -55,13 +55,15 @@ To ensure the system is using **Real AI Data** and not falling back to hardcoded
 ```
 careertrojan/
 ├── apps/
-│   ├── admin-portal/       # Unified React Admin app
-│   ├── user-portal/        # Unified React User app
-│   └── mentor-portal/      # Unified React Mentor app
+│   ├── admin/              # Unified React Admin app
+│   ├── user/               # Unified React User app
+│   └── mentor/             # Unified React Mentor app
 ├── services/
-│   ├── backend-api/        # FastAPI Canonical API (v1)
-│   ├── ai-workers/         # Resume parsing & enrichment workers
-│   └── portal-bridge/      # Shared API client & auth logic
+│   ├── backend_api/        # FastAPI Canonical API (v1)
+│   ├── ai_engine/          # AI inference engine
+│   ├── workers/            # Resume parsing & enrichment workers
+│   ├── shared/             # Shared services + portal-bridge
+│   └── shared_backend/     # Shared backend utilities
 ├── shared/
 │   ├── contracts/          # OpenAPI & Data schemas
 │   ├── registry/           # Dynamic capability registry (Flexibility Layer)
@@ -70,6 +72,12 @@ careertrojan/
 │   ├── venv-py311/         # Python 3.11 Virtual Environment
 │   ├── docker-compose.yml  # Local runtime orchestration
 │   └── nginx/              # Reverse proxy & routing
+├── data-mounts/
+│   ├── ai-data   → L:\antigravity_version_ai_data_final
+│   ├── parser    → L:\antigravity_version_ai_data_final\automated_parser
+│   ├── user-data → L:\antigravity_version_ai_data_final\USER DATA
+│   ├── logs      → (TBD)
+│   └── models    → (TBD)
 └── scripts/                # Build and migration scripts
 ```
 
@@ -85,7 +93,7 @@ careertrojan/
 - [x] **Capability Registry:** Dynamic registry in `shared/registry` for toggling AI models, parsers, or UI modules.
 - [x] **Admin Portal:** 31 pages (00–31) + 29 tools + 10 ops pages in `apps/admin/src/pages/`.
 - [x] **User Portal:** 15 pages + ConsolidationPage in `apps/user/src/pages/`.
-- [x] **Mentor Portal:** 12 pages in `apps/mentor/src/pages/`.
+- [x] **Mentor Portal:** 12 pages (each with nested sub-app src) in `apps/mentor/src/pages/`.
 
 #### Phase 3: Backend & Data Linking ✅ COMPLETE
 - [x] Deploy the FastAPI `backend-api` with versioned routes (`/api/{domain}/v1/*`).
@@ -100,66 +108,21 @@ careertrojan/
 - [x] Map every route defined in `MAPPING.md` to a functioning React page.
 - [x] Verify API connectivity for core interactions (Resume Upload, Enrichment, etc.).
 - [x] **136 tests green** across unit/integration/e2e tiers.
-- [ ] **Run endpoint introspection pipeline** to verify full endpoint count (~160-300 estimated).
-- [ ] **Update ~25 React API callsites** still referencing old prefixes to new `/api/.../v1` paths.
-- [ ] **Full validation deep-dive** — contamination traps, live data checks, sync verification.
+- [ ] **4a — Endpoint Introspection Pipeline** → `scripts/run_introspection.py`
+  - Runs `fastapi_introspect_routes.py` → `react_api_scan.py` → `join_endpoint_graph.py`
+  - Generates `reports/endpoint_map.json` + `reports/endpoint_map.html`
+  - Expected range: 160–300 endpoints across 29 routers
+- [ ] **4b — React Callsite Migration** → `scripts/migrate_react_api_prefixes.py`
+  - Scan `apps/*/src/**/*.{ts,tsx}` for legacy prefixes (`/api/v1/`, `/v1/`, hardcoded ports)
+  - Auto-rewrite to canonical `/api/{domain}/v1` pattern
+  - Estimated ~25 callsites across all three portals
+- [ ] **4c — Full Validation Deep-Dive** → `scripts/continue_build.ps1`
+  - Contamination trap ("Sales vs Python") live run
+  - L: → E: sync trap write + verify
+  - Data-mount junction health check
+  - Zero "Intellicv-AI" grep confirmation
 
-## Visual Diagram (Runtime Architecture)
-
-```mermaid
-graph TD
-    subgraph "External Clients"
-        Web[Browser / Mobile]
-    end
-
-    subgraph "Runtime: CareerTrojan (Drive 1)"
-        Proxy[NGINX / API Gateway]
-        
-        subgraph "Frontend Apps"
-            Admin[Admin Portal]
-            User[User Portal]
-            Mentor[Mentor Portal]
-        end
-
-        subgraph "Services"
-            FastAPI[FastAPI Backend - Canonical v1]
-            Workers[AI Workers - Parser/Enrichment]
-            Bridge[Portal Bridge - Auth/Sessions]
-        end
-    end
-
-    subgraph "Data Storage (Drive L)"
-        Dataset[(ai_data_final)]
-        ParserStore[(automated_parser)]
-        Logs[(System Logs)]
-    end
-
-    subgraph "External APIs"
-        Auth[Auth Provider]
-        LLM[AI / LLM Services]
-    end
-
-    Web --> Proxy
-    Proxy --> Admin
-    Proxy --> User
-    Proxy --> Mentor
-    
-    Admin -- "REST /api/v1" --> FastAPI
-    User -- "REST /api/v1" --> FastAPI
-    Mentor -- "REST /api/v1" --> FastAPI
-    
-    FastAPI --> Bridge
-    Bridge --> Auth
-    
-    FastAPI -- "Jobs" --> Workers
-    Workers -- "Read/Write" --> Dataset
-    Workers -- "Processing" --> ParserStore
-    Workers --> LLM
-    
-    FastAPI --> Logs
-```
-
-## Phase 5: React Page Reconciliation ✅ COMPLETE (Feb 2026)
+#### Phase 5: React Page Reconciliation ✅ COMPLETE (Feb 2026)
 > Canonical source: `E:\Archive Scripts\pages order\`
 
 ### Admin Portal — 31 Pages + Tools + Ops
@@ -177,22 +140,24 @@ Pages 01–15 (skipping 06) from the archive are enacted in `apps/user/src/pages
 
 ### Mentor Portal — 12 Pages
 All 12 pages from the archive are enacted in `apps/mentor/src/pages/` with React routes.
+Each mentor page contains a nested sub-app with its own `src/` directory.
 - [x] Pages 01–12 verified present and routed
 
 ## Phase 6: Data Architecture & Duplication Strategy ✅ COMPLETE (Feb 2026)
 
 ### Source of Truth
-- **Primary Data Store**: `L:\VS ai_data final - version\`
+- **Primary Data Store**: `L:\antigravity_version_ai_data_final\`
   - `ai_data_final/` — AI knowledge base (JSON, parsed CVs, job data)
   - `automated_parser/` — Raw document ingestion pipeline
   - `USER DATA/` — User sessions, audit logs, profiles, trap data
 - **Runtime Data Mounts**: `C:\careertrojan\data-mounts\`
-  - `ai-data` → junction to `L:\VS ai_data final - version`
-  - `parser` → junction to `L:\VS ai_data final - version\automated_parser`
+  - `ai-data` → junction to `L:\antigravity_version_ai_data_final`
+  - `parser` → junction to `L:\antigravity_version_ai_data_final\automated_parser`
+  - `user-data` → junction to `L:\antigravity_version_ai_data_final\USER DATA`
 
 ### Tandem Duplication (L: ↔ E:)
 - **Mirror Location**: `E:\CareerTrojan\USER_DATA_COPY\`
-- **Sync Traps**: Every write to `L:\...\USER DATA\` must be automatically mirrored to `E:\CareerTrojan\USER_DATA_COPY\`
+- **Sync Traps**: Every write to `L:\antigravity_version_ai_data_final\USER DATA\` must be automatically mirrored to `E:\CareerTrojan\USER_DATA_COPY\`
 - **Structure**: Both locations maintain identical subdirectories:
   ```
   USER DATA/
@@ -212,7 +177,7 @@ All 12 pages from the archive are enacted in `apps/mentor/src/pages/` with React
 
 ### AI Orchestrator Feedback Loop
 ```
-User Login/Action → USER DATA (L:)
+User Login/Action → USER DATA (L:\antigravity_version_ai_data_final\USER DATA)
        ↓                    ↓ (sync trap)
   AI Orchestrator      USER_DATA_COPY (E:)
        ↓
@@ -247,6 +212,51 @@ Remove from `C:\careertrojan\`:
 - Duplicate/orphaned docker-compose files in app subdirectories
 - Utility scripts that have been superseded by the runtime
 
+## Phase 9: Production Hardening (Planned)
+
+### 9.1 Secrets Management
+- [ ] Move all secrets (Braintree keys, JWT signing key, 2FA seeds) from `.env` to **Docker Secrets** or a mounted vault file.
+- [ ] Ensure `.env` is in `.gitignore` and `.dockerignore`.
+
+### 9.2 HTTPS & TLS
+- [ ] Generate self-signed cert for local dev (`infra/nginx/certs/`).
+- [ ] NGINX config updated to terminate TLS on port **8500**.
+- [ ] HSTS header added.
+
+### 9.3 Container Image
+- [ ] `Dockerfile` for backend-api (Python 3.11-slim base, multi-stage build).
+- [ ] `Dockerfile` for each portal (Node 20 build → NGINX serve).
+- [ ] `docker-compose.yml` updated with health checks, restart policies, resource limits.
+- [ ] Container name: `CaReerTroJan-Antigravity` (as spec'd).
+
+### 9.4 Observability
+- [ ] `/healthz` and `/readyz` endpoints on backend-api.
+- [ ] Structured JSON logging (correlation ID in every line).
+- [ ] Log rotation policy for `USER DATA/session_logs/`.
+
+### 9.5 Rate Limiting & Abuse Prevention
+- [ ] Verify `RateLimitMiddleware` covers all public endpoints.
+- [ ] Add CAPTCHA or proof-of-work on login after 5 failed attempts.
+
+## Phase 10: Launch Readiness Checklist (Planned)
+
+| # | Check | Status |
+|---|-------|--------|
+| 1 | All Phase 4 items closed | ⬜ |
+| 2 | Endpoint count matches introspection report | ⬜ |
+| 3 | Zero legacy callsites in React (`migrate_react_api_prefixes.py --check`) | ⬜ |
+| 4 | Contamination trap passes on fresh boot | ⬜ |
+| 5 | L: ↔ E: sync verified (< 5 s latency) | ⬜ |
+| 6 | Docker Compose `up` succeeds with no warnings | ⬜ |
+| 7 | `janj3143` test user can login, upload CV, receive matches | ⬜ |
+| 8 | Admin impersonation + audit log verified | ⬜ |
+| 9 | GDPR export + deletion tested end-to-end | ⬜ |
+| 10 | Braintree sandbox purchase flow succeeds | ⬜ |
+| 11 | Logo renders correctly on all three portals | ⬜ |
+| 12 | Zero instances of "Intellicv-AI" in codebase | ⬜ |
+| 13 | All 136+ tests green in CI-equivalent local run | ⬜ |
+| 14 | Phase 8 cleanup complete (no legacy scripts) | ⬜ |
+
 ## Verification Plan
 
 ### Automated Tests — 136 Passing ✅
@@ -256,12 +266,12 @@ Remove from `C:\careertrojan\`:
 - **Root conftest.py**: Auto-loads .env, session-scoped app/client/db fixtures, auto-resets rate limiter
 - **Contract Validation:** Use `schemathesis` to verify FastAPI matches the OpenAPI spec.
 - **Renaming Integrity:** Scripted grep to ensure zero instances of "Intellicv-AI" remain.
-- **Sync Trap Validation:** Write a test file to `L:\...\USER DATA\test\` and verify it appears in `E:\CareerTrojan\USER_DATA_COPY\test\` within 5 seconds.
+- **Sync Trap Validation:** Write a test file to `L:\antigravity_version_ai_data_final\USER DATA\test\` and verify it appears in `E:\CareerTrojan\USER_DATA_COPY\test\` within 5 seconds.
 - **Endpoint Coverage:** Run endpoint introspection pipeline and verify count matches 29 registered routers.
 
 ### Manual Verification
 1. **Login Flow:** Verify "CareerTrojan" branding on the login page and successful JWT acquisition.
-2. **Resume Upload:** Upload a test resume to the User Portal and verify it appears in `L:\VS ai_data final - version\automated_parser`.
+2. **Resume Upload:** Upload a test resume to the User Portal and verify it appears in `L:\antigravity_version_ai_data_final\automated_parser`.
 3. **Admin Monitor:** Check the Admin Status Monitor to see live health checks of all services.
 4. **Data Mapping:** Pick three random pages from `MAPPING.md` and verify they render correctly with live data.
 5. **Page 31:** Verify Admin Portal entry point page loads and authenticates.

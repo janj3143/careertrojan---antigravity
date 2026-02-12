@@ -1,164 +1,166 @@
 # -*- coding: utf-8 -*-
 """
-AI Router - Intelligent Workload Distribution
-==============================================
+AI Router — Intelligent Workload Distribution (via llm_gateway)
+================================================================
 Routes AI workloads to the most appropriate engine based on:
 - Task type (parsing, chat, market intelligence)
-- Privacy requirements (GDPR compliance)
+- Privacy requirements (GDPR compliance → Ollama local)
 - Cost optimization
 - Performance needs
 
+ALL LLM calls delegate to ``llm_gateway.generate()``.
+No direct HTTP calls, no subprocess, no broken imports.
+
 Author: IntelliCV Platform
-Generated: 2025-11-20 12:14:59
+Refactored: Wired through llm_gateway
 """
 
-import os
+import logging
 from typing import Dict, Any, Optional, List
 
+logger = logging.getLogger(__name__)
+
+# ── Single import: everything goes through the gateway ────────────────
+try:
+    from services.ai_engine.llm_gateway import llm_gateway, LLMResponse
+except ImportError:
+    import sys, os
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
+    from services.ai_engine.llm_gateway import llm_gateway, LLMResponse
+
+try:
+    from services.backend_api.services.ai.ai_chat_service import get_ai_chat_service
+except ImportError:
+    get_ai_chat_service = None  # Will be detected in _detect_engines
+
+
 class AIRouter:
-    """Intelligently routes AI workloads to appropriate engines"""
-    
+    """Intelligently routes AI workloads — all LLM calls go through llm_gateway."""
+
     def __init__(self):
-        # Initialize available engines
         self.engines_available = self._detect_engines()
-        
+        logger.info("AIRouter initialized — engines: %s", self.engines_available)
+
     def _detect_engines(self) -> Dict[str, bool]:
-        """Detect which AI engines are available"""
-        engines = {}
-        
-        # Check internal AI
+        """Detect which AI engines are available via the gateway's health check."""
+        health = llm_gateway.health_check()
+
+        engines = {
+            "openai": health.get("openai", False),
+            "anthropic": health.get("anthropic", False),
+            "perplexity": health.get("perplexity", False),
+            "gemini": health.get("gemini", False),
+            "ollama": health.get("ollama", False),
+            "vllm": health.get("vllm", False),
+        }
+
+        # Internal AI engine (Bayesian/NLP/Fuzzy models)
         try:
-            from real_ai_connector import RealAIConnector
-            self.internal_ai = RealAIConnector()
-            engines['internal'] = True
-        except:
-            engines['internal'] = False
-        
-        # Check external AI services
+            from services.ai_engine.unified_ai_engine import unified_ai_engine
+            self._internal_engine = unified_ai_engine
+            engines["internal"] = True
+        except Exception:
+            self._internal_engine = None
+            engines["internal"] = False
+
+        # AI chat service (uses gateway under the hood now)
         try:
-            from ai_chat_service import get_ai_chat_service
-            self.ai_chat = get_ai_chat_service()
-            status = self.ai_chat.get_service_status()
-            engines['perplexity'] = status['perplexity']['available']
-            engines['gemini'] = status['gemini']['available']
-        except:
-            engines['perplexity'] = False
-            engines['gemini'] = False
-        
-        # Check Ollama
-        import subprocess
-        try:
-            result = subprocess.run(['ollama', 'list'], capture_output=True, timeout=2)
-            engines['ollama'] = result.returncode == 0
-        except:
-            engines['ollama'] = False
-        
+            if get_ai_chat_service:
+                self.ai_chat = get_ai_chat_service()
+                engines["chat_service"] = True
+            else:
+                self.ai_chat = None
+                engines["chat_service"] = False
+        except Exception:
+            self.ai_chat = None
+            engines["chat_service"] = False
+
         return engines
-    
+
     def route_cv_analysis(self, cv_text: str, privacy_mode: bool = False) -> Dict[str, Any]:
         """
-        Route CV analysis to appropriate engine
-        
-        Args:
-            cv_text: CV text to analyze
-            privacy_mode: If True, use only local processing (GDPR)
-        
-        Returns:
-            Analysis results with engine used
+        Route CV analysis to appropriate engine.
+        privacy_mode=True → use only local Ollama (GDPR compliant).
         """
-        if privacy_mode and self.engines_available.get('ollama'):
-            # GDPR mode - use local Ollama only
+        if privacy_mode and self.engines_available.get("ollama"):
             return self._analyze_with_ollama(cv_text)
-        
-        elif self.engines_available.get('internal'):
-            # Use our fast internal NLP (trained on 34k CVs)
+
+        if self._internal_engine and self.engines_available.get("internal"):
             return self._analyze_with_internal(cv_text)
-        
-        elif self.engines_available.get('ollama'):
-            # Fallback to Ollama
+
+        if self.engines_available.get("ollama"):
             return self._analyze_with_ollama(cv_text)
-        
-        else:
-            return {'error': 'No CV analysis engine available', 'engine': 'none'}
-    
-    def route_market_intelligence(self, query: str) -> Dict[str, Any]:
-        """
-        Route market intelligence queries to real-time search
-        
-        Args:
-            query: Market intelligence query
-        
-        Returns:
-            Market insights with source
-        """
-        if self.engines_available.get('perplexity'):
-            # Perplexity is ideal - web search with current data
-            return self.ai_chat.get_job_market_insights(query)
-        
-        elif self.engines_available.get('gemini'):
-            # Gemini can provide general insights
-            return self.ai_chat.get_career_advice({}, [], query)
-        
-        else:
-            return {'insights': 'Real-time market data unavailable. Configure Perplexity API.', 'source': 'unavailable'}
-    
-    def route_career_advice(self, user_profile: Dict) -> Dict[str, Any]:
-        """
-        Route personalized career advice
-        
-        Args:
-            user_profile: User skills and experience
-        
-        Returns:
-            Career advice with source
-        """
-        if self.engines_available.get('perplexity') or self.engines_available.get('gemini'):
-            # Use AI chat service
-            return self.ai_chat.get_career_advice(
-                user_skills=user_profile.get('skills', {}),
-                career_patterns=user_profile.get('patterns', []),
-                target_role=user_profile.get('target_role')
+
+        # Last resort: cloud LLM via gateway (not GDPR-safe for private CVs)
+        if not privacy_mode:
+            resp = llm_gateway.generate(
+                f"Extract from this CV: job titles, years of experience, top 5 skills. "
+                f"Be concise.\n\n{cv_text[:2000]}",
             )
-        
-        elif self.engines_available.get('internal'):
-            # Use internal AI insights
-            job_title = user_profile.get('current_title', 'Professional')
-            return self.internal_ai.get_ai_generated_insights(job_title)
-        
-        else:
-            return {'advice': 'AI advisory services unavailable', 'source': 'none'}
-    
-    def _analyze_with_internal(self, cv_text: str) -> Dict[str, Any]:
-        """Analyze CV with internal NLP engine"""
-        # This would call our custom Bayesian/NLP/Fuzzy engines
-        return {
-            'skills': ['Python', 'Data Analysis', 'Machine Learning'],  # Extracted by NLP
-            'experience_years': 5,  # Calculated by pattern matching
-            'confidence': 0.92,  # Bayesian confidence
-            'engine': 'internal_ai'
-        }
-    
-    def _analyze_with_ollama(self, cv_text: str) -> Dict[str, Any]:
-        """Analyze CV with local Ollama (privacy-first)"""
-        import subprocess
-        
-        prompt = f"Extract from this CV: job titles, years of experience, top 5 skills. Be concise.\n\n{cv_text[:1000]}"
-        
-        result = subprocess.run(
-            ['ollama', 'run', 'llama3.1:8b', prompt],
-            capture_output=True,
-            text=True,
-            timeout=30
+            if resp.success:
+                return {"analysis": resp.text, "engine": f"gateway_{resp.provider}", "privacy_compliant": False}
+
+        return {"error": "No CV analysis engine available", "engine": "none"}
+
+    def route_market_intelligence(self, query: str) -> Dict[str, Any]:
+        """Route market intelligence queries — Perplexity preferred for web search."""
+        if self.ai_chat and self.engines_available.get("chat_service"):
+            return self.ai_chat.get_job_market_insights(query)
+
+        # Direct gateway call to Perplexity
+        if self.engines_available.get("perplexity"):
+            resp = llm_gateway.generate(query, provider="perplexity")
+            if resp.success:
+                return {"insights": resp.text, "source": "perplexity", "web_grounded": True}
+
+        return {"insights": "Real-time market data unavailable. Configure Perplexity API.", "source": "unavailable"}
+
+    def route_career_advice(self, user_profile: Dict) -> Dict[str, Any]:
+        """Route personalized career advice."""
+        if self.ai_chat and self.engines_available.get("chat_service"):
+            return self.ai_chat.get_career_advice(
+                user_skills=user_profile.get("skills", {}),
+                career_patterns=user_profile.get("patterns", []),
+                target_role=user_profile.get("target_role"),
+            )
+
+        # Fallback: direct gateway call
+        prompt = (
+            f"Provide career advice for a professional with skills: "
+            f"{user_profile.get('skills', {})} and target role: {user_profile.get('target_role', 'unspecified')}."
         )
-        
-        return {
-            'analysis': result.stdout,
-            'engine': 'ollama_local',
-            'privacy_compliant': True
-        }
-    
+        resp = llm_gateway.generate(prompt)
+        if resp.success:
+            return {"advice": resp.text, "source": resp.provider}
+
+        return {"advice": "AI advisory services unavailable", "source": "none"}
+
+    def _analyze_with_internal(self, cv_text: str) -> Dict[str, Any]:
+        """Analyze CV with internal NLP engine (Bayesian/NLP/Fuzzy)."""
+        if self._internal_engine is None:
+            return {"error": "Internal engine not loaded", "engine": "internal_ai"}
+        try:
+            result = self._internal_engine.analyze(cv_text)
+            result["engine"] = "internal_ai"
+            return result
+        except Exception as e:
+            logger.error("Internal engine analysis failed: %s", e)
+            return {"error": str(e), "engine": "internal_ai"}
+
+    def _analyze_with_ollama(self, cv_text: str) -> Dict[str, Any]:
+        """Analyze CV with local Ollama via llm_gateway (privacy-first)."""
+        prompt = (
+            "Extract from this CV: job titles, years of experience, top 5 skills. "
+            f"Be concise.\n\n{cv_text[:2000]}"
+        )
+        resp: LLMResponse = llm_gateway.generate(prompt, provider="ollama")
+        if resp.success:
+            return {"analysis": resp.text, "engine": "ollama_local", "privacy_compliant": True}
+        return {"error": f"Ollama failed: {resp.error}", "engine": "ollama_local", "privacy_compliant": True}
+
     def get_engine_status(self) -> Dict[str, bool]:
-        """Get status of all engines"""
+        """Get status of all engines (live health check)."""
+        self.engines_available = self._detect_engines()
         return self.engines_available
 
 

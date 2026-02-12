@@ -1,40 +1,37 @@
-# IntelliCV Admin Portal Dockerfile
-FROM python:3.10-slim
+# =============================================================================
+# CareerTrojan Admin Portal — Multi-stage Dockerfile
+# =============================================================================
+# Build:   docker build -t careertrojan-admin ./apps/admin
+# Run:     docker run -p 8501:80 careertrojan-admin
+# =============================================================================
 
-# Set working directory
+# ── Build Stage ──────────────────────────────────────────────────────────
+FROM node:18-alpine AS build
+
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    gcc \
-    g++ \
-    && rm -rf /var/lib/apt/lists/*
+# Install dependencies first (layer cache)
+COPY package.json package-lock.json* ./
+RUN npm ci --prefer-offline
 
-# Copy requirements first for better Docker layer caching
-COPY requirements.txt ./
-
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
+# Copy source and build
 COPY . .
+RUN npm run build
 
-# Create necessary directories
-RUN mkdir -p logs data ai_data_final
+# ── Production Stage ─────────────────────────────────────────────────────
+FROM nginx:alpine
 
-# Set environment variables
-ENV STREAMLIT_SERVER_PORT=8501
-ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
-ENV STREAMLIT_SERVER_HEADLESS=true
-ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+LABEL project="CareerTrojan-Antigravity" service="admin-portal"
 
-# Expose the port
-EXPOSE 8501
+# Copy built assets
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8501/_stcore/health || exit 1
+# Nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Run the application
-CMD ["streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget -qO- http://localhost:80/ || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,5 +1,8 @@
 # CareerTrojan Kubernetes Deployment
-# Deploys User Portal, Admin Portal, Mentor Portal, and Backend API
+# Full runtime: API, 3 Portals, 3 Workers, Postgres, Redis, Ingress
+# Usage:
+#   kubectl apply -f config/k8s/deployment.yaml
+#   kubectl get pods -n careertrojan
 
 ---
 apiVersion: v1
@@ -8,7 +11,42 @@ metadata:
   name: careertrojan
 
 ---
-# Backend API Deployment
+# ==========================================================================
+# CONFIGMAP — shared configuration
+# ==========================================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: careertrojan-config
+  namespace: careertrojan
+data:
+  ENVIRONMENT: "production"
+  CAREERTROJAN_DATA_ROOT: "/mnt/ai_data"
+  REDIS_URL: "redis://redis:6379/0"
+  AI_DATA_ROOT: "/mnt/ai_data/ai_data_final"
+  ML_MODELS_PATH: "/mnt/trained_models"
+
+---
+# ==========================================================================
+# SECRETS — populate with real values before deploying
+# ==========================================================================
+apiVersion: v1
+kind: Secret
+metadata:
+  name: careertrojan-secrets
+  namespace: careertrojan
+type: Opaque
+stringData:
+  database-url: "postgresql://user:pass@postgres:5432/careertrojan"
+  jwt-secret: "CHANGE_ME_IN_PRODUCTION"
+  redis-password: "CHANGE_ME_IN_PRODUCTION"
+  openai-api-key: ""
+  anthropic-api-key: ""
+
+---
+# ==========================================================================
+# BACKEND API
+# ==========================================================================
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,7 +66,10 @@ spec:
       - name: backend-api
         image: careertrojan/backend-api:latest
         ports:
-        - containerPort: 8500
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: careertrojan-config
         env:
         - name: DATABASE_URL
           valueFrom:
@@ -40,11 +81,20 @@ spec:
             secretKeyRef:
               name: careertrojan-secrets
               key: jwt-secret
-        - name: AI_DATA_ROOT
-          value: "/mnt/ai_data"
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: openai-api-key
         volumeMounts:
         - name: ai-data
           mountPath: /mnt/ai_data
+          readOnly: true
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: trained-models
+          mountPath: /mnt/trained_models
           readOnly: true
         resources:
           requests:
@@ -55,23 +105,28 @@ spec:
             cpu: "2000m"
         livenessProbe:
           httpGet:
-            path: /shared/health
-            port: 8500
+            path: /health
+            port: 8000
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
-            path: /shared/health
-            port: 8500
+            path: /health
+            port: 8000
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
       - name: ai-data
         persistentVolumeClaim:
           claimName: ai-data-pvc
+      - name: config-volume
+        configMap:
+          name: careertrojan-app-config
+      - name: trained-models
+        persistentVolumeClaim:
+          claimName: trained-models-pvc
 
 ---
-# Backend API Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -82,12 +137,14 @@ spec:
     app: backend-api
   ports:
   - protocol: TCP
-    port: 8500
-    targetPort: 8500
+    port: 8000
+    targetPort: 8000
   type: ClusterIP
 
 ---
-# User Portal Deployment
+# ==========================================================================
+# FRONTEND PORTALS (all serve nginx on port 80)
+# ==========================================================================
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -107,20 +164,22 @@ spec:
       - name: user-portal
         image: careertrojan/user-portal:latest
         ports:
-        - containerPort: 3000
-        env:
-        - name: VITE_API_URL
-          value: "http://backend-api:8500"
+        - containerPort: 80
         resources:
           requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
             memory: "256Mi"
             cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 30
 
 ---
-# User Portal Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -131,12 +190,11 @@ spec:
     app: user-portal
   ports:
   - protocol: TCP
-    port: 3000
-    targetPort: 3000
+    port: 80
+    targetPort: 80
   type: ClusterIP
 
 ---
-# Admin Portal Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -156,20 +214,22 @@ spec:
       - name: admin-portal
         image: careertrojan/admin-portal:latest
         ports:
-        - containerPort: 3001
-        env:
-        - name: VITE_API_URL
-          value: "http://backend-api:8500"
+        - containerPort: 80
         resources:
           requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
             memory: "256Mi"
             cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 30
 
 ---
-# Admin Portal Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -180,12 +240,11 @@ spec:
     app: admin-portal
   ports:
   - protocol: TCP
-    port: 3001
-    targetPort: 3001
+    port: 80
+    targetPort: 80
   type: ClusterIP
 
 ---
-# Mentor Portal Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -205,20 +264,22 @@ spec:
       - name: mentor-portal
         image: careertrojan/mentor-portal:latest
         ports:
-        - containerPort: 3002
-        env:
-        - name: VITE_API_URL
-          value: "http://backend-api:8500"
+        - containerPort: 80
         resources:
           requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
             memory: "256Mi"
             cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 30
 
 ---
-# Mentor Portal Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -229,12 +290,300 @@ spec:
     app: mentor-portal
   ports:
   - protocol: TCP
-    port: 3002
-    targetPort: 3002
+    port: 80
+    targetPort: 80
   type: ClusterIP
 
 ---
-# Ingress Configuration
+# ==========================================================================
+# WORKERS
+# ==========================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parser-worker
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: parser-worker
+  template:
+    metadata:
+      labels:
+        app: parser-worker
+    spec:
+      containers:
+      - name: parser-worker
+        image: careertrojan/parser-worker:latest
+        envFrom:
+        - configMapRef:
+            name: careertrojan-config
+        volumeMounts:
+        - name: ai-data
+          mountPath: /mnt/ai_data
+        - name: parser-data
+          mountPath: /app/parser
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+      volumes:
+      - name: ai-data
+        persistentVolumeClaim:
+          claimName: ai-data-pvc
+      - name: parser-data
+        persistentVolumeClaim:
+          claimName: parser-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enrichment-worker
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: enrichment-worker
+  template:
+    metadata:
+      labels:
+        app: enrichment-worker
+    spec:
+      containers:
+      - name: enrichment-worker
+        image: careertrojan/enrichment-worker:latest
+        envFrom:
+        - configMapRef:
+            name: careertrojan-config
+        volumeMounts:
+        - name: ai-data
+          mountPath: /mnt/ai_data
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+      volumes:
+      - name: ai-data
+        persistentVolumeClaim:
+          claimName: ai-data-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-worker
+  namespace: careertrojan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-worker
+  template:
+    metadata:
+      labels:
+        app: ai-worker
+    spec:
+      containers:
+      - name: ai-worker
+        image: careertrojan/ai-worker:latest
+        envFrom:
+        - configMapRef:
+            name: careertrojan-config
+        env:
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: openai-api-key
+        - name: ANTHROPIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: anthropic-api-key
+        volumeMounts:
+        - name: ai-data
+          mountPath: /mnt/ai_data
+          readOnly: true
+        - name: trained-models
+          mountPath: /mnt/trained_models
+          readOnly: true
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+      volumes:
+      - name: ai-data
+        persistentVolumeClaim:
+          claimName: ai-data-pvc
+      - name: trained-models
+        persistentVolumeClaim:
+          claimName: trained-models-pvc
+      - name: config-volume
+        configMap:
+          name: careertrojan-app-config
+
+---
+# ==========================================================================
+# INFRASTRUCTURE — Postgres
+# ==========================================================================
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: careertrojan
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: "careertrojan_user"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: database-url
+        - name: POSTGRES_DB
+          value: "careertrojan"
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          exec:
+            command: ["pg_isready", "-U", "careertrojan_user"]
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command: ["pg_isready", "-U", "careertrojan_user"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 20Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: careertrojan
+spec:
+  selector:
+    app: postgres
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432
+  type: ClusterIP
+
+---
+# ==========================================================================
+# INFRASTRUCTURE — Redis
+# ==========================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: careertrojan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        command: ["redis-server", "--appendonly", "yes"]
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: redis-data
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: careertrojan
+spec:
+  selector:
+    app: redis
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+  type: ClusterIP
+
+---
+# ==========================================================================
+# INGRESS — TLS with cert-manager
+# ==========================================================================
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -243,6 +592,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
 spec:
   ingressClassName: nginx
   tls:
@@ -259,31 +610,33 @@ spec:
           service:
             name: backend-api
             port:
-              number: 8500
+              number: 8000
       - path: /admin
         pathType: Prefix
         backend:
           service:
             name: admin-portal
             port:
-              number: 3001
+              number: 80
       - path: /mentor
         pathType: Prefix
         backend:
           service:
             name: mentor-portal
             port:
-              number: 3002
+              number: 80
       - path: /
         pathType: Prefix
         backend:
           service:
             name: user-portal
             port:
-              number: 3000
+              number: 80
 
 ---
-# Persistent Volume Claim for AI Data
+# ==========================================================================
+# PERSISTENT VOLUME CLAIMS
+# ==========================================================================
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -298,13 +651,59 @@ spec:
   storageClassName: standard
 
 ---
-# Secrets (template - populate with actual values)
 apiVersion: v1
-kind: Secret
+kind: PersistentVolumeClaim
 metadata:
-  name: careertrojan-secrets
+  name: trained-models-pvc
   namespace: careertrojan
-type: Opaque
-stringData:
-  database-url: "postgresql://user:pass@postgres:5432/careertrojan"
-  jwt-secret: "CHANGE_ME_IN_PRODUCTION"
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: parser-pvc
+  namespace: careertrojan
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: standard
+
+---
+# ==========================================================================
+# HORIZONTAL POD AUTOSCALER
+# ==========================================================================
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-api-hpa
+  namespace: careertrojan
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend-api
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

@@ -1,0 +1,47 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# SendGrid Email Authentication — DNS CNAME Records
+# ──────────────────────────────────────────────────────────────────────────────
+# These CNAME records must be configured at the domain registrar for
+# careertrojan.com to authenticate SendGrid as an approved email sender.
+#
+# Status: PENDING DNS CONFIGURATION
+# Updated: 2026-02-15
+# ──────────────────────────────────────────────────────────────────────────────
+
+domain: careertrojan.com
+provider: sendgrid
+account_prefix: u57311405
+
+cname_records:
+  # ── 1. Email Link Branding ──────────────────────────────────────────────
+  - type: CNAME
+    host: em227.careertrojan.com
+    value: u57311405.wl156.sendgrid.net
+    purpose: Email link branding / click tracking
+
+  # ── 2. DKIM Key 1 ──────────────────────────────────────────────────────
+  - type: CNAME
+    host: s1._domainkey.careertrojan.com
+    value: s1.domainkey.u57311405.wl156.sendgrid.net
+    purpose: DKIM signature verification (key 1)
+
+  # ── 3. DKIM Key 2 ──────────────────────────────────────────────────────
+  - type: CNAME
+    host: s2._domainkey.careertrojan.com
+    value: s2.domainkey.u57311405.wl156.sendgrid.net
+    purpose: DKIM signature verification (key 2)
+
+  # ── 4. DMARC Policy ────────────────────────────────────────────────────
+  - type: TXT
+    host: _dmarc.careertrojan.com
+    value: "v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;"
+    purpose: DMARC policy — quarantine unauthenticated mail, relaxed alignment
+
+# ── Environment Variables (for backend SendGrid integration) ─────────────
+env_vars:
+  SENDGRID_API_KEY: ""           # Set in .env (never commit)
+  SENDGRID_FROM_EMAIL: "noreply@careertrojan.com"
+  SENDGRID_FROM_NAME: "CareerTrojan"
+
+# ── Kubernetes Secret (add to deployment.yaml careertrojan-secrets) ──────
+k8s_secret_key: SENDGRID_API_KEY

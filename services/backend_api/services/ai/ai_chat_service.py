@@ -272,7 +272,7 @@ class AIChatService:
                                      user_skills: Dict,
                                      career_patterns: List[str],
                                      target_role: Optional[str]) -> str:
-        """Build career advice prompt"""
+        """Build career advice prompt, enriched with evolution lineage context."""
 
         top_skills = sorted(
             [(k, v) for k, v in user_skills.items() if k != 'years_experience'],
@@ -285,19 +285,53 @@ class AIChatService:
         pattern_desc = ", ".join(career_patterns) if career_patterns else "traditional career path"
         target_str = f"\nTarget role: {target_role}" if target_role else ""
 
+        # ── Inject term evolution context ────────────────────────────────
+        # If the user's skills or target role appear in an evolution chain,
+        # tell the AI about the lineage so it can give smarter advice.
+        evolution_context = ""
+        try:
+            from services.ai_engine.term_evolution_engine import evolution_engine
+            all_terms = [s[0] for s in top_skills]
+            if target_role:
+                all_terms.append(target_role)
+            all_terms.extend(career_patterns)
+
+            seen_chains = set()
+            evo_blocks = []
+            for term in all_terms:
+                chain = evolution_engine.resolve(term)
+                if chain and chain.get("chain_id") not in seen_chains:
+                    seen_chains.add(chain["chain_id"])
+                    block = evolution_engine.format_for_ai_context(term)
+                    if block:
+                        evo_blocks.append(block)
+
+            if evo_blocks:
+                evolution_context = (
+                    "\n\n--- INDUSTRY EVOLUTION CONTEXT (use this to inform your advice) ---\n"
+                    + "\n\n".join(evo_blocks[:3])  # Max 3 chains to keep prompt focused
+                    + "\n--- END EVOLUTION CONTEXT ---\n"
+                )
+        except Exception:
+            pass  # Non-fatal — evolution engine may not be loaded
+
         prompt = f"""
         Provide personalized career advice for a professional with the following profile:
 
         Experience: {years_exp} years
         Top Skills: {', '.join([f"{s[0]} ({s[1]:.1f})" for s in top_skills])}
         Career Pattern: {pattern_desc}{target_str}
-
+        {evolution_context}
         Provide:
         1. Career strengths and unique value proposition
         2. Recommended career paths or next roles
         3. Skill gaps to address for advancement
         4. Industry trends relevant to their background
         5. Specific action items for next 6 months
+
+        IMPORTANT: If evolution context is provided above, use it to show the user
+        how their existing skills connect to emerging roles and industry trends.
+        Highlight transferable skills and career pivots they may not have considered.
 
         Be specific and actionable, referencing current market conditions.
         """

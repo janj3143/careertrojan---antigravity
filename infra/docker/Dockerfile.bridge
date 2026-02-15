@@ -23,7 +23,7 @@ COPY --from=builder /root/.local /home/appuser/.local
 ENV PATH=/home/appuser/.local/bin:$PATH
 
 # Copy service code
-COPY services/portal_bridge/ ./services/portal_bridge/
+COPY services/shared/portal-bridge/ ./services/shared/portal-bridge/
 
 # Ownership and User switch
 RUN chown -R appuser:appgroup /app
@@ -31,4 +31,4 @@ USER appuser
 
 EXPOSE 8001
 
-CMD ["uvicorn", "services.portal_bridge.main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "services.shared.portal-bridge.main:app", "--host", "0.0.0.0", "--port", "8001"]

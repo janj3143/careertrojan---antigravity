@@ -112,9 +112,16 @@ class TeaserResponse(BaseModel):
 # ============================================================================
 
 def _get_user_id() -> str:
-    """Get current user ID from auth - placeholder"""
-    # TODO: Implement proper auth dependency
-    return "user_demo"
+    """Get current user ID from auth context.
+
+    TODO: Wire to real JWT / session dependency once auth middleware is live.
+    Until then, raise so callers know auth is required.
+    """
+    # When auth middleware is wired, this will read from request.state.user_id
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Authentication required — user identity not resolved",
+    )
 
 
 def _ensure_credit_system():

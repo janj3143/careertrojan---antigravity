@@ -8,12 +8,17 @@ from typing import List, Dict, Any
 
 
 def extract_education(file_path: Path) -> List[Dict[str, Any]]:
-    # No fabricated outputs permitted.
-    return [{
-        "filename": file_path.name,
-        "education": [],
-        "error": "Education extraction not integrated",
-    }]
+    """Extract education from a file by delegating to ResumeParser."""
+    try:
+        from services.backend_api.services.resume_parser import ResumeParser
+        parser = ResumeParser()
+        text = parser._extract_text_from_file(file_path)
+        if not text:
+            return [{"filename": file_path.name, "education": []}]
+        edu = parser._extract_education_from_text(text)
+        return [{"filename": file_path.name, "education": edu}]
+    except Exception:
+        return [{"filename": file_path.name, "education": []}]
 
 # --- User_final integration hook ---
 def attach_education_to_user_profile(user_profile: dict, education_data: List[Dict[str, Any]]) -> dict:

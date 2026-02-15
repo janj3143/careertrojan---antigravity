@@ -1309,11 +1309,29 @@ class UnifiedIntelliCVAIEngine:
         results['semantic_embedding'] = doc_embedding.tolist() # Convert to list for JSON serialization
         results['embedding_dim'] = len(doc_embedding)
 
-        # Example: Check similarity with key roles
-        key_roles = ['Software Engineer', 'Data Scientist', 'Project Manager', 'Sales Executive']
+        # Cross-industry role comparison — covers tech, healthcare, business,
+        # trades, finance, education, and creative to avoid sector bias
+        key_roles = [
+            # Technology
+            'Software Engineer', 'Data Scientist', 'DevOps Engineer',
+            # Business & Management
+            'Project Manager', 'Business Analyst', 'Operations Manager',
+            # Sales & Marketing
+            'Sales Executive', 'Marketing Manager', 'Account Manager',
+            # Healthcare
+            'Registered Nurse', 'Medical Doctor', 'Occupational Therapist',
+            # Finance
+            'Financial Analyst', 'Accountant', 'Risk Manager',
+            # Engineering & Trades
+            'Mechanical Engineer', 'Electrical Engineer', 'Process Engineer',
+            # Education & HR
+            'Teacher', 'HR Manager', 'Training Specialist',
+            # Creative
+            'Graphic Designer', 'Content Writer', 'UX Designer',
+        ]
         for role in key_roles:
             similarity = self.neural_engine.calculate_similarity(content[:500], role)
-            if similarity > 0.3: # Threshold
+            if similarity > 0.3:  # Threshold
                 results['similar_roles'].append({
                     'role': role,
                     'similarity': float(similarity)

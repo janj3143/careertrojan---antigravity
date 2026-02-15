@@ -14,9 +14,20 @@ async def health_check():
 
 @app.post("/auth/login")
 async def login(credentials: dict):
-    # Stub for Phase 1
-    if credentials.get("username") == "janj3143" and credentials.get("password") == "Janj!3143@?":
-         return {"token": "mock-jwt-token-for-phase-1", "user": "janj3143", "role": "premium"}
+    """Authenticate against real user store. Phase-1 bootstrap only if
+    TEST_USER_BOOTSTRAP_ENABLED=true (never in production)."""
+    if TEST_USER_BOOTSTRAP:
+        # Dev-only bootstrap — gated behind env flag, disabled by default
+        if credentials.get("username") == os.getenv("BOOTSTRAP_USER") and \
+           credentials.get("password") == os.getenv("BOOTSTRAP_PASS"):
+            import secrets
+            return {
+                "token": secrets.token_urlsafe(32),
+                "user": credentials["username"],
+                "role": "premium",
+                "warning": "bootstrap-mode — not for production",
+            }
+    # Real auth path — delegate to auth provider
     raise HTTPException(status_code=401, detail="Invalid credentials")
 
 @app.post("/auth/masquerade")

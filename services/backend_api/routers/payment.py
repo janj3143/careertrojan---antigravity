@@ -236,14 +236,12 @@ def _process_braintree_payment(
         )
         return result
     else:
-        # Fallback stub for testing without Braintree credentials
-        logger.warning("Braintree not configured — using payment stub")
-        return {
-            "success": True,
-            "transaction_id": f"stub_{uuid.uuid4().hex[:16]}",
-            "amount": f"{amount:.2f}",
-            "status": "submitted_for_settlement",
-        }
+        # No Braintree credentials — reject the payment, never fake success
+        logger.error("Braintree not configured — payment cannot be processed")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Payment gateway not configured. Please contact support.",
+        )
 
 
 # ============================================================================

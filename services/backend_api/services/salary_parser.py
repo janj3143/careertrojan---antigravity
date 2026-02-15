@@ -3,25 +3,22 @@ Salary & Package Parser Module
 """
 from pathlib import Path
 
-
-from .advanced_web_scraper import robust_get
-from bs4 import BeautifulSoup
-
 def extract_salary_info(file_path: Path, job_title: str = None, location: str = None) -> dict:
-    # Placeholder: implement actual salary/package extraction logic from file
+    """Extract salary data from file content — never returns fabricated numbers."""
     salary_info = {"filename": file_path.name, "salary": None, "package": None}
-    # --- Web scraping enrichment hook ---
-    if job_title and location:
-        # Example: scrape salary from a public salary site (e.g., levels.fyi, glassdoor, indeed)
-        # This is a placeholder for actual scraping logic
-        url = f"https://www.example.com/salaries/{job_title.replace(' ', '-')}/{location.replace(' ', '-')}"
-        resp = robust_get(url)
-        if resp:
-            soup = BeautifulSoup(resp.text, 'html.parser')
-            # Example selector (customize per site)
-            salary = soup.find('span', class_='salary-amount')
-            if salary:
-                salary_info["salary"] = salary.get_text(strip=True)
+
+    # Attempt to extract salary mentions from the file text itself
+    try:
+        text = file_path.read_text(errors="replace") if file_path.suffix.lower() == ".txt" else ""
+        if text:
+            import re
+            # Match common salary patterns: $120,000 | 120k | £80,000 etc.
+            m = re.search(r'[\$\u00a3\u20ac]\s*[\d,]+(?:\.\d{2})?(?:\s*[kK])?', text)
+            if m:
+                salary_info["salary"] = m.group(0).strip()
+    except Exception:
+        pass  # Graceful — return None, never fabricate
+
     return salary_info
 
 def parse_all_salaries(resume_dir: Path) -> list:

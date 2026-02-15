@@ -795,18 +795,9 @@ class EmailIntegrationManager:
                     if len(extracted_docs) >= limit:
                         break
         
-        # If no real files yet, show sample data
+        # If no real files yet, return empty list — never fabricated entries
         if not extracted_docs:
-            extracted_docs = [
-                {
-                    "filename": "sample_resume.pdf",
-                    "extraction_date": "2025-10-10",
-                    "email_from": "Ready for email scanning",
-                    "file_size": 0,
-                    "cv_score": 0.0,
-                    "status": "No email scans performed yet"
-                }
-            ]
+            return []
         
         return sorted(extracted_docs, key=lambda x: x.get("extraction_date", ""), reverse=True)
 

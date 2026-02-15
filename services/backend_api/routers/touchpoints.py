@@ -4,7 +4,6 @@ Every visual click emits touchpoint_ids → this router returns the evidence + g
 """
 
 import logging
-import random
 from typing import List, Optional
 from fastapi import APIRouter, Depends, Query, HTTPException
 
@@ -56,7 +55,7 @@ def _build_evidence_items(touchpoint_ids: List[str], loader) -> List[dict]:
                 "source": tp.get("source", "resume"),
                 "section": tp.get("section", "experience"),
                 "text_span": tp.get("text", f"Evidence for touchpoint {tid}"),
-                "confidence": tp.get("confidence", round(random.uniform(0.6, 0.99), 2)),
+                "confidence": tp.get("confidence", 0.0),  # Unknown confidence = 0, never random
                 "tags": tp.get("tags", []),
             })
         else:

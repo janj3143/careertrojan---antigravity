@@ -309,8 +309,8 @@ class CompanyIntel:
         site = ddg_search_official_site(self.s, company)
         if not site:
             rec = CompanyRecord(name=company, website=f"https://duckduckgo.com/?q={requests.utils.quote(company)}",
-                                description="Company overview", industry="Business Services",
-                                status="placeholder", source="placeholder", interactive_ready=False, domain=None)
+                                description=None, industry=None,
+                                status="unresolved", source="placeholder", interactive_ready=False, domain=None)
             with db() as con: upsert(con, rec); con.commit()
             return rec
 

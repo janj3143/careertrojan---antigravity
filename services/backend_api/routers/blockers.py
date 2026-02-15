@@ -41,6 +41,9 @@ def generate_plans(
     # For now, we will expose what we have or placeholder.
     # The original BlockerService.generate_improvement_plans logic handles this.
     service = BlockerService(db)
-    # Warning: The SQLAlchemy service we just wrote currently has simplified methods.
-    # We might need to port the full logic later.
-    return {"status": "pending_port", "message": "Full generation logic pending deep port"}
+    # The full generation pipeline is not yet ported. Return 501 so
+    # callers know the feature isn't available rather than getting a fake success.
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail="Improvement plan generation pending full port from legacy service",
+    )

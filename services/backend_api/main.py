@@ -10,11 +10,11 @@ from services.backend_api.config.logging_config import configure_logging, get_lo
 try:
     from services.shared.config import config as settings
 except ImportError:
-    # Fallback/Mock for initial setup if config file isn't created yet
+    # Fallback for initial setup if config file isn't created yet
     class Settings:
         APP_NAME = "CareerTrojan"
         VERSION = "1.0.0"
-        DEBUG = True
+        DEBUG = os.getenv("CAREERTROJAN_DEBUG", "false").lower() == "true"
         CAREERTROJAN_DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
     settings = Settings()
 

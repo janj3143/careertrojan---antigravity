@@ -51,18 +51,19 @@ class ComplianceDataService:
                 'security_controls_active': self._count_security_controls()
             }
         except Exception as e:
-            # Fallback to basic metrics if analysis fails
+            # Do NOT fabricate compliance numbers — surface the failure
             return {
-                'compliance_score': 85.0,
-                'compliance_delta': 2.0,
-                'audits_completed': 15,
-                'audits_delta': 3,
-                'issues_found': 5,
-                'issues_delta': -2,
-                'risk_level': 'Medium',
+                'compliance_score': None,
+                'compliance_delta': None,
+                'audits_completed': None,
+                'audits_delta': None,
+                'issues_found': None,
+                'issues_delta': None,
+                'risk_level': 'Unknown',
                 'timestamp': datetime.now().isoformat(),
-                'data_sources_checked': 3,
-                'security_controls_active': 8
+                'data_sources_checked': 0,
+                'security_controls_active': 0,
+                'error': f'Compliance analysis failed: {e}',
             }
     
     def _analyze_data_quality(self) -> float:

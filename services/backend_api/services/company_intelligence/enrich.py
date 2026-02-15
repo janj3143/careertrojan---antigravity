@@ -187,16 +187,17 @@ def extract_industry_info(soup: BeautifulSoup, company_name: str) -> str:
     return "Business Services"
 
 def create_placeholder_company(company_name: str) -> Dict:
+    """Return a minimal placeholder — clearly marked as unresolved."""
     return {
         "name": company_name,
         "website": f"https://www.google.com/search?q={company_name.replace(' ', '+')}",
         "title": company_name,
-        "description": "Industry leader with global presence",
+        "description": None,  # No fabricated descriptions
         "logo_url": None,
         "logo_path": None,
-        "industry": "Business Services",
+        "industry": None,  # Unknown until resolved
         "last_updated": datetime.now().isoformat(),
-        "status": "placeholder",
+        "status": "unresolved",
         "intelligence_source": "placeholder",
         "interactive_ready": False
     }

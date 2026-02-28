@@ -11,7 +11,7 @@ from pathlib import Path
 import logging
 
 # =============================================================================
-# BACKEND SERVICE MANAGER - IntelliCV-AI Admin Portal
+# BACKEND SERVICE MANAGER - CareerTrojan Admin Portal
 # Real backend integration with all services
 # =============================================================================
 
@@ -23,7 +23,7 @@ class BackendServiceManager:
         self.postgres_config = {
             'host': 'localhost',
             'port': 5432,
-            'databases': ['intellicv_admin', 'intellicv_user', 'intellicv_core']
+            'databases': ['careertrojan_admin', 'careertrojan_user', 'careertrojan_core']
         }
         self.redis_config = {
             'host': 'localhost',
@@ -63,9 +63,9 @@ class BackendServiceManager:
     def start_backend_service(self) -> Dict[str, Any]:
         """Start the FastAPI backend service"""
         try:
-            backend_path = Path("c:/IntelliCV/backend_final")
+            backend_path = Path("C:/careertrojan/services/backend_api")
             cmd = [
-                "c:/IntelliCV/env310/Scripts/python.exe",
+                "C:/careertrojan/.venv/Scripts/python.exe",
                 str(backend_path / "main.py")
             ]
             
@@ -203,7 +203,7 @@ class BackendServiceManager:
     def backup_database(self, database: str) -> Dict[str, Any]:
         """Create database backup"""
         try:
-            backup_dir = Path("c:/IntelliCV/backups")
+            backup_dir = Path("C:/careertrojan/backups")
             backup_dir.mkdir(exist_ok=True)
             
             timestamp = time.strftime("%Y%m%d_%H%M%S")
@@ -403,7 +403,7 @@ class BackendServiceManager:
         """Get system logs for specific service"""
         try:
             if service == 'backend':
-                log_file = Path("c:/IntelliCV/backend_final/logs/backend.log")
+                log_file = Path("C:/careertrojan/logs/backend.log")
             elif service == 'postgres':
                 # PostgreSQL log location varies by installation
                 log_file = Path("C:/Program Files/PostgreSQL/13/data/log/postgresql*.log")
@@ -522,7 +522,7 @@ def render_postgres_tab(manager):
     
     # Database selection
     database = st.selectbox("Select Database", 
-                           ["intellicv_admin", "intellicv_user", "intellicv_core"])
+                           ["careertrojan_admin", "careertrojan_user", "careertrojan_core"])
     
     col1, col2, col3 = st.columns(3)
     

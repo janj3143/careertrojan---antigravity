@@ -1,4 +1,4 @@
-"""FastAPI client wrapper for IntelliCV admin portal."""
+"""FastAPI client wrapper for CareerTrojan admin portal."""
 
 from __future__ import annotations
 
@@ -18,9 +18,9 @@ class AdminFastAPIClient:
         timeout: float = 8.0,
         default_headers: Optional[Dict[str, str]] = None,
     ) -> None:
-        self.base_url = base_url or os.getenv("INTELLICV_ADMIN_API", "http://localhost:8000/api/admin/v1")
+        self.base_url = base_url or os.getenv("CAREERTROJAN_ADMIN_API", "http://localhost:8000/api/admin/v1")
         self.timeout = timeout
-        self._headers = {"X-Admin-Portal": "intellicv-admin"}
+        self._headers = {"X-Admin-Portal": "careertrojan-admin"}
         if default_headers:
             self._headers.update(default_headers)
         self._client = httpx.Client(base_url=self.base_url, timeout=self.timeout, headers=self._headers)

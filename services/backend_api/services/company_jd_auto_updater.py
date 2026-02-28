@@ -9,7 +9,7 @@ Monitors user employment history and company database to:
 3. Bulk update feature for admin-initiated searches
 4. Store JD history for speculative applications
 
-Author: IntelliCV Platform
+Author: CareerTrojan Platform
 Created: November 17, 2025
 """
 

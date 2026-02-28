@@ -8,7 +8,7 @@ export default function OpsBackupRestore() {
             <PageTemplate 
                 title="Backup & Restore (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/backup"
+                endpoint="/api/ops/v1/backup"
             />
         </AdminLayout>
     );

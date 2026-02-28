@@ -71,22 +71,86 @@ LOCAL_GAZETTEERS_DIR = _LOCAL_DATA_ROOT / "gazetteers"
 
 
 @dataclass
-class CollocationResult:
-    """A discovered collocation (multi-word expression)."""
-    phrase: str
-    score: float
-    method: str  # "pmi", "chi2", "frequency", "gazetteer", "cooccurrence"
-    frequency: int = 0
-    label: Optional[str] = None  # NER label if applicable
+class PhraseSpan:
+    """A single occurrence of a phrase in a document with exact positions."""
+    doc_index: int           # which document in the corpus
+    char_start: int          # character offset start (inclusive)
+    char_end: int            # character offset end (exclusive)
+    token_start: int         # token index start (inclusive)
+    token_end: int           # token index end (exclusive)
+    text: str                # the exact surface form as it appeared
+    negated: bool = False    # whether this span is under negation scope
+    negation_cue: Optional[str] = None  # the negation word ("not", "without", etc.)
+
+    def to_dict(self) -> Dict[str, Any]:
+        d = {
+            "doc_index": self.doc_index,
+            "char_start": self.char_start,
+            "char_end": self.char_end,
+            "token_start": self.token_start,
+            "token_end": self.token_end,
+            "text": self.text,
+        }
+        if self.negated:
+            d["negated"] = True
+            d["negation_cue"] = self.negation_cue
+        return d
+
+
+@dataclass
+class ProximityHit:
+    """A NEAR-operator match: two terms found within a positional window."""
+    term_a: str
+    term_b: str
+    distance: int            # token distance between the two terms
+    doc_index: int
+    pos_a: int               # token position of term_a
+    pos_b: int               # token position of term_b
+    char_a: int              # character offset of term_a
+    char_b: int              # character offset of term_b
 
     def to_dict(self) -> Dict[str, Any]:
         return {
+            "term_a": self.term_a,
+            "term_b": self.term_b,
+            "distance": self.distance,
+            "doc_index": self.doc_index,
+            "pos_a": self.pos_a,
+            "pos_b": self.pos_b,
+            "char_a": self.char_a,
+            "char_b": self.char_b,
+        }
+
+
+@dataclass
+class CollocationResult:
+    """A discovered collocation (multi-word expression) with full positional metadata."""
+    phrase: str
+    score: float
+    method: str  # "pmi", "chi2", "frequency", "gazetteer", "cooccurrence", "near", "negation"
+    frequency: int = 0
+    label: Optional[str] = None       # NER label if applicable
+    spans: List[PhraseSpan] = field(default_factory=list)          # every occurrence with positions
+    proximity_hits: List[ProximityHit] = field(default_factory=list)  # NEAR-operator matches
+    negated_count: int = 0            # how many occurrences are under negation scope
+    negation_ratio: float = 0.0       # negated_count / max(frequency, 1)
+
+    def to_dict(self) -> Dict[str, Any]:
+        d = {
             "phrase": self.phrase,
             "score": round(self.score, 4),
             "method": self.method,
             "frequency": self.frequency,
             "label": self.label,
         }
+        if self.spans:
+            d["spans"] = [s.to_dict() for s in self.spans]
+        if self.proximity_hits:
+            d["proximity_hits"] = [h.to_dict() for h in self.proximity_hits]
+        if self.negated_count > 0:
+            d["negated_count"] = self.negated_count
+            d["negation_ratio"] = round(self.negation_ratio, 3)
+        return d
 
 
 class CollocationEngine:
@@ -224,10 +288,40 @@ class CollocationEngine:
         for label, terms in by_label.items():
             self.gazetteers.setdefault(label, []).extend(terms)
 
+    # ── Phrase quality gate ────────────────────────────────────────────
+    _VALID_PHRASE_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9 &/'-]{2,80}[a-zA-Z0-9]$")
+
+    @classmethod
+    def _is_valid_phrase(cls, phrase: str) -> bool:
+        """Return True if *phrase* looks like a real multi-word domain term.
+
+        Rejects:
+          • binary/control characters
+          • concatenated garbage (no spaces)
+          • single character or too short (< 4 chars)
+          • extremely long strings (> 80 chars)
+          • majority non-alpha content
+        """
+        if not phrase or len(phrase) < 4 or len(phrase) > 80:
+            return False
+        # Must contain at least one space (multi-word)
+        if " " not in phrase:
+            return False
+        # Must pass the clean-character regex
+        if not cls._VALID_PHRASE_RE.match(phrase):
+            return False
+        # Majority alpha check — at least 60 % letters
+        alpha = sum(1 for c in phrase if c.isalpha())
+        if alpha < len(phrase) * 0.6:
+            return False
+        return True
+
     def _load_learned_phrases(self) -> None:
         """
         Restore previously persisted learned phrases from L: drive.
         This is what makes the engine survive restarts with all its learning intact.
+        Applies the ``_is_valid_phrase`` quality gate so corrupted / garbage
+        entries that crept into learned_collocations.json are silently dropped.
         """
         if not LEARNED_PHRASES_PATH.exists():
             logger.info("No learned_collocations.json found — starting fresh learning")
@@ -236,15 +330,24 @@ class CollocationEngine:
             with open(LEARNED_PHRASES_PATH, "r", encoding="utf-8") as f:
                 data = json.load(f)
             phrases = data.get("phrases", {})
+            loaded = 0
+            rejected = 0
             for phrase, meta in phrases.items():
-                key = phrase.lower()
+                key = phrase.lower().strip()
+                if not self._is_valid_phrase(key):
+                    rejected += 1
+                    continue
                 self._learned_phrases[key] = meta
                 self.known_phrases.add(key)
                 label = meta.get("label")
                 if label:
                     self.gazetteers.setdefault(label, []).append(phrase)
+                loaded += 1
             self._ingestion_count = data.get("total_ingestions", 0)
-            logger.info("Restored %d learned phrases from %s", len(phrases), LEARNED_PHRASES_PATH)
+            logger.info(
+                "Restored %d learned phrases from %s (rejected %d invalid)",
+                loaded, LEARNED_PHRASES_PATH, rejected,
+            )
         except Exception as e:
             logger.warning("Failed to load learned phrases: %s — starting fresh", e)
 
@@ -461,9 +564,14 @@ class CollocationEngine:
                     terms = data.get("terms", [])
                     if terms:
                         existing = self.gazetteers.get(label, [])
-                        new_terms = [t for t in terms if t.lower() not in {e.lower() for e in existing}]
+                        # Apply quality gate to prevent corrupted terms entering
+                        new_terms = [
+                            t for t in terms
+                            if t.lower() not in {e.lower() for e in existing}
+                            and self._is_valid_phrase(t)
+                        ]
                         self.gazetteers.setdefault(label, []).extend(new_terms)
-                        self.known_phrases.update(t.lower() for t in terms)
+                        self.known_phrases.update(t.lower() for t in new_terms)
                         loaded += len(new_terms)
 
                     # Handle abbreviations map
@@ -620,6 +728,340 @@ class CollocationEngine:
         logger.info("Found %d co-occurrence pairs (window=%d)", len(results[:top_k]), window)
         return results[:top_k]
 
+    # ── 5b. NEAR Proximity Operator ──────────────────────────────────────
+
+    # Negation cues used by both NEAR (to annotate proximity hits) and NOT/NOR.
+    NEGATION_CUES = frozenset({
+        "not", "no", "nor", "never", "neither", "without", "lack",
+        "lacking", "hardly", "barely", "scarcely", "none", "nothing",
+        "nobody", "nowhere", "cannot", "can't", "won't", "don't",
+        "doesn't", "didn't", "isn't", "aren't", "wasn't", "weren't",
+        "hasn't", "haven't", "hadn't", "wouldn't", "shouldn't", "couldn't",
+        "mustn't", "shan't", "needn't",
+    })
+    # Scope-extending negation patterns (the negation scope stretches to the
+    # next clause boundary — punctuation, conjunction, or end-of-sentence).
+    _SCOPE_BREAK_RE = re.compile(r"[,;:.!?\n]|(?:\bbut\b|\balthough\b|\bhowever\b|\byet\b)", re.IGNORECASE)
+
+    def _tokenize_positions(self, text: str) -> List[Tuple[str, int, int]]:
+        """
+        Tokenize text and return (word_lower, char_start, char_end) tuples.
+        Preserves exact character offsets for span export.
+        """
+        return [
+            (m.group().lower(), m.start(), m.end())
+            for m in re.finditer(r"\b[a-zA-Z][a-zA-Z'-]*[a-zA-Z]\b|\b[a-zA-Z]\b", text)
+        ]
+
+    def find_near_pairs(
+        self,
+        texts: List[str],
+        target_terms: Optional[Set[str]] = None,
+        window: int = None,
+        min_hits: int = 2,
+        top_k: int = 300,
+    ) -> Tuple[List[CollocationResult], List[ProximityHit]]:
+        """
+        NEAR operator: find term-pairs that appear within *window* tokens of each
+        other.  Unlike ``find_cooccurrences`` this method:
+
+        * Records **every** individual hit with exact token + char positions.
+        * Computes a distance-decayed proximity score per pair
+          (closer together → higher score).
+        * Optionally restricts one side of the pair to a set of ``target_terms``
+          (e.g. known gazetteer phrases) so you can query
+          "what appears NEAR 'machine learning'?".
+
+        Returns
+        -------
+        results : list of CollocationResult
+            Aggregated per unique pair, sorted by proximity-weighted score.
+        all_hits : list of ProximityHit
+            Every single positional hit (for span export / downstream use).
+        """
+        window = window or self.window_size
+        target_lower = {t.lower() for t in target_terms} if target_terms else None
+
+        pair_hits: Dict[Tuple[str, str], List[ProximityHit]] = defaultdict(list)
+        word_freq: Counter = Counter()
+
+        for doc_idx, text in enumerate(texts):
+            tokens = self._tokenize_positions(text)  # (word, char_start, char_end)
+            words_only = [t[0] for t in tokens]
+            word_freq.update(words_only)
+
+            for i, (wa, ca_start, _ca_end) in enumerate(tokens):
+                if target_lower and wa not in target_lower:
+                    continue
+                for j in range(i + 1, min(i + window + 1, len(tokens))):
+                    wb, cb_start, _cb_end = tokens[j]
+                    if wa == wb:
+                        continue
+                    if target_lower and wb not in target_lower and wa not in target_lower:
+                        continue
+                    pair_key = tuple(sorted([wa, wb]))
+                    hit = ProximityHit(
+                        term_a=wa, term_b=wb,
+                        distance=j - i,
+                        doc_index=doc_idx,
+                        pos_a=i, pos_b=j,
+                        char_a=ca_start, char_b=cb_start,
+                    )
+                    pair_hits[pair_key].append(hit)
+
+        # Aggregate into CollocationResults with proximity-weighted score
+        total_words = max(sum(word_freq.values()), 1)
+        results: List[CollocationResult] = []
+        all_hits: List[ProximityHit] = []
+
+        for (w1, w2), hits in pair_hits.items():
+            if len(hits) < min_hits:
+                continue
+            # Distance-decayed score: each hit contributes 1/distance
+            prox_score = sum(1.0 / max(h.distance, 1) for h in hits)
+            # Also fold in PMI for statistical rigour
+            p_x = word_freq.get(w1, 0) / total_words
+            p_y = word_freq.get(w2, 0) / total_words
+            p_xy = len(hits) / total_words
+            pmi = math.log2(p_xy / (p_x * p_y)) if (p_x > 0 and p_y > 0 and p_xy > 0) else 0
+            combined = prox_score + max(pmi, 0)
+
+            res = CollocationResult(
+                phrase=f"{w1} NEAR/{window} {w2}",
+                score=combined,
+                method="near",
+                frequency=len(hits),
+                proximity_hits=hits,
+            )
+            results.append(res)
+            all_hits.extend(hits)
+
+        results.sort(key=lambda r: -r.score)
+        logger.info("NEAR operator: %d pairs (window=%d, targets=%s), %d individual hits",
+                     len(results[:top_k]), window,
+                     len(target_lower) if target_lower else "all", len(all_hits))
+        return results[:top_k], all_hits
+
+    # ── 5c. NOT / NOR Negation Tagger ────────────────────────────────────
+
+    def _build_negation_spans(self, tokens: List[Tuple[str, int, int]]) -> List[Tuple[int, int, str]]:
+        """
+        Given positional tokens, return a list of (tok_start, tok_end, cue)
+        ranges that are under negation scope.
+
+        Scope rules:
+          1. If a NEGATION_CUE is found at token position *i*, the scope
+             extends from *i* up to the next clause-boundary token or end of
+             sentence, whichever comes first.
+          2. "neither … nor" is treated as a single scope from "neither" to
+             "nor" + its own scope extension.
+        """
+        spans: List[Tuple[int, int, str]] = []
+        i = 0
+        while i < len(tokens):
+            word = tokens[i][0]
+            if word in self.NEGATION_CUES:
+                cue = word
+                scope_end = i + 1
+                # Extend scope until clause boundary or max 12 tokens
+                for k in range(i + 1, min(i + 13, len(tokens))):
+                    tok_text = tokens[k][0]
+                    # Check the original text between previous token and this one
+                    # for punctuation scope breaks is done below at usage time
+                    if tok_text in self.NEGATION_CUES and tok_text in ("nor",):
+                        # "neither … nor" → extend scope past "nor"
+                        cue = f"{cue}…{tok_text}"
+                        scope_end = k + 1
+                        continue
+                    scope_end = k + 1
+                spans.append((i, scope_end, cue))
+                i = scope_end  # jump past scope
+            else:
+                i += 1
+        return spans
+
+    def tag_negations(
+        self,
+        texts: List[str],
+        phrases_of_interest: Optional[Set[str]] = None,
+    ) -> Dict[str, List[PhraseSpan]]:
+        """
+        NOT / NOR negation tagger.
+
+        Scans every text for known (or explicitly listed) phrases and marks
+        each occurrence as **negated** or **affirmed** depending on whether
+        it falls inside a negation scope.
+
+        Parameters
+        ----------
+        texts : list of str
+            The corpus documents.
+        phrases_of_interest : set of str, optional
+            If given, restrict span extraction to these phrases.
+            Defaults to ``self.known_phrases``.
+
+        Returns
+        -------
+        phrase_spans : dict[str, list[PhraseSpan]]
+            Mapping from phrase → list of every span (with negation flags).
+        """
+        targets = phrases_of_interest or self.known_phrases
+        if not targets:
+            return {}
+
+        # Filter to valid, clean phrases and build regex
+        clean = [p for p in targets if self._is_valid_phrase(p)]
+        if not clean:
+            return {}
+        # Seed phrases always take priority over learned
+        seed_set = set(self.SEED_PHRASES.keys())
+        priority = sorted([p for p in clean if p in seed_set], key=len, reverse=True)
+        remainder = sorted([p for p in clean if p not in seed_set], key=len, reverse=True)
+        ordered = priority + remainder
+        pattern_str = "|".join(re.escape(p) for p in ordered[:5000])
+        phrase_re = re.compile(rf"\b(?:{pattern_str})\b", re.IGNORECASE)
+
+        phrase_spans: Dict[str, List[PhraseSpan]] = defaultdict(list)
+
+        for doc_idx, text in enumerate(texts):
+            tokens = self._tokenize_positions(text)
+            neg_ranges = self._build_negation_spans(tokens)
+
+            # Build a fast lookup: char_offset → token_index
+            char_to_tok: Dict[int, int] = {}
+            for tok_idx, (_w, cs, _ce) in enumerate(tokens):
+                char_to_tok[cs] = tok_idx
+
+            # Also refine negation scope boundaries using punctuation scope-breaks
+            # in the raw text between the cue and the tokens
+            refined_neg: List[Tuple[int, int, str]] = []
+            for (ns, ne, cue) in neg_ranges:
+                # The actual text slice for the scope
+                scope_start_char = tokens[ns][1] if ns < len(tokens) else 0
+                scope_end_char = tokens[min(ne, len(tokens)) - 1][2] if ne <= len(tokens) and ne > 0 else len(text)
+                scope_text = text[scope_start_char:scope_end_char]
+                # Check for early scope break
+                brk = self._SCOPE_BREAK_RE.search(scope_text)
+                if brk:
+                    # Find the token whose char_start is >= break position
+                    break_abs = scope_start_char + brk.start()
+                    for k in range(ns, ne):
+                        if k < len(tokens) and tokens[k][1] >= break_abs:
+                            ne = k
+                            break
+                refined_neg.append((ns, ne, cue))
+
+            def _in_negation(tok_start: int, tok_end: int) -> Optional[str]:
+                """Return the negation cue if the token range overlaps any negation scope."""
+                for (ns, ne, cue) in refined_neg:
+                    if tok_start < ne and tok_end > ns:
+                        return cue
+                return None
+
+            # Find all phrase occurrences in the text
+            for m in phrase_re.finditer(text):
+                phrase_lower = m.group().lower()
+                cs, ce = m.start(), m.end()
+
+                # Map char offsets to token indices
+                tok_start = char_to_tok.get(cs)
+                # Find tok_end (first token starting at or after ce)
+                tok_end = tok_start
+                if tok_start is not None:
+                    for tidx in range(tok_start, len(tokens)):
+                        if tokens[tidx][1] >= ce:
+                            tok_end = tidx
+                            break
+                    else:
+                        tok_end = len(tokens)
+                else:
+                    # Fallback: approximate by scanning
+                    for tidx, (_w, tcs, _tce) in enumerate(tokens):
+                        if tcs >= cs:
+                            tok_start = tidx
+                            break
+                    tok_end = tok_start + len(phrase_lower.split()) if tok_start else 0
+
+                neg_cue = _in_negation(tok_start or 0, (tok_end or 0) + 1)
+                span = PhraseSpan(
+                    doc_index=doc_idx,
+                    char_start=cs,
+                    char_end=ce,
+                    token_start=tok_start or 0,
+                    token_end=tok_end or 0,
+                    text=m.group(),
+                    negated=neg_cue is not None,
+                    negation_cue=neg_cue,
+                )
+                phrase_spans[phrase_lower].append(span)
+
+        logger.info("Negation tagger: scanned %d texts, found %d phrases with %d total spans "
+                     "(%d negated)",
+                     len(texts), len(phrase_spans),
+                     sum(len(v) for v in phrase_spans.values()),
+                     sum(1 for spans in phrase_spans.values() for s in spans if s.negated))
+        return dict(phrase_spans)
+
+    # ── 5d. Phrase Span Exporter ─────────────────────────────────────────
+
+    def extract_phrase_spans(
+        self,
+        texts: List[str],
+        phrases: Optional[Set[str]] = None,
+    ) -> Dict[str, List[PhraseSpan]]:
+        """
+        Extract **all** occurrences of known phrases with exact character and
+        token positions — suitable for exporting into the glossary JSON.
+
+        This is the lightweight version of ``tag_negations`` that does NOT
+        compute negation scope (faster for bulk glossary export).  If you
+        need negation flags, call ``tag_negations`` instead.
+
+        Returns
+        -------
+        dict[str, list[PhraseSpan]]
+            phrase → sorted list of every span.
+        """
+        targets = phrases or self.known_phrases
+        if not targets:
+            return {}
+
+        # Filter to valid, clean phrases — seed first, then learned
+        clean = [p for p in targets if self._is_valid_phrase(p)]
+        if not clean:
+            return {}
+        seed_set = set(self.SEED_PHRASES.keys())
+        priority = sorted([p for p in clean if p in seed_set], key=len, reverse=True)
+        remainder = sorted([p for p in clean if p not in seed_set], key=len, reverse=True)
+        ordered = priority + remainder
+        pattern_str = "|".join(re.escape(p) for p in ordered[:5000])
+        phrase_re = re.compile(rf"\b(?:{pattern_str})\b", re.IGNORECASE)
+
+        phrase_spans: Dict[str, List[PhraseSpan]] = defaultdict(list)
+
+        for doc_idx, text in enumerate(texts):
+            tokens = self._tokenize_positions(text)
+            char_to_tok = {cs: idx for idx, (_w, cs, _ce) in enumerate(tokens)}
+
+            for m in phrase_re.finditer(text):
+                phrase_lower = m.group().lower()
+                cs, ce = m.start(), m.end()
+                tok_start = char_to_tok.get(cs, 0)
+                tok_end = tok_start + len(phrase_lower.split())
+                span = PhraseSpan(
+                    doc_index=doc_idx,
+                    char_start=cs,
+                    char_end=ce,
+                    token_start=tok_start,
+                    token_end=tok_end,
+                    text=m.group(),
+                )
+                phrase_spans[phrase_lower].append(span)
+
+        logger.info("Phrase span export: %d unique phrases, %d total spans across %d docs",
+                     len(phrase_spans), sum(len(v) for v in phrase_spans.values()), len(texts))
+        return dict(phrase_spans)
+
     # ── 6. Phrase-Aware Tokenization ─────────────────────────────────────
 
     def tokenize_with_phrases(self, text: str) -> List[str]:
@@ -660,28 +1102,54 @@ class CollocationEngine:
 
     def analyze_corpus(self, texts: List[str], save_results: bool = True) -> Dict[str, Any]:
         """
-        Run all collocation discovery methods on a corpus.
-        Returns a comprehensive report with all discovered phrases.
+        Run all collocation discovery methods on a corpus — including the new
+        NEAR proximity, NOT/NOR negation tagging, and phrase span export.
+        Returns a comprehensive report with all discovered phrases and metadata.
         """
         logger.info("Starting corpus analysis on %d texts...", len(texts))
 
         # Load gazetteers first (adds to known_phrases)
         self.load_gazetteers()
 
-        # Run all methods
+        # ── Classic methods ───────────────────────────────────────────────
         ngram_results = self.extract_ngrams(texts, n_range=(2, 3))
         pmi_results = self.compute_pmi(texts)
         nltk_results = self.find_nltk_collocations(texts, method="pmi")
         cooccurrence_results = self.find_cooccurrences(texts)
 
-        # Merge and deduplicate
-        all_results = {}
+        # ── NEW: NEAR proximity operator ──────────────────────────────────
+        near_results, near_hits = self.find_near_pairs(texts, top_k=200)
+
+        # ── NEW: NOT/NOR negation tagging ─────────────────────────────────
+        negation_spans = self.tag_negations(texts)
+
+        # ── NEW: Phrase span export ───────────────────────────────────────
+        all_spans = self.extract_phrase_spans(texts)
+
+        # Merge and deduplicate (classic methods)
+        all_results: Dict[str, CollocationResult] = {}
         for result in ngram_results + pmi_results + nltk_results + cooccurrence_results:
             key = result.phrase.lower()
             if key not in all_results or result.score > all_results[key].score:
                 all_results[key] = result
 
+        # Attach negation metadata + spans to merged results
+        for key, res in all_results.items():
+            if key in negation_spans:
+                res.spans = negation_spans[key]
+                res.negated_count = sum(1 for s in res.spans if s.negated)
+                res.negation_ratio = res.negated_count / max(len(res.spans), 1)
+            elif key in all_spans:
+                res.spans = all_spans[key]
+
+        # Also merge NEAR results (they have a special phrase format)
+        for nr in near_results:
+            all_results[nr.phrase.lower()] = nr
+
         # Build report
+        negated_phrase_count = sum(1 for r in all_results.values() if r.negated_count > 0)
+        total_span_count = sum(len(r.spans) for r in all_results.values())
+
         report = {
             "timestamp": datetime.now().isoformat(),
             "corpus_size": len(texts),
@@ -692,6 +1160,17 @@ class CollocationEngine:
                 "pmi": {"count": len(pmi_results), "top_10": [r.to_dict() for r in pmi_results[:10]]},
                 "nltk": {"count": len(nltk_results), "top_10": [r.to_dict() for r in nltk_results[:10]]},
                 "cooccurrence": {"count": len(cooccurrence_results), "top_10": [r.to_dict() for r in cooccurrence_results[:10]]},
+                "near": {"count": len(near_results), "total_hits": len(near_hits),
+                         "top_10": [r.to_dict() for r in near_results[:10]]},
+                "negation": {"phrases_with_negation": negated_phrase_count,
+                             "total_negated_spans": sum(
+                                 sum(1 for s in spans if s.negated)
+                                 for spans in negation_spans.values()
+                             )},
+            },
+            "span_export": {
+                "unique_phrases_with_spans": sum(1 for r in all_results.values() if r.spans),
+                "total_spans": total_span_count,
             },
             "all_phrases": [r.to_dict() for r in sorted(all_results.values(), key=lambda r: -r.score)],
             "gazetteers_loaded": {k: len(v) for k, v in self.gazetteers.items()},
@@ -717,6 +1196,10 @@ class CollocationEngine:
         This is the CORE LEARNING METHOD — called by the enrichment pipeline
         whenever new user data arrives (CV upload, search query, job browse).
 
+        Now also runs NEAR proximity and NOT/NOR negation tagging on the
+        incoming batch, attaching positional + negation metadata to each
+        newly discovered or updated phrase.
+
         Returns a summary of what was discovered and whether persistence is needed.
         """
         if not texts:
@@ -737,6 +1220,15 @@ class CollocationEngine:
             # 3. Co-occurrence for near-misses
             cooc_results = self.find_cooccurrences(texts, top_k=50)
 
+            # 4. NEW — NEAR proximity (lightweight: only against known phrases)
+            near_results, _near_hits = self.find_near_pairs(
+                texts, target_terms=self.known_phrases, window=self.window_size,
+                min_hits=1, top_k=50,
+            )
+
+            # 5. NEW — Negation tagging (tags every occurrence of known phrases)
+            negation_map = self.tag_negations(texts)
+
             self.min_freq = old_min
 
             # Track newly discovered phrases with metadata
@@ -744,7 +1236,12 @@ class CollocationEngine:
             new_discoveries = 0
             for result in pmi_results + ngram_results + cooc_results:
                 key = result.phrase.lower()
+                if not self._is_valid_phrase(key):
+                    continue  # quality gate: reject garbage n-grams
                 if key not in self._learned_phrases and key not in self.SEED_PHRASES:
+                    # Attach negation stats if available
+                    neg_spans = negation_map.get(key, [])
+                    neg_count = sum(1 for s in neg_spans if s.negated)
                     self._learned_phrases[key] = {
                         "label": result.label or self._infer_label(result.phrase),
                         "score": result.score,
@@ -752,6 +1249,9 @@ class CollocationEngine:
                         "frequency": result.frequency,
                         "discovered_at": now,
                         "source": source,
+                        "negated_count": neg_count,
+                        "negation_ratio": neg_count / max(len(neg_spans), 1),
+                        "span_count": len(neg_spans),
                     }
                     new_discoveries += 1
                 elif key in self._learned_phrases:
@@ -759,6 +1259,19 @@ class CollocationEngine:
                     self._learned_phrases[key]["frequency"] = (
                         self._learned_phrases[key].get("frequency", 0) + result.frequency
                     )
+                    # Also update negation stats incrementally
+                    if key in negation_map:
+                        neg_spans = negation_map[key]
+                        old_neg = self._learned_phrases[key].get("negated_count", 0)
+                        new_neg = sum(1 for s in neg_spans if s.negated)
+                        old_span = self._learned_phrases[key].get("span_count", 0)
+                        total_span = old_span + len(neg_spans)
+                        total_neg = old_neg + new_neg
+                        self._learned_phrases[key]["negated_count"] = total_neg
+                        self._learned_phrases[key]["span_count"] = total_span
+                        self._learned_phrases[key]["negation_ratio"] = (
+                            total_neg / max(total_span, 1)
+                        )
 
             self._ingestion_count += 1
             after_count = len(self.known_phrases)
@@ -772,6 +1285,9 @@ class CollocationEngine:
             if should_persist and self._learned_phrases:
                 self.persist_learned_phrases()
 
+            negated_total = sum(
+                1 for spans in negation_map.values() for s in spans if s.negated
+            )
             summary = {
                 "texts_ingested": len(texts),
                 "new_discoveries": new_discoveries,
@@ -781,10 +1297,14 @@ class CollocationEngine:
                 "ingestion_count": self._ingestion_count,
                 "persisted": should_persist,
                 "source": source,
+                "near_pairs_found": len(near_results),
+                "negated_occurrences": negated_total,
             }
             logger.info(
-                "Enrichment ingest: %d texts → %d new phrases (total known: %d)",
+                "Enrichment ingest: %d texts → %d new phrases (total known: %d, "
+                "near: %d, negated: %d)",
                 len(texts), new_discoveries, after_count,
+                len(near_results), negated_total,
             )
             return summary
 
@@ -936,7 +1456,8 @@ class CollocationEngine:
             now = datetime.now().isoformat()
             for phrase, label in phrases.items():
                 key = phrase.lower()
-                if key not in self.known_phrases:
+                # Apply quality gate to prevent corrupted/garbage phrases
+                if key not in self.known_phrases and self._is_valid_phrase(key):
                     self.known_phrases.add(key)
                     self.gazetteers.setdefault(label, []).append(phrase)
                     self._learned_phrases[key] = {

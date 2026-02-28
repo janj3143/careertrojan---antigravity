@@ -370,15 +370,18 @@ class AIEnrichmentOrchestrator:
             logger.error(f"❌ Failed to load legacy models: {e}")
             return models
 
-    def _load_embeddings(self) -> np.ndarray:
+    def _load_embeddings(self) -> Optional[np.ndarray]:
         """Load pre-computed candidate embeddings."""
         try:
             embeddings = np.load(self.models_path / "candidate_embeddings.npy")
             logger.info(f"✅ Loaded embeddings: shape {embeddings.shape}")
             return embeddings
+        except FileNotFoundError:
+            logger.warning("⚠️ candidate_embeddings.npy not found — embeddings unavailable")
+            return None
         except Exception as e:
             logger.error(f"❌ Failed to load embeddings: {e}")
-            raise
+            return None
 
     def _load_statistical_analysis(self) -> Dict[str, Any]:
         """Load statistical analysis results."""
@@ -668,23 +671,16 @@ class AIEnrichmentOrchestrator:
         # Predict cluster using trained K-means
         cluster_id = int(self.models['kmeans'].predict(tfidf_vector)[0])
 
-        cluster_labels = {
-            0: "Data Engineer",
-            1: "Full-Stack Developer",
-            2: "DevOps/Infrastructure",
-            3: "Product Manager",
-            4: "ML Engineer",
-            5: "Frontend Specialist",
-            6: "Backend Architect",
-            7: "Solutions/Sales Engineer",
-            8: "Mixed Profile",
-            9: "Emerging Tech"
-        }
+        # Derive cluster label from model metadata — no hardcoded role names
+        cluster_label = f"Cluster_{cluster_id}"
+        if hasattr(self.models.get('kmeans'), 'cluster_labels_'):
+            labels_map = self.models['kmeans'].cluster_labels_
+            cluster_label = labels_map.get(cluster_id, cluster_label)
 
         return {
             "cluster_id": cluster_id,
-            "cluster_label": cluster_labels.get(cluster_id, "Mixed Profile"),
-            "peer_percentile": 50.0,  # TODO: Compute from real peer data
+            "cluster_label": cluster_label,
+            "peer_percentile": None,  # requires peer distribution data
             "cluster_keywords": keywords_result.get('extracted', [])[:5]
         }
 
@@ -697,27 +693,29 @@ class AIEnrichmentOrchestrator:
         Compute market signals from real statistical analysis.
         NO MOCKS - uses statistical_methods_analysis.json data.
         """
-        # Load from real statistical analysis
+        # Extract from real statistical analysis data (no hardcoded values)
+        trending_skills = []
+        salary_data = None
+        demand_trend = None
+
         if self.statistical_analysis:
-            # TODO: Extract trending skills from time series analysis
-            trending_skills = [
-                "Cloud Architecture (AWS/GCP/Azure)",
-                "Kubernetes/DevOps",
-                "Data Pipelines (Airflow)",
-                "Machine Learning (PyTorch/TF)",
-                "API Design (REST/GraphQL)"
-            ]
-        else:
-            trending_skills = []
+            trend_data = self.statistical_analysis.get("trend_analysis", {})
+            trending_skills = trend_data.get("trending_skills", [])
+            salary_stats = self.statistical_analysis.get("salary_analysis", {})
+            if salary_stats:
+                salary_data = {
+                    "min": salary_stats.get("percentile_25"),
+                    "max": salary_stats.get("percentile_75"),
+                    "median": salary_stats.get("median"),
+                    "currency": salary_stats.get("currency", "USD"),
+                }
+            demand_trend = trend_data.get("demand_direction")
 
         return {
             "trending_skills": trending_skills,
-            "salary_range": {
-                "min": 120000,
-                "max": 180000,
-                "currency": "USD"
-            },
-            "demand_trend": "Rising"
+            "salary_range": salary_data,
+            "demand_trend": demand_trend,
+            "data_available": bool(self.statistical_analysis),
         }
 
     def enrich_keywords_across_entities(
@@ -803,33 +801,39 @@ class AIEnrichmentOrchestrator:
         if not self.expert_systems:
             return recommendations
 
-        # Rule engine inference
+        # Rule engine inference — apply loaded rules
         if 'rule_engine' in self.expert_systems:
             try:
-                rules = self.expert_systems['rule_engine']
-                # Apply rules based on profile
+                rules_data = self.expert_systems['rule_engine']
+                rule_list = rules_data.get('rules', []) if isinstance(rules_data, dict) else []
                 exp_years = len(user_profile.get('experience', []))
                 skills_count = len(user_profile.get('skills', []))
-
-                if exp_years >= 10 and skills_count >= 15:
-                    recommendations["rule_engine_result"] = "Senior Level Assessment (R001)"
-                elif exp_years >= 5 and skills_count >= 8:
-                    recommendations["rule_engine_result"] = "Mid Level Assessment (R002)"
-                else:
-                    recommendations["rule_engine_result"] = "Junior Level Assessment (R003)"
+                triggered = []
+                for rule in rule_list:
+                    cond = rule.get('condition', {})
+                    if exp_years >= cond.get('min_experience', 0) and skills_count >= cond.get('min_skills', 0):
+                        triggered.append({
+                            "rule_id": rule.get('id', 'unknown'),
+                            "label": rule.get('label', rule.get('action', 'matched')),
+                        })
+                recommendations["rule_engine_result"] = triggered if triggered else "No rules matched"
             except Exception as e:
                 logger.debug(f"Rule engine failed: {e}")
 
-        # Knowledge graph insights
+        # Knowledge graph insights — query actual loaded graph
         if 'knowledge_graph' in self.expert_systems:
             try:
                 kg = self.expert_systems['knowledge_graph']
-                # Extract insights from knowledge graph
-                recommendations["knowledge_graph_insights"] = [
-                    "Skills domain mapping available",
-                    "Career progression paths identified",
-                    "Technical skill relationships mapped"
-                ]
+                user_skills = [s.lower() for s in user_profile.get('skills', [])]
+                insights = []
+                nodes = kg.get('nodes', {}) if isinstance(kg, dict) else {}
+                edges = kg.get('edges', []) if isinstance(kg, dict) else []
+                for skill in user_skills[:5]:
+                    related = [e.get('target') for e in edges
+                               if e.get('source', '').lower() == skill and e.get('target')]
+                    if related:
+                        insights.append(f"{skill} → {', '.join(related[:3])}")
+                recommendations["knowledge_graph_insights"] = insights
             except Exception as e:
                 logger.debug(f"Knowledge graph failed: {e}")
 
@@ -850,17 +854,31 @@ class AIEnrichmentOrchestrator:
         exp_years = len(user_profile.get('experience', []))
         skills_count = len(user_profile.get('skills', []))
 
-        # Mamdani FIS
+        # Mamdani FIS — use loaded fuzzy inference rules
         if 'mamdani_fis' in self.fuzzy_systems:
             try:
-                # Simple fuzzy inference
-                if exp_years >= 10 and skills_count >= 20:
-                    fuzzy_scores["mamdani_suitability"] = 0.95
-                elif exp_years >= 5 and skills_count >= 10:
-                    fuzzy_scores["mamdani_suitability"] = 0.75
+                fis = self.fuzzy_systems['mamdani_fis']
+                rules = fis.get('rules', []) if isinstance(fis, dict) else []
+                if rules:
+                    output_sum = 0.0
+                    weight_sum = 0.0
+                    for rule in rules:
+                        conds = rule.get('conditions', {})
+                        cons = rule.get('output', 0.5)
+                        firing = 1.0
+                        for var_name, rng in conds.items():
+                            val = exp_years if 'exp' in var_name else skills_count
+                            lo, hi = rng.get('min', 0), rng.get('max', 100)
+                            span = max(hi - lo, 1)
+                            firing = min(firing, max(0.0, min(1.0, (val - lo) / span)))
+                        output_sum += firing * cons
+                        weight_sum += firing
+                    fuzzy_scores["mamdani_suitability"] = round(output_sum / max(weight_sum, 1e-6), 3)
                 else:
-                    fuzzy_scores["mamdani_suitability"] = 0.50
-
+                    # FIS loaded but no rules — linear membership approximation
+                    fuzzy_scores["mamdani_suitability"] = round(
+                        min(1.0, (exp_years / 15.0) * 0.6 + (skills_count / 25.0) * 0.4), 3
+                    )
                 fuzzy_scores["fuzzy_confidence"] = fuzzy_scores["mamdani_suitability"]
             except Exception as e:
                 logger.debug(f"Mamdani FIS failed: {e}")
@@ -889,38 +907,45 @@ class AIEnrichmentOrchestrator:
         if not self.nlp_models:
             return nlp_analysis
 
-        # Sentiment analysis
+        # Sentiment analysis — use trained classifier
         if 'sentiment' in self.nlp_models:
             try:
                 model = self.nlp_models['sentiment']
-                # Simplified sentiment
-                nlp_analysis["sentiment"] = "positive"
-                nlp_analysis["sentiment_score"] = 0.75
+                if hasattr(model, 'predict') and 'tfidf' in self.models:
+                    features = self.models['tfidf'].transform([all_text])
+                    pred = model.predict(features)[0]
+                    sentiment_map = {0: "negative", 1: "neutral", 2: "positive"}
+                    nlp_analysis["sentiment"] = sentiment_map.get(int(pred), "neutral")
+                    if hasattr(model, 'predict_proba'):
+                        proba = model.predict_proba(features)[0]
+                        nlp_analysis["sentiment_score"] = round(float(proba.max()), 3)
             except Exception as e:
                 logger.debug(f"Sentiment analysis failed: {e}")
 
-        # Text classification
+        # Text classification — use trained model
         if 'text_classifier' in self.nlp_models:
             try:
                 model = self.nlp_models['text_classifier']
-                # Simplified classification
-                if 'python' in all_text.lower() or 'java' in all_text.lower():
-                    nlp_analysis["text_category"] = "technical"
-                elif 'manage' in all_text.lower() or 'lead' in all_text.lower():
-                    nlp_analysis["text_category"] = "management"
-                else:
-                    nlp_analysis["text_category"] = "general"
+                if hasattr(model, 'predict') and 'tfidf' in self.models:
+                    features = self.models['tfidf'].transform([all_text])
+                    pred = model.predict(features)[0]
+                    nlp_analysis["text_category"] = str(pred)
+                    if hasattr(model, 'predict_proba'):
+                        proba = model.predict_proba(features)[0]
+                        nlp_analysis["classification_confidence"] = round(float(proba.max()), 3)
             except Exception as e:
                 logger.debug(f"Text classification failed: {e}")
 
-        # Topic modeling
+        # Topic modeling — use trained LDA model
         if 'topic_model' in self.nlp_models:
             try:
-                nlp_analysis["topics"] = [
-                    "Software Development",
-                    "Data Engineering",
-                    "Cloud Infrastructure"
-                ]
+                model = self.nlp_models['topic_model']
+                if hasattr(model, 'transform') and 'tfidf' in self.models:
+                    features = self.models['tfidf'].transform([all_text])
+                    topic_dist = model.transform(features)[0]
+                    top_idx = int(topic_dist.argmax())
+                    nlp_analysis["topics"] = [f"Topic_{top_idx}"]
+                    nlp_analysis["topic_distribution"] = [round(float(s), 3) for s in topic_dist]
             except Exception as e:
                 logger.debug(f"Topic modeling failed: {e}")
 

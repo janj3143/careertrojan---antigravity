@@ -106,11 +106,11 @@ export default function AdminHome() {
                                     <div className="text-lg font-semibold text-white mb-1">📊 Analytics</div>
                                     <div className="text-sm text-slate-400">View platform analytics and insights</div>
                                 </a>
-                                <a href="/admin/service-status" className="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg p-4 transition">
+                                <a href="/admin/status" className="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg p-4 transition">
                                     <div className="text-lg font-semibold text-white mb-1">🔧 Service Status</div>
                                     <div className="text-sm text-slate-400">Monitor system health and services</div>
                                 </a>
-                                <a href="/admin/ai-enrichment" className="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg p-4 transition">
+                                <a href="/admin/ai-enrich" className="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg p-4 transition">
                                     <div className="text-lg font-semibold text-white mb-1">🤖 AI Enrichment</div>
                                     <div className="text-sm text-slate-400">Manage AI data enrichment pipeline</div>
                                 </a>

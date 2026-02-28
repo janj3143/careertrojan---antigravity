@@ -1,5 +1,5 @@
 """
-Real Compliance Data Service for IntelliCV Admin Portal
+Real Compliance Data Service for CareerTrojan Admin Portal
 Provides real compliance metrics based on actual system state
 """
 

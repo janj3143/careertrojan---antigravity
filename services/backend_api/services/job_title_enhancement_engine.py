@@ -1,5 +1,5 @@
 """
-IntelliCV-AI Job Title Normalization and Enhancement Engine
+CareerTrojan Job Title Normalization and Enhancement Engine
 ==========================================================
 
 This module processes and normalizes job titles from various sources to enhance
@@ -10,7 +10,7 @@ the AI engine's capability for:
 - Interview preparation guidance
 - Career coaching insights
 
-Author: IntelliCV-AI Team
+Author: CareerTrojan Team
 Date: September 30, 2025
 """
 

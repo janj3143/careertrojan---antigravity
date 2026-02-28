@@ -11,7 +11,7 @@ Routes AI workloads to the most appropriate engine based on:
 ALL LLM calls delegate to ``llm_gateway.generate()``.
 No direct HTTP calls, no subprocess, no broken imports.
 
-Author: IntelliCV Platform
+Author: CareerTrojan Platform
 Refactored: Wired through llm_gateway
 """
 

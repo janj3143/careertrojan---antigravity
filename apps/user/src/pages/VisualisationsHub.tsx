@@ -13,10 +13,13 @@ interface VisualEntry {
 
 // Inline fallback if backend is unreachable
 const FALLBACK_REGISTRY: VisualEntry[] = [
+    { id: "leadership_spider_d3", title: "Leadership & Strategy Spider", category: "Leadership", react_component: "LeadershipSpiderD3View" },
+    { id: "skills_competency_spider_d3", title: "Skills & Competency Spider", category: "Competency", react_component: "SkillsCompetencySpiderD3View" },
     { id: "quadrant_fit_d3", title: "Market Fit Quadrant", category: "Positioning", react_component: "QuadrantFitD3View" },
     { id: "wordcloud_connected_d3", title: "Skill Cloud Analysis", category: "Market Trends", react_component: "ConnectedWordCloudD3View" },
     { id: "touchpoint_network_cytoscape", title: "Network Touchpoints", category: "Explainability", react_component: "TouchpointNetworkCytoscapeView" },
-    { id: "mindmap_reactflow", title: "Career Path Mind Map", category: "User Directed", react_component: "MindMapReactFlowView" },
+    { id: "career_mindmap_d3", title: "Career Mind Map", category: "Career Planning", react_component: "CareerMindMapD3View" },
+    { id: "mindmap_reactflow", title: "Legacy Mind Map", category: "User Directed", react_component: "MindMapReactFlowView" },
 ];
 
 // ── TouchPoints Overlay Panel ─────────────────────────────────

@@ -1,8 +1,9 @@
 # =============================================================================
-# CareerTrojan Mentor Portal — Multi-stage Dockerfile
+# CareerTrojan Mentor Portal — Multi-stage Dockerfile (React/Vite)
 # =============================================================================
 # Build:   docker build -t careertrojan-mentor ./apps/mentor
-# Run:     docker run -p 8503:80 careertrojan-mentor
+# Run:     docker run -p 8603:80 careertrojan-mentor
+# NOTE:    Streamlit .py files are LEGACY — Docker builds React only.
 # =============================================================================
 
 # ── Build Stage ──────────────────────────────────────────────────────────

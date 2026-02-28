@@ -4,7 +4,7 @@ Application Blocker Detector Utility
 Purpose: Lightweight blocker detection for resume upload integration
 Can be called from resume upload pages, job matching, and career assistant
 
-Author: IntelliCV AI System
+Author: CareerTrojan AI System
 Date: 2025-11-XX
 """
 

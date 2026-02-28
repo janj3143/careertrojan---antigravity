@@ -436,7 +436,7 @@ export default function App() {
         {/* Footer */}
         <Separator className="my-8" />
         <div className="text-center text-sm text-slate-500 pb-8">
-          <p>📊 IntelliCV Mentor Portal | Business Performance Overview</p>
+          <p>📊 CareerTrojan Mentor Portal | Business Performance Overview</p>
         </div>
       </div>
     </div>

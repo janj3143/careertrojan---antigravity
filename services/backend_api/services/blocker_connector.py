@@ -6,7 +6,7 @@ Purpose: Share blocker detection and management across all three portals
 - Admin Portal: Monitor blocker trends and effectiveness
 - Mentor Portal: Guide mentorship focused on gap closure
 
-Author: IntelliCV AI System
+Author: CareerTrojan AI System
 Date: November 15, 2025
 """
 

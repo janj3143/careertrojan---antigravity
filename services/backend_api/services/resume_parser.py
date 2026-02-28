@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-IntelliCV Complete Data Parser - Master Historical Data Processing Engine
+CareerTrojan Complete Data Parser - Master Historical Data Processing Engine
 ===========================================================================
 
 This comprehensive parser processes ALL historical data from multiple sources:
@@ -11,7 +11,7 @@ This comprehensive parser processes ALL historical data from multiple sources:
 - Web-scraped company intelligence data
 - Enriched AI outputs from previous runs
 
-Designed specifically for the IntelliCV Admin Portal to prepare all historical
+Designed specifically for the CareerTrojan Admin Portal to prepare all historical
 data for AI enrichment and provide a complete dataset for analysis.
 """
 
@@ -43,7 +43,7 @@ logger = get_logger(__name__)
 class ResumeParser(LoggingMixin, SafeOperationsMixin):
     """
     Master data parser that processes all historical data from multiple sources
-    and prepares it for AI enrichment in the IntelliCV system.
+    and prepares it for AI enrichment in the CareerTrojan system.
     """
 
     def __init__(self, base_path: Optional[str] = None):
@@ -60,7 +60,12 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
 
         # Regex patterns for data extraction
         self.email_pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
-        self.phone_pattern = re.compile(r'(?:\+\d{1,3}[-.\s]?)?\(?[0-9]{1,4}\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,9}')
+        # Phone regex: require word boundaries & min 7 digits total
+        self.phone_pattern = re.compile(
+            r'\b(?:\+\d{1,3}[-.\s]?)?'
+            r'(?:\(?\d{2,4}\)?[-.\s]?)?'
+            r'\d{3,4}[-.\s]?\d{3,4}\b'
+        )
         self.name_pattern = re.compile(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b')
         self.date_pattern = re.compile(r'\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b|\b\d{4}[/-]\d{1,2}[/-]\d{1,2}\b')
 
@@ -110,8 +115,8 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
         logger.info(f"Data directories discovered: {len(self.data_directories)}")
 
     def _discover_data_directories(self) -> List[Path]:
-        """Discover all potential data directories in the IntelliCV system"""
-        include_absolute_fallback = os.getenv("INTELLICV_INCLUDE_ABSOLUTE_DATA_FALLBACK", "false").lower() == "true"
+        """Discover all potential data directories in the CareerTrojan system"""
+        include_absolute_fallback = os.getenv("CAREERTROJAN_INCLUDE_ABSOLUTE_DATA_FALLBACK", "false").lower() == "true"
 
         potential_directories = [
             # Main data directories
@@ -139,12 +144,12 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
             self.base_path / "enriched_output",
 
             # Legacy directories
-            self.base_path.parent / "IntelliCV" / "data",
+            self.base_path.parent / "CareerTrojan" / "data",
         ]
 
         # Absolute fallback is opt-in only (it can be extremely large).
         if include_absolute_fallback:
-            potential_directories.append(Path("C:/IntelliCV/data"))
+            potential_directories.append(Path(os.getenv("CAREERTROJAN_AI_DATA", os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data"), "ai_data_final"))))
 
         # Filter to existing directories
         existing_dirs = []
@@ -291,8 +296,8 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
         """Determine if file is historical data (2011-2020)"""
         name_lower = file_path.name.lower()
         # Check for year patterns in filename
-        years = re.findall(r'20[01][0-9]', name_lower)
-        return len(years) > 0 and any(int(year) <= 2020 for year in years)
+        years = re.findall(r'20[012][0-9]', name_lower)
+        return len(years) > 0 and any(int(year) <= 2025 for year in years)
 
     def process_all_data(self, include_historical: bool = True) -> Dict[str, Any]:
         """
@@ -374,6 +379,7 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
                 if candidate_data:
                     results["candidates_extracted"].append(candidate_data)
                     results["files_processed"] += 1
+                    self.stats["total_files_processed"] += 1
 
                     # Collect skills
                     if "skills" in candidate_data:
@@ -417,7 +423,7 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
 
             # Extract basic contact information
             emails = self.email_pattern.findall(text_content)
-            phones = self.phone_pattern.findall(text_content)
+            phones = self._validate_phones(self.phone_pattern.findall(text_content))
             names = self.name_pattern.findall(text_content)
 
             if emails:
@@ -497,33 +503,72 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
             logger.error(f"Error extracting text from {file_path}: {e}")
             return None
 
+    # ── Phone validation helper ────────────────────────────────────────
+    @staticmethod
+    def _validate_phones(raw_matches: List[str]) -> List[str]:
+        """Filter phone regex matches: require 7-15 digits, reject dates/timestamps."""
+        valid = []
+        date_re = re.compile(r'^\d{1,4}[-/]\d{1,2}[-/]\d{1,4}$')  # YYYY-MM-DD etc.
+        for m in raw_matches:
+            m = m.strip()
+            digits = re.sub(r'\D', '', m)
+            if len(digits) < 7 or len(digits) > 15:
+                continue  # too short or too long
+            if date_re.match(m):
+                continue  # looks like a date
+            if m not in valid:
+                valid.append(m)
+        return valid
+
     def _extract_skills_from_text(self, text: str) -> List[str]:
-        """Extract technical skills from text using keyword matching"""
-        # Common technical skills - this could be expanded significantly
+        """Extract technical skills from text using word-boundary regex matching."""
+        # Skills that need exact word-boundary matching.
+        # Short/ambiguous tokens (r, go, sap, git, vue) use custom patterns
+        # to avoid false positives ("resource" matching 'r', etc.).
         skill_keywords = [
             # Programming languages
-            'python', 'java', 'javascript', 'c++', 'c#', 'php', 'ruby', 'go', 'rust',
-            'typescript', 'kotlin', 'scala', 'r', 'matlab', 'sql', 'html', 'css',
+            'python', 'java', 'javascript', 'c\\+\\+', 'c#', 'php', 'ruby', 'rust',
+            'typescript', 'kotlin', 'scala', 'matlab', 'sql', 'html', 'css',
+            # Multi-word entries that won't false-positive
+            'r\\b(?:\\s+programming|\\s+language|\\s+studio)',  # 'R' only when followed by context
+            '\\bgo(?:lang)\\b',  # 'go' only as 'golang' or exact word next to lang
 
             # Frameworks and libraries
-            'react', 'angular', 'vue', 'django', 'flask', 'spring', 'nodejs', 'express',
+            'react', 'angular', 'vue\\.?js', 'django', 'flask', 'spring\\s+boot|\\bspring\\b',
+            'node\\.?js|nodejs', 'express\\.?js',
             'tensorflow', 'pytorch', 'pandas', 'numpy', 'scikit-learn',
 
             # Tools and platforms
-            'aws', 'azure', 'gcp', 'docker', 'kubernetes', 'jenkins', 'git', 'jira',
-            'tableau', 'powerbi', 'excel', 'salesforce', 'sap',
+            'aws', 'azure', 'gcp', 'docker', 'kubernetes', 'jenkins',
+            '\\bgit(?:hub|lab)?\\b',  # git/github/gitlab but not 'digital'
+            'jira', 'tableau', 'power\\s*bi', 'excel', 'salesforce',
+            '\\bsap\\b',  # only exact match
 
             # Methodologies
-            'agile', 'scrum', 'devops', 'ci/cd', 'machine learning', 'data science',
-            'project management', 'business analysis'
+            'agile', 'scrum', 'devops', 'ci/cd', 'machine\\s+learning',
+            'data\\s+science', 'project\\s+management', 'business\\s+analysis',
+
+            # Engineering / domain skills
+            'autocad', 'solidworks', 'ansys', 'catia', 'matlab', 'simulink',
+            'process\\s+engineering', 'chemical\\s+engineering',
+            'mechanical\\s+engineering', 'electrical\\s+engineering',
+            'piping', 'instrumentation', 'commissioning',
+            'six\\s+sigma', 'lean\\s+manufacturing', 'hse', 'iso\\s+\\d+',
         ]
 
-        found_skills = []
+        found_skills: List[str] = []
         text_lower = text.lower()
 
-        for skill in skill_keywords:
-            if skill.lower() in text_lower:
-                found_skills.append(skill)
+        for pattern in skill_keywords:
+            # Build a word-boundary regex for the skill
+            regex = re.compile(r'\b' + pattern + r'\b', re.IGNORECASE)
+            if regex.search(text_lower):
+                # Use the first match text as the canonical skill name
+                match = regex.search(text_lower)
+                if match:
+                    skill_name = match.group(0).strip().lower()
+                    if skill_name not in found_skills:
+                        found_skills.append(skill_name)
 
         return found_skills
 
@@ -736,7 +781,7 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
                     text = f.read()
 
                 emails = list(set(self.email_pattern.findall(text)))
-                phones = list(set(self.phone_pattern.findall(text)))
+                phones = self._validate_phones(self.phone_pattern.findall(text))
 
                 if emails or phones:
                     contacts.append({
@@ -770,7 +815,7 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
 
                     # Check for emails and phones in any field
                     emails = self.email_pattern.findall(value)
-                    phones = self.phone_pattern.findall(value)
+                    phones = self._validate_phones(self.phone_pattern.findall(value))
 
                     if emails:
                         contact.setdefault('emails', []).extend(emails)
@@ -970,7 +1015,7 @@ class ResumeParser(LoggingMixin, SafeOperationsMixin):
                         "year": year,
                         "content_preview": text_content[:1000],
                         "emails_found": self.email_pattern.findall(text_content),
-                        "phones_found": self.phone_pattern.findall(text_content),
+                        "phones_found": self._validate_phones(self.phone_pattern.findall(text_content)),
                         "processed_date": datetime.now().isoformat()
                     }
                     historical_data.append(record)
@@ -1148,7 +1193,7 @@ def main():
     """Main function to run the complete data parser"""
     import argparse
 
-    parser = argparse.ArgumentParser(description="IntelliCV Complete Data Parser")
+    parser = argparse.ArgumentParser(description="CareerTrojan Complete Data Parser")
     parser.add_argument("--base-path", help="Base path for data discovery")
     parser.add_argument("--include-historical", action="store_true",
                        help="Include historical data processing (2011-2020)")
@@ -1161,7 +1206,7 @@ def main():
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    logger.info("IntelliCV Complete Data Parser Starting...")
+    logger.info("CareerTrojan Complete Data Parser Starting...")
     logger.info("=" * 60)
 
     # Initialize parser

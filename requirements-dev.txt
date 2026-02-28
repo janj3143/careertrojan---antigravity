@@ -1,0 +1,114 @@
+# CareerTrojan Development Tools
+# Linting, testing, and development utilities
+# Python 3.10+ compatible
+# Date: November 6, 2025
+#
+# Installation: pip install -r requirements-dev.txt
+
+############################
+# Code Quality & Formatting (N5 Tools)
+############################
+black>=24.0.0
+ruff>=0.6.9
+mypy>=1.9.0
+isort>=5.13.2
+bandit>=1.7.9
+pre-commit>=4.6.0
+
+# Type Stubs
+mypy-extensions>=1.1.0
+typing-extensions>=4.12.2
+types-requests>=2.32.0
+types-PyYAML>=6.0.12
+types-redis>=4.6.0
+
+# Additional Linters
+flake8>=7.1.0
+pylint>=3.3.0
+autopep8>=2.3.0
+pycodestyle>=2.12.0
+pydocstyle>=6.3.0
+pyflakes>=3.2.0
+vulture>=2.11  # Dead code finder
+radon>=6.0.1  # Code complexity
+
+############################
+# Testing Framework
+############################
+pytest>=8.1.1
+pytest-cov>=4.1.0
+pytest-html>=4.1.1
+pytest-asyncio>=0.23.5
+pytest-mock>=3.12.0
+pytest-xdist>=3.5.0
+pytest-benchmark>=4.0.0
+pytest-timeout>=2.3.0
+pytest-randomly>=3.15.0
+coverage>=7.4.0
+tox>=4.21.0
+hypothesis>=6.98.0  # Property-based testing
+faker>=30.0.0  # Fake data generation
+freezegun>=1.5.0  # Time mocking
+responses>=0.25.0  # HTTP mocking
+
+# Load Testing
+locust>=2.31.0
+
+# Browser Testing
+selenium>=4.26.0
+playwright>=1.40.0
+webdriver-manager>=4.0.0
+
+############################
+# Profiling & Performance
+############################
+py-spy>=0.4.0
+memory-profiler>=0.61.0
+line-profiler>=4.1.0
+pympler>=0.9.0
+
+############################
+# CLI Development
+############################
+rich-click>=1.8.0
+questionary>=2.0.1
+prompt-toolkit>=3.0.50
+halo>=0.0.31
+yaspin>=3.1.0
+alive-progress>=3.2.0
+
+############################
+# Configuration & Validation
+############################
+tomlkit>=0.13.2
+jsonschema>=4.23.0
+marshmallow>=3.22.0
+dynaconf>=3.2.6
+
+############################
+# Documentation
+############################
+sphinx>=5.0.0
+mkdocs>=1.6.0
+mkdocs-material>=9.5.0
+mkdocs-mermaid2-plugin>=1.1.0
+docformatter>=1.7.5
+
+############################
+# Development Server Tools
+############################
+watchdog>=6.0.0
+gunicorn>=23.0.0
+waitress>=3.0.0
+
+############################
+# Debugging
+############################
+ipython>=8.12.0
+ipdb>=0.13.0
+pdbpp>=0.10.0
+
+############################
+# API Development
+############################
+httpie>=3.2.0

@@ -1,0 +1,317 @@
+# CareerTrojan — Parsers (conversion & OCR hooks)
+#
+# Purpose: Robust ingestion (legacy formats, OCR). Requires system tools installed separately:
+# - LibreOffice (for .doc -> .docx), antiword, unrtf, catdoc, tesseract-ocr, poppler-utils/pdftotext
+# - Optional: unoconv (0.8.2) from local zip
+#
+# Keep pip deps minimal; mainly act as wrappers around system binaries.
+
+############################
+# Character Encoding & Detection
+############################
+chardet>=5.2.0
+charset-normalizer>=3.0.0
+
+############################
+# Document Parsing
+############################
+python-docx>=0.8.11
+docx2txt>=0.8
+python-pptx>=0.6.23
+striprtf>=0.0.16
+python-magic>=0.4.27; sys_platform != "win32"
+python-magic-bin>=0.4.14; sys_platform == "win32"
+
+############################
+# Cloud Storage Integration & Mining
+############################
+# Google Drive & Workspace Access
+google-api-python-client>=2.143.0  # Google Drive/Docs API access
+google-auth>=2.34.0                # Google authentication
+google-auth-oauthlib>=1.2.1        # OAuth2 for Google services
+google-auth-httplib2>=0.2.0        # HTTP transport for Google Auth
+gspread>=6.1.2                     # Google Sheets API wrapper
+pygsheets>=2.0.6                   # Alternative Google Sheets library
+google-cloud-storage>=2.18.0       # Google Cloud Storage access
+google-resumable-media>=2.7.2      # Large file uploads to Google services
+# gdrive3 removed (package not found); use PyDrive2 instead
+pydrive2>=1.20.0                   # Google Drive API wrapper
+google-drive-downloader>=0.4       # Download files from Google Drive links
+
+# Microsoft OneDrive & SharePoint Access
+office365-rest-python-client>=2.5.10  # Microsoft Graph API
+msal>=1.30.0                          # Microsoft Authentication Library
+onedrivesdk-python>=1.1.8            # OneDrive SDK
+sharepoint-python>=2.1.0             # SharePoint integration
+msgraph-core>=1.1.5                  # Microsoft Graph core library
+azure-identity>=1.17.1               # Azure authentication
+azure-storage-blob>=12.22.0          # Azure Blob Storage
+requests-ntlm>=1.3.0                 # NTLM authentication for corporate environments
+
+# Universal Cloud Storage
+boto3>=1.35.36          # AWS S3 access
+dropbox>=12.0.2         # Dropbox API
+box-sdk-gen>=1.5.0      # Box.com API
+webdav4>=0.9.8          # WebDAV protocol for various cloud storage
+
+############################
+# Excel & Spreadsheet Processing
+############################
+openpyxl>=3.1.5          # Excel .xlsx files (read/write)
+xlrd>=2.0.1              # Excel .xls files (legacy format)
+xlsxwriter>=3.2.0        # Excel writing with formatting
+xlwings>=0.32.0          # Excel automation (Windows/Mac)
+pyxlsb>=1.0.10           # Excel binary format (.xlsb)
+odfpy>=1.4.1             # OpenDocument spreadsheets (.ods)
+
+############################
+# CSV & Delimited Text Processing
+############################
+pandas>=2.2.2            # Comprehensive CSV/Excel data processing
+polars>=1.7.0            # Fast CSV processing alternative
+csvkit>=2.0.0            # Command-line CSV toolkit
+chardet>=5.2.0           # Character encoding detection
+unicodecsv>=0.14.1       # Unicode CSV handling for Python 2/3 compat
+csv-diff>=1.1            # CSV comparison and diffing
+
+############################
+# Plain Text & Notepad Processing
+############################
+codecs>=0.5.0            # Text encoding/decoding
+textdistance>=4.6.3      # Text similarity metrics
+ftfy>=6.2.3              # Fix text encoding issues
+unidecode>=1.3.8         # ASCII transliteration
+python-magic>=0.4.27; sys_platform != "win32"  # File type detection
+python-magic-bin>=0.4.14; sys_platform == "win32"
+
+############################
+# PDF Processing - All Forms & Types
+############################
+# Core PDF Libraries
+pypdf>=4.3.0            # Modern PDF library (successor to PyPDF2)
+PyPDF2>=3.0.1           # Legacy support for older PDFs
+pymupdf>=1.24.0         # High-performance PDF processing (MuPDF binding)
+pdfminer.six>=20221105  # Low-level PDF parsing
+pdfplumber>=0.11.0      # High-level PDF text/table extraction
+
+# Specialized PDF Processing
+camelot-py>=0.11.0      # Advanced PDF table extraction
+tabula-py>=2.9.0        # Java-based PDF table extraction
+pdfquery>=0.4.3         # CSS-like PDF parsing
+slate3k>=0.5.3          # Simple PDF text extraction
+PyMuPDF>=1.24.0         # Alternative name for pymupdf
+
+# PDF Forms & Interactive Elements
+PyPDF4>=3.0.0           # Enhanced PDF form handling
+pdfrw>=0.4              # PDF reading/writing with form support
+reportlab>=4.2.2        # PDF generation with forms
+fillpdf>=0.7.1          # PDF form filling
+
+# PDF Security & Protection
+pikepdf>=9.1.1          # PDF manipulation with encryption support
+pycryptodome>=3.20.0    # Cryptographic functions for secured PDFs
+
+# PDF Conversion & Image Processing
+pdf2image>=1.17.0       # PDF to image conversion
+Wand>=0.6.13            # ImageMagick binding for PDF processing
+ghostscript>=0.7        # PostScript/PDF processing
+img2pdf>=0.5.1          # Image to PDF conversion
+
+# PDF Metadata & Analysis
+pdfinfo>=1.0.0          # PDF metadata extraction
+PyPDF3>=3.0.1           # Alternative PDF processing library
+pdftk-python>=3.3.2     # PDF toolkit Python wrapper
+
+############################
+# Email & MSG Processing
+############################
+extract-msg>=0.55.0
+email-validator>=2.1.1
+mailparser>=4.7.0       # Enhanced email parsing
+
+############################
+# Email Provider Integration & Access
+############################
+# Microsoft Email (Outlook/Exchange/Office365)
+exchangelib>=5.4.3      # Microsoft Exchange Web Services (EWS)
+msal>=1.30.0            # Microsoft Authentication Library
+O365>=2.0.35            # Office 365 API wrapper
+pywin32>=306; sys_platform == "win32"  # Windows COM for Outlook
+outlook-calendar>=0.2.0 # Outlook calendar integration
+
+# Gmail & Google Workspace
+google-api-python-client>=2.143.0  # Already added above
+google-auth>=2.34.0                # Already added above  
+google-auth-oauthlib>=1.2.1        # Already added above
+gmail-api-wrapper>=1.0.6           # Simplified Gmail API access
+simplegmail>=4.1.1                 # Easy Gmail integration
+
+# Yahoo Mail
+yagmail>=0.15.293       # Yahoo/Gmail SMTP sending
+yahoo-oauth>=1.5.1      # Yahoo OAuth authentication
+
+# Universal Email Access (IMAP/POP3/SMTP)
+imaplib2>=3.6           # Enhanced IMAP client
+poplib3>=0.9.0          # POP3 email access
+secure-smtplib>=0.1.1   # Secure SMTP client
+imapclient>=3.0.1       # High-level IMAP client
+email-reply-parser>=0.5.12  # Parse email threads/replies
+
+# Email Attachment Processing
+email-attachment-downloader>=1.1.0  # Download email attachments
+attachment-downloader>=2.1.0        # Multi-provider attachment download
+email-crawler>=0.6.0               # Search and crawl email content
+
+# Email Search & Filtering
+email-search>=1.2.0     # Advanced email search capabilities
+mail-parser>=3.15.0     # Parse complex email structures
+email-to>=0.1.0         # Email format conversion utilities
+
+############################
+# OCR & Text Extraction
+############################
+pytesseract>=0.3.13     # Tesseract OCR wrapper
+pillow>=10.4.0          # Image processing for OCR
+pdf2image>=1.17.0       # PDF to image conversion
+easyocr>=1.7.1          # Alternative OCR engine
+
+############################
+# HTML & XML Processing
+############################
+beautifulsoup4>=4.12.2
+lxml>=4.9.4
+html5lib>=1.1           # HTML parsing
+xmltodict>=0.13.0       # XML to dict conversion
+
+############################
+# Google Docs Export Formats & Web-based Documents
+############################
+# Google Docs can be exported as various formats - handle them all
+odfpy>=1.4.1            # OpenDocument formats (.odt, .ods, .odp)
+python-docx>=0.8.11     # Already included above - Google Docs → DOCX
+html2text>=2024.2.26    # HTML to plain text (Google Docs HTML export)
+markdown>=3.7           # Markdown processing (Google Docs can export as MD)
+weasyprint>=62.3        # HTML/CSS to PDF conversion
+pdfkit>=1.0.0           # HTML to PDF via wkhtmltopdf
+selenium>=4.24.0        # Web scraping for Google Docs viewing
+requests-html>=0.10.0   # JavaScript-enabled web scraping
+
+############################
+# Advanced Document Processing
+############################
+textract>=1.6.5         # Multi-format text extraction
+unstructured>=0.15.0    # Modern document parsing
+mammoth>=1.8.0          # .docx to HTML conversion
+pandoc>=2.3             # Universal document converter (Python wrapper)
+markdownify>=0.13.1     # HTML to Markdown conversion
+python-dateutil>=2.9.0  # Date parsing from documents
+phonenumbers>=8.13.40   # Phone number extraction and validation
+
+############################
+# Specialized Parsers
+############################
+olefile>=0.47           # OLE file format (old Office docs)
+ebooklib>=0.18          # EPUB parsing
+pdfquery>=0.4.3         # CSS-like PDF parsing
+tabula-py>=2.9.0        # PDF table extraction
+PyMuPDF>=1.24.0         # PDF text/image extraction (alias for pymupdf)
+slate3k>=0.5.3          # Simple PDF text extraction
+
+############################
+# Archive & Compression
+############################
+zipfile38>=0.0.3        # Enhanced ZIP support
+py7zr>=0.22.0           # 7-Zip support
+rarfile>=4.2            # RAR file support
+
+############################
+# Text Processing & NLP for Parsing
+############################
+langdetect>=1.0.9       # Language detection
+nltk>=3.9.1             # Natural language processing
+spacy>=3.7.6            # Advanced NLP (for content extraction)
+regex>=2024.7.24        # Advanced regex patterns
+fuzzywuzzy>=0.18.0      # Fuzzy string matching
+python-Levenshtein>=0.25.0  # Fast string distance calculations
+
+############################
+# Email Automation & Monitoring
+############################
+schedule>=1.2.2         # Task scheduling for email checks
+watchdog>=4.0.2         # File system monitoring
+apscheduler>=3.10.4     # Advanced task scheduling
+celery>=5.4.0           # Distributed task queue for email processing
+redis>=5.1.1            # Task queue backend
+filelock>=3.16.1        # File locking for concurrent access
+
+############################
+# Authentication & Security
+############################
+keyring>=25.4.1         # Secure credential storage
+cryptography>=43.0.1    # Encryption for stored credentials
+pyjwt>=2.9.0            # JWT token handling
+oauthlib>=3.2.2         # OAuth2 authentication framework
+requests-oauthlib>=2.0.0 # OAuth for requests
+
+############################
+# Utilities
+############################
+tqdm>=4.66.0            # Progress bars for batch processing
+pathlib2>=2.3.7         # Enhanced path handling
+mimetypes-plus>=1.1.0   # Extended MIME type detection
+magic>=2.1.0            # File type detection
+humanize>=4.10.0        # Human-readable file sizes/dates
+typing-extensions>=4.12.0  # Enhanced type hints
+python-dotenv>=1.0.1    # Environment variable management
+configparser>=7.1.0     # Configuration file handling
+
+############################
+# Visualization & Graphics (from requirements_visual_parse.txt)
+############################
+matplotlib>=3.7.0
+seaborn>=0.13.2
+plotly>=5.22.0
+altair>=4.2.0  # More compatible version
+networkx>=3.1  # Use >= for flexibility
+wordcloud>=1.9.0
+opencv-python>=4.8.0
+
+############################
+# Enhanced Dashboard Visualization
+############################
+plotly-dash>=2.17.1          # Interactive dashboards
+dash-bootstrap-components>=1.6.0  # Bootstrap components for Dash
+kaleido>=0.2.1               # Static image export for Plotly
+bokeh>=3.4.0                 # Interactive visualization library
+pygraphviz>=1.13             # Graph visualization
+pyvis>=0.3.2                 # Interactive network visualization
+folium>=0.16.0               # Interactive maps
+geopandas>=0.14.4            # Geospatial data visualization
+streamlit-plotly-events>=0.0.6  # Plotly events in Streamlit
+streamlit-echarts>=0.4.0     # ECharts integration
+
+############################
+# Export & Report Generation
+############################
+reportlab>=4.2.2             # Advanced PDF generation
+weasyprint>=62.3             # HTML/CSS to PDF conversion
+jinja2>=3.1.4                # Template engine for reports
+pdfkit>=1.0.0                # HTML to PDF conversion
+
+############################
+# Web Scraping & Automation
+############################
+beautifulsoup4>=4.12.2
+selenium>=4.11.2
+fake-useragent>=1.4.0
+playwright>=1.40.0
+
+############################
+# Audio & Text-to-Speech
+############################
+sounddevice>=0.4.6
+edge-tts>=6.1.0
+
+# Editable local packages if you keep vendor zips (optional):
+# -e downloadzips/unoconv-0.8.2
+# -e downloadzips/textract-1.6.4

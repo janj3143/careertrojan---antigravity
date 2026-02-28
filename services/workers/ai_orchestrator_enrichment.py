@@ -31,12 +31,12 @@ except ImportError:
 # ── Paths (cross-platform) ──────────────────────────────────
 INTERACTIONS_DIR = Path(os.getenv(
     "CAREERTROJAN_USER_DATA",
-    r"L:\VS ai_data final - version\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
+    r"L:\antigravity_version_ai_data_final\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
 )) / "interactions"
 
 AI_DATA_ROOT = Path(os.getenv(
     "CAREERTROJAN_AI_DATA",
-    r"L:\VS ai_data final - version\ai_data_final" if sys.platform == "win32" else "/mnt/careertrojan/ai_data_final"
+    r"L:\antigravity_version_ai_data_final\ai_data_final" if sys.platform == "win32" else "/mnt/careertrojan/ai_data_final"
 ))
 
 LOG_DIR = Path(os.getenv(

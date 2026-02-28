@@ -27,28 +27,28 @@ class CareerTrojanPaths:
     # ── Core Data ────────────────────────────────────────────
     data_root: Path = field(default_factory=lambda: Path(os.getenv(
         "CAREERTROJAN_DATA_ROOT",
-        r"L:\VS ai_data final - version" if sys.platform == "win32" else "/mnt/careertrojan"
+        r"L:\antigravity_version_ai_data_final" if sys.platform == "win32" else "/mnt/careertrojan"
     )))
 
     ai_data_final: Path = field(default_factory=lambda: Path(os.getenv(
         "CAREERTROJAN_AI_DATA",
-        r"L:\VS ai_data final - version\ai_data_final" if sys.platform == "win32" else "/mnt/careertrojan/ai_data_final"
+        r"L:\antigravity_version_ai_data_final\ai_data_final" if sys.platform == "win32" else "/mnt/careertrojan/ai_data_final"
     )))
 
     parser_root: Path = field(default_factory=lambda: Path(os.getenv(
         "CAREERTROJAN_PARSER_ROOT",
-        r"L:\VS ai_data final - version\automated_parser" if sys.platform == "win32" else "/mnt/careertrojan/automated_parser"
+        r"L:\antigravity_version_ai_data_final\automated_parser" if sys.platform == "win32" else "/mnt/careertrojan/automated_parser"
     )))
 
     # ── User Data (primary + mirror) ─────────────────────────
     user_data: Path = field(default_factory=lambda: Path(os.getenv(
         "CAREERTROJAN_USER_DATA",
-        r"L:\VS ai_data final - version\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
+        r"L:\antigravity_version_ai_data_final\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
     )))
 
     user_data_mirror: Path = field(default_factory=lambda: Path(os.getenv(
         "CAREERTROJAN_USER_DATA_MIRROR",
-        r"E:\CareerTrojan\USER_DATA_COPY" if sys.platform == "win32" else "/mnt/careertrojan/backups/user_data"
+        r"L:\antigravity_version_ai_data_final\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/backups/user_data"
     )))
 
     # ── Runtime ──────────────────────────────────────────────

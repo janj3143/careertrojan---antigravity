@@ -8,7 +8,7 @@ export default function OpsExports() {
             <PageTemplate 
                 title="Exports (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/exports"
+                endpoint="/api/ops/v1/exports"
             />
         </AdminLayout>
     );

@@ -1,0 +1,113 @@
+# CareerTrojan AI ENGINES - Heavy ML/Deep Learning
+# Install AFTER requirements-core-only.txt
+# These are large packages (PyTorch ~2GB, TensorFlow ~500MB)
+# Python 3.10+ compatible
+# Date: November 6, 2025
+#
+# Installation Order: Install THIRD (after core and ai-lite)
+# pip install -r requirements-ai-engines.txt
+
+############################
+# Scientific Computing Base
+############################
+scipy>=1.11.0
+scikit-learn>=1.7.0
+
+############################
+# Deep Learning Frameworks
+############################
+# PyTorch (CPU version - for GPU, install manually)
+torch>=2.5.0
+torchvision>=0.20.0
+torchaudio>=2.5.0
+torchtext>=0.20.0
+
+# PyTorch Utilities
+pytorch-lightning>=2.4.0
+accelerate>=1.1.0
+tokenizers>=0.20.0
+
+# TensorFlow (alternative/complementary to PyTorch)
+tensorflow>=2.18.0
+keras>=3.0.0
+
+############################
+# Transformers & LLMs
+############################
+transformers>=4.45.0
+huggingface-hub>=0.25.0
+
+# Local LLM Inference
+llama-cpp-python>=0.2.90
+
+# Structured LLM Outputs
+instructor>=1.11.0
+guidance>=0.1.16
+
+############################
+# Bayesian Networks & Probabilistic Models
+############################
+pgmpy>=0.1.19
+pymc>=5.0.0
+pomegranate>=1.1.0
+networkx>=3.1
+
+# Statistical Models
+statsmodels>=0.14.0
+
+############################
+# Fuzzy Logic & Expert Systems
+############################
+scikit-fuzzy>=0.4.2
+
+############################
+# Gradient Boosting & Advanced ML
+############################
+xgboost>=2.1.0
+lightgbm>=4.5.0
+catboost>=1.2.7
+
+############################
+# Model Interpretability
+############################
+shap>=0.46.0
+lime>=0.2.0.1
+
+############################
+# Hyperparameter Optimization
+############################
+optuna>=4.0.0
+ray[tune]>=2.38.0
+
+############################
+# Neural Network Additions
+############################
+# NLP Advanced
+gensim>=4.2.0
+textblob>=0.17.1
+
+############################
+# Time Series & Forecasting
+############################
+prophet>=1.1.6
+neuralprophet>=0.8.2
+statsforecast>=1.0.0
+
+############################
+# Computer Vision
+############################
+opencv-python>=4.10.0
+pillow>=10.4.0
+imageio>=2.36.0
+albumentations>=1.4.20
+
+############################
+# Multi-Agent Systems
+############################
+autogen>=0.4.0
+
+############################
+# Performance Optimization
+############################
+numba>=0.56.0  # JIT compilation for NumPy
+joblib>=1.4.0  # Parallel processing

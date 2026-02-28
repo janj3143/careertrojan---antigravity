@@ -15,12 +15,14 @@ export const API = {
   analytics: `${API_BASE}/api/analytics/v1`,
   mapping: `${API_BASE}/api/mapping/v1`,
   aiData: `${API_BASE}/api/ai_data/v1`,
+  aiGateway: `${API_BASE}/api/ai`,  // AI Gateway (unified entry point)
   telemetry: `${API_BASE}/api/telemetry/v1`,
   logs: `${API_BASE}/api/logs/v1`,
   mentor: `${API_BASE}/api/mentor/v1`,
   payment: `${API_BASE}/api/payment/v1`,
   jobs: `${API_BASE}/api/jobs/v1`,
   taxonomy: `${API_BASE}/api/taxonomy/v1`,
+  support: `${API_BASE}/api/support/v1`,  // Zendesk Support Bridge
 } as const;
 
 export const API_CONFIG = { baseUrl: API_BASE };

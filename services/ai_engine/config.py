@@ -23,7 +23,7 @@ env_path = Path(r"C:\careertrojan\infra\env\runtime.env")
 load_env_file(env_path)
 
 # Runtime Paths
-runtime_root = Path(r"C:\careertrojan")
+runtime_root = Path(os.getenv("CAREERTROJAN_ROOT", r"C:\careertrojan"))
 data_root = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"))
 log_root = Path(os.getenv("CAREERTROJAN_LOG_ROOT", r"C:\careertrojan\logs"))
 

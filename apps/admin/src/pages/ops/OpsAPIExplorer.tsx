@@ -8,7 +8,7 @@ export default function OpsAPIExplorer() {
             <PageTemplate 
                 title="API Explorer (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/api-explorer"
+                endpoint="/api/ops/v1/api-explorer"
             />
         </AdminLayout>
     );

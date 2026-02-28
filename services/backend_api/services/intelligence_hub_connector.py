@@ -9,7 +9,7 @@ Provides comprehensive integration with:
 - Portal Bridge Intelligence Services
 - Live system monitoring
 
-Author: IntelliCV-AI Team
+Author: CareerTrojan Team
 Date: November 11, 2025
 """
 

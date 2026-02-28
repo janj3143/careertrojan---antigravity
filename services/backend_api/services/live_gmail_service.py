@@ -1,11 +1,11 @@
 """
-Live Gmail Service for IntelliCV Admin Portal
+Live Gmail Service for CareerTrojan Admin Portal
 ===========================================
 
 Real-time Gmail integration service that provides live data instead of mock data.
 This service connects to the actual Gmail account and extracts CV documents.
 
-Author: IntelliCV AI System
+Author: CareerTrojan AI System
 Date: October 11, 2025
 """
 
@@ -29,8 +29,8 @@ class LiveGmailService:
     def __init__(self):
         """Initialize the live Gmail service"""
         self.sandbox_root = Path(__file__).parent.parent.parent
-        self.email_config_path = self.sandbox_root / "IntelliCV-data" / "email_integration" / "email_accounts.json"
-        self.email_extracted_path = self.sandbox_root / "IntelliCV-data" / "email_extracted"
+        self.email_config_path = self.sandbox_root / "careertrojan-data" / "email_integration" / "email_accounts.json"
+        self.email_extracted_path = self.sandbox_root / "careertrojan-data" / "email_extracted"
         
         # Ensure directories exist
         self.email_extracted_path.mkdir(parents=True, exist_ok=True)

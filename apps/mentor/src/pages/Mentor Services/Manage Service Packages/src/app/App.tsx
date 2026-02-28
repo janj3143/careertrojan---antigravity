@@ -64,7 +64,7 @@ function App() {
               <PackageIcon className="w-10 h-10 text-cyan-400" />
               <h1 className="text-white">Service Packages Manager</h1>
             </div>
-            <p className="text-gray-300">IntelliCV AI Platform</p>
+            <p className="text-gray-300">CareerTrojan AI Platform</p>
             <p className="text-sm text-gray-400 mt-2">
               Mentors define, edit and manage monetized session offerings.
             </p>

@@ -1,0 +1,52 @@
+# CareerTrojan — All operational components (no dev tools)
+# Consolidated master requirements file for complete installation.
+# Uses modular sets and aligns versions across portals and services.
+
+############################
+# Core functionality (backend, UI, DB)
+############################
+-r requirements-core.txt
+
+############################
+# Document parsing & conversion tools
+############################
+-r requirements-parsers.txt
+
+############################
+# Visualization, web scraping, and testing framework
+############################
+# (Updated to match merged visual/parse set name)
+-r requirements-visual_parse.txt
+
+############################
+# Lightweight AI and ML components
+############################
+-r requirements-ai-lite.txt
+
+############################
+# Heavy AI models and advanced ML tools (server/admin only)
+############################
+-r requirements-ai-heavy.txt
+
+############################
+# Admin panel and dashboard components
+############################
+-r requirements-admin.txt
+
+############################
+# Documentation & Deployment (optional)
+############################
+mkdocs>=1.6.0
+mkdocs-material>=9.5.0
+mkdocs-mermaid2-plugin>=1.1.0
+gunicorn>=23.0.0         # WSGI server for production
+waitress>=3.0.0          # Pure Python WSGI server
+
+############################
+# Container & Cloud Support (optional)
+############################
+docker>=7.1.0
+kubernetes>=30.1.0
+boto3>=1.35.0            # AWS SDK
+google-cloud-storage>=2.18.0  # Google Cloud
+azure-storage-blob>=12.23.0   # Azure

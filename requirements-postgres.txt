@@ -1,0 +1,24 @@
+# PostgreSQL Database Requirements
+# Install with: pip install -r requirements-postgres.txt
+
+# Core PostgreSQL driver and ORM
+psycopg2-binary==2.9.9  # PostgreSQL adapter for Python
+sqlalchemy==2.0.25      # ORM and database toolkit
+alembic==1.13.1         # Database migrations
+
+# Async PostgreSQL support
+asyncpg==0.29.0         # Async PostgreSQL driver
+
+# Connection pooling and utilities
+psycopg2-pool==1.1      # Connection pooling
+sqlalchemy-utils==0.41.1 # Database utilities
+
+# Database migration and management
+yoyo-migrations==8.2.0  # Alternative migration tool (optional)
+
+# Type stubs for development
+types-psycopg2==2.9.21.16
+sqlalchemy-stubs==0.4
+
+# Performance monitoring
+sqlalchemy-monitor==0.1.0  # Query performance monitoring (optional)

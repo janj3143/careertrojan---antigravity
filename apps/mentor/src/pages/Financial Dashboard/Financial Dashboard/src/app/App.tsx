@@ -571,7 +571,7 @@ export default function App() {
                 <AlertDescription className="text-red-900">
                   <div className="space-y-2">
                     <p className="font-semibold">⚠️ IMPORTANT TAX DISCLAIMER</p>
-                    <p><strong>IntelliCV is NOT responsible for your tax affairs.</strong></p>
+                    <p><strong>CareerTrojan is NOT responsible for your tax affairs.</strong></p>
                     <ul className="list-disc list-inside space-y-1 text-sm mt-2">
                       <li>This earnings summary is provided for YOUR RECORDS ONLY</li>
                       <li>We do NOT provide tax advice or tax filing services</li>
@@ -797,7 +797,7 @@ export default function App() {
           {/* Footer */}
           <Separator />
           <div className="text-center text-sm text-slate-500 pb-6">
-            <p>💰 Financial Dashboard | Earnings, Payouts & Tax Documentation | IntelliCV Mentor Portal</p>
+            <p>💰 Financial Dashboard | Earnings, Payouts & Tax Documentation | CareerTrojan Mentor Portal</p>
           </div>
         </div>
       </div>

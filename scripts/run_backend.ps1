@@ -8,7 +8,7 @@ Write-Host "Environment: Production/Runtime" -ForegroundColor Magenta
 # 1. Set Environment Variables
 $Env:PYTHONPATH = "C:\careertrojan"
 $Env:CAREERTROJAN_DATA_ROOT = "L:\antigravity_version_ai_data_final\ai_data_final"
-$Env:INTELLICV_DATA_ROOT = "L:\antigravity_version_ai_data_final\ai_data_final"
+$Env:CAREERTROJAN_DATA_ROOT = "L:\antigravity_version_ai_data_final\ai_data_final"
 
 # 2. Check Python
 $PYTHON_PATH = "C:\Python\python.exe"

@@ -40,50 +40,122 @@ def get_visual_catalogue():
         return {"visuals": registry.get("visuals", [])}
     # Fallback inline catalogue when file is missing
     return {"visuals": [
+        {"id": "leadership_spider_d3", "title": "Leadership & Strategy Spider", "category": "Leadership", "react_component": "LeadershipSpiderD3View"},
+        {"id": "skills_competency_spider_d3", "title": "Skills & Competency Spider", "category": "Competency", "react_component": "SkillsCompetencySpiderD3View"},
         {"id": "quadrant_fit_d3", "title": "Fit Quadrant (D3)", "category": "Positioning", "react_component": "QuadrantFitD3View"},
         {"id": "wordcloud_connected_d3", "title": "Connected Word Cloud (D3-cloud)", "category": "Market Trends", "react_component": "ConnectedWordCloudD3View"},
         {"id": "touchpoint_network_cytoscape", "title": "Touch-Point Network (Cytoscape)", "category": "Explainability", "react_component": "TouchpointNetworkCytoscapeView"},
-        {"id": "mindmap_reactflow", "title": "Mind Map (React Flow)", "category": "User Directed", "react_component": "MindMapReactFlowView"},
+        {"id": "career_mindmap_d3", "title": "Career Mind Map", "category": "Career Planning", "react_component": "CareerMindMapD3View"},
+        {"id": "mindmap_reactflow", "title": "Legacy Mind Map (React Flow)", "category": "User Directed", "react_component": "MindMapReactFlowView"},
     ]}
 
 # ── B2: Skills radar endpoint ────────────────────────────────────
+
+# ── Radar type definitions ────────────────────────────────────
+
+LEADERSHIP_AXES = [
+    "Leadership", "Strategic Thinking", "Vision",
+    "Management", "Executive Communication", "Business Acumen",
+]
+
+SKILLS_AXES = [
+    "Technical Skills", "Engineering", "Development",
+    "Sales & Marketing", "Finance & Admin", "Industry Knowledge", "Certifications",
+]
+
+GENERIC_AXES = ["Technical", "Leadership", "Communication", "Domain", "Analytics", "Creativity"]
+
+# Keyword fragments used to heuristically score profiles against each axis
+_LEADERSHIP_KEYWORDS = {
+    "Leadership": ["lead", "leader", "managing", "head of", "director", "ceo", "cto", "vp "],
+    "Strategic Thinking": ["strateg", "planning", "roadmap", "vision", "analysis", "decision"],
+    "Vision": ["vision", "innovate", "transform", "future", "disrupt", "pioneer"],
+    "Management": ["manage", "operations", "personnel", "supervise", "coordinate", "budget"],
+    "Executive Communication": ["present", "communic", "stakeholder", "board", "executive", "negotiate"],
+    "Business Acumen": ["business", "revenue", "profit", "market", "commercial", "finance"],
+}
+
+_SKILLS_KEYWORDS = {
+    "Technical Skills": ["python", "java", "cloud", "aws", "azure", "devops", "docker", "sql"],
+    "Engineering": ["engineer", "architect", "design", "system", "infrastructure", "ci/cd"],
+    "Development": ["develop", "software", "frontend", "backend", "react", "node", "api"],
+    "Sales & Marketing": ["sales", "marketing", "crm", "seo", "campaign", "customer"],
+    "Finance & Admin": ["finance", "accounting", "admin", "budget", "payroll", "compliance"],
+    "Industry Knowledge": ["industry", "sector", "domain", "vertical", "regulation", "standard"],
+    "Certifications": ["cert", "aws", "pmp", "scrum", "cissp", "itil", "prince2", "cpa"],
+}
+
+
+def _score_profile_axes(profile: dict, axes: List[str], keyword_map: dict) -> List[int]:
+    """Score a profile against axes using keyword matching on skills + role."""
+    text_blob = " ".join(profile.get("skills", [])).lower() + " " + profile.get("role", "").lower()
+    values = []
+    for ax in axes:
+        keywords = keyword_map.get(ax, [ax.lower()[:4]])
+        hits = sum(1 for kw in keywords if kw in text_blob)
+        score = min(100, hits * 18 + random.randint(8, 35))
+        values.append(score)
+    return values
+
+
+def _aggregate_axes(profiles: list, axes: List[str], keyword_map: dict) -> List[float]:
+    """Compute cohort average across all profiles for given axes."""
+    n = max(len(profiles), 1)
+    totals = [0.0] * len(axes)
+    for p in profiles:
+        scores = _score_profile_axes(p, axes, keyword_map)
+        for i, s in enumerate(scores):
+            totals[i] += s
+    return [round(t / n, 1) for t in totals]
+
 
 @router.get("/skills/radar")
 def get_skills_radar(
     loader=Depends(get_loader),
     profile_id: Optional[str] = None,
+    type: Optional[str] = Query(default=None, description="Radar type: 'leadership', 'skills', or None for generic"),
 ):
     """
     Returns radar / spider-chart data for a profile's skill coverage.
-    Each axis = a skill category, value = normalised strength (0-100).
+    
+    type parameter:
+      - 'leadership' → Leadership / Strategy / Vision / Management spider
+      - 'skills'     → Technical / Engineering / Development / Competency spider
+      - None / other  → Original 6-axis generic spider
+
+    Each axis value = normalised strength (0-100).
     If no profile_id given, returns aggregate cohort average.
     """
     profiles = loader.get_profiles() if loader else []
 
-    # Define canonical axes (top-level skill categories)
-    axes = ["Technical", "Leadership", "Communication", "Domain", "Analytics", "Creativity"]
+    # Select axes + keyword map based on type
+    if type == "leadership":
+        axes = LEADERSHIP_AXES
+        keyword_map = _LEADERSHIP_KEYWORDS
+    elif type == "skills":
+        axes = SKILLS_AXES
+        keyword_map = _SKILLS_KEYWORDS
+    else:
+        axes = GENERIC_AXES
+        keyword_map = {ax: [ax.lower()[:4]] for ax in axes}
 
     if profile_id:
         profile = next((p for p in profiles if p["id"] == profile_id), None)
         if not profile:
             return {"axes": axes, "series": []}
-        skills_set = {s.lower() for s in profile.get("skills", [])}
-        # Simple heuristic: count skills that contain axis keyword
-        values = [
-            min(100, sum(1 for s in skills_set if ax.lower()[:4] in s) * 25 + random.randint(10, 40))
-            for ax in axes
-        ]
-        return {"axes": axes, "series": [{"label": profile.get("role", "You"), "values": values}]}
+        values = _score_profile_axes(profile, axes, keyword_map)
+        peer_avg = _aggregate_axes(profiles, axes, keyword_map)
+        return {
+            "axes": axes,
+            "series": [
+                {"label": profile.get("role", "You"), "values": values},
+                {"label": "Peer Average", "values": [int(v) for v in peer_avg]},
+            ],
+        }
 
     # Aggregate: mean across all profiles
-    totals = [0.0] * len(axes)
-    n = max(len(profiles), 1)
-    for p in profiles:
-        skills_set = {s.lower() for s in p.get("skills", [])}
-        for i, ax in enumerate(axes):
-            totals[i] += sum(1 for s in skills_set if ax.lower()[:4] in s) * 25 + random.randint(5, 20)
-    avg = [round(t / n, 1) for t in totals]
-    return {"axes": axes, "series": [{"label": "Cohort Average", "values": avg}]}
+    avg = _aggregate_axes(profiles, axes, keyword_map)
+    return {"axes": axes, "series": [{"label": "Cohort Average", "values": [int(v) for v in avg]}]}
 
 @router.get("/quadrant")
 def get_quadrant_data(
@@ -263,4 +335,101 @@ def resolve_cohort(
             "seniorities": list({p.get("seniority", "Unknown") for p in matched}),
         },
         "profile_ids": [p["id"] for p in matched[:50]],  # cap at 50 for response size
+    }
+
+
+# ── Mind Map endpoint ──────────────────────────────────────────────
+
+_BRANCH_COLORS = [
+    "#7C3AED", "#3B82F6", "#EF4444", "#F59E0B",
+    "#10B981", "#06B6D4", "#8B5CF6", "#EC4899",
+]
+_BRANCH_ICONS = ["⚡", "🎯", "🔴", "🏭", "🎓", "🚀", "🤝", "⭐"]
+_BRANCH_LABELS = [
+    "Core Skills", "Target Roles", "Skill Gaps", "Industry Sectors",
+    "Certifications", "Career Actions", "Network", "Experience",
+]
+
+@router.get("/mindmap")
+def get_mindmap(
+    profile_id: Optional[str] = Query(None),
+    loader=Depends(get_loader),
+):
+    """
+    Return a career-driven mind-map structure with 8 domain branches.
+    Each branch has children derived from the user's profile data.
+    Falls back to generic demo if no profile found.
+    """
+    profile = None
+    if profile_id and loader:
+        try:
+            profile = loader.get_profile(profile_id)
+        except Exception:
+            profile = None
+
+    branches = []
+    start_angles = [180, 225, 270, 315, 0, 45, 90, 135]
+
+    if profile:
+        # Derive branches from real profile data
+        mapping = {
+            "Core Skills": profile.get("skills", []),
+            "Target Roles": profile.get("target_roles", profile.get("roles", [])),
+            "Skill Gaps": profile.get("skill_gaps", []),
+            "Industry Sectors": profile.get("industries", []),
+            "Certifications": profile.get("certifications", []),
+            "Career Actions": profile.get("actions", profile.get("next_steps", [])),
+            "Network": profile.get("network_tags", []),
+            "Experience": profile.get("highlights", profile.get("achievements", [])),
+        }
+        for i, label in enumerate(_BRANCH_LABELS):
+            items = mapping.get(label, [])
+            if isinstance(items, str):
+                items = [items]
+            children = [
+                {"id": f"{label[:3].lower()}_{j}", "label": str(v)[:40]}
+                for j, v in enumerate(items[:6])
+            ]
+            branches.append({
+                "id": label.lower().replace(" ", "_"),
+                "label": label,
+                "color": _BRANCH_COLORS[i],
+                "icon": _BRANCH_ICONS[i],
+                "startAngle": start_angles[i],
+                "spread": 38,
+                "children": children,
+            })
+        center = profile.get("name", profile.get("full_name", "My Career"))
+    else:
+        # Demo/fallback — generic career template
+        _demo_data = {
+            "Core Skills": ["Python", "TypeScript", "Data Analysis", "Cloud Architecture"],
+            "Target Roles": ["Senior Engineer", "Tech Lead", "Engineering Manager"],
+            "Skill Gaps": ["System Design", "People Management", "Public Speaking"],
+            "Industry Sectors": ["FinTech", "HealthTech"],
+            "Certifications": ["AWS SA", "PMP", "Scrum Master", "CISSP"],
+            "Career Actions": ["Update LinkedIn", "Build Portfolio", "Apply to 10 Roles"],
+            "Network": ["Mentors", "Industry Contacts", "Recruiters", "Alumni"],
+            "Experience": ["Led 12-person team", "Scaled to 1M users", "£2M savings"],
+        }
+        for i, label in enumerate(_BRANCH_LABELS):
+            items = _demo_data.get(label, [])
+            children = [
+                {"id": f"{label[:3].lower()}_{j}", "label": v}
+                for j, v in enumerate(items)
+            ]
+            branches.append({
+                "id": label.lower().replace(" ", "_"),
+                "label": label,
+                "color": _BRANCH_COLORS[i],
+                "icon": _BRANCH_ICONS[i],
+                "startAngle": start_angles[i],
+                "spread": 38,
+                "children": children,
+            })
+        center = "My Career"
+
+    return {
+        "center_label": center,
+        "branches": branches,
     }

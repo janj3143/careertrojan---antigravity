@@ -1,5 +1,5 @@
 """
-Dynamic User Data Service for IntelliCV Admin Portal
+Dynamic User Data Service for CareerTrojan Admin Portal
 Connects to real data sources and provides live user metrics
 """
 

@@ -6,6 +6,7 @@ import MobileBottomBar from './components/mobile/MobileBottomBar';
 import PWAInstallBanner from './components/mobile/PWAInstallBanner';
 import NetworkBanner from './components/mobile/NetworkBanner';
 import CookieConsent from './components/CookieConsent';
+import { SupportButton } from './components/support';
 
 // ── Eager: public pages (first paint) ────────────────────
 import Home from './pages/Home';
@@ -93,6 +94,7 @@ export default function App() {
                 <MobileBottomBar />
                 <PWAInstallBanner />
                 <CookieConsent />
+                <SupportButton />
             </BrowserRouter>
         </AuthProvider>
     );

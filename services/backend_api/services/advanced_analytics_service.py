@@ -1,6 +1,6 @@
 """
 Advanced Analytics Service - Integration Layer
-Connects statistical engine with existing IntelliCV services
+Connects statistical engine with existing CareerTrojan services
 Provides high-level analytics workflows for admin dashboard
 """
 
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class AdvancedAnalyticsService:
     """
     High-level analytics service integrating statistical engine
-    with existing IntelliCV admin services.
+    with existing CareerTrojan admin services.
 
     Provides:
     - Candidate pool analysis

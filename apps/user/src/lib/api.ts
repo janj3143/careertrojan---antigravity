@@ -43,6 +43,46 @@ export async function getSkillsRadar(profileId?: string) {
     );
 }
 
+/** Fetch Leadership / Strategy / Vision / Management spider data */
+export async function getLeadershipRadar(profileId?: string) {
+    const p = new URLSearchParams({ type: "leadership" });
+    if (profileId) p.set("profile_id", profileId);
+    return http<{
+        axes: string[];
+        series: Array<{ label: string; values: number[]; color?: string }>;
+        touchpoint_map?: Record<string, string[]>;
+    }>(`${API.insights}/skills/radar?${p}`);
+}
+
+/** Fetch Skills / Competency / Technical spider data */
+export async function getSkillsCompetencyRadar(profileId?: string) {
+    const p = new URLSearchParams({ type: "skills" });
+    if (profileId) p.set("profile_id", profileId);
+    return http<{
+        axes: string[];
+        series: Array<{ label: string; values: number[]; color?: string }>;
+        touchpoint_map?: Record<string, string[]>;
+    }>(`${API.insights}/skills/radar?${p}`);
+}
+
+/** Fetch career mind-map branch structure */
+export async function getCareerMindMap(profileId?: string) {
+    const p = new URLSearchParams();
+    if (profileId) p.set("profile_id", profileId);
+    return http<{
+        center_label: string;
+        branches: Array<{
+            id: string;
+            label: string;
+            color: string;
+            icon: string;
+            startAngle: number;
+            spread: number;
+            children: Array<{ id: string; label: string; touchpoint_ids?: string[] }>;
+        }>;
+    }>(`${API.insights}/mindmap?${p}`);
+}
+
 export async function getTermCloud(filters: CohortFilters): Promise<TermCloudResponse> {
     return http<TermCloudResponse>(`${API.insights}/terms/cloud?${qs(filters)}`);
 }

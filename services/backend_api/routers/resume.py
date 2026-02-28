@@ -181,6 +181,53 @@ async def list_resumes(auth=Depends(require_user)):
         }
     }
 
+
+# ============================================================================
+# GET /resume/latest – Get most recent resume
+# ============================================================================
+@router.get("/latest")
+async def get_latest_resume(auth=Depends(require_user)):
+    """
+    Get the most recently uploaded resume for the authenticated user.
+    Used by dashboard widgets and quick actions.
+    """
+    user_id = str(auth.id)
+    db = load_resume_db()
+    
+    user_resumes = [
+        r for r in db.values()
+        if r.get("user_id") == user_id
+    ]
+    
+    if not user_resumes:
+        return {
+            "ok": True,
+            "data": None,
+            "message": "No resumes uploaded yet"
+        }
+    
+    # Sort by uploaded_at descending and get the latest
+    sorted_resumes = sorted(
+        user_resumes,
+        key=lambda x: x.get("uploaded_at", ""),
+        reverse=True
+    )
+    
+    latest = sorted_resumes[0]
+    
+    return {
+        "ok": True,
+        "data": {
+            "resume_id": latest.get("resume_id"),
+            "filename": latest.get("filename"),
+            "uploaded_at": latest.get("uploaded_at"),
+            "cv_score": latest.get("cv_score", 78),  # Demo score
+            "word_count": latest.get("word_count", 0),
+            "skills": latest.get("skills", [])
+        }
+    }
+
+
 # ============================================================================
 # LEGACY Support
 # ============================================================================

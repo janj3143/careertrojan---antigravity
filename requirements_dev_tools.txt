@@ -1,0 +1,129 @@
+# CareerTrojan — Development Tools & Security (Consolidated)
+# Merged from requirements_dev_tools.txt and requirements-dev-tools.txt
+# Python 3.10+ compatible
+
+############################
+# Authentication & Security
+############################
+pyotp>=2.8.0
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+email-validator>=2.1.1
+bcrypt>=4.2.0
+cryptography>=46.0.0
+python-multipart>=0.0.9  # For FastAPI file uploads
+
+############################
+# Code Quality & Formatting
+############################
+ruff>=0.3.4
+black>=24.0.0
+mypy>=1.9.0
+mypy-extensions>=1.1.0   # Additional mypy functionality
+typing-extensions>=4.12.2  # Backported typing features
+types-requests>=2.32.0   # Type stubs for requests
+types-PyYAML>=6.0.12     # Type stubs for PyYAML
+types-redis>=4.6.0       # Type stubs for redis
+isort>=5.13.2
+bandit>=1.7.7
+pre-commit>=3.7.0
+flake8>=7.1.0            # Additional linting
+pylint>=3.3.0            # Comprehensive code analysis
+autopep8>=2.3.0          # PEP 8 auto-formatting
+docformatter>=1.7.5     # Docstring formatting
+pycodestyle>=2.12.0      # Style guide enforcement
+pydocstyle>=6.3.0        # Docstring style checking
+vulture>=2.11            # Dead code finder
+radon>=6.0.1             # Code complexity analysis
+xenon>=0.9.1             # Complexity monitoring
+mccabe>=0.7.0            # Complexity checker
+pyflakes>=3.2.0          # Simple Python error checker
+semgrep>=1.67.0          # Static analysis tool
+flake8-bugbear>=24.2.0   # Additional flake8 plugins
+flake8-docstrings>=1.7.0 # Docstring linting
+flake8-import-order>=0.18.2  # Import order checking
+pyupgrade>=3.19.0        # Python syntax upgrades
+add-trailing-comma>=3.1.0  # Trailing comma formatter
+
+############################
+# Testing Framework  
+############################
+pytest>=8.1.1
+pytest-cov>=4.1.0
+pytest-html>=4.1.1
+pytest-asyncio>=0.23.5
+pytest-mock>=3.12.0
+pytest-xdist>=3.5.0
+pytest-benchmark>=4.0.0  # Performance testing
+pytest-timeout>=2.3.0    # Test timeouts
+pytest-env>=1.1.0        # Environment variables for tests
+pytest-sugar>=1.0.0      # Better test output
+pytest-randomly>=3.15.0  # Randomize test order
+pytest-repeat>=0.9.3     # Repeat tests
+pytest-rerunfailures>=14.0  # Rerun failed tests
+pytest-django>=4.9.0     # Django testing support
+pytest-flask>=1.3.0      # Flask testing support
+pytest-snapshot>=0.9.0   # Snapshot testing
+coverage>=7.4.0          # Code coverage
+coverage-badge>=1.1.0    # Coverage badges
+tox>=4.21.0              # Multi-environment testing
+factory-boy>=3.3.0       # Test data factories
+hypothesis>=6.98.0       # Property-based testing
+faker>=30.0.0            # Fake data generation
+freezegun>=1.5.0         # Time mocking
+responses>=0.25.0        # HTTP mocking
+httpx>=0.27.0            # Async HTTP testing
+locust>=2.31.0           # Load testing
+selenium>=4.26.0         # Web browser automation
+webdriver-manager>=4.0.0  # WebDriver management
+
+############################
+# Configuration & Data
+############################
+PyYAML>=6.0.1
+toml>=0.10.2
+tomli>=2.0.0; python_version<"3.11"
+tomli-w>=1.1.0
+tomlkit>=0.13.2          # Advanced TOML manipulation
+python-dotenv>=1.0.0
+configparser>=7.1.0
+dynaconf>=3.2.6          # Advanced configuration management
+pydantic>=2.7.4          # Data validation
+pydantic-settings>=2.3.0 # Settings management
+jsonschema>=4.23.0       # JSON schema validation
+cerberus>=1.3.5          # Data validation
+marshmallow>=3.22.0      # Serialization/deserialization
+
+############################
+# CLI & Utilities
+############################
+tabulate>=0.9.0
+typer>=0.12.0
+click>=8.1.0
+rich>=13.7.0             # Rich console output
+rich-click>=1.8.0        # Enhanced CLI with rich
+colorama>=0.4.6          # Cross-platform colored output
+tqdm>=4.66.0             # Progress bars
+halo>=0.0.31             # Spinners for long operations
+yaspin>=3.1.0            # Alternative spinners
+alive-progress>=3.2.0    # Animated progress bars
+questionary>=2.0.1       # Interactive command line prompts
+prompt-toolkit>=3.0.50   # Building interactive CLIs
+
+############################
+# Development Server & API
+############################
+fastapi>=0.115.0
+uvicorn[standard]>=0.31.0
+gunicorn>=23.0.0
+watchdog>=6.0.0          # File watching for development
+python-multipart>=0.0.9
+
+############################
+# GIS & Analytics (Optional)
+############################
+folium>=0.16.0
+geopy>=2.4.0
+geopandas>=0.14.4
+mixpanel>=4.10.0
+google-analytics-data>=0.13.0

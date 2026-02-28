@@ -13,12 +13,14 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
-router = APIRouter(prefix="/api/admin/v1/tokens", tags=["admin-tokens"])
+from services.backend_api.utils.auth_deps import require_admin
 
-# REQUIRED plan keys (must match user portal)
-PLAN_KEYS = ("free", "monthly", "annual", "elitepro")
+router = APIRouter(prefix="/api/admin/v1/tokens", tags=["admin-tokens"], dependencies=[Depends(require_admin)])
+
+# REQUIRED plan keys (must match canonical plan_config.py)
+PLAN_KEYS = ("free", "monthly", "annual", "elite")
 
 
 @dataclass

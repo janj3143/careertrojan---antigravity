@@ -1,8 +1,8 @@
 """
-IntelliCV Data Directory Manager
+CareerTrojan Data Directory Manager
 ==============================
 
-Manages the proper data directory structure for IntelliCV, including:
+Manages the proper data directory structure for CareerTrojan, including:
 - AI training data in SANDBOX/ai_data_final
 - Email integration data
 - CV/candidate data for processing
@@ -27,25 +27,25 @@ setup_logging()
 logger = get_logger(__name__)
 
 
-class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
-    """Manages the proper data directory structure for IntelliCV"""
+class CareerTrojanDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
+    """Manages the proper data directory structure for CareerTrojan"""
     
     def __init__(self):
         super().__init__()
-        # Main IntelliCV root directory
-        self.intellicv_root = Path("c:/IntelliCV-AI/IntelliCV")
+        # Main CareerTrojan root directory
+        self.careertrojan_root = Path("C:/careertrojan")
         
         # SANDBOX data paths (primary location for AI training data)
-        self.sandbox_root = self.intellicv_root / "SANDBOX" / "admin_portal"
+        self.sandbox_root = self.careertrojan_root / "SANDBOX" / "admin_portal"
         self.ai_data_path = self.sandbox_root / "ai_data_final"
         
-        # Email integration data (can be in IntelliCV-data or SANDBOX)
-        self.intellicv_data_path = self.intellicv_root / "IntelliCV-data"
-        self.email_data_path = self.intellicv_data_path / "email_integration"
-        self.email_extracted_path = self.intellicv_data_path / "email_extracted"
+        # Email integration data (can be in careertrojan-data or SANDBOX)
+        self.careertrojan_data_path = self.careertrojan_root / "careertrojan-data"
+        self.email_data_path = self.careertrojan_data_path / "email_integration"
+        self.email_extracted_path = self.careertrojan_data_path / "email_extracted"
         
         # Candidate data paths (multiple sources)
-        self.candidate_data_path = self.intellicv_data_path / "candidate_data"
+        self.candidate_data_path = self.careertrojan_data_path / "candidate_data"
         self.sandbox_candidate_data = self.sandbox_root / "candidate_data"
         
         # Backend AI services data (for neural network, expert system, etc.)
@@ -70,7 +70,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         """Build the complete data directory structure"""
         directories_to_create = [
             # Main data directories
-            self.intellicv_data_path,
+            self.careertrojan_data_path,
             self.ai_data_path,
             self.sandbox_candidate_data,
             
@@ -129,7 +129,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         # Data directory configuration
         directory_config_file = self.config_path / "directory_config.json"
         directory_config = {
-            "intellicv_data_path": str(self.intellicv_data_path),
+            "careertrojan_data_path": str(self.careertrojan_data_path),
             "sandbox_ai_data_path": str(self.ai_data_path),
             "email_data_path": str(self.email_data_path),
             "email_extracted_path": str(self.email_extracted_path),
@@ -169,8 +169,8 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         )
         
         self.logger = logging.getLogger(__name__)
-        self.logger.info(f"IntelliCV Data Directory Manager initialized")
-        self.logger.info(f"Main data path: {self.intellicv_data_path}")
+        self.logger.info(f"CareerTrojan Data Directory Manager initialized")
+        self.logger.info(f"Main data path: {self.careertrojan_data_path}")
     
     def get_directory_status(self):
         """Get the status of all directories"""
@@ -185,7 +185,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         
         # Check main directories
         main_dirs = [
-            ("IntelliCV Data Root", self.intellicv_data_path),
+            ("CareerTrojan Data Root", self.careertrojan_data_path),
             ("SANDBOX AI Data", self.ai_data_path),
             ("Email Integration", self.email_data_path),
             ("Email Extracted", self.email_extracted_path),
@@ -381,7 +381,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         ai_counts = status["file_counts"].get("ai_data", {})
         
         return {
-            "data_directory_exists": self.intellicv_data_path.exists(),
+            "data_directory_exists": self.careertrojan_data_path.exists(),
             "sandbox_ai_data_exists": self.ai_data_path.exists(),
             "email_data_exists": self.email_data_path.exists(),
             "backend_data_exists": self.backend_data_path.exists(),
@@ -402,7 +402,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
             "email_account_count": email_config["account_count"],
             
             "data_paths": {
-                "intellicv_data": str(self.intellicv_data_path),
+                "careertrojan_data": str(self.careertrojan_data_path),
                 "sandbox_ai_data": str(self.ai_data_path),
                 "email_data": str(self.email_data_path),
                 "email_extracted": str(self.email_extracted_path),
@@ -415,15 +415,15 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
 
 
 def get_data_manager():
-    """Get the IntelliCV Data Directory Manager instance"""
-    return IntelliCVDataDirectoryManager()
+    """Get the CareerTrojan Data Directory Manager instance"""
+    return CareerTrojanDataDirectoryManager()
 
 
 if __name__ == "__main__":
     # Test the data manager
-    manager = IntelliCVDataDirectoryManager()
+    manager = CareerTrojanDataDirectoryManager()
     logger.info("Data directory structure built successfully!")
-    logger.info(f"Main data path: {manager.intellicv_data_path}")
+    logger.info(f"Main data path: {manager.careertrojan_data_path}")
     
     status = manager.get_directory_status()
     logger.info("\nDirectory Status:")

@@ -1,4 +1,4 @@
--- IntelliCV-AI Mentorship Portal Database Schema
+-- CareerTrojan Mentorship Portal Database Schema
 -- Week 1 Implementation - November 15, 2025
 -- Privacy-protected mentor-user linking system with payment workflow
 

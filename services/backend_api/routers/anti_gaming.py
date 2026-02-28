@@ -4,13 +4,14 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 from datetime import datetime
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 
+from services.backend_api.utils.auth_deps import require_admin
 from services.backend_api.services.abuse_policy_service import AbusePolicyService
 from services.backend_api.services.resume_store import ResumeStore
 
-router = APIRouter(prefix="/api/admin/v1/anti-gaming", tags=["anti-gaming"])
+router = APIRouter(prefix="/api/admin/v1/anti-gaming", tags=["anti-gaming"], dependencies=[Depends(require_admin)])
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]  # .../backend/api/routes -> project root
 store = ResumeStore(PROJECT_ROOT)

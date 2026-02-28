@@ -1,0 +1,22 @@
+# CareerTrojan — Visual Parse Requirements (Windows-friendly)
+# Focused on image/PDF visualization and OCR hooks
+
+# Core imaging
+pillow>=10.4.0
+opencv-python>=4.8.0
+
+# PDF visualization and parsing (provides `fitz` import)
+PyMuPDF>=1.24.0
+pdfplumber>=0.11.0
+pdf2image>=1.17.0
+
+# OCR (requires system Tesseract installed separately)
+pytesseract>=0.3.10; sys_platform == "win32"
+
+# Visualization helpers
+matplotlib>=3.7.0
+seaborn>=0.13.2
+plotly>=5.22.0
+altair>=4.2.0
+networkx>=3.1
+wordcloud>=1.9.0

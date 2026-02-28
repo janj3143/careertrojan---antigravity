@@ -1,0 +1,162 @@
+======================================================================
+  Email Extraction Utility
+======================================================================
+
+Scanning: L:\antigravity_version_ai_data_final\ai_data_final\parsed_resumes
+  ... 5000 text files scanned, 0 non-text skipped, 6072 emails so far
+  Files scanned: 9961  (skipped 0 non-text)
+  Unique emails in this dir: 7207
+  [CHECKPOINT] completed parsed_resumes ù 7207 emails saved
+
+Scanning: L:\antigravity_version_ai_data_final\ai_data_final\parsed_from_automated
+  [CHECKPOINT] 10000 files processed ù 7220 emails saved
+  ... 5000 text files scanned, 0 non-text skipped, 118 emails so far
+  ... 10000 text files scanned, 0 non-text skipped, 137 emails so far
+  [CHECKPOINT] 20000 files processed ù 7316 emails saved
+  ... 15000 text files scanned, 0 non-text skipped, 154 emails so far
+  ... 20000 text files scanned, 0 non-text skipped, 2605 emails so far
+  [CHECKPOINT] 30000 files processed ù 9550 emails saved
+  ... 25000 text files scanned, 0 non-text skipped, 7959 emails so far
+  ... 30000 text files scanned, 0 non-text skipped, 12320 emails so far
+  [CHECKPOINT] 40000 files processed ù 18189 emails saved
+  ... 35000 text files scanned, 0 non-text skipped, 12338 emails so far
+  ... 40000 text files scanned, 0 non-text skipped, 12582 emails so far
+  [CHECKPOINT] 50000 files processed ù 18450 emails saved
+  ... 45000 text files scanned, 0 non-text skipped, 14573 emails so far
+  ... 50000 text files scanned, 0 non-text skipped, 14691 emails so far
+  [CHECKPOINT] 60000 files processed ù 20426 emails saved
+  ... 55000 text files scanned, 0 non-text skipped, 18403 emails so far
+  Files scanned: 58539  (skipped 87 non-text)
+  Unique emails in this dir: 24737
+  [CHECKPOINT] completed parsed_from_automated ù 30232 emails saved
+
+Scanning: L:\antigravity_version_ai_data_final\ai_data_final\parsed_cv_files
+  Files scanned: 2  (skipped 0 non-text)
+  Unique emails in this dir: 0
+  [CHECKPOINT] completed parsed_cv_files ù 30232 emails saved
+
+Scanning: L:\antigravity_version_ai_data_final\ai_data_final\email_extracted
+  Files scanned: 163  (skipped 0 non-text)
+  Unique emails in this dir: 30303
+  [CHECKPOINT] completed email_extracted ù 30303 emails saved
+
+======================================================================
+  TOTAL UNIQUE EMAILS: 30303
+======================================================================
+  (Showing first 50 and last 50 of 30303 emails)
+     1. %business%leader%+971%55%4983926%sprobinson2204@gmail.com
+     2. +584264621830kantumarka@gmail.com
+     3. +62-812-13964820p.c.poluan@gmail.com
+     4. ---aliozer62@yahoo.com
+     5. -aa@mail.ru
+     6. -baric@hotmail.com
+     7. -beyer@gmx.net
+     8. -catimel@wanadoo.fr
+     9. -cc@hotmail.com
+    10. -duval@laposte.net
+    11. -engenharia@hotmail.com
+    12. -paolo@libero.it
+    13. -portercd9@aol.co.uk
+    14. -sedlar@rgn.hr
+    15. -walker@eatechnology.com
+    16. ...........martinghart@uwclub.net
+    17. .abouelhassan@live.com
+    18. .de.sario@gmail.com
+    19. .kacprzak@gmail.com
+    20. .moore.eden@gmail.com
+    21. .stefan@gmx.net
+    22. .usta@saint-gobain.com
+    23. .williams2@jacobs.com
+    24. 007@gmail.com
+    25. 01656660949@sky.com
+    26. 01marcogrippa@bluewin.chprofessional
+    27. 04panda@sky.com
+    28. 069149-traverssecurity@hotmail.co.uk
+    29. 06@gmail.com
+    30. 07534941199eng2rm1@yahoo.co.uk
+    31. 0761pnokin@euroscreen.be
+    32. 07800921666mdyates87@gmail.com
+    33. 07984567106mark.picco@hotmail.co.uk
+    34. 1.mac.bed@gmail.com
+    35. 1005645.2312@compuserve.com
+    36. 101367.3104@compuserve.com
+    37. 1014@aol.com
+    38. 101740.343@compuserve.com
+    39. 10@gmail.com
+    40. 123darrenh@gmail.com
+    41. 1313kate@gmail.com
+    42. 13810607396@163.com
+    43. 1529748525@qq.com
+    44. 17nettletonh@gmail.com
+    45. 1903@yahoo.com
+    46. 19633384159119@tim.it
+    47. 1966@yahoo.com
+    48. 1969webster@gmail.com
+    49. 1969webster@googlemail.com
+    50. 1986@googlemail.com
+  ...
+  30254. ziad.jawad@p66.com
+  30255. ziaullah816@hotmail.com
+  30256. ziftikar@deloitte.co.uk
+  30257. ziolek1308@poczta.onet.pl
+  30258. ziona774@gmail.com
+  30259. zissu_mihaela@yahoo.com
+  30260. zmalkyz@gmail.com
+  30261. zmikep@outlook.com
+  30262. zmulyadi@gmail.com
+  30263. znovotna81@gmail.com
+  30264. zo.fathallah@gmail.com
+  30265. zobair.ahmad@petrofacemirates.ae
+  30266. zobair321@gmail.com
+  30267. zobair@sify.com
+  30268. zobairk7@gmail.com
+  30269. zoe.brewster@nederman.co.uk
+  30270. zoe.warner@centrica.com
+  30271. zoe_waites@computacenter.com
+  30272. zois.koklas@gmail.com
+  30273. zoltan.gomori@tvk.hu
+  30274. zoltansimon82@gmail.com
+  30275. zoltantamasvarga@gmail.com
+  30276. zomaric15@gmail.com
+  30277. zoran.maric@ina.hr
+  30278. zoran@asw.as
+  30279. zoran@edenergysev.net
+  30280. zrelli@gmail.com
+  30281. zreza@spemail.org
+  30282. zshikhali@yahoo.com
+  30283. zsolt.zenyik@spx.com
+  30284. zsolt_oros@yahoo.co.uk
+  30285. zubair.ali@dnv.com
+  30286. zubaircalicut@gmail.com
+  30287. zucca_francesco@hotmail.com
+  30288. zudella@zadco.ae
+  30289. zukhairi10@yahoo.com
+  30290. zuko34@yahoo.com
+  30291. zulfidr@hotmail.com
+  30292. zulkhairi@explorergeo.com
+  30293. zumrut.altay@gmail.com
+  30294. zunino.juan@gmail.com
+  30295. zuritajo@hotmail.com
+  30296. zuritajo@yahoo.com.mx
+  30297. zuzana.simpson@pitneybowes.co.uk
+  30298. zuzaniuk@hotmail.com
+  30299. zvdnest@gmail.com
+  30300. zvezdin.bobin@ucb-group.com
+  30301. zvezdin.bobin@ucb.com
+  30302. zyme.uk@btinternet.com
+  30303. zzkkz@yahoo.com
+
+----------------------------------------------------------------------
+  PER-DIRECTORY SUMMARY
+----------------------------------------------------------------------
+  parsed_resumes                  [OK]  files=9961  emails=7207
+  parsed_from_automated           [OK]  files=58539  emails=24737
+  parsed_cv_files                 [OK]  files=2  emails=0
+  email_extracted                 [OK]  files=163  emails=30303
+
+  Total files scanned:    68665
+  Files containing emails: 34116
+  Total unique emails:     30303
+
+  Results saved to: L:\antigravity_version_ai_data_final\ai_data_final\email_extracted\master_email_list.json
+======================================================================

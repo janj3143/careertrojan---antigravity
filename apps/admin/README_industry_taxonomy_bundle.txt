@@ -1,4 +1,4 @@
-IntelliCV-AI Industry Taxonomy Bundle
+CareerTrojan Industry Taxonomy Bundle
 ====================================
 
 This bundle contains:
@@ -19,14 +19,14 @@ How to integrate
 1. Place `industry_taxonomy_service.py` under your shared services module,
    for example:
 
-       IntelliCV/
+       CareerTrojan/
          shared_backend/
            services/
              industry_taxonomy_service.py   <-- this file
 
    or
 
-       IntelliCV/
+       CareerTrojan/
          services/
            industry_taxonomy_service.py
 
@@ -34,15 +34,15 @@ How to integrate
 
 2. Configure dataset paths via environment variables (Docker, dev, admin):
 
-       INTELLICV_DATA_ROOT=/path/to/large_datasets
+       CAREERTROJAN_DATA_ROOT=/path/to/large_datasets
 
-       INTELLICV_SOC2020_STRUCTURE=.../extendedsoc2020structureanddescriptionsexcel03122025.xlsx
-       INTELLICV_SOC2020_INDEX=.../soc2020volume2thecodingindexexcel03122025.xlsx
+       CAREERTROJAN_SOC2020_STRUCTURE=.../extendedsoc2020structureanddescriptionsexcel03122025.xlsx
+       CAREERTROJAN_SOC2020_INDEX=.../soc2020volume2thecodingindexexcel03122025.xlsx
 
-       INTELLICV_ESCO_CLASSIFICATION=.../esco_classification_en.csv
+       CAREERTROJAN_ESCO_CLASSIFICATION=.../esco_classification_en.csv
 
-       INTELLICV_NAICS_STRUCTURE=.../2022_NAICS_Structure.xlsx
-       INTELLICV_NAICS_DESCRIPTIONS=.../2022_NAICS_Descriptions.xlsx
+       CAREERTROJAN_NAICS_STRUCTURE=.../2022_NAICS_Structure.xlsx
+       CAREERTROJAN_NAICS_DESCRIPTIONS=.../2022_NAICS_Descriptions.xlsx
 
 3. Wire into **Job Title AI Integration** (admin page 18):
 

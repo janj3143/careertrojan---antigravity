@@ -4,14 +4,16 @@ Backend API Routes for Analytics and Dashboard Data
 Provides endpoints for system statistics, dashboard data, and analytics.
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pathlib import Path
 import json
 from typing import Dict, Any
 from datetime import datetime
 
+from services.backend_api.utils.auth_deps import require_admin
+
 import os
-router = APIRouter(prefix="/api/analytics/v1", tags=["analytics"])
+router = APIRouter(prefix="/api/analytics/v1", tags=["analytics"], dependencies=[Depends(require_admin)])
 
 # Source of truth: L: drive → ai_data_final subdirectory
 _DATA_ROOT = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final"))

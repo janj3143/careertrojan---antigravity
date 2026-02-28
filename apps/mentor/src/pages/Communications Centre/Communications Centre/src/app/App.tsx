@@ -351,7 +351,7 @@ ${questionsText}`,
           {/* Footer */}
           <Separator className="my-8 bg-white/20" />
           <div className="text-center text-sm text-white/80 pb-8 drop-shadow-lg">
-            <strong>💬 Communication Center</strong> | Session Reviews, Q&A & Messaging | IntelliCV Mentor Portal
+            <strong>💬 Communication Center</strong> | Session Reviews, Q&A & Messaging | CareerTrojan Mentor Portal
           </div>
         </div>
       </div>

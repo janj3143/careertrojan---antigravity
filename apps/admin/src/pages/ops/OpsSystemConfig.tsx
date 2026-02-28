@@ -8,7 +8,7 @@ export default function OpsSystemConfig() {
             <PageTemplate 
                 title="System Config (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/config"
+                endpoint="/api/ops/v1/config"
             />
         </AdminLayout>
     );

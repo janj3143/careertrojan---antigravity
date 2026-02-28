@@ -1,5 +1,5 @@
 """
-Web Intelligence Service for IntelliCV Admin Portal
+Web Intelligence Service for CareerTrojan Admin Portal
 Provides real web-based company research and competitive intelligence
 """
 

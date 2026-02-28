@@ -1,4 +1,4 @@
-IntelliCV Hybrid AI Platform: Technical Roadmap
+CareerTrojan Hybrid AI Platform: Technical Roadmap
 1. Architecture Overview
 Backend: Python (FastAPI for APIs, background workers for analysis, modular enrichment/ML/Bayes services)
 Frontend: Streamlit (user/admin dashboards), React/Next.js (optional for richer UI)

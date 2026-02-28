@@ -1,5 +1,5 @@
 """
-Real Data Parser Service for IntelliCV Complete Data Parser
+Real Data Parser Service for CareerTrojan Complete Data Parser
 Provides real metrics and data analysis based on actual files and processing
 """
 

@@ -1,5 +1,5 @@
 """
-Enhanced Chrome WebDriver-based web scraper for IntelliCV Admin Portal
+Enhanced Chrome WebDriver-based web scraper for CareerTrojan Admin Portal
 Replaces Firefox with Chrome for better compatibility and performance
 """
 

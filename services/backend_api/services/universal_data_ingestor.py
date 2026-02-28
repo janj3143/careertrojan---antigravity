@@ -694,6 +694,6 @@ class UniversalDataIngestor:
 
 if __name__ == "__main__":
     # Run from command line
-    base_path = r"C:\IntelliCV\SANDBOX\Full system"
+    base_path = os.getenv("CAREERTROJAN_DATA_ROOT", "./data")
     ingestor = UniversalDataIngestor(base_path)
     ingestor.ingest_all()

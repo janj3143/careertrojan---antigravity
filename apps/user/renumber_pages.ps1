@@ -1,10 +1,10 @@
-# IntelliCV Pages Renumbering Script
+# CareerTrojan Pages Renumbering Script
 # This script will renumber all pages in sequential order
 
-$pagesPath = "c:\IntelliCV-AI\IntelliCV\SANDBOX\user_portal_final\pages"
+$pagesPath = "c:\CareerTrojan\CareerTrojan\SANDBOX\user_portal_final\pages"
 Set-Location $pagesPath
 
-Write-Host "🔄 Starting IntelliCV Pages Renumbering..." -ForegroundColor Cyan
+Write-Host "🔄 Starting CareerTrojan Pages Renumbering..." -ForegroundColor Cyan
 
 # Define the new page order with their current names
 $pageMapping = @(

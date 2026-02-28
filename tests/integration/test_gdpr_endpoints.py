@@ -131,7 +131,9 @@ class TestGDPRDeletion:
         headers = _get_auth_headers()
         r = client.delete("/api/gdpr/v1/delete-account", headers=headers)
         assert r.status_code == 400
-        assert "confirm=yes" in r.json()["detail"]
+        body = r.json()
+        msg = body.get("error", {}).get("message", "") or body.get("detail", "")
+        assert "confirm=yes" in msg
 
     def test_delete_account_full_erasure(self):
         """Create a fresh user, then delete them — verify all data is gone."""

@@ -1,6 +1,6 @@
 """
 =============================================================================
-IntelliCV AI Feedback Loop System - Intelligent Research & Learning
+CareerTrojan AI Feedback Loop System - Intelligent Research & Learning
 =============================================================================
 
 Advanced feedback loop system for unknown data flagging and automated research:
@@ -35,9 +35,9 @@ Advanced feedback loop system for unknown data flagging and automated research:
 - Rate limiting for API calls
 - Results validation and quality scoring
 
-Author: IntelliCV AI Integration Team
+Author: CareerTrojan AI Integration Team
 Purpose: Production-ready feedback loop with real research capabilities
-Environment: IntelliCV\env310 with web scraping and AI integration
+Environment: CareerTrojan\env310 with web scraping and AI integration
 """
 
 import json
@@ -174,7 +174,7 @@ class WebResearchEngine:
         self.config = config
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'IntelliCV-Research/1.0 (Educational Purpose)'
+            'User-Agent': 'CareerTrojan-Research/1.0 (Educational Purpose)'
         })
 
         # Rate limiting
@@ -1061,7 +1061,7 @@ class AIFeedbackLoopSystem:
 
 if __name__ == "__main__":
     # Example usage and testing
-    print("IntelliCV AI Feedback Loop System - Testing")
+    print("CareerTrojan AI Feedback Loop System - Testing")
 
     # Initialize configuration
     config = ResearchConfig(

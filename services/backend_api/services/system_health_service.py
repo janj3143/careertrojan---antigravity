@@ -1,5 +1,5 @@
 """
-System Health Monitoring Service for IntelliCV Admin Portal
+System Health Monitoring Service for CareerTrojan Admin Portal
 Provides real system status monitoring and health checks
 """
 

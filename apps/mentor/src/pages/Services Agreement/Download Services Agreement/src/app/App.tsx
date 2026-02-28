@@ -13,7 +13,7 @@ export default function App() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white">
             <h1 className="text-4xl mb-2">📜 Services Agreement</h1>
-            <p className="text-xl opacity-90">IntelliCV AI Platform</p>
+            <p className="text-xl opacity-90">CareerTrojan AI Platform</p>
           </div>
         </div>
       </div>

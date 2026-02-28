@@ -3,7 +3,7 @@
 Automatic Data Ingestion Service - Real-Time AI Enrichment Pipeline
 ====================================================================
 
-This service automatically enriches the IntelliCV AI system whenever:
+This service automatically enriches the CareerTrojan AI system whenever:
 - A user registers (adds profile data to AI database)
 - A user uploads a resume (adds CV data to AI enrichment)
 - A user updates their profile (updates AI intelligence)

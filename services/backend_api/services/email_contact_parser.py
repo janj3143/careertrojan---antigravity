@@ -14,7 +14,7 @@ NAME_REGEX = re.compile(r"Name[:\s]+([A-Z][a-z]+(?: [A-Z][a-z]+)*)")
 LOCATION_REGEX = re.compile(r"Location[:\s]+([A-Za-z ,]+)")
 JOB_TITLE_REGEX = re.compile(r"Job Title[:\s]+([A-Za-z ,]+)")
 COMPANY_REGEX = re.compile(r"Company[:\s]+([A-Za-z0-9 &.,-]+)")
-LINKEDIN_REGEX = re.compile(r"https?://(www\.)?linkedin.com/in/[A-Za-z0-9-_%]+")
+LINKEDIN_REGEX = re.compile(r"https?://(?:www\.)?linkedin\.com/in/[A-Za-z0-9-_%]+")
 
 def extract_contacts_from_text(text: str) -> List[Dict[str, Any]]:
     if not text:

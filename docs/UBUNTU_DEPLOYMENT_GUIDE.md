@@ -76,10 +76,10 @@ sudo chown -R $USER:$USER /mnt/careertrojan /opt/careertrojan
 | Windows Path | Ubuntu Path | Purpose |
 |-------------|-------------|---------|
 | `C:\careertrojan\` | `/opt/careertrojan/runtime/` | Application code |
-| `L:\VS ai_data final - version\ai_data_final\` | `/mnt/careertrojan/ai_data_final/` | AI knowledge base |
-| `L:\VS ai_data final - version\automated_parser\` | `/mnt/careertrojan/ai_data_final/automated_parser/` | Parser input |
-| `L:\VS ai_data final - version\USER DATA\` | `/mnt/careertrojan/user_data/` | User sessions & data |
-| `E:\CareerTrojan\USER_DATA_COPY\` | `/mnt/careertrojan/backups/user_data/` | Mirror backup |
+| `L:\antigravity_version_ai_data_final\ai_data_final\` | `/mnt/careertrojan/ai_data_final/` | AI knowledge base |
+| `L:\antigravity_version_ai_data_final\automated_parser\` | `/mnt/careertrojan/ai_data_final/automated_parser/` | Parser input |
+| `L:\antigravity_version_ai_data_final\USER DATA\` | `/mnt/careertrojan/user_data/` | User sessions & data |
+| `L:\antigravity_version_ai_data_final\USER DATA\` | `/mnt/careertrojan/backups/user_data/` | Mirror backup |
 | `C:\careertrojan\logs\` | `/mnt/careertrojan/logs/` | Application logs |
 | `C:\careertrojan\trained_models\` | `/opt/careertrojan/runtime/trained_models/` | ML models |
 

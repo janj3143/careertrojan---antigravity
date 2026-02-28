@@ -8,7 +8,7 @@ export default function OpsLogsViewer() {
             <PageTemplate 
                 title="Logs Viewer (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/logs"
+                endpoint="/api/ops/v1/logs"
             />
         </AdminLayout>
     );

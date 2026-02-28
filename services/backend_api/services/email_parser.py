@@ -1,6 +1,3 @@
-def extract_emails_from_file(file_path: Path) -> list:
-def extract_emails_from_dir(email_dir: Path) -> list:
-
 import os, re, json, csv, logging
 from pathlib import Path
 from collections import Counter, defaultdict
@@ -11,7 +8,7 @@ AI_DATA_DIR = Path(__file__).resolve().parents[1] / "ai_data"
 AI_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
-EMAIL_REGEX = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+EMAIL_REGEX = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
 PHONE_REGEX = re.compile(r"\b(?:\+?\d{1,3}[\s-]?)?(?:\(?\d{2,4}\)?[\s-]?)?\d{3,4}[\s-]?\d{3,4}\b")
 NAME_REGEX = re.compile(r"Name[:\s]+([A-Z][a-z]+(?: [A-Z][a-z]+)*)")
 LOCATION_REGEX = re.compile(r"Location[:\s]+([A-Za-z ,]+)")
@@ -82,6 +79,9 @@ def extract_from_file(filepath: Path) -> str:
         return ""
     return ""
 
+
+def parse_all_emails(data_dirs: List[Path]):
+    """Scan directories for files, extract contacts, deduplicate by email."""
     all_emails: Set[str] = set()
     results: Dict[str, List[Dict[str, str]]] = {}
     domain_counter = Counter()
@@ -161,3 +161,22 @@ def run_email_parsing_and_export():
         "unique_domains": len(domain_counter),
         "top_domains": domain_counter.most_common(10)
     }
+
+
+# ── Convenience wrappers (referenced by other modules) ────────────────
+
+def extract_emails_from_file(file_path: Path) -> list:
+    """Extract email addresses from a single file."""
+    text = extract_from_file(file_path)
+    return EMAIL_REGEX.findall(text) if text else []
+
+
+def extract_emails_from_dir(email_dir: Path) -> list:
+    """Walk a directory and return all unique email addresses found."""
+    emails: Set[str] = set()
+    if not email_dir.exists():
+        return []
+    for fp in email_dir.rglob("*"):
+        if fp.is_file() and fp.suffix.lower() in ['.txt', '.docx', '.pdf', '.csv', '.xlsx', '.json']:
+            emails.update(extract_emails_from_file(fp))
+    return sorted(emails)

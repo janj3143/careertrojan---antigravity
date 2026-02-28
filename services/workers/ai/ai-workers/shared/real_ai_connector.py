@@ -12,6 +12,7 @@ This module provides:
 - Real market data
 """
 
+import os
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 import json
@@ -25,7 +26,7 @@ class RealAIDataConnector:
     """
     
     def __init__(self):
-        self.base_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.base_path = Path(os.getenv("CAREERTROJAN_AI_DATA", os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data"), "ai_data_final")))
         self.pattern_report_path = self.base_path / "pattern_analysis_report.json"
         self.normalized_path = self.base_path / "normalized"
         

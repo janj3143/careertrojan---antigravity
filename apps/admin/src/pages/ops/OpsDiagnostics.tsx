@@ -8,7 +8,7 @@ export default function OpsDiagnostics() {
             <PageTemplate 
                 title="Diagnostics (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/diagnostics"
+                endpoint="/api/ops/v1/diagnostics"
             />
         </AdminLayout>
     );

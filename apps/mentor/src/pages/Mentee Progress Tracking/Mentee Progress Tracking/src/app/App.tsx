@@ -47,11 +47,11 @@ If the mentee is hired/engaged by the mentor's company (or a connected company) 
 The Hiring Fee is distributed as follows:
 - **25%** to a charity chosen by the mentee
 - **25%** to a charity chosen by the mentor
-- **25%** to a charity chosen by the platform (IntelliCV)
-- **25%** retained by IntelliCV to support administration costs and future development
+- **25%** to a charity chosen by the platform (CareerTrojan)
+- **25%** retained by CareerTrojan to support administration costs and future development
 
 ### 6) Notification and evidence
-Both parties agree to notify IntelliCV promptly if a Trigger Event occurs. IntelliCV may request reasonable evidence to calculate the Annual Package and confirm the Trigger Event.
+Both parties agree to notify CareerTrojan promptly if a Trigger Event occurs. CareerTrojan may request reasonable evidence to calculate the Annual Package and confirm the Trigger Event.
 
 ### 7) Confidentiality
 Both parties agree to keep non-public information and mentorship materials confidential, except where disclosure is required to administer this agreement, comply with law, or resolve disputes.
@@ -551,7 +551,7 @@ export default function App() {
         {/* Footer Info */}
         <div className="mt-8 text-center space-y-2 text-sm text-muted-foreground">
           <p>
-            <strong>📋 Mentee Dashboard</strong> | Agreements, Progress & Communication | IntelliCV Mentor Portal
+            <strong>📋 Mentee Dashboard</strong> | Agreements, Progress & Communication | CareerTrojan Mentor Portal
           </p>
           <p>Link ID: {linkId} | Privacy-protected mentorship system</p>
         </div>

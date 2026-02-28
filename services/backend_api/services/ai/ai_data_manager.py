@@ -1,6 +1,6 @@
 """
 =============================================================================
-IntelliCV AI Data Manager - Modular Data Directory System
+CareerTrojan AI Data Manager - Modular Data Directory System
 =============================================================================
 
 Creates and manages intelligent data directory structure for AI processing:
@@ -26,9 +26,9 @@ Creates and manages intelligent data directory structure for AI processing:
 This modular structure supports rotation sequences, data flow management,
 and intelligent processing pipelines for production AI systems.
 
-Author: IntelliCV AI Integration Team
+Author: CareerTrojan AI Integration Team
 Purpose: Production-ready data architecture with AI learning capabilities
-Environment: IntelliCV\env310 with full data processing stack
+Environment: CareerTrojan\env310 with full data processing stack
 """
 
 import os
@@ -762,7 +762,7 @@ class AIDataManager(LoggingMixin, SafeOperationsMixin):
 
 if __name__ == "__main__":
     # Example usage and testing
-    logger.info("IntelliCV AI Data Manager - Testing")
+    logger.info("CareerTrojan AI Data Manager - Testing")
     
     # Initialize data manager
     config = DataFlowConfig(

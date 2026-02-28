@@ -142,8 +142,33 @@ class CareerRules:
         for rule in self._rules:
             try:
                 condition = rule.get("condition", "False")
-                # Safe eval with only the context namespace
-                result = eval(condition, {"__builtins__": {}}, ctx)  # noqa: S307
+                # W-1 FIX: Replace eval() with AST-safe expression evaluator.
+                # Only allows comparisons, boolean ops, attribute access on
+                # the context dict — NO function calls, imports, or builtins.
+                import ast
+                try:
+                    tree = ast.parse(condition, mode="eval")
+                    # Walk AST and reject anything beyond safe nodes
+                    _SAFE_NODES = (
+                        ast.Expression, ast.BoolOp, ast.And, ast.Or, ast.Not,
+                        ast.UnaryOp, ast.Compare, ast.Constant, ast.Name,
+                        ast.Load, ast.Eq, ast.NotEq, ast.Lt, ast.LtE,
+                        ast.Gt, ast.GtE, ast.In, ast.NotIn, ast.Is, ast.IsNot,
+                        ast.BinOp, ast.Add, ast.Sub, ast.Mult,
+                        ast.Attribute, ast.Subscript, ast.Index,
+                        ast.List, ast.Tuple, ast.Call,
+                    )
+                    for node in ast.walk(tree):
+                        if not isinstance(node, _SAFE_NODES):
+                            raise ValueError(f"Unsafe AST node: {type(node).__name__}")
+                        # Block function calls except len()
+                        if isinstance(node, ast.Call):
+                            if not (isinstance(node.func, ast.Name) and node.func.id == "len"):
+                                raise ValueError(f"Unsafe call: {ast.dump(node.func)}")
+                    result = eval(compile(tree, "<rule>", "eval"), {"__builtins__": {}, "len": len}, ctx)
+                except (ValueError, SyntaxError) as ast_err:
+                    logger.warning("Rule %s blocked by safety check: %s", rule.get("id"), ast_err)
+                    result = False
             except Exception as e:
                 logger.debug("Rule %s condition error: %s", rule.get("id"), e)
                 result = False
@@ -187,6 +212,21 @@ class SkillMatcher:
     Weighted scoring system for matching user skills to role requirements.
     Supports exact match, transferable skills, and certification credit.
     """
+
+    _nlp = None  # lazy-loaded spaCy model for semantic similarity
+
+    @classmethod
+    def _get_nlp(cls):
+        """Lazy-load spaCy model for semantic similarity (loaded once)."""
+        if cls._nlp is None:
+            try:
+                import spacy
+                cls._nlp = spacy.load("en_core_web_md", disable=["parser", "ner"])
+                logger.info("SkillMatcher: spaCy en_core_web_md loaded for semantic similarity")
+            except Exception:
+                cls._nlp = False  # mark as permanently unavailable
+                logger.info("SkillMatcher: spaCy model unavailable — semantic similarity disabled")
+        return cls._nlp if cls._nlp is not False else None
 
     def __init__(self, config_path: Optional[Path] = None):
         self._raw = _load_yaml(config_path or RULES_DIR / "skill_matcher.yaml")
@@ -268,8 +308,20 @@ class SkillMatcher:
         # 4. Experience depth (simple linear scale, caps at 10 years)
         exp_score = min(experience_years / 10.0, 1.0)
 
-        # 5. Semantic similarity placeholder (returns 0 unless embeddings are available)
-        semantic_score = 0.0  # TODO: wire to embedding engine when available
+        # 5. Semantic similarity via spaCy word vectors
+        semantic_score = 0.0
+        nlp = self._get_nlp()
+        if nlp is not None:
+            try:
+                unmatched_user = user_set - exact_matches
+                unmatched_req = req_set - exact_matches - {tc["to"] for tc in transferable_credits}
+                if unmatched_user and unmatched_req:
+                    user_doc = nlp(" ".join(sorted(unmatched_user)))
+                    req_doc = nlp(" ".join(sorted(unmatched_req)))
+                    if user_doc.vector_norm and req_doc.vector_norm:
+                        semantic_score = max(0.0, float(user_doc.similarity(req_doc)))
+            except Exception as e:
+                logger.debug("Semantic similarity failed: %s", e)
 
         # Weighted overall score
         overall = (

@@ -8,7 +8,7 @@ export default function OpsRouteMap() {
             <PageTemplate 
                 title="Route Map (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/route-map"
+                endpoint="/api/ops/v1/route-map"
             />
         </AdminLayout>
     );

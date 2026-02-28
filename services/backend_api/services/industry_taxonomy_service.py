@@ -1,5 +1,5 @@
 """
-Industry Taxonomy Service for IntelliCV-AI
+Industry Taxonomy Service for CareerTrojan
 ==========================================
 
 This module centralises loading and querying of *real* industry and
@@ -40,12 +40,12 @@ NOTE: All paths are configurable via environment variables so that
 Docker, dev, and admin environments can share the same code.
 
 Env variables (recommended):
-  INTELLICV_DATA_ROOT               – base path for large taxonomies
-  INTELLICV_SOC2020_STRUCTURE       – override for SOC 2020 structure Excel
-  INTELLICV_SOC2020_INDEX           – override for SOC 2020 coding index Excel
-  INTELLICV_ESCO_CLASSIFICATION     – path to ESCO classification CSV
-  INTELLICV_NAICS_STRUCTURE         – NAICS 2022 structure Excel
-  INTELLICV_NAICS_DESCRIPTIONS      – NAICS 2022 descriptions Excel
+  CAREERTROJAN_DATA_ROOT               – base path for large taxonomies
+  CAREERTROJAN_SOC2020_STRUCTURE       – override for SOC 2020 structure Excel
+  CAREERTROJAN_SOC2020_INDEX           – override for SOC 2020 coding index Excel
+  CAREERTROJAN_ESCO_CLASSIFICATION     – path to ESCO classification CSV
+  CAREERTROJAN_NAICS_STRUCTURE         – NAICS 2022 structure Excel
+  CAREERTROJAN_NAICS_DESCRIPTIONS      – NAICS 2022 descriptions Excel
 
 The module is intentionally conservative: it only *reads* from disk
 and returns Python objects; higher-level aggregation stays in portal
@@ -128,33 +128,33 @@ class IndustryTaxonomyService:
         self.data_root = (
             Path(data_root)
             if data_root
-            else Path(os.environ.get("INTELLICV_DATA_ROOT", default_root)).expanduser()
+            else Path(os.environ.get("CAREERTROJAN_DATA_ROOT", default_root)).expanduser()
         )
 
         # Allow explicit overrides; otherwise derive from data_root if present
         self.soc_structure_path = self._resolve_path(
             soc_structure_path,
-            env_var="INTELLICV_SOC2020_STRUCTURE",
+            env_var="CAREERTROJAN_SOC2020_STRUCTURE",
             default_filename="extendedsoc2020structureanddescriptionsexcel03122025.xlsx",
         )
         self.soc_index_path = self._resolve_path(
             soc_index_path,
-            env_var="INTELLICV_SOC2020_INDEX",
+            env_var="CAREERTROJAN_SOC2020_INDEX",
             default_filename="soc2020volume2thecodingindexexcel03122025.xlsx",
         )
         self.esco_path = self._resolve_path(
             esco_path,
-            env_var="INTELLICV_ESCO_CLASSIFICATION",
+            env_var="CAREERTROJAN_ESCO_CLASSIFICATION",
             default_filename="esco_classification_en.csv",
         )
         self.naics_structure_path = self._resolve_path(
             naics_structure_path,
-            env_var="INTELLICV_NAICS_STRUCTURE",
+            env_var="CAREERTROJAN_NAICS_STRUCTURE",
             default_filename="2022_NAICS_Structure.xlsx",
         )
         self.naics_desc_path = self._resolve_path(
             naics_desc_path,
-            env_var="INTELLICV_NAICS_DESCRIPTIONS",
+            env_var="CAREERTROJAN_NAICS_DESCRIPTIONS",
             default_filename="2022_NAICS_Descriptions.xlsx",
         )
 

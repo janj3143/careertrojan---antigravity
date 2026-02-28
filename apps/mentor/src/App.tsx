@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MentorAuthProvider, useMentorAuth } from './context/MentorAuthContext';
 import MentorLogin from './pages/MentorLogin';
+import { SupportButton } from './components/support';
 
 // Mentor Pages
 import Dashboard from './pages/Dashboard';
@@ -50,6 +51,7 @@ export default function App() {
                     {/* Fallback */}
                     <Route path="*" element={<Navigate to="/mentor" />} />
                 </Routes>
+                <SupportButton />
             </BrowserRouter>
         </MentorAuthProvider>
     );

@@ -32,12 +32,12 @@ export default function MentorDashboard() {
         try {
             setLoading(true);
             // First get mentor profile ID from user ID
-            const profileRes = await fetch(`/api/mentor/profile-by-user/${user?.id}`);
+            const profileRes = await fetch(`/api/mentor/v1/profile-by-user/${user?.id}`);
             if (!profileRes.ok) throw new Error('Failed to fetch mentor profile');
             const profile = await profileRes.json();
 
             // Then get dashboard stats
-            const statsRes = await fetch(`/api/mentor/${profile.mentor_profile_id}/dashboard-stats`);
+            const statsRes = await fetch(`/api/mentor/v1/${profile.mentor_profile_id}/dashboard-stats`);
             if (!statsRes.ok) throw new Error('Failed to fetch dashboard stats');
             const data = await statsRes.json();
             setStats(data);

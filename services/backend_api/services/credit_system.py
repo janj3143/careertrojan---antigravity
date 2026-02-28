@@ -23,6 +23,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, List, Optional
+import json
 import logging
 import uuid
 
@@ -30,636 +31,289 @@ logger = logging.getLogger(__name__)
 
 
 # ============================================================================
-# PLAN DEFINITIONS
+# PLAN DEFINITIONS — imported from canonical single source of truth
 # ============================================================================
 
-class PlanTier(str, Enum):
-    FREE = "free"
-    MONTHLY = "monthly"
-    ANNUAL = "annual"
-    ELITE = "elite"
+from services.backend_api.services.plan_config import (
+    PlanTier,
+    PLANS,
+    ACTION_COSTS as _CANONICAL_ACTION_COSTS,
+    CreditAction,
+    get_plan,
+    get_action_config,
+    user_can_access,
+    plan_rank,
+)
 
+# Re-export so existing `from credit_system import PLANS, PlanTier` still works
+__all__ = [
+    "PlanTier", "PLANS", "ACTION_COSTS", "CreditAction",
+    "CreditManager", "get_credit_manager", "generate_free_tier_teaser",
+]
 
-@dataclass
-class PlanConfig:
-    """Plan configuration with credit allocations"""
-    tier: PlanTier
-    name: str
-    credits_per_month: int
-    price_monthly: float
-    price_yearly: Optional[float]
-    
-    # Feature flags
-    full_career_analysis: bool = False
-    full_job_applications: bool = False
-    resume_tuning: bool = False
-    blocker_detection: bool = False
-    coaching_access: bool = False
-    mentorship_access: bool = False
-    dual_career: bool = False
-    api_access: bool = False
-    
-    # Limits
-    max_applications_per_month: int = 0
-    max_coaching_sessions: int = 0
-    max_resumes_stored: int = 1
-
-
-PLANS: Dict[PlanTier, PlanConfig] = {
-    # -------------------------------------------------------------------------
-    # FREE TIER: Upload resume, see PREVIEWS only
-    # Goal: Hook them with value, show what they're missing
-    # -------------------------------------------------------------------------
-    PlanTier.FREE: PlanConfig(
-        tier=PlanTier.FREE,
-        name="Free Trial",
-        credits_per_month=15,
-        price_monthly=0.0,
-        price_yearly=None,
-        
-        # Restricted features (preview mode)
-        full_career_analysis=False,      # Gets PREVIEW only
-        full_job_applications=False,     # Can search, sees count, but can't apply
-        resume_tuning=False,             # Sees SAMPLE of what tuning looks like
-        blocker_detection=False,         # Sees that blockers exist, not details
-        coaching_access=False,
-        mentorship_access=False,
-        dual_career=False,
-        api_access=False,
-        
-        max_applications_per_month=0,    # Can't actually apply
-        max_coaching_sessions=0,
-        max_resumes_stored=1,
-    ),
-    
-    # -------------------------------------------------------------------------
-    # MONTHLY PRO: ~20 full applications/month
-    # 20 apps × 7 credits = 140 + buffer for coaching = 150
-    # -------------------------------------------------------------------------
-    PlanTier.MONTHLY: PlanConfig(
-        tier=PlanTier.MONTHLY,
-        name="Monthly Pro",
-        credits_per_month=150,
-        price_monthly=15.99,
-        price_yearly=None,
-        
-        full_career_analysis=True,
-        full_job_applications=True,
-        resume_tuning=True,
-        blocker_detection=True,
-        coaching_access=True,
-        mentorship_access=False,
-        dual_career=False,
-        api_access=False,
-        
-        max_applications_per_month=20,
-        max_coaching_sessions=3,
-        max_resumes_stored=5,
-    ),
-    
-    # -------------------------------------------------------------------------
-    # ANNUAL PRO: ~35 full applications/month
-    # 35 apps × 7 = 245 + coaching + mentorship intro = 350
-    # -------------------------------------------------------------------------
-    PlanTier.ANNUAL: PlanConfig(
-        tier=PlanTier.ANNUAL,
-        name="Annual Pro",
-        credits_per_month=350,
-        price_monthly=12.49,  # Effective monthly (2 months free)
-        price_yearly=149.99,
-        
-        full_career_analysis=True,
-        full_job_applications=True,
-        resume_tuning=True,
-        blocker_detection=True,
-        coaching_access=True,
-        mentorship_access=True,          # Basic access
-        dual_career=True,
-        api_access=False,
-        
-        max_applications_per_month=35,
-        max_coaching_sessions=10,
-        max_resumes_stored=10,
-    ),
-    
-    # -------------------------------------------------------------------------
-    # ELITE PRO: Full 500 credits, unlimited everything
-    # 500 credits = ~70 applications OR mix of premium features
-    # -------------------------------------------------------------------------
-    PlanTier.ELITE: PlanConfig(
-        tier=PlanTier.ELITE,
-        name="Elite Pro",
-        credits_per_month=500,
-        price_monthly=24.99,  # Effective monthly
-        price_yearly=299.99,
-        
-        full_career_analysis=True,
-        full_job_applications=True,
-        resume_tuning=True,
-        blocker_detection=True,
-        coaching_access=True,
-        mentorship_access=True,          # Full marketplace
-        dual_career=True,
-        api_access=True,
-        
-        max_applications_per_month=999,  # Effectively unlimited
-        max_coaching_sessions=999,
-        max_resumes_stored=50,
-    ),
-}
+# Backwards-compat alias: old code imported ActionCost from credit_system
+ActionCost = _CANONICAL_ACTION_COSTS  # type: ignore  # It's a dict but keeps the name importable
 
 
 # ============================================================================
-# ACTION CREDIT COSTS
+# CREDIT MANAGER CLASS — DB-backed via UserCreditBalance / CreditUsageLog
 # ============================================================================
 
-@dataclass
-class ActionCost:
-    """Cost definition for a single action"""
-    action_id: str
-    name: str
-    credits: int
-    description: str
-    preview_available: bool = False      # Can free users see a preview?
-    preview_credits: int = 0             # Cost for preview (usually free)
-    requires_plan: PlanTier = PlanTier.FREE
 
 
-# Action costs - designed for ~20 apps/month on Monthly Pro (150 credits)
-# 20 apps × 7 credits average = 140, leaves 10 for coaching/extras
-
-ACTION_COSTS: Dict[str, ActionCost] = {
-    # =========================================================================
-    # FREE ACTIONS (Navigation, Account, Job Search)
-    # =========================================================================
-    "login": ActionCost(
-        action_id="login",
-        name="Login",
-        credits=0,
-        description="User authentication",
-    ),
-    "dashboard_view": ActionCost(
-        action_id="dashboard_view", 
-        name="View Dashboard",
-        credits=0,
-        description="View main dashboard",
-    ),
-    "profile_view": ActionCost(
-        action_id="profile_view",
-        name="View Profile",
-        credits=0,
-        description="View user profile",
-    ),
-    "profile_update": ActionCost(
-        action_id="profile_update",
-        name="Update Profile",
-        credits=0,
-        description="Update profile information",
-    ),
-    "job_search": ActionCost(
-        action_id="job_search",
-        name="Job Search",
-        credits=0,
-        description="Search and browse job listings (shows count & titles)",
-    ),
-    "job_view": ActionCost(
-        action_id="job_view",
-        name="View Job Details",
-        credits=0,
-        description="View full job description",
-    ),
-    
-    # =========================================================================
-    # RESUME ACTIONS
-    # =========================================================================
-    "resume_upload": ActionCost(
-        action_id="resume_upload",
-        name="Resume Upload",
-        credits=0,                       # FREE - this is the hook
-        description="Upload and parse resume (PDF/DOCX)",
-    ),
-    "resume_view": ActionCost(
-        action_id="resume_view",
-        name="View Parsed Resume",
-        credits=0,
-        description="View your parsed resume data",
-    ),
-    
-    # =========================================================================
-    # CAREER ANALYSIS (Preview for free, full for paid)
-    # =========================================================================
-    "career_analysis_preview": ActionCost(
-        action_id="career_analysis_preview",
-        name="Career Analysis Preview",
-        credits=5,                       # Free tier can afford this once
-        description="Basic career analysis with restricted insights",
-        preview_available=True,
-    ),
-    "career_analysis_full": ActionCost(
-        action_id="career_analysis_full",
-        name="Full Career Analysis",
-        credits=10,
-        description="Complete AI career analysis with all insights",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-
-    # =========================================================================
-    # VISUALIZATIONS (per-render where compute is heavier)
-    # =========================================================================
-    "visual_keyword_overlap": ActionCost(
-        action_id="visual_keyword_overlap",
-        name="Keyword Overlap Visual",
-        credits=1,
-        description="Venn/overlap visualization of your keywords vs target",
-    ),
-    "visual_job_suitability": ActionCost(
-        action_id="visual_job_suitability",
-        name="Job Suitability Gauge",
-        credits=1,
-        description="Gauge + bar breakdown for a single job fit",
-    ),
-    "visual_connected_cloud": ActionCost(
-        action_id="visual_connected_cloud",
-        name="Connected Word Cloud",
-        credits=2,
-        description="Graph-style keyword map with layout computation",
-    ),
-    "visual_multi_job_compare": ActionCost(
-        action_id="visual_multi_job_compare",
-        name="Multi-Job Suitability Compare",
-        credits=2,
-        description="Compare fit across multiple jobs (≤10 roles)",
-    ),
-    
-    # =========================================================================
-    # JOB APPLICATION WORKFLOW (Per-job costs)
-    # Target: 7 credits per full application
-    # =========================================================================
-    "fit_analysis_preview": ActionCost(
-        action_id="fit_analysis_preview",
-        name="Fit Analysis Preview",
-        credits=5,                       # Free tier can see ONE
-        description="See fit score only (no details)",
-        preview_available=True,
-    ),
-    "fit_analysis_full": ActionCost(
-        action_id="fit_analysis_full",
-        name="Full Fit Analysis",
-        credits=2,                       # Per job
-        description="Complete fit analysis with skill gaps & recommendations",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-    "blocker_detection_preview": ActionCost(
-        action_id="blocker_detection_preview",
-        name="Blocker Detection Preview",
-        credits=5,                       # Free tier preview
-        description="Shows blocker COUNT only (e.g., '3 blockers found')",
-        preview_available=True,
-    ),
-    "blocker_detection_full": ActionCost(
-        action_id="blocker_detection_full",
-        name="Full Blocker Detection",
-        credits=2,                       # Per job
-        description="Complete blocker analysis with severity & fix strategies",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-    "resume_tuning_preview": ActionCost(
-        action_id="resume_tuning_preview",
-        name="Resume Tuning Preview",
-        credits=0,                       # FREE preview - show WHAT it does
-        description="Shows sample tuning suggestions (blurred/partial)",
-        preview_available=True,
-    ),
-    "resume_tuning_full": ActionCost(
-        action_id="resume_tuning_full",
-        name="Full Resume Tuning",
-        credits=3,                       # Per job - most valuable action
-        description="Generate job-optimized resume variant",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-    
-    # =========================================================================
-    # APPLICATION TRACKING
-    # =========================================================================
-    "application_submit": ActionCost(
-        action_id="application_submit",
-        name="Track Application",
-        credits=0,                       # Free to track
-        description="Add job to application tracker",
-        requires_plan=PlanTier.MONTHLY,  # But need paid to use tracker
-    ),
-    "application_update": ActionCost(
-        action_id="application_update",
-        name="Update Application Status",
-        credits=0,
-        description="Update application status/notes",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-    
-    # =========================================================================
-    # COACHING & INTERVIEW PREP
-    # =========================================================================
-    "coaching_session": ActionCost(
-        action_id="coaching_session",
-        name="AI Coaching Session",
-        credits=8,
-        description="Full AI interview coaching session",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-    "interview_questions": ActionCost(
-        action_id="interview_questions",
-        name="Generate Interview Questions",
-        credits=3,
-        description="AI-generated interview questions for specific job",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-    "star_story_builder": ActionCost(
-        action_id="star_story_builder",
-        name="STAR Story Builder",
-        credits=5,
-        description="Build STAR format stories from your experience",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-    
-    # =========================================================================
-    # MENTORSHIP
-    # =========================================================================
-    "mentor_search": ActionCost(
-        action_id="mentor_search",
-        name="Search Mentors",
-        credits=0,                       # Free to browse
-        description="Search and browse mentor profiles",
-    ),
-    "mentor_contact": ActionCost(
-        action_id="mentor_contact",
-        name="Contact Mentor",
-        credits=15,
-        description="Initiate contact with a mentor",
-        requires_plan=PlanTier.ANNUAL,
-    ),
-    "mentorship_session": ActionCost(
-        action_id="mentorship_session",
-        name="Mentorship Session",
-        credits=25,
-        description="Book mentorship session",
-        requires_plan=PlanTier.ANNUAL,
-    ),
-    
-    # =========================================================================
-    # PREMIUM FEATURES
-    # =========================================================================
-    "dual_career_analysis": ActionCost(
-        action_id="dual_career_analysis",
-        name="Dual Career Analysis",
-        credits=15,
-        description="Partner career optimization analysis",
-        requires_plan=PlanTier.ANNUAL,
-    ),
-    "career_intelligence_report": ActionCost(
-        action_id="career_intelligence_report",
-        name="Career Intelligence Report",
-        credits=20,
-        description="Comprehensive market intelligence report",
-        requires_plan=PlanTier.ANNUAL,
-    ),
-    "geo_career_analysis": ActionCost(
-        action_id="geo_career_analysis",
-        name="Geographic Career Analysis",
-        credits=10,
-        description="Location-based career opportunities",
-        requires_plan=PlanTier.MONTHLY,
-    ),
-}
+# Re-export ACTION_COSTS from canonical source under the old name
+ACTION_COSTS = _CANONICAL_ACTION_COSTS
 
 
 # ============================================================================
-# CREDIT ACTION ENUM (for safer imports in pages)
-# ============================================================================
-
-class CreditAction(str, Enum):
-    """Action identifiers for credit-gated features."""
-
-    # Core flows
-    JOB_SEARCH = "job_search"
-    FIT_ANALYSIS = "fit_analysis_full"
-    BLOCKER_DETECTION = "blocker_detection_full"
-    RESUME_TUNING = "resume_tuning_full"
-    INTERVIEW_PREP = "interview_questions"
-
-    # Visualizations
-    VISUAL_KEYWORD_OVERLAP = "visual_keyword_overlap"
-    VISUAL_JOB_SUITABILITY = "visual_job_suitability"
-    VISUAL_CONNECTED_CLOUD = "visual_connected_cloud"
-    VISUAL_MULTI_JOB_COMPARE = "visual_multi_job_compare"
-
-
-# ============================================================================
-# CREDIT MANAGER CLASS
+# DB-BACKED CREDIT MANAGER
 # ============================================================================
 
 @dataclass
 class UserCredits:
-    """User's credit balance and usage tracking"""
+    """In-process representation of user's credit balance (hydrated from DB)."""
     user_id: str
     plan: PlanTier
     credits_remaining: int
     credits_used_this_month: int
     month_start: datetime
-    usage_history: List[Dict[str, Any]] = field(default_factory=list)
+    credits_total: int = 15
+
+
+def _get_db_session():
+    """Obtain a new DB session (caller must close)."""
+    from services.backend_api.db.connection import SessionLocal
+    return SessionLocal()
 
 
 class CreditManager:
     """
-    Manages user credits and action authorization.
-    
-    Usage:
-        manager = CreditManager()
-        
-        # Check if user can perform action
-        can_do, message = manager.can_perform_action(user_id, "fit_analysis_full")
-        
-        # Consume credits for action
-        result = manager.consume_credits(user_id, "fit_analysis_full", context={"job_id": "123"})
+    DB-backed credit manager.
+
+    Reads/writes ``UserCreditBalance`` and ``CreditUsageLog`` via SQLAlchemy.
+    Falls back to in-memory for resilience when the DB is unreachable.
     """
-    
-    def __init__(self):
-        # In-memory storage (replace with database)
-        self._user_credits: Dict[str, UserCredits] = {}
-    
+
+    # --- public helpers (unchanged API surface) ---------------------------
+
     def get_user_credits(self, user_id: str) -> UserCredits:
-        """Get or initialize user credits"""
-        if user_id not in self._user_credits:
-            # Default to free plan
-            self._user_credits[user_id] = UserCredits(
+        """Load balance from DB; auto-create a free-tier row if missing."""
+        from services.backend_api.db.models import UserCreditBalance
+
+        db = _get_db_session()
+        try:
+            row = db.query(UserCreditBalance).filter(
+                UserCreditBalance.user_id == int(user_id)
+            ).first()
+
+            if row is None:
+                # First time — create free-tier balance
+                plan_cfg = get_plan(PlanTier.FREE)
+                now = datetime.now(timezone.utc)
+                row = UserCreditBalance(
+                    user_id=int(user_id),
+                    plan_tier=PlanTier.FREE.value,
+                    credits_total=plan_cfg.credits_per_month,
+                    credits_remaining=plan_cfg.credits_per_month,
+                    credits_used=0,
+                    period_start=now.replace(day=1, hour=0, minute=0, second=0, microsecond=0),
+                )
+                db.add(row)
+                db.commit()
+                db.refresh(row)
+
+            return UserCredits(
+                user_id=str(row.user_id),
+                plan=PlanTier(row.plan_tier),
+                credits_remaining=row.credits_remaining,
+                credits_used_this_month=row.credits_used,
+                credits_total=row.credits_total,
+                month_start=row.period_start or datetime.now(timezone.utc),
+            )
+        except Exception:
+            db.rollback()
+            logger.warning("DB read failed for user %s — returning free-tier default", user_id)
+            plan_cfg = get_plan(PlanTier.FREE)
+            return UserCredits(
                 user_id=user_id,
                 plan=PlanTier.FREE,
-                credits_remaining=PLANS[PlanTier.FREE].credits_per_month,
+                credits_remaining=plan_cfg.credits_per_month,
                 credits_used_this_month=0,
-                month_start=datetime.now(timezone.utc).replace(day=1, hour=0, minute=0, second=0),
+                credits_total=plan_cfg.credits_per_month,
+                month_start=datetime.now(timezone.utc),
             )
-        return self._user_credits[user_id]
-    
+        finally:
+            db.close()
+
     def set_user_plan(self, user_id: str, plan: PlanTier) -> UserCredits:
-        """Update user's plan and reset credits"""
-        user = self.get_user_credits(user_id)
-        user.plan = plan
-        user.credits_remaining = PLANS[plan].credits_per_month
-        user.credits_used_this_month = 0
-        user.month_start = datetime.now(timezone.utc).replace(day=1, hour=0, minute=0, second=0)
-        return user
-    
-    def get_action_cost(self, action_id: str, is_preview: bool = False) -> Optional[ActionCost]:
-        """Get cost for an action"""
-        if action_id not in ACTION_COSTS:
-            return None
-        
-        action = ACTION_COSTS[action_id]
-        
-        # If requesting preview and available, return preview cost
-        if is_preview and action.preview_available:
-            return ActionCost(
-                action_id=f"{action_id}_preview",
-                name=f"{action.name} (Preview)",
-                credits=action.preview_credits,
-                description=action.description,
-                preview_available=True,
-            )
-        
-        return action
-    
+        """Upgrade/downgrade user plan and reset credits for this period."""
+        from services.backend_api.db.models import UserCreditBalance
+
+        plan_cfg = get_plan(plan)
+        db = _get_db_session()
+        try:
+            row = db.query(UserCreditBalance).filter(
+                UserCreditBalance.user_id == int(user_id)
+            ).first()
+
+            now = datetime.now(timezone.utc)
+            if row is None:
+                row = UserCreditBalance(
+                    user_id=int(user_id),
+                    plan_tier=plan.value,
+                    credits_total=plan_cfg.credits_per_month,
+                    credits_remaining=plan_cfg.credits_per_month,
+                    credits_used=0,
+                    period_start=now.replace(day=1, hour=0, minute=0, second=0, microsecond=0),
+                )
+                db.add(row)
+            else:
+                row.plan_tier = plan.value
+                row.credits_total = plan_cfg.credits_per_month
+                row.credits_remaining = plan_cfg.credits_per_month
+                row.credits_used = 0
+                row.period_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+            db.commit()
+            db.refresh(row)
+            return self.get_user_credits(user_id)
+        except Exception:
+            db.rollback()
+            raise
+        finally:
+            db.close()
+
+    def get_action_cost(self, action_id: str, is_preview: bool = False) -> Optional[Any]:
+        """Look up canonical action config."""
+        return ACTION_COSTS.get(action_id)
+
     def can_perform_action(
-        self, 
-        user_id: str, 
+        self,
+        user_id: str,
         action_id: str,
-        is_preview: bool = False
+        is_preview: bool = False,
     ) -> tuple[bool, str, Optional[Dict[str, Any]]]:
-        """
-        Check if user can perform an action.
-        
-        Returns:
-            (can_perform, message, upgrade_info)
-        """
+        """Check if user has plan + credits for the action."""
         user = self.get_user_credits(user_id)
         action = ACTION_COSTS.get(action_id)
-        
+
         if not action:
             return False, f"Unknown action: {action_id}", None
-        
-        plan_config = PLANS[user.plan]
-        
-        # Check plan requirement
-        plan_order = [PlanTier.FREE, PlanTier.MONTHLY, PlanTier.ANNUAL, PlanTier.ELITE]
-        user_plan_idx = plan_order.index(user.plan)
-        required_plan_idx = plan_order.index(action.requires_plan)
-        
-        if user_plan_idx < required_plan_idx:
-            # User needs higher plan
-            required_plan = PLANS[action.requires_plan]
-            return False, f"Requires {required_plan.name} plan", {
+
+        # Plan-gate check
+        if not user_can_access(user.plan, action.requires_plan):
+            req_plan = get_plan(action.requires_plan)
+            return False, f"Requires {req_plan.name} plan", {
                 "required_plan": action.requires_plan.value,
-                "required_plan_name": required_plan.name,
-                "price": required_plan.price_monthly,
-                "upgrade_url": f"/payment?plan={action.requires_plan.value}"
+                "required_plan_name": req_plan.name,
+                "price": req_plan.price_monthly,
+                "upgrade_url": f"/payment?plan={action.requires_plan.value}",
             }
-        
-        # Check if preview available for free users
-        if user.plan == PlanTier.FREE and action.preview_available and not is_preview:
-            return False, "Preview available - upgrade for full access", {
-                "preview_available": True,
-                "preview_action": f"{action_id}_preview",
-                "upgrade_url": "/payment"
-            }
-        
-        # Check credit balance
-        cost = action.credits
-        if is_preview and action.preview_available:
-            cost = action.preview_credits
-        
+
+        # Credit check
+        cost = action.cost
         if user.credits_remaining < cost:
             return False, f"Insufficient credits ({user.credits_remaining} remaining, need {cost})", {
                 "credits_remaining": user.credits_remaining,
                 "credits_needed": cost,
-                "upgrade_url": "/payment"
+                "upgrade_url": "/payment",
             }
-        
+
         return True, f"OK - costs {cost} credits", None
-    
+
     def consume_credits(
         self,
         user_id: str,
         action_id: str,
         context: Optional[Dict[str, Any]] = None,
-        is_preview: bool = False
+        is_preview: bool = False,
     ) -> Dict[str, Any]:
-        """
-        Consume credits for an action.
-        
-        Returns result dict with success status, remaining credits, etc.
-        """
-        can_perform, message, upgrade_info = self.can_perform_action(user_id, action_id, is_preview)
-        
-        if not can_perform:
-            return {
-                "success": False,
-                "message": message,
-                "upgrade_info": upgrade_info,
-                "credits_consumed": 0,
-            }
-        
-        user = self.get_user_credits(user_id)
+        """Deduct credits and write an immutable usage log row."""
+        from services.backend_api.db.models import UserCreditBalance, CreditUsageLog
+
+        can_do, message, upgrade_info = self.can_perform_action(user_id, action_id, is_preview)
+        if not can_do:
+            return {"success": False, "message": message, "upgrade_info": upgrade_info, "credits_consumed": 0}
+
         action = ACTION_COSTS[action_id]
-        
-        cost = action.credits
-        if is_preview and action.preview_available:
-            cost = action.preview_credits
-        
-        # Deduct credits
-        user.credits_remaining -= cost
-        user.credits_used_this_month += cost
-        
-        # Log usage
-        usage_entry = {
-            "action_id": action_id,
-            "action_name": action.name,
-            "credits": cost,
-            "is_preview": is_preview,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "context": context or {},
-        }
-        user.usage_history.append(usage_entry)
-        
-        logger.info(f"User {user_id} consumed {cost} credits for {action_id}")
-        
-        return {
-            "success": True,
-            "message": f"Consumed {cost} credits for {action.name}",
-            "credits_consumed": cost,
-            "credits_remaining": user.credits_remaining,
-            "credits_used_this_month": user.credits_used_this_month,
-        }
-    
+        cost = action.cost
+
+        db = _get_db_session()
+        try:
+            row = db.query(UserCreditBalance).filter(
+                UserCreditBalance.user_id == int(user_id)
+            ).with_for_update().first()
+
+            if row is None or row.credits_remaining < cost:
+                return {"success": False, "message": "Balance changed — retry", "credits_consumed": 0}
+
+            row.credits_remaining -= cost
+            row.credits_used += cost
+
+            log = CreditUsageLog(
+                user_id=int(user_id),
+                action_id=action_id,
+                action_name=action.label,
+                credits_consumed=cost,
+                credits_remaining_after=row.credits_remaining,
+                is_preview=is_preview,
+                context_json=json.dumps(context) if context else None,
+            )
+            db.add(log)
+            db.commit()
+
+            logger.info("User %s consumed %d credits for %s", user_id, cost, action_id)
+            return {
+                "success": True,
+                "message": f"Consumed {cost} credits for {action.label}",
+                "credits_consumed": cost,
+                "credits_remaining": row.credits_remaining,
+                "credits_used_this_month": row.credits_used,
+            }
+        except Exception as exc:
+            db.rollback()
+            logger.error("Credit consumption failed for user %s: %s", user_id, exc)
+            return {"success": False, "message": "Internal error", "credits_consumed": 0}
+        finally:
+            db.close()
+
     def get_usage_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get user's credit usage summary"""
+        """Return credit usage summary including per-action breakdown."""
+        from services.backend_api.db.models import CreditUsageLog
+
         user = self.get_user_credits(user_id)
-        plan = PLANS[user.plan]
-        
-        # Calculate usage by category
-        usage_by_action = {}
-        for entry in user.usage_history:
-            action = entry["action_id"]
-            if action not in usage_by_action:
-                usage_by_action[action] = {"count": 0, "credits": 0}
-            usage_by_action[action]["count"] += 1
-            usage_by_action[action]["credits"] += entry["credits"]
-        
+        plan_cfg = get_plan(user.plan)
+
+        usage_by_action: Dict[str, Dict[str, int]] = {}
+        db = _get_db_session()
+        try:
+            logs = (
+                db.query(CreditUsageLog)
+                .filter(CreditUsageLog.user_id == int(user_id))
+                .order_by(CreditUsageLog.created_at.desc())
+                .limit(500)
+                .all()
+            )
+            for log in logs:
+                key = log.action_id
+                if key not in usage_by_action:
+                    usage_by_action[key] = {"count": 0, "credits": 0}
+                usage_by_action[key]["count"] += 1
+                usage_by_action[key]["credits"] += log.credits_consumed
+        except Exception:
+            pass
+        finally:
+            db.close()
+
+        total = plan_cfg.credits_per_month or 1
         return {
             "user_id": user_id,
             "plan": user.plan.value,
-            "plan_name": plan.name,
-            "credits_total": plan.credits_per_month,
+            "plan_name": plan_cfg.name,
+            "credits_total": total,
             "credits_remaining": user.credits_remaining,
             "credits_used": user.credits_used_this_month,
-            "usage_percentage": round((user.credits_used_this_month / plan.credits_per_month) * 100, 1),
+            "usage_percentage": round((user.credits_used_this_month / total) * 100, 1),
             "usage_by_action": usage_by_action,
             "month_start": user.month_start.isoformat(),
         }

@@ -52,6 +52,42 @@ try:
 except ImportError:
     Image = None
 
+
+def extract_text(file_path: Union[str, Path]) -> str:
+    """Synchronous text extraction from a file on disk.
+
+    This wraps the same logic as ``extract_text_from_upload`` but reads
+    the file from a local path instead of an in-memory upload object,
+    so parsers that operate on local files can use it directly.
+    """
+    file_path = Path(file_path)
+    if not file_path.exists():
+        return ""
+
+    try:
+        raw_bytes = file_path.read_bytes()
+    except OSError:
+        return ""
+
+    import asyncio
+
+    async def _run():
+        return await extract_text_from_upload(raw_bytes, file_path.name)
+
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
+
+    if loop and loop.is_running():
+        # We're inside an async context — use a new thread to avoid deadlock
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(lambda: asyncio.run(_run())).result(timeout=30)
+    else:
+        return asyncio.run(_run())
+
+
 async def extract_text_from_upload(uploaded_file, filename: str) -> str:
     """
     Convert an uploaded file (bytes) to plain text.

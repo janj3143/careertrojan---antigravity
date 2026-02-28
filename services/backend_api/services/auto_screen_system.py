@@ -1,5 +1,5 @@
 """
-IntelliCV Auto-Screen System - SANDBOX Version
+CareerTrojan Auto-Screen System - SANDBOX Version
 ==============================================
 
 Automatic data screening and AI processing for user login events.
@@ -12,7 +12,7 @@ Features:
 - SQLite learning system updates
 - Real-time user data quality assessment
 
-Author: IntelliCV AI Team
+Author: CareerTrojan AI Team
 Purpose: Automated user data screening with AI intelligence
 Environment: SANDBOX Admin Portal
 """
@@ -37,7 +37,7 @@ except ImportError as e:
     print(f"⚠️ AI services not available: {e}")
     AI_SERVICES_AVAILABLE = False
 
-class IntelliCVAutoScreenSystem:
+class CareerTrojanAutoScreenSystem:
     """
     Automatic screening system for user data processing
     """
@@ -419,11 +419,11 @@ class IntelliCVAutoScreenSystem:
 # Global instance
 _auto_screen_system = None
 
-def get_auto_screen_system() -> IntelliCVAutoScreenSystem:
+def get_auto_screen_system() -> CareerTrojanAutoScreenSystem:
     """Get global auto-screen system instance"""
     global _auto_screen_system
     if _auto_screen_system is None:
-        _auto_screen_system = IntelliCVAutoScreenSystem()
+        _auto_screen_system = CareerTrojanAutoScreenSystem()
     return _auto_screen_system
 
 def auto_screen_user(user_id: str, user_data: Dict[str, Any] = None) -> Dict[str, Any]:
@@ -439,7 +439,7 @@ def get_screening_statistics() -> Dict[str, Any]:
 if __name__ == "__main__":
     # Test the auto-screen system
     system = get_auto_screen_system()
-    print("🔍 IntelliCV Auto-Screen System Test")
+    print("🔍 CareerTrojan Auto-Screen System Test")
     print("=" * 40)
 
     # Test with a sample user

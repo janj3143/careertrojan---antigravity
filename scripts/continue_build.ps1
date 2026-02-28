@@ -125,7 +125,7 @@ if (-not $DryRun) {
     $ts = Get-Date -Format "yyyyMMddHHmmss"
     $trapDir = "L:\antigravity_version_ai_data_final\USER DATA\test"
     $trapFile = Join-Path $trapDir "_sync_trap_$ts.txt"
-    $mirrorDir = "E:\CareerTrojan\USER_DATA_COPY\test"
+    $mirrorDir = "L:\antigravity_version_ai_data_final\USER DATA\test"
     $trapContent = "sync-trap-$(Get-Random)"
 
     New-Item -ItemType Directory -Force -Path $trapDir | Out-Null

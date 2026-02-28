@@ -28,6 +28,8 @@ export const API = {
   credits: `${API_BASE}/api/credits/v1`,
   sessions: `${API_BASE}/api/sessions/v1`,
   aiData: `${API_BASE}/api/ai_data/v1`,
+  aiGateway: `${API_BASE}/api/ai`,  // AI Gateway (unified entry point)
+  support: `${API_BASE}/api/support/v1`,  // Zendesk Support Bridge
 } as const;
 
 /** Legacy alias — prefer named imports above */

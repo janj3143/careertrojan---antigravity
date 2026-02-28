@@ -1,0 +1,175 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\careertrojan
+configfile: pytest.ini
+plugins: anyio-4.12.1
+collected 4 items
+
+tests\integration\test_auth_endpoints.py FFF                             [ 75%]
+tests\integration\test_gdpr_endpoints.py F                               [100%]
+
+================================== FAILURES ===================================
+_______________ TestRegistration.test_register_duplicate_email ________________
+
+self = <integration.test_auth_endpoints.TestRegistration object at 0x0000011C68BC0B90>
+test_client = <starlette.testclient.TestClient object at 0x0000011C1EAF6250>
+
+    def test_register_duplicate_email(self, test_client):
+        email = _unique_email("dup")
+        _register(test_client, email)
+        resp = _register(test_client, email)
+        assert resp.status_code == 400
+>       assert "already registered" in resp.json()["detail"].lower()
+                                       ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'detail'
+
+tests\integration\test_auth_endpoints.py:73: KeyError
+---------------------------- Captured stdout setup ----------------------------
+{"event": "TESTING mode \u2014 skipping collocation engine bootstrap", "level": "info", "logger": "backend", "timestamp": "2026-02-27T12:06:23.789584Z"}
+{"event": "TESTING mode \u2014 skipping enrichment watchdog", "level": "info", "logger": "backend", "timestamp": "2026-02-27T12:06:23.789584Z"}
+----------------------------- Captured log setup ------------------------------
+INFO     backend:main.py:230 {'event': 'TESTING mode ù skipping collocation engine bootstrap', 'level': 'info', 'logger': 'backend', 'timestamp': '2026-02-27T12:06:23.789584Z'}
+INFO     backend:main.py:246 {'event': 'TESTING mode ù skipping enrichment watchdog', 'level': 'info', 'logger': 'backend', 'timestamp': '2026-02-27T12:06:23.789584Z'}
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "request_id": "e6b37311-86f", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:23.794807Z"}
+{"status_code": 200, "duration_ms": 708.4, "event": "request_completed", "request_id": "e6b37311-86f", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:24.503408Z"}
+{"event": "request_started", "request_id": "cab1d0b0-46e", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:24.520317Z"}
+{"status_code": 400, "duration_ms": 4.0, "event": "request_completed", "request_id": "cab1d0b0-46e", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:24.524324Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': 'e6b37311-86f', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:23.794807Z'}
+INFO     request:request_correlation.py:41 {'status_code': 200, 'duration_ms': 708.4, 'event': 'request_completed', 'request_id': 'e6b37311-86f', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:24.503408Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': 'cab1d0b0-46e', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:24.520317Z'}
+INFO     request:request_correlation.py:41 {'status_code': 400, 'duration_ms': 4.0, 'event': 'request_completed', 'request_id': 'cab1d0b0-46e', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:24.524324Z'}
+__________ TestBruteForceProtection.test_lockout_after_five_failures __________
+
+self = <integration.test_auth_endpoints.TestBruteForceProtection object at 0x0000011C68BC1C90>
+test_client = <starlette.testclient.TestClient object at 0x0000011C1EAF6250>
+
+    def test_lockout_after_five_failures(self, test_client):
+        """After 5 wrong-password attempts from the same IP, the 6th gets 429."""
+        email = _unique_email("brute")
+        _register(test_client, email, password="RealPass123!")
+    
+        # 5 failures
+        for i in range(5):
+            resp = _login(test_client, email, password="Wrong!")
+            assert resp.status_code == 401, f"Attempt {i+1} should be 401"
+    
+        # 6th attempt should be locked out (429)
+        resp = _login(test_client, email, password="Wrong!")
+        assert resp.status_code == 429
+>       assert "retry" in resp.json()["detail"].lower() or "too many" in resp.json()["detail"].lower()
+                          ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'detail'
+
+tests\integration\test_auth_endpoints.py:178: KeyError
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "request_id": "d3c3a551-18c", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:25.325159Z"}
+{"status_code": 200, "duration_ms": 405.1, "event": "request_completed", "request_id": "d3c3a551-18c", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:25.731166Z"}
+{"event": "request_started", "request_id": "8c43661f-917", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:25.754885Z"}
+{"status_code": 401, "duration_ms": 521.8, "event": "request_completed", "request_id": "8c43661f-917", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:26.276294Z"}
+{"event": "request_started", "request_id": "661f23ca-aca", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:26.292869Z"}
+{"status_code": 401, "duration_ms": 413.3, "event": "request_completed", "request_id": "661f23ca-aca", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:26.705554Z"}
+{"event": "request_started", "request_id": "55a547d4-8a8", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:26.716552Z"}
+{"status_code": 401, "duration_ms": 478.0, "event": "request_completed", "request_id": "55a547d4-8a8", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.194551Z"}
+{"event": "request_started", "request_id": "42c1407d-f25", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.205150Z"}
+{"status_code": 401, "duration_ms": 355.6, "event": "request_completed", "request_id": "42c1407d-f25", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.560471Z"}
+{"event": "request_started", "request_id": "4ee82847-ff8", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.569472Z"}
+{"event": "IP testclient locked out for 900s after 5 failed login attempts"}
+{"status_code": 401, "duration_ms": 383.1, "event": "request_completed", "request_id": "4ee82847-ff8", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.952442Z"}
+{"event": "request_started", "request_id": "5cbded80-365", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.963382Z"}
+{"status_code": 429, "duration_ms": 3.5, "event": "request_completed", "request_id": "5cbded80-365", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.966355Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': 'd3c3a551-18c', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:25.325159Z'}
+INFO     request:request_correlation.py:41 {'status_code': 200, 'duration_ms': 405.1, 'event': 'request_completed', 'request_id': 'd3c3a551-18c', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:25.731166Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '8c43661f-917', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:25.754885Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 521.8, 'event': 'request_completed', 'request_id': '8c43661f-917', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:26.276294Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '661f23ca-aca', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:26.292869Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 413.3, 'event': 'request_completed', 'request_id': '661f23ca-aca', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:26.705554Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '55a547d4-8a8', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:26.716552Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 478.0, 'event': 'request_completed', 'request_id': '55a547d4-8a8', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.194551Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '42c1407d-f25', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.205150Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 355.6, 'event': 'request_completed', 'request_id': '42c1407d-f25', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.560471Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '4ee82847-ff8', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.569472Z'}
+WARNING  login_protection:login_protection.py:78 IP testclient locked out for 900s after 5 failed login attempts
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 383.1, 'event': 'request_completed', 'request_id': '4ee82847-ff8', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.952442Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '5cbded80-365', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.963382Z'}
+INFO     request:request_correlation.py:41 {'status_code': 429, 'duration_ms': 3.5, 'event': 'request_completed', 'request_id': '5cbded80-365', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.966355Z'}
+__________ TestBruteForceProtection.test_retry_after_header_present ___________
+
+self = <integration.test_auth_endpoints.TestBruteForceProtection object at 0x0000011C68BC2BD0>
+test_client = <starlette.testclient.TestClient object at 0x0000011C1EAF6250>
+
+    def test_retry_after_header_present(self, test_client):
+        """The 429 response should include a Retry-After header."""
+        email = _unique_email("retryheader")
+        _register(test_client, email, password="Pass123!")
+    
+        for _ in range(5):
+            _login(test_client, email, password="Wrong!")
+    
+        resp = _login(test_client, email, password="Wrong!")
+        assert resp.status_code == 429
+>       assert "retry-after" in resp.headers or "Retry-After" in resp.headers
+E       AssertionError: assert ('retry-after' in Headers({'content-length': '145', 'content-type': 'application/json', 'x-request-id': '576ef9f9-9b8'}) or 'Retry-After' in Headers({'content-length': '145', 'content-type': 'application/json', 'x-request-id': '576ef9f9-9b8'}))
+E        +  where Headers({'content-length': '145', 'content-type': 'application/json', 'x-request-id': '576ef9f9-9b8'}) = <Response [429 Too Many Requests]>.headers
+E        +  and   Headers({'content-length': '145', 'content-type': 'application/json', 'x-request-id': '576ef9f9-9b8'}) = <Response [429 Too Many Requests]>.headers
+
+tests\integration\test_auth_endpoints.py:203: AssertionError
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "request_id": "c822af03-413", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:27.988164Z"}
+{"status_code": 200, "duration_ms": 326.8, "event": "request_completed", "request_id": "c822af03-413", "path": "/api/auth/v1/register", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:28.315646Z"}
+{"event": "request_started", "request_id": "0f9395ad-f02", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:28.328352Z"}
+{"status_code": 401, "duration_ms": 341.3, "event": "request_completed", "request_id": "0f9395ad-f02", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:28.670136Z"}
+{"event": "request_started", "request_id": "342a2e3e-25b", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:28.682414Z"}
+{"status_code": 401, "duration_ms": 383.3, "event": "request_completed", "request_id": "342a2e3e-25b", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:29.065498Z"}
+{"event": "request_started", "request_id": "a76b5490-5bf", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:29.083948Z"}
+{"status_code": 401, "duration_ms": 321.6, "event": "request_completed", "request_id": "a76b5490-5bf", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:29.405514Z"}
+{"event": "request_started", "request_id": "6f21bfbc-d6c", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:29.417150Z"}
+{"status_code": 401, "duration_ms": 320.2, "event": "request_completed", "request_id": "6f21bfbc-d6c", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:29.737075Z"}
+{"event": "request_started", "request_id": "9ad66a10-d4a", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:29.754037Z"}
+{"event": "IP testclient locked out for 900s after 5 failed login attempts"}
+{"status_code": 401, "duration_ms": 335.8, "event": "request_completed", "request_id": "9ad66a10-d4a", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:30.089319Z"}
+{"event": "request_started", "request_id": "576ef9f9-9b8", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:30.101475Z"}
+{"status_code": 429, "duration_ms": 4.2, "event": "request_completed", "request_id": "576ef9f9-9b8", "path": "/api/auth/v1/login", "method": "POST", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:30.105512Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': 'c822af03-413', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:27.988164Z'}
+INFO     request:request_correlation.py:41 {'status_code': 200, 'duration_ms': 326.8, 'event': 'request_completed', 'request_id': 'c822af03-413', 'path': '/api/auth/v1/register', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:28.315646Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '0f9395ad-f02', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:28.328352Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 341.3, 'event': 'request_completed', 'request_id': '0f9395ad-f02', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:28.670136Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '342a2e3e-25b', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:28.682414Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 383.3, 'event': 'request_completed', 'request_id': '342a2e3e-25b', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:29.065498Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': 'a76b5490-5bf', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:29.083948Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 321.6, 'event': 'request_completed', 'request_id': 'a76b5490-5bf', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:29.405514Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '6f21bfbc-d6c', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:29.417150Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 320.2, 'event': 'request_completed', 'request_id': '6f21bfbc-d6c', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:29.737075Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '9ad66a10-d4a', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:29.754037Z'}
+WARNING  login_protection:login_protection.py:78 IP testclient locked out for 900s after 5 failed login attempts
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 335.8, 'event': 'request_completed', 'request_id': '9ad66a10-d4a', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:30.089319Z'}
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '576ef9f9-9b8', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:30.101475Z'}
+INFO     request:request_correlation.py:41 {'status_code': 429, 'duration_ms': 4.2, 'event': 'request_completed', 'request_id': '576ef9f9-9b8', 'path': '/api/auth/v1/login', 'method': 'POST', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:30.105512Z'}
+________________ TestGDPRDeletion.test_delete_requires_confirm ________________
+
+self = <integration.test_gdpr_endpoints.TestGDPRDeletion object at 0x0000011C1EFAFFD0>
+
+    def test_delete_requires_confirm(self):
+        headers = _get_auth_headers()
+        r = client.delete("/api/gdpr/v1/delete-account", headers=headers)
+        assert r.status_code == 400
+>       assert "confirm=yes" in r.json()["detail"]
+                                ^^^^^^^^^^^^^^^^^^
+E       KeyError: 'detail'
+
+tests\integration\test_gdpr_endpoints.py:134: KeyError
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "request_id": "9ec7819d-a3c", "path": "/api/gdpr/v1/delete-account", "method": "DELETE", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:30.134899Z"}
+{"status_code": 400, "duration_ms": 10.5, "event": "request_completed", "request_id": "9ec7819d-a3c", "path": "/api/gdpr/v1/delete-account", "method": "DELETE", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:06:30.144598Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'request_id': '9ec7819d-a3c', 'path': '/api/gdpr/v1/delete-account', 'method': 'DELETE', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:30.134899Z'}
+INFO     request:request_correlation.py:41 {'status_code': 400, 'duration_ms': 10.5, 'event': 'request_completed', 'request_id': '9ec7819d-a3c', 'path': '/api/gdpr/v1/delete-account', 'method': 'DELETE', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:06:30.144598Z'}
+=========================== short test summary info ===========================
+FAILED tests/integration/test_auth_endpoints.py::TestRegistration::test_register_duplicate_email
+FAILED tests/integration/test_auth_endpoints.py::TestBruteForceProtection::test_lockout_after_five_failures
+FAILED tests/integration/test_auth_endpoints.py::TestBruteForceProtection::test_retry_after_header_present
+FAILED tests/integration/test_gdpr_endpoints.py::TestGDPRDeletion::test_delete_requires_confirm
+======================= 4 failed, 3 warnings in 12.43s ========================

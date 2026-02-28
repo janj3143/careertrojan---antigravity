@@ -25,20 +25,36 @@ import hashlib
 class ModelRegistry:
     """Central registry for all trained AI models"""
 
-    def __init__(self, registry_dir: str = "admin_portal/models", models_dir: str = "admin_portal/models"):
+    def __init__(self, registry_dir: str = None, models_dir: str = None):
         """
-        Initialize model registry
+        Initialize model registry.
 
-        Args:
-            registry_dir: Directory where registry.json is stored
-            models_dir: Directory where model files are stored
+        Uses config.py paths by default so all trainers and the unified
+        engine share the same model root.
         """
-        self.registry_dir = Path(registry_dir)
-        self.models_dir = Path(models_dir)
+        try:
+            from services.ai_engine.config import models_path as _cfg_models
+            default_models = _cfg_models
+        except ImportError:
+            default_models = Path(__file__).parent / "trained_models"
+
+        self.models_dir = Path(models_dir) if models_dir else default_models
+        self.registry_dir = Path(registry_dir) if registry_dir else self.models_dir
         self.registry_file = self.registry_dir / "registry.json"
 
         self.registry_dir.mkdir(parents=True, exist_ok=True)
         self.models_dir.mkdir(parents=True, exist_ok=True)
+
+        # Engine sub-directories
+        self.engine_dirs = {
+            "bayesian": self.models_dir / "bayesian",
+            "neural": self.models_dir / "neural",
+            "fuzzy": self.models_dir / "fuzzy",
+            "nlp": self.models_dir / "nlp",
+            "statistical": self.models_dir / "statistical",
+        }
+        for d in self.engine_dirs.values():
+            d.mkdir(parents=True, exist_ok=True)
 
         self.registry = self._load_registry()
 

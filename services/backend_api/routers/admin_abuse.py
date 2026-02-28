@@ -4,9 +4,11 @@ from pathlib import Path
 import json
 from typing import Any, Dict, List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-router = APIRouter(prefix="/api/admin/v1/abuse", tags=["admin-abuse"])
+from services.backend_api.utils.auth_deps import require_admin
+
+router = APIRouter(prefix="/api/admin/v1/abuse", tags=["admin-abuse"], dependencies=[Depends(require_admin)])
 
 import os
 PROJECT_ROOT = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))

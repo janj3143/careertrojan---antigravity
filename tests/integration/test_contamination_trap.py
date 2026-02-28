@@ -69,8 +69,12 @@ class TestContaminationTrap:
                 return [SALES_PROFILE]
 
         result = get_skills_radar(loader=MockLoader(), profile_id="contamination_trap_001")
-        assert len(result["series"]) == 1
-        series = result["series"][0]
+        assert len(result["series"]) >= 1
+        # Find the user's series (not peer average)
+        series = next(
+            (s for s in result["series"] if s.get("label") == "Sales Manager"),
+            result["series"][0],
+        )
         axes = result["axes"]
 
         # Find "Technical" axis index
@@ -121,11 +125,11 @@ class TestContaminationTrap:
             def get_profiles(self):
                 return [SALES_PROFILE]
 
-        elements = get_graph_data(loader=MockLoader())
-        # Elements is a list of nodes + edges
+        result = get_graph_data(loader=MockLoader())
+        # Result is {"nodes": [...], "edges": [...]}
         labels = []
-        for el in elements:
-            data = el.get("data", {})
+        for el in result.get("nodes", []) + result.get("edges", []):
+            data = el.get("data", {}) if isinstance(el, dict) else {}
             if "label" in data:
                 labels.append(data["label"].lower())
 

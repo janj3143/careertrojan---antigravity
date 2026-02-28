@@ -1,4 +1,4 @@
-"""Unified data ingestion runner for IntelliCV."""
+"""Unified data ingestion runner for CareerTrojan."""
 
 from __future__ import annotations
 
@@ -39,7 +39,7 @@ def run_cv_parser(source_dir: Path | None, output_dir: Path | None, force: bool)
 
 
 def main() -> int:
-    cli = argparse.ArgumentParser(description="Run IntelliCV ingestion pipeline")
+    cli = argparse.ArgumentParser(description="Run CareerTrojan ingestion pipeline")
     cli.add_argument(
         "--steps",
         default="phase1,cv",

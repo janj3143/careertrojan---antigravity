@@ -6,7 +6,7 @@ Provides AI-powered chat functionality for job title descriptions, meanings,
 and career insights. Integrates with various AI services and maintains a
 knowledge base of job title information.
 
-Author: IntelliCV-AI Team
+Author: CareerTrojan Team
 Date: October 2, 2025
 """
 

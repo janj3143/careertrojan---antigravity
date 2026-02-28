@@ -68,9 +68,7 @@ def compliance_summary(_: bool = Depends(require_admin), db: Session = Depends(g
         "timestamp": datetime.utcnow().isoformat(),
     }
 
-@router.get("/email/status")
-def email_status(_: bool = Depends(require_admin)):
-    _not_impl("Implement email status")
+# NOTE: /email/status stub removed — real implementation lives in admin_email_campaigns.py
 
 @router.get("/parsers/status")
 def parsers_status(_: bool = Depends(require_admin)):

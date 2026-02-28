@@ -1,0 +1,216 @@
+
+# === CareerTrojan — AI Heavy Requirements ===
+# Advanced AI/ML tools for server/admin use
+# Python 3.10 compatible
+# Consolidated from requirements_ai.txt, requirements_fusion.txt
+#
+# This provides comprehensive AI/ML capabilities including:
+# - Multi-model LLM support
+# - AI Fusion Engine (Fuzzy Logic + Bayesian Networks)
+# - Advanced ML tools and evaluation
+
+# --- Multi-model ---
+google-generativeai>=0.8.0
+anthropic>=0.34.0
+litellm>=1.49.0
+openai>=1.50.0
+cohere>=5.9.0            # Cohere AI models
+replicate>=0.34.0        # Replicate platform
+huggingface-hub>=0.25.0  # HuggingFace models
+transformers>=4.45.0     # HuggingFace transformers
+torch>=2.5.0             # PyTorch for heavy models
+torchvision>=0.20.0      # Computer vision models
+torchaudio>=2.5.0        # Audio processing models
+
+# --- Vector DB & RAG ---
+chromadb>=0.5.3
+weaviate-client>=4.6.5
+faiss-cpu>=1.8.0
+llama-index>=0.11.0
+unstructured>=0.15.0
+pinecone-client>=5.0.0
+qdrant-client>=1.11.0
+milvus>=2.4.0            # Milvus vector database
+elasticsearch>=8.15.0    # Elasticsearch for search
+opensearch-py>=2.7.0     # OpenSearch client
+pgvector>=0.3.5          # PostgreSQL vector extension
+langchain-community>=0.3.0  # Extended LangChain integrations
+llama-cpp-python>=0.2.90    # Local LLM inference
+
+# --- Evaluation & metrics ---
+ragas>=0.1.14
+deepeval>=0.21.80
+rouge-score>=0.1.2
+sacrebleu>=2.4.0
+bert-score>=0.3.13
+bleu>=0.6.0              # BLEU score evaluation
+meteor-score>=0.1.0      # METEOR evaluation
+evaluate>=0.4.2          # HuggingFace evaluate library
+datasets>=3.0.0          # HuggingFace datasets
+wandb>=0.18.0            # Weights & Biases for experiment tracking
+mlflow>=2.16.0           # MLflow for ML lifecycle management
+
+# --- PII / Safety ---
+presidio-analyzer>=2.2.355
+presidio-anonymizer>=2.2.355
+
+# --- HTTP / Async ---
+aiohttp>=3.9.5
+httpx>=0.27.0
+requests>=2.31.0
+
+# --- Config / Validation ---
+pydantic>=2.7.4
+pydantic-settings>=2.3.0
+python-dotenv>=1.0.0
+
+# --- Caching & Background jobs ---
+redis>=5.0.4
+celery[redis]>=5.4.0
+diskcache
+
+# --- Observability ---
+langfuse>=2.50.0
+langsmith>=0.1.0         # LangChain observability
+phoenix-evals>=0.15.0    # Arize Phoenix evaluation
+whylogs>=1.4.0           # Data quality monitoring
+evidently>=0.4.36        # ML model monitoring
+gradio>=4.44.0           # Web UI for ML models
+streamlit>=1.39.0        # Dashboard framework
+tensorboard>=2.18.0      # TensorBoard for visualization
+neptune>=1.12.0          # Neptune for experiment tracking
+comet-ml>=3.50.0         # Comet for ML experimentation
+
+# --- Advanced ML Tools ---
+optuna>=4.0.0            # Hyperparameter optimization
+ray[tune]>=2.38.0        # Distributed hyperparameter tuning
+dask>=2024.9.1           # Parallel computing
+modin>=0.32.0            # Pandas acceleration
+polars>=1.8.0            # Fast DataFrame library
+
+# --- Additional AI/ML Libraries ---
+scikit-learn>=1.7.0      # Machine learning library
+joblib>=1.4.0            # Parallel processing for sklearn
+xgboost>=2.1.0           # Gradient boosting
+lightgbm>=4.5.0          # Light gradient boosting
+catboost>=1.2.7          # Categorical boosting
+auto-sklearn>=0.15.0     # Automated machine learning
+shap>=0.46.0             # SHAP (SHapley Additive exPlanations)
+lime>=0.2.0.1            # Local Interpretable Model-agnostic Explanations
+
+# --- Deep Learning Extras ---
+torchtext>=0.20.0        # Text processing for PyTorch
+torchdata>=0.10.0        # Data loading for PyTorch
+lightning>=2.4.0         # PyTorch Lightning
+accelerate>=1.1.0        # HuggingFace Accelerate
+tokenizers>=0.20.0       # Fast tokenizers
+datasets>=3.0.0          # HuggingFace datasets (already above, but critical)
+
+# --- Computer Vision ---
+opencv-python>=4.10.0    # Computer vision
+pillow>=10.4.0           # Image processing
+imageio>=2.36.0          # Image I/O
+albumentations>=1.4.20   # Image augmentation
+
+# --- Modern AI Tools ---
+instructor>=1.11.0       # Structured outputs from LLMs  
+guidance>=0.1.16         # Microsoft Guidance for LLMs
+autogen>=0.4.0           # Multi-agent conversations
+langflow>=1.1.0          # Visual LLM workflow builder
+flowise>=2.1.0           # Drag & drop LLM apps
+chainlit>=1.3.0          # Build conversational AI
+panel>=1.5.0             # Create custom web apps
+voila>=0.5.8             # Turn Jupyter notebooks into web apps
+
+# --- Time Series & Forecasting ---
+prophet>=1.1.6           # Facebook Prophet for forecasting
+neuralprophet>=0.8.2     # Neural Prophet
+darts>=0.31.0            # Time series forecasting
+sktime>=0.35.0           # Time series machine learning
+tsfresh>=0.21.0          # Time series feature extraction
+
+# --- Text Processing & NLP Extras ---
+transformers[torch]>=4.45.0  # Full transformers with PyTorch
+sentence-transformers>=3.3.0  # Sentence embeddings
+spacy-transformers>=1.3.7     # spaCy transformers
+textstat>=0.7.4              # Text statistics
+wordcloud>=1.9.4             # Word cloud generation
+textdistance>=4.6.3          # Text distance algorithms
+
+# --- Core AI & ML Framework (from requirements_ai.txt) ---
+tiktoken>=0.8.0
+spacy>=3.6.0
+nltk>=3.8.1
+textblob>=0.17.1
+pyspellchecker>=0.8.1
+langchain>=0.3.0
+langchain-core>=0.3.0
+openai-whisper>=20230314  # Speech recognition
+
+# --- Evaluation & Metrics for LLM/RAG ---
+ragas>=0.1.14
+deepeval>=0.21.80
+rouge-score>=0.1.2
+sacrebleu>=2.4.0
+bert-score>=0.3.13
+
+# --- Background Jobs & Caching ---
+celery[redis]>=5.4.0
+kombu>=5.3.0        # Celery messaging
+vine>=5.1.0         # Celery utilities
+
+# --- AI Fusion Engine (Advanced Components) ---
+# Fuzzy Logic Systems
+fuzzy-logic>=1.2.0
+# Bayesian Networks and Probabilistic Models
+pymc>=5.0.0
+pomegranate>=0.14.8
+# Neural Networks and Deep Learning
+keras>=2.8.0
+pytorch-lightning>=1.6.0
+# Natural Language Processing
+gensim>=4.2.0
+# Performance and Optimization
+numba>=0.56.0
+cython>=0.29.0
+joblib>=1.1.0
+# Configuration Management
+hydra-core>=1.2.0
+omegaconf>=2.2.0
+# Time Series Analysis (for trend detection)
+statsforecast>=1.0.0
+prophet>=1.1.0
+# Graph Processing (for relationship analysis)
+igraph>=0.9.0
+# Computer Vision (for document analysis)
+opencv-python>=4.6.0
+pillow>=9.1.0
+# Audio Processing (for future voice features)
+librosa>=0.9.0
+soundfile>=0.10.0
+# Distributed Computing
+dask>=2022.6.0
+ray>=2.0.0
+# Model Serving and Deployment
+mlflow>=1.27.0
+bentoml>=1.0.0
+# Feature Engineering
+featuretools>=1.11.0
+# Hyperparameter Optimization
+optuna>=2.10.0
+hyperopt>=0.2.0
+# Model Interpretability
+shap>=0.41.0
+lime>=0.2.0
+# Reinforcement Learning (for adaptive systems)
+stable-baselines3>=1.5.0
+gym>=0.24.0
+# Knowledge Graphs
+rdflib>=6.1.0
+owlrl>=6.0.0
+# Quantum Computing (future integration)
+qiskit>=0.37.0
+# Blockchain Integration (for secure data)
+web3>=5.30.0
+# Time Management
+pendulum>=2.1.0

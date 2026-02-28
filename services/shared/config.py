@@ -1,6 +1,6 @@
 """
 =============================================================================
-IntelliCV Shared Configuration Layer (Runtime Optimized)
+CareerTrojan Shared Configuration Layer (Runtime Optimized)
 =============================================================================
 
 Central configuration for all data paths and directory structures.
@@ -19,8 +19,8 @@ from typing import Dict, List, Optional
 # CORE DIRECTORY STRUCTURE
 # =============================================================================
 
-# Base IntelliCV directory — auto-detect from env or from file location
-INTELLICV_ROOT = Path(os.getenv(
+# Base CareerTrojan directory — auto-detect from env or from file location
+CAREERTROJAN_ROOT = Path(os.getenv(
     "CAREERTROJAN_ROOT",
     str(Path(__file__).resolve().parents[2])  # …/services/shared → project root
 ))
@@ -28,22 +28,22 @@ INTELLICV_ROOT = Path(os.getenv(
 # Core data directories — driven by CAREERTROJAN_DATA_ROOT env var
 AI_DATA_DIR = Path(os.getenv(
     "CAREERTROJAN_DATA_ROOT",
-    str(INTELLICV_ROOT / "data" / "ai_data_final")
+    str(CAREERTROJAN_ROOT / "data" / "ai_data_final")
 ))
-RAW_DATA_DIR = INTELLICV_ROOT / "raw_data"
-WORKING_COPY_DIR = INTELLICV_ROOT / "working"
+RAW_DATA_DIR = CAREERTROJAN_ROOT / "raw_data"
+WORKING_COPY_DIR = CAREERTROJAN_ROOT / "working"
 
 AI_DATA_ROOT = AI_DATA_DIR
 
 # Additional structure
-LOGS_DIR = INTELLICV_ROOT / "logs"
-SCRIPTS_DIR = INTELLICV_ROOT / "scripts"
-SHARED_BACKEND_DIR = INTELLICV_ROOT / "shared_backend"
+LOGS_DIR = CAREERTROJAN_ROOT / "logs"
+SCRIPTS_DIR = CAREERTROJAN_ROOT / "scripts"
+SHARED_BACKEND_DIR = CAREERTROJAN_ROOT / "shared_backend"
 
 # Apps
-USER_PORTAL_DIR = INTELLICV_ROOT / "apps" / "user-portal"
-ADMIN_PORTAL_DIR = INTELLICV_ROOT / "apps" / "admin-portal"
-MENTOR_PORTAL_DIR = INTELLICV_ROOT / "apps" / "mentor-portal"
+USER_PORTAL_DIR = CAREERTROJAN_ROOT / "apps" / "user-portal"
+ADMIN_PORTAL_DIR = CAREERTROJAN_ROOT / "apps" / "admin-portal"
+MENTOR_PORTAL_DIR = CAREERTROJAN_ROOT / "apps" / "mentor-portal"
 
 # =============================================================================
 # AI DATA FINAL STRUCTURE

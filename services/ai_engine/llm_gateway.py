@@ -27,6 +27,8 @@ from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
 from datetime import datetime
 
+from services.shared.circuit_breaker import get_circuit_registry, CircuitOpenError
+
 logger = logging.getLogger(__name__)
 
 
@@ -351,14 +353,37 @@ class LLMGateway:
         )
 
     def _call_provider(self, name: str, prompt: str, **kwargs) -> LLMResponse:
-        """Call a specific provider."""
+        """Call a specific provider with circuit breaker protection."""
         prov = self._providers.get(name)
         if not prov:
             return LLMResponse(text="", provider=name, model="", success=False, error=f"Provider '{name}' not initialized")
+
+        cb = get_circuit_registry().get(name, failure_threshold=5, recovery_timeout=60)
+
+        # Check circuit state before calling
+        if not cb.allow_request():
+            stats = cb.get_stats()
+            logger.warning("Circuit breaker OPEN for '%s' — skipping call (retry after %.0fs)", name, stats.time_in_current_state)
+            return LLMResponse(
+                text="", provider=name, model="", success=False,
+                error=f"Circuit breaker OPEN for {name} — provider temporarily disabled",
+            )
+
         try:
-            return prov.generate(prompt, **kwargs)
+            resp = prov.generate(prompt, **kwargs)
+            if resp.success:
+                cb.record_success()
+            else:
+                cb.record_failure()
+            return resp
         except Exception as e:
+            cb.record_failure()
             return LLMResponse(text="", provider=name, model="", success=False, error=str(e))
+
+    def circuit_breaker_status(self) -> Dict[str, Any]:
+        """Get circuit breaker stats for all providers."""
+        registry = get_circuit_registry()
+        return registry.all_stats()
 
     def health_check(self) -> Dict[str, bool]:
         """Check availability of all providers."""

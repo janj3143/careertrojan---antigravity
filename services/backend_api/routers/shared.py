@@ -17,12 +17,14 @@ router = APIRouter(
 
 
 @router.get("/health")
+@router.get("/healthz", include_in_schema=False)
 async def health_check():
     """Lightweight liveness probe — always returns fast."""
     return {"status": "ok"}
 
 
 @router.get("/health/deep")
+@router.get("/readyz", include_in_schema=False)
 def deep_health_check(db: Session = Depends(get_db)):
     """
     Readiness probe — checks all critical dependencies:
@@ -74,7 +76,7 @@ def deep_health_check(db: Session = Depends(get_db)):
         }
     checks["directories"] = dir_results
 
-    # 4. Redis (best-effort — not blocking if absent)
+    # 4. Redis (properly reports degraded if unreachable)
     try:
         import redis
         redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -82,7 +84,51 @@ def deep_health_check(db: Session = Depends(get_db)):
         r.ping()
         checks["redis"] = {"status": "ok"}
     except Exception:
-        checks["redis"] = {"status": "unavailable", "detail": "Redis not reachable (non-blocking)"}
+        checks["redis"] = {"status": "degraded", "detail": "Redis not reachable — rate limiting and caching impaired"}
+        overall = "degraded"
+
+    # 5. AI Engine / LLM Providers
+    try:
+        from services.ai_engine.llm_gateway import llm_gateway
+        provider_health = llm_gateway.health_check()
+        any_available = any(provider_health.values())
+        checks["ai_providers"] = {
+            "status": "ok" if any_available else "degraded",
+            "providers": provider_health,
+        }
+        if not any_available:
+            overall = "degraded"
+    except Exception as e:
+        checks["ai_providers"] = {"status": "unavailable", "detail": str(e)[:200]}
+        overall = "degraded"
+
+    # 6. Circuit breaker status
+    try:
+        from services.shared.circuit_breaker import get_circuit_registry
+        cb_stats = get_circuit_registry().all_stats()
+        open_circuits = [n for n, s in cb_stats.items() if s.get("state") == "open"]
+        checks["circuit_breakers"] = {
+            "status": "degraded" if open_circuits else "ok",
+            "open_circuits": open_circuits,
+            "total_breakers": len(cb_stats),
+        }
+        if open_circuits:
+            overall = "degraded"
+    except Exception:
+        checks["circuit_breakers"] = {"status": "unknown"}
+
+    # 7. Data index freshness
+    try:
+        from services.shared.data_index import get_index_registry
+        freshness = get_index_registry().is_fresh(max_age_hours=24)
+        stale = [k for k, v in freshness.items() if not v]
+        checks["data_indexes"] = {
+            "status": "ok" if not stale else "warning",
+            "freshness": freshness,
+            "stale": stale,
+        }
+    except Exception:
+        checks["data_indexes"] = {"status": "unknown"}
 
     return {
         "status": overall,

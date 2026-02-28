@@ -1,0 +1,9 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\careertrojan
+configfile: pytest.ini
+plugins: anyio-4.12.1
+collected 53 items
+
+tests\unit\test_login_protection.py .............                        [ 24%]
+tests\unit\test_auth_roles.py ............

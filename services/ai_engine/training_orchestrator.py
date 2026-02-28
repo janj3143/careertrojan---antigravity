@@ -23,6 +23,7 @@ Usage:
 """
 
 import json
+import logging
 import pickle
 import sys
 from pathlib import Path
@@ -30,24 +31,26 @@ from datetime import datetime
 from typing import Dict, List, Tuple, Optional
 import traceback
 
-# Import the existing trainer
-try:
-    from train_all_models import IntelliCVModelTrainer
-except ImportError as e:
-    print(f"❌ train_all_models.py import error: {e}")
-    print("   Make sure it's in the same directory.")
-    sys.exit(1)
-except KeyboardInterrupt:
-    print("\n⚠️  Import interrupted. This can happen with heavy ML libraries.")
-    print("   Try running again, or use a lighter environment.")
-    sys.exit(1)
+logger = logging.getLogger(__name__)
 
-# Import model registry
+# Import the existing trainer (using absolute imports, no sys.exit on failure)
+CareerTrojanModelTrainer = None  # type: ignore
+ModelRegistry = None  # type: ignore
 try:
-    from model_registry import ModelRegistry
+    from services.ai_engine.train_all_models import CareerTrojanModelTrainer  # noqa: N811
 except ImportError:
-    print("❌ model_registry.py not found. Make sure it's in the same directory.")
-    sys.exit(1)
+    try:
+        from train_all_models import CareerTrojanModelTrainer  # noqa: N811
+    except ImportError as e:
+        logger.warning("train_all_models.py import failed: %s", e)
+
+try:
+    from services.ai_engine.model_registry import ModelRegistry  # noqa: N811
+except ImportError:
+    try:
+        from model_registry import ModelRegistry  # noqa: N811
+    except ImportError as e:
+        logger.warning("model_registry.py import failed: %s", e)
 
 
 class TrainingCheckpoint:
@@ -108,7 +111,7 @@ class TrainingOrchestrator:
         self.registry_dir = registry_dir
 
         # Initialize components
-        self.trainer = IntelliCVModelTrainer(data_dir=data_dir)
+        self.trainer = CareerTrojanModelTrainer(data_dir=data_dir)
         self.registry = ModelRegistry(registry_dir=registry_dir, models_dir=models_dir)
         self.checkpoint = TrainingCheckpoint()
 

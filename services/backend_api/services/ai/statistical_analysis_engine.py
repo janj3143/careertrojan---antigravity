@@ -1,7 +1,7 @@
 """
 Statistical Analysis Engine
 ===========================
-Provides robust statistical methods for the IntelliCV Platform.
+Provides robust statistical methods for the CareerTrojan Platform.
 Designed to run in both heavy (Pandas) and light (Pure Python) environments.
 
 Capabilities (Top 15 Techniques):
@@ -168,10 +168,40 @@ class StatisticalAnalysisEngine:
             
         return {"centroids": centroids, "labels": labels}
 
-    # 9. Factor Analysis (Stub)
-    def factor_analysis(self, correlation_matrix: List[List[float]]) -> Dict[str, Any]:
-        # Returns simulated factors
-        return {"factors": ["Skill_Group_A", "Skill_Group_B"], "loadings": [[0.8, 0.1], [0.2, 0.9]]}
+    # 9. Factor Analysis (Power Iteration)
+    def factor_analysis(self, correlation_matrix: List[List[float]], n_factors: int = 2) -> Dict[str, Any]:
+        """Extract factors from a correlation matrix via power iteration."""
+        if not correlation_matrix or not correlation_matrix[0]:
+            return {"factors": [], "loadings": []}
+
+        n = len(correlation_matrix)
+        n_factors = min(n_factors, n)
+        matrix = [row[:] for row in correlation_matrix]  # deep copy for deflation
+        loadings = []
+
+        for f in range(n_factors):
+            vec = [1.0 / math.sqrt(n)] * n
+            eigenvalue = 0.0
+            for _ in range(100):
+                new_vec = [sum(matrix[i][j] * vec[j] for j in range(n)) for i in range(n)]
+                norm = math.sqrt(sum(v ** 2 for v in new_vec))
+                if norm < 1e-10:
+                    break
+                vec = [v / norm for v in new_vec]
+            mv = [sum(matrix[i][j] * vec[j] for j in range(n)) for i in range(n)]
+            eigenvalue = sum(vec[i] * mv[i] for i in range(n))
+            loading = [round(v * math.sqrt(abs(eigenvalue)), 3) for v in vec]
+            loadings.append(loading)
+            # Deflate matrix
+            for i in range(n):
+                for j in range(n):
+                    matrix[i][j] -= eigenvalue * vec[i] * vec[j]
+
+        # Transpose to [variables x factors]
+        loadings_t = [[loadings[f][v] for f in range(n_factors)] for v in range(n)]
+        factor_names = [f"Factor_{f + 1}" for f in range(n_factors)]
+
+        return {"factors": factor_names, "loadings": loadings_t}
 
     # 10. Bayesian Analysis (Naive likelihood)
     def bayesian_probability(self, prior: float, likelihood: float, evidence: float) -> float:

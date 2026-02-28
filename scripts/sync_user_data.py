@@ -34,11 +34,11 @@ except ImportError:
 # ── Resolve paths from env (cross-platform) ─────────────────
 SOURCE = Path(os.getenv(
     "CAREERTROJAN_USER_DATA",
-    r"L:\VS ai_data final - version\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
+    r"L:\antigravity_version_ai_data_final\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
 ))
 MIRROR = Path(os.getenv(
     "CAREERTROJAN_USER_DATA_MIRROR",
-    r"E:\CareerTrojan\USER_DATA_COPY" if sys.platform == "win32" else "/mnt/careertrojan/backups/user_data"
+    r"L:\antigravity_version_ai_data_final\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/backups/user_data"
 ))
 LOG_DIR = Path(os.getenv(
     "CAREERTROJAN_APP_LOGS",

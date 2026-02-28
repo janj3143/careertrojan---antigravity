@@ -24,28 +24,28 @@ This document defines the data architecture, synchronisation strategy, session m
 
 | Location | Purpose | Access Mode |
 |----------|---------|-------------|
-| `L:\VS ai_data final - version\ai_data_final\` | AI knowledge base (JSON, parsed CVs, jobs, skills) | Read/Write |
-| `L:\VS ai_data final - version\automated_parser\` | Raw document ingestion pipeline (CVs, JDs, emails) | Read/Write |
-| `L:\VS ai_data final - version\USER DATA\` | User sessions, profiles, interactions, uploads | Read/Write |
+| `L:\antigravity_version_ai_data_final\ai_data_final\` | AI knowledge base (JSON, parsed CVs, jobs, skills) | Read/Write |
+| `L:\antigravity_version_ai_data_final\automated_parser\` | Raw document ingestion pipeline (CVs, JDs, emails) | Read/Write |
+| `L:\antigravity_version_ai_data_final\USER DATA\` | User sessions, profiles, interactions, uploads | Read/Write |
 
 ### 2.2 Runtime Mounts (`C:\careertrojan\data-mounts\`)
 
 | Mount Name | Junction Target | Status |
 |-----------|-----------------|--------|
-| `ai-data` | `L:\VS ai_data final - version` | ✅ Active (junction) |
-| `parser` | `L:\VS ai_data final - version\automated_parser` | ✅ Active (junction) |
-| `user-data` | `L:\VS ai_data final - version\USER DATA` | 🔧 TO CREATE |
+| `ai-data` | `L:\antigravity_version_ai_data_final` | ✅ Active (junction) |
+| `parser` | `L:\antigravity_version_ai_data_final\automated_parser` | ✅ Active (junction) |
+| `user-data` | `L:\antigravity_version_ai_data_final\USER DATA` | 🔧 TO CREATE |
 | `logs/` | Local directory | ✅ Active |
 | `models/` | Local directory | ✅ Active |
 
 ### 2.3 Environment Variables (`.env`)
 
 ```env
-CAREERTROJAN_DATA_ROOT=L:\VS ai_data final - version
-CAREERTROJAN_AI_DATA=L:\VS ai_data final - version\ai_data_final
-CAREERTROJAN_PARSER_ROOT=L:\VS ai_data final - version\automated_parser
-CAREERTROJAN_USER_DATA=L:\VS ai_data final - version\USER DATA
-CAREERTROJAN_USER_DATA_MIRROR=E:\CareerTrojan\USER_DATA_COPY
+CAREERTROJAN_DATA_ROOT=L:\antigravity_version_ai_data_final
+CAREERTROJAN_AI_DATA=L:\antigravity_version_ai_data_final\ai_data_final
+CAREERTROJAN_PARSER_ROOT=L:\antigravity_version_ai_data_final\automated_parser
+CAREERTROJAN_USER_DATA=L:\antigravity_version_ai_data_final\USER DATA
+CAREERTROJAN_USER_DATA_MIRROR=L:\antigravity_version_ai_data_final\USER DATA
 CAREERTROJAN_WORKING_ROOT=C:\careertrojan\working\working_copy
 ```
 
@@ -69,7 +69,7 @@ The FastAPI backend (`services/backend_api/main.py`) reads `CAREERTROJAN_DATA_RO
 
 | Primary (L:) | Mirror (E:) |
 |--------------|-------------|
-| `L:\VS ai_data final - version\USER DATA\` | `E:\CareerTrojan\USER_DATA_COPY\` |
+| `L:\antigravity_version_ai_data_final\USER DATA\` | `L:\antigravity_version_ai_data_final\USER DATA\` |
 
 ### 3.3 Directory Structure (Both Locations)
 
@@ -165,7 +165,7 @@ Anything the user generates that could enrich the AI:
 - **Coaching conversation history**
 - **Match acceptance/rejection decisions**
 
-All of this is stored in `USER DATA/` and mirrored to `E:\CareerTrojan\USER_DATA_COPY\`.
+All of this is stored in `USER DATA/` and mirrored to `L:\antigravity_version_ai_data_final\USER DATA\`.
 
 ---
 
@@ -239,20 +239,20 @@ The AI orchestrator (`services/ai_engine/`) reads from `USER DATA/interactions/`
 If E: mirror falls behind:
 ```powershell
 # Full re-sync from L: to E:
-robocopy "L:\VS ai_data final - version\USER DATA" "E:\CareerTrojan\USER_DATA_COPY" /MIR /MT:8 /LOG:C:\careertrojan\logs\resync.log
+robocopy "L:\antigravity_version_ai_data_final\USER DATA" "L:\antigravity_version_ai_data_final\USER DATA" /MIR /MT:8 /LOG:C:\careertrojan\logs\resync.log
 ```
 
 If L: is unavailable:
 ```powershell
 # Emergency: promote E: mirror to primary (temporary)
-$env:CAREERTROJAN_USER_DATA = "E:\CareerTrojan\USER_DATA_COPY"
+$env:CAREERTROJAN_USER_DATA = "L:\antigravity_version_ai_data_final\USER DATA"
 ```
 
 ---
 
 ## 7. Task Checklist
 
-- [x] Create `data-mounts/user-data` junction → `L:\VS ai_data final - version\USER DATA`
+- [x] Create `data-mounts/user-data` junction → `L:\antigravity_version_ai_data_final\USER DATA`
 - [x] Update `.env` with all data path variables
 - [x] Implement `scripts/sync_user_data.py` (watchdog filesystem watcher + mirror)
 - [x] Implement `services/workers/ai_orchestrator_enrichment.py` (interactions → ai_data_final)

@@ -32,8 +32,8 @@ if (Test-Path $ENV_FILE) {
 
 # ── 2. Validate Drive Connections ─────────────────────────────
 $drives = @{
-    "L: (Source of Truth)" = "L:\VS ai_data final - version"
-    "E: (Mirror Backup)"  = "E:\CareerTrojan"
+    "L: (Source of Truth)" = "L:\antigravity_version_ai_data_final"
+    "E: (Mirror Backup)"  = "C:\careertrojan"
     "C: (App Root)"        = $APP_ROOT
 }
 

@@ -1,8 +1,10 @@
 # =============================================================================
-# CareerTrojan Admin Portal — Multi-stage Dockerfile
+# CareerTrojan Admin Portal — Multi-stage Dockerfile (React/Vite)
 # =============================================================================
 # Build:   docker build -t careertrojan-admin ./apps/admin
-# Run:     docker run -p 8501:80 careertrojan-admin
+# Run:     docker run -p 8601:80 careertrojan-admin
+# NOTE:    Streamlit .py files in pages/ are LEGACY — Docker builds React only.
+#          Only src/ → dist/ is served. Python files never enter the final image.
 # =============================================================================
 
 # ── Build Stage ──────────────────────────────────────────────────────────

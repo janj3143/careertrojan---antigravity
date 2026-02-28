@@ -1,5 +1,5 @@
 """
-Azure Integration Framework for IntelliCV
+Azure Integration Framework for CareerTrojan
 Comprehensive Azure cloud services integration with security and scalability
 """
 
@@ -83,10 +83,10 @@ class AzureConfigurationManager:
             "subscription_id": "",
             "tenant_id": "",
             "client_id": "",
-            "resource_group": "intellicv-rg",
+            "resource_group": "careertrojan-rg",
             "location": "eastus",
-            "storage_account": "intellicvstorage",
-            "keyvault_name": "intellicv-keyvault",
+            "storage_account": "careertrojanstorage",
+            "keyvault_name": "careertrojan-keyvault",
             "cognitive_services": {
                 "text_analytics_endpoint": "",
                 "openai_endpoint": "",
@@ -228,7 +228,7 @@ class AzureConfigurationManager:
 
 class AzureStorageManager:
     """
-    Azure Blob Storage management for IntelliCV data
+    Azure Blob Storage management for CareerTrojan data
     """
 
     def __init__(self, config_manager: AzureConfigurationManager):
@@ -503,9 +503,9 @@ class AzureCognitiveServicesManager:
             print(f"❌ Key phrase extraction error: {e}")
             return []
 
-class IntelliCVAzureIntegration:
+class CareerTrojanAzureIntegration:
     """
-    Main Azure integration class for IntelliCV
+    Main Azure integration class for CareerTrojan
     """
 
     def __init__(self, config_path: Optional[str] = None):
@@ -626,11 +626,11 @@ class IntelliCVAzureIntegration:
 # Global Azure integration instance
 _azure_integration = None
 
-def get_azure_integration() -> IntelliCVAzureIntegration:
+def get_azure_integration() -> CareerTrojanAzureIntegration:
     """Get global Azure integration instance"""
     global _azure_integration
     if _azure_integration is None:
-        _azure_integration = IntelliCVAzureIntegration()
+        _azure_integration = CareerTrojanAzureIntegration()
     return _azure_integration
 
 def test_azure_integration():

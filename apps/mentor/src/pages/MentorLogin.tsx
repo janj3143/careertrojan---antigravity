@@ -163,7 +163,7 @@ export default function MentorLogin() {
                     {/* Become a Mentor Link */}
                     <div className="text-center">
                         <a
-                            href="/user/mentor-application"
+                            href="/mentor/apply"
                             className="text-sm text-green-400 hover:text-green-300 transition"
                         >
                             Apply to become a mentor →

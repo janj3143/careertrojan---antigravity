@@ -15,6 +15,9 @@ from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone
 import logging
 
+from services.backend_api.utils.auth_deps import get_current_user, optional_user
+from services.backend_api.db import models
+
 # Import credit system
 try:
     from services.backend_api.services.credit_system import (
@@ -111,17 +114,9 @@ class TeaserResponse(BaseModel):
 # HELPER FUNCTIONS
 # ============================================================================
 
-def _get_user_id() -> str:
-    """Get current user ID from auth context.
-
-    TODO: Wire to real JWT / session dependency once auth middleware is live.
-    Until then, raise so callers know auth is required.
-    """
-    # When auth middleware is wired, this will read from request.state.user_id
-    raise HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Authentication required — user identity not resolved",
-    )
+def _get_user_id(current_user: models.User = Depends(get_current_user)) -> str:
+    """Get current user ID from JWT auth context."""
+    return str(current_user.id)
 
 
 def _ensure_credit_system():

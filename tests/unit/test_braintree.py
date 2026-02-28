@@ -22,9 +22,15 @@ from fastapi.testclient import TestClient
 
 @pytest.fixture
 def client():
-    """Fresh TestClient with rate limiter + in-memory state reset for each test."""
+    """Fresh TestClient with rate limiter + in-memory state reset for each test.
+
+    Overrides the ``_get_user_id_from_token`` dependency so that payment
+    endpoints receive a deterministic test user-id without requiring a real
+    JWT token.
+    """
     from services.backend_api.main import app
     from services.backend_api.routers import payment
+    from services.backend_api.routers.payment import _get_user_id_from_token
 
     # Reset rate limiter counters
     _clear_rate_limiter(app)
@@ -33,7 +39,12 @@ def client():
     payment._user_subscriptions.clear()
     payment._payment_history.clear()
 
-    return TestClient(app, raise_server_exceptions=False)
+    # Provide a fake user-id so endpoints don't require a real JWT
+    app.dependency_overrides[_get_user_id_from_token] = lambda: "test-user-1"
+    try:
+        yield TestClient(app, raise_server_exceptions=False)
+    finally:
+        app.dependency_overrides.pop(_get_user_id_from_token, None)
 
 
 def _clear_rate_limiter(app):
@@ -120,7 +131,7 @@ class TestPaymentEndpoints:
         data = resp.json()
         assert "plans" in data
         plan_ids = {p["id"] for p in data["plans"]}
-        assert plan_ids == {"free", "monthly", "annual", "elitepro"}
+        assert plan_ids == {"free", "monthly", "annual", "elite"}
         assert data["current_plan"] == "free"  # default for demo user
 
     def test_get_single_plan(self, client):
@@ -148,35 +159,35 @@ class TestPaymentEndpoints:
             "plan_id": "monthly"
         })
         assert resp.status_code == 400
-        assert "Payment method required" in resp.json()["detail"]
+        body = resp.json()
+        msg = body.get("error", {}).get("message", "") or body.get("detail", "")
+        assert "Payment method required" in msg
 
     def test_process_paid_plan_with_stub(self, client):
-        """When Braintree is not configured, falls back to stub processor."""
+        """When Braintree is not configured, returns 503 (never fakes success)."""
         with patch("services.backend_api.routers.payment.braintree_service") as mock_bt:
             mock_bt.is_configured.return_value = False
-            resp = client.post("/api/payment/v1/process", json={
-                "plan_id": "monthly",
-                "payment_method_nonce": "fake-valid-nonce"
-            })
-        assert resp.status_code == 200
+            with patch("services.backend_api.routers.payment.BRAINTREE_AVAILABLE", False):
+                resp = client.post("/api/payment/v1/process", json={
+                    "plan_id": "monthly",
+                    "payment_method_nonce": "fake-valid-nonce"
+                })
+        assert resp.status_code == 503
         data = resp.json()
-        assert data["success"] is True
-        assert data["plan_id"] == "monthly"
-        assert data["amount_charged"] == 15.99
+        msg = (data.get("error", {}).get("message", "") or data.get("detail", "")).lower()
+        assert "not configured" in msg or "gateway" in msg
 
     def test_process_paid_plan_with_promo_code(self, client):
+        """When Braintree is not configured, promo code doesn't matter — still 503."""
         with patch("services.backend_api.routers.payment.braintree_service") as mock_bt:
             mock_bt.is_configured.return_value = False
-            resp = client.post("/api/payment/v1/process", json={
-                "plan_id": "annual",
-                "payment_method_nonce": "fake-nonce",
-                "promo_code": "LAUNCH20"
-            })
-        assert resp.status_code == 200
-        data = resp.json()
-        assert data["success"] is True
-        # 149.99 - 20% = 119.992 → rounded to 119.99
-        assert data["amount_charged"] == pytest.approx(119.99, abs=0.01)
+            with patch("services.backend_api.routers.payment.BRAINTREE_AVAILABLE", False):
+                resp = client.post("/api/payment/v1/process", json={
+                    "plan_id": "annual",
+                    "payment_method_nonce": "fake-nonce",
+                    "promo_code": "LAUNCH20"
+                })
+        assert resp.status_code == 503
 
     def test_invalid_plan_returns_400(self, client):
         resp = client.post("/api/payment/v1/process", json={
@@ -208,14 +219,15 @@ class TestPaymentEndpoints:
         assert resp.status_code == 200
         data = resp.json()
         assert data["status"] == "healthy"
-        assert data["gateway"] == "braintree"
+        assert "primary_gateway" in data
         assert "braintree_configured" in data
 
     def test_gateway_info_endpoint(self, client):
         resp = client.get("/api/payment/v1/gateway-info")
         assert resp.status_code == 200
         data = resp.json()
-        assert data["gateway"] == "braintree"
+        assert "primary_gateway" in data
+        assert "braintree" in data
 
     def test_list_methods_returns_empty_when_unconfigured(self, client):
         resp = client.get("/api/payment/v1/methods")

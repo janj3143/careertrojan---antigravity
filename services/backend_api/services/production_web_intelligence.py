@@ -14,7 +14,7 @@ Features:
 - Rate limiting and error handling
 - Caching for performance
 
-Author: IntelliCV-AI System
+Author: CareerTrojan System
 Date: December 2024
 """
 

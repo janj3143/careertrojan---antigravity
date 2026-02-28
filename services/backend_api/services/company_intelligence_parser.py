@@ -1,8 +1,19 @@
 # --- Advanced web scraping integration ---
-from advanced_web_scraper import robust_get
-from bs4 import BeautifulSoup
+try:
+    from advanced_web_scraper import robust_get
+    WEB_SCRAPER_AVAILABLE = True
+except ImportError:
+    robust_get = None  # type: ignore
+    WEB_SCRAPER_AVAILABLE = False
 
-# Enhanced Sidebar Integration
+try:
+    from bs4 import BeautifulSoup
+    BS4_AVAILABLE = True
+except ImportError:
+    BeautifulSoup = None  # type: ignore
+    BS4_AVAILABLE = False
+
+# Enhanced Sidebar Integration (only active in Streamlit context)
 import sys
 from pathlib import Path
 shared_path = Path(__file__).parent.parent / "shared"
@@ -16,15 +27,20 @@ except ImportError:
     ENHANCED_SIDEBAR_AVAILABLE = False
 
 
-# Activate Enhanced Sidebar
-if ENHANCED_SIDEBAR_AVAILABLE:
-    inject_sidebar_css()
-    render_enhanced_sidebar()
+# Only activate sidebar in Streamlit context (not when imported as a library)
+def _init_sidebar():
+    if ENHANCED_SIDEBAR_AVAILABLE:
+        try:
+            import streamlit as _st  # noqa: F401
+            inject_sidebar_css()
+            render_enhanced_sidebar()
+        except (ImportError, RuntimeError):
+            pass
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-IntelliCV Company Intelligence Parser — Refactored (Robust + Safe)
+CareerTrojan Company Intelligence Parser — Refactored (Robust + Safe)
 - Safer search via DuckDuckGo HTML (no Google SERP scraping).
 - Robots.txt awareness, retries/backoff, timeouts.
 - Canonical domain keys + SQLite persistence, JSON export mirror.
@@ -63,7 +79,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(
 logger = logging.getLogger("company-intel")
 
 # ---------- HTTP & Search ----------
-USER_AGENT = "Mozilla/5.0 (compatible; IntelliCVBot/1.0; +https://example.com/bot)"
+USER_AGENT = "Mozilla/5.0 (compatible; CareerTrojanBot/1.0; +https://example.com/bot)"
 DEFAULT_TIMEOUT = 12
 MAX_RETRIES = 3
 BACKOFF = 0.6
@@ -367,7 +383,7 @@ from market_intelligence.enrich import enrich_company
 
 # ---------- CLI ----------
 def parse_args():
-    p = argparse.ArgumentParser(description="IntelliCV Company Intelligence (refactored)")
+    p = argparse.ArgumentParser(description="CareerTrojan Company Intelligence (refactored)")
     p.add_argument("--companies", nargs="*", help="Company names to enrich")
     p.add_argument("--input-dir", type=str, help="Directory of .txt files to scan")
     p.add_argument("--cache-days", type=int, default=30)

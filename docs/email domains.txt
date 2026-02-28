@@ -1,0 +1,766 @@
+Lets do a really detailed - re parse - through the automated parser - going deep into all the sub folders - then make sure this is all - lined up with the ai_data_final - in the respective folder
+When this is done as a test - do a full email count - part of the expected different is that we are not fully parsing the CSV now are we - using logic to find the emails
+So we are not using simple email - expected terminolly such if @ is near. (In fact simpler - is @ - then a single word- is followed by . ( because there are global ends such as .com .co. .de etc - we really need a list of these - to 
+Summary of Top 15 Most Common Alternatives (2025/2026)
+According to recent industry data, these are the most common alternatives to .com to consider for a global brand:
+.net
+.org
+.co
+.us (USA focus)
+.ai (Tech focus)
+.io (Tech focus)
+.xyz
+.shop
+.pro
+.store
+.online
+.inc
+.llc
+.info
+.tech 
+
+https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains#Proposed_internationalized_ccTLDs
+
+Chinese (.cn)
+Name	Chinese term	Translation	Restrictions	Operator	IDN	DNSSEC
+.ren	人 rén	"people/person" in Mandarin pinyin	Restricted TLD[11]	(Cancelled)[12]	Unknown	Yes
+.shouji	手机 shǒujī	mobile phone	—	QIHOO 360 TECHNOLOGY CO. LTD.		
+.tushu	图书 túshū	books	—	Amazon Registry Services, Inc.		
+.wanggou	网购 wǎnggòu	online shopping	—	Amazon Registry Services, Inc.		
+.weibo	微博 wēibó	microblogging	—	Sina Corporation		
+.xihuan	喜欢 xǐhuān	like	—	QIHOO 360 TECHNOLOGY CO. LTD.		
+.xin	信 xìn	credit; honest	—	Alibaba Group		
+French (.fr)
+Name	Translation	Restrictions	Operator	IDN	DNSSEC
+.arte	Association relative à la télévision européenne, whose acronym is arte, "art"	—	Association Relative à la Télévision Européenne G.E.I.E.	[13]	
+.clinique	"clinic or hospital"	—	The Estée Lauder Companies Inc.	[13]	
+.luxe	"luxury"	—	Minds + Machines[n 1]	Unknown	Yes
+.maison	"house"	—	Identity Digital[n 2]	Yes	Yes
+.moi	"me"	—	Amazon Registry Services, Inc.	[13]	
+.rsvp	Invitations and replies	—	Charleston Road Registry Inc. (Google)[n 3]	Unknown	Yes
+.sarl	Société à responsabilité limitée, Francophone Limited liability company	—	Identity Digital[n 2]	Yes	Yes
+German (.de)
+Name	Translation	Restrictions	Operator	IDN	DNSSEC
+.epost	e-mail	—	Deutsche Post AG		
+.gmbh	GmbH	Upon request, you will be required to demonstrate current or pending designation as a GmbH company whose existence can be validated with the respective public authorities in Austria, Germany, Liechtenstein or Switzerland.	Identity Digital	Yes	Yes
+.haus	"house"	—	Identity Digital[n 4]	Yes	Yes
+.immobilien	"real estate"	—	Identity Digital[n 4]	Yes[14]	Yes
+.jetzt	"now"	—	Identity Digital	Yes	Yes
+.kaufen	"buy"	—	Identity Digital[n 4]	Yes[14]	Yes
+.kinder	"children"	restricted .brand TLD	Ferrero Trading Lux S.A.		
+.reise	"travel"	Must be an eligible member of the travel business community; also, domain must be used for travel-related purposes.[15]	Identity Digital	Yes[14]	Yes
+.reisen	"traveling"	—	Identity Digital[n 2]	Yes[14]	Yes
+.schule	"school"	—	Identity Digital[n 2]	Yes	Yes
+.versicherung	"insurance"	—		Latin script[14]	Yes
+Hindi
+Name	Translation	Restrictions	Operator	IDN	DNSSEC
+.desi	Desi (देसी), term for the peoples of the Indian subcontinent	—	Desi Networks	Unknown	Yes
+.shiksha	शिक्षा, "education"	—	Identity Digital	Unknown	Yes
+Italian (.it)
+Name	Translation	Restrictions	Operator	IDN	DNSSEC
+.casa	"house"	—	Minds + Machines[n 1]	Yes	Yes
+.immo	French, German,[16] and Italian abbreviation for "real estate"	—	Identity Digital[n 2]	Yes	Yes
+.moda	"fashion"	—	Identity Digital[n 4]	Yes[14]	Yes
+.voto	"vote", for election and campaign websites	Must use the domain in connection with a "clearly identified political/democratic process."[17] Initially only available to registrations in the United States.[18]	Identity Digital	Unknown	Yes
+Portuguese (.pt)
+Name	Translation	Restrictions	Operator	IDN	DNSSEC
+.bom	"good"	—	Núcleo de Informação e Coordenação do Ponto BR - NIC.br		
+.passagens	"ticket"	—	Travel Reservations SRL		
+Spanish (.es)
+Name	Translation	Restrictions	Operator	IDN	DNSSEC
+.abogado	"lawyer"	To be restricted to licensed lawyers or law firms.[19]	Minds + Machines[n 1]	Unknown	Yes
+.futbol	"Football" (soccer)	—	Identity Digital[n 4]	Yes	Yes
+.gratis	"free"	—	Identity Digital[n 2]	Yes	Yes
+.hoteles	"hotels"	—	Travel Reservations SRL		
+.juegos	"games"	—	Identity Digital[n 4]		Yes
+.ltda	companies in South America	Domains are limited to registered LTDAs (like LLCs) in Brazil, Colombia, Chile, and Ecuador.[20]	InterNetX	Unknown	Yes
+.soy	"I am"
+Also refers to the soybean and its food derivatives	—	Charleston Road Registry Inc. (Google)[n 3]	Latin script, Japanese[21]	Yes
+.tienda	"shop", "store"	—	Identity Digital	Yes	Yes
+.uno	"one", for websites targeting Spanish speaking consumers	—		Spanish	Yes
+.viajes	"travel" or "trips"	—	Identity Digital	Spanish	Yes
+.vuelos	"flights"	—	Travel Reservations SRL	Yes	Yes
+Internationalized generic top-level domains
+All of these TLDs are internationalized domain names (IDN) and support second-level IDNs.
+
+Notes: general remarks and intended use
+DNSSEC: presence of DS records for Domain Name System Security Extensions
+Arabic script
+DNS Name	IDN	Language	Script	Transliteration	English Translation	Notes	DNSSEC
+xn--4gbrim[22]	.موقع	Arabic	Arabic	mawqiʿ	"site" or "location"	Open TLD	Yes
+xn--fhbei[22]	.كوم		Arabic	kūm	com	Owned by: VeriSign Sarl[13]	
+xn--mgbb9fbpob[22]	.موبايلي		Arabic	mūbāylī	Mobily	Owned by: GreenTech Consultancy Company W.L.L.[13]	
+xn--mgbi4ecexp[22]	.كاثوليك		Arabic	kāthūlīk	Catholic	Owned by: Pontificium Consilium de Comunicationibus Socialibus (PCCS) (Pontifical Council for Social Communication)[13]	
+xn--ngbc5azd[22]	.شبكة	Arabic	Arabic	shabaka	"network"	Open TLD	Yes
+xn--ngbe9e0a[22]	.بيتك		Arabic	baytak	your home	Owned by: Kuwait Finance House[13]	
+xn--mgbab2bd[22]	.بازار	Persian	Arabic	bâzâr	"market", "bazaar"	Open TLD	Yes
+Chinese characters
+DNS Name	IDN	Language	Script	Transliteration	English Translation	Notes	DNSSEC
+xn--3ds443g[22]	.在线	Chinese	Chinese (Simplified)	zàixiàn	"online"	Open TLD.
+The Chinese Government quickly bought 20,000 internationalized subdomains for localities.[23]	Yes
+xn--fiq228c5hs[22]	.中文网	Chinese	Chinese (Simplified)	Zhōngwén wǎng	"(written) Chinese (language) network"	Open TLD.
+The Chinese Government quickly bought 20,000 IDN for localities.[23]	Yes
+xn--ses554g[22]	.网址	Chinese	Chinese (Simplified)	wǎngzhǐ	"network address" or "website"	Open TLD	Yes
+xn--5tzm5g[22]	.网站	Chinese	Chinese (Simplified)	wǎngzhàn	"website"	Open TLD	Yes
+xn--io0a7i[22]	.网络	Chinese	Chinese (Simplified)	wǎngluò	"network"	Open TLD	Yes
+xn--55qx5d[22]	.公司	Chinese	Chinese (Simplified and Traditional)	gōngsī	"business organization" or "company"	Open TLD	Yes
+xn--czru2d[22]	.商城	Chinese	Chinese (Simplified and Traditional)	shāngchéng	"mall"	Open TLD	Yes
+xn--nqv7f[22]	.机构	Chinese	Chinese (Simplified)	jīgòu	"agency"	Open TLD	Yes
+xn--6qq986b3xl[22]	.我爱你	Chinese	Chinese (Simplified)	wǒ ài nǐ	"I love you"	Open TLD	Yes
+xn--czr694b[22]	.商标	Chinese	Chinese (Simplified)	shāngbiāo	"trademark"	Open TLD	Yes
+xn--rhqv96g[22]	.世界	Chinese and Japanese	Chinese (Simplified and Traditional), Kanji (Shinjitai and Kyūjitai)	shìjiè
+sekai	"world"	Open TLD	Yes
+xn--3bst00m[22]	.集团	Chinese	Chinese (Simplified)	jítuán	"conglomerate"	Open TLD	Yes
+xn--30rr7y[22]	.慈善	Chinese and Japanese	Chinese (Simplified and Traditional), Kanji (Kyūjitai and Shinjitai)	císhàn
+jizen	"philanthropy"	Open TLD	Yes
+xn--45q11c[22]	.八卦	Chinese	Chinese (Simplified and Traditional)	bāguà	"gossip"	Open TLD	Yes
+xn--55qw42g[22]	.公益	Chinese and Japanese	Chinese (Simplified and Traditional), Kanji (Shinjitai and Kyūjitai)	gōngyì
+kōeki	"philanthropy"	Open TLD	Yes
+xn--g2xx48c[22]	.购物	Chinese	Chinese (Simplified and Traditional)	gòuwù	"shopping"	Open TLD	Yes
+xn--kput3i[22]	.手机	Chinese	Chinese (Simplified and Traditional)	shǒujī	"cell phone"	Open TLD	Yes
+xn--mxtq1m[22]	.政府	Hani Chinese	Chinese (Simplified and Traditional)	zhèngfǔ	"public affairs	Second level restricted to ISO3166-1 country codes; third level registrations restricted to governmental organizations, or public institutions[24]	Yes
+Cyrillic script
+DNS Name	IDN	Language	Script	Transliteration	English Translation	Notes	DNSSEC
+xn--d1acj3b[22]	.дети	Russian	Cyrillic (Russian)	dyeti	"kids" or "children"	Open TLD	Yes
+xn--80aqecdr1a[22]	.католик		Cyrillic	Katolik	"сatholic" (as noun)	Owned by: Pontificium Consilium de Comunicationibus Socialibus (Pontifical Council for Social Communications)[13]	
+xn--j1aef[22]	.ком	Russian	Cyrillic (Russian)	kom	"com"	Owned by: VeriSign Sarl	
+xn--80asehdb[22]	.онлайн	Russian	Cyrillic (Russian)	onlain	"online"	Open TLD	Yes
+xn--c1avg[22]	.орг	Russian	Cyrillic (Russian)	org	"org" or "organization"	Open TLD	Yes
+xn--80aswg[22]	.сайт	Russian	Cyrillic (Russian)	sait	"site"	Open TLD	Yes
+.рф	Russian	Cyrillic (Russian)	rf			
+Japanese characters
+DNS Name	IDN	Language	Script	Transliteration	English Translation	Notes	DNSSEC
+xn--q9jyb4c[22]	.みんな	Japanese	Hiragana	minna	everyone	Open TLD[25]	Yes
+xn--1ck2e1b[22]	.セール	Japanese	Katakana	sēru	sale	Owned by: Amazon Registry Services, Inc.[13]	
+xn--bck1b9a5dre4c[22]	.ファッション	Japanese	Katakana	fasshon	fashion		
+xn--cck2b3b[22]	.ストア	Japanese	Katakana	sutoa	store		
+xn--eckvdtc9d[22]	.ポイント	Japanese	Katakana	pointo	point		
+xn--gckr3f0f[22]	.クラウド	Japanese	Katakana	kuraudo	cloud		
+xn--tckwe[22]	.コム	Japanese	Katakana	komu	com	Owned by: VeriSign Sarl[13]	
+Other script
+DNS Name	IDN	Language	Script	Transliteration	English Translation	Notes	DNSSEC
+xn--54b7fta0cc[26]	.বাংলা	Bengali	Bengali	Bānlā	Bangla	Open TLD	
+xn‑‑h2brj9c[27]	.भारत	Hindi	Devanagari	bharat	India		
+xn--i1b6b1a6a2e[22]	.संगठन	Marathi, Hindi	Devanagari	saṅgaṭhana	"organization"	Open TLD	Yes
+xn--11b4c3d[22]	.कॉम	Marathi, Hindi	Devanagari	kom	com		
+xn--c2br7g[22]	.नेट	Marathi, Hindi	Devanagari	net	net		
+xn--mk1bu44c[22]	.닷컴	Korean	Hangul	datkeom / tatk'ŏm	dotcom		
+xn--t60b56a[22]	.닷넷	Korean	Hangul	datnet / tatnet	dotnet		
+xn--9dbq2a[22]	.קום	Hebrew	Hebrew	kum	com	Open TLD	Yes
+xn--42c2d9a[22]	.คอม	Thai	Thai	khom	com		
+Geographic top-level domains
+Name: DNS name
+Entity: Target geographic area
+Notes: general remarks
+IDN: support for internationalized domain names (IDN)
+DNSSEC: presence of DS records for Domain Name System Security Extensions
+Africa
+Name	Entity	Notes	IDN	DNSSEC
+.africa	 Africa	[13][28]		Yes
+.capetown	 Cape Town, South Africa	[29]	Unknown	Yes
+.durban	 Durban, South Africa	[30]	Unknown	Yes
+.joburg	 Johannesburg, South Africa	[31]	Unknown	Yes
+Asia
+Name	Entity	Notes	IDN	DNSSEC
+.abudhabi	 Abu Dhabi, UAE	[13]		Yes
+.arab	 League of Arab States	[13]		Yes
+.asia	Asia–Pacific region	This is a TLD for companies, organizations, and individuals based in the region of Asia, Australia, and the Pacific.	Chinese, Japanese, Korean[14]	Yes
+.doha	Doha, Qatar	[13]		
+.dubai	Emirate of Dubai Dubai, UAE	[13]		Yes
+.krd	 Kurdistan	This is a TLD for companies, organizations, and individuals based in the region of Kurdistan[32][33]	Kurdish	Yes
+.kyoto	 Kyoto, Japan	[34]		Yes
+.nagoya	 Nagoya, Japan	[35]	Japanese[14]	Yes
+.okinawa	 Okinawa, Japan	[36]	Japanese	Yes
+.osaka	 Osaka, Japan	[13]		Yes
+.ryukyu	Ryukyu Islands, Japan	[37]	Unknown	Yes
+.taipei	Taipei Taipei, Taiwan	Introduced in September 2014[38]	Unknown	Yes
+.tokyo	 Tokyo, Japan	[39]	Yes	Yes
+.yokohama	 Yokohama, Japan	[40]	Japanese	Yes
+Europe
+Geographic TLDs in France
+Name	Entity	Notes	IDN	DNSSEC
+.alsace	 Alsace	"The purpose of .ALSACE is to bring Alsatian culture and identity to the Internet, make our region more visible internationally and boost the digital economy in Alsace."[41]	Unknown	Yes
+.bzh	 Brittany; Breton language and culture	Breizh in Breton.[42] This is a TLD for Web sites in the Breton language or related to Breton culture	French[14]	Yes
+.cat	 Catalonia; Catalan language and culture	This is a TLD for Web sites in the Catalan language or related to Catalan culture.[43]	Catalan[14]	Yes
+.corsica	 Corsica	TLD Related to Corsican Culture	Unknown	Yes
+.eus	 Basque, Spain and France	Euskal Herria in Basque. Web sites must be in the Basque language and are checked periodically.[44]	Unknown	Yes
+.paris	 Paris	"Must be an individual or corporate entity with a bona fide presence in the Greater area of Paris"[45]	Yes	Yes
+Geographic TLDs in Germany 
+Name	Entity	Notes	IDN	DNSSEC
+.bayern	 Bavaria	[46]	Yes	Yes
+.berlin	 Berlin	Must have a connection to Berlin, Germany. For example: a company based in Berlin, a person from Berlin, etc.[47]	Latin and Cyrillic scripts[14]	Yes
+.cologne	 Cologne	[48]	Yes	Yes
+.koeln	[49]	Yes	Yes
+.hamburg	 Hamburg		Latin script[14]	Yes
+.nrw	 North Rhine-Westphalia	[50]	Yes	Yes
+.ruhr	Ruhr	[51]	German[14]	Yes
+.saarland	 Saarland	[52]	Unknown	Yes
+Geographic TLDs in Spain
+Name	Entity	Notes	IDN	DNSSEC
+.bcn	 Barcelona	[13]		Yes
+.barcelona		Unknown	Yes
+.cat	 Catalonia; Catalan language and culture	This is a TLD for Web sites in the Catalan language or related to Catalan culture.[43]	Catalan[14]	Yes
+.eus	 Basque, Spain and France	Euskal Herria in Basque. Web sites must be in the Basque language and are checked periodically.[44]	Unknown	Yes
+.gal	 Galicia	This is a TLD for Web sites in the Galician language or related to Galician culture.[53]	Unknown	Yes
+.madrid	 Madrid	[54]	Unknown	Yes
+Other European Geographic TLDs 
+Name	Entity	Notes	IDN	DNSSEC
+.eu	 European Union	[55] Available for any person, company or organization based in the European Union.	Yes	Yes
+.amsterdam	 Amsterdam, Netherlands	[56]	Unknown	Yes
+.bar	 Bar, Montenegro	[13] Mostly used for bars and other alcohol facilities worldwide	Unknown	Yes
+.brussels	 Brussels, Belgium	[57]	Latin script[14]	Yes
+.cymru	 Wales, United Kingdom	[58]	Welsh[14]	Yes
+.wales	[58]	Welsh[14]	Yes
+.frl	 Friesland, Netherlands	Fryslân in (West) Frisian, one of the twelve provinces in the Netherlands.[59]	Unknown	Yes
+.gent	 Ghent, Belgium	[60]	Unknown	Yes
+.helsinki	 Helsinki, Finland		Unknown	Yes
+.irish	 Ireland and Irish diaspora		Unknown	Yes
+.ist	Istanbul, Turkey		Unknown	Yes
+.istanbul		Unknown	Yes
+.london	London, United Kingdom	[61]	Yes	Yes
+.moscow [ru]	 Moscow, Russia	[62]	Yes	Yes
+.scot	 Scotland, United Kingdom	[63]	Unknown	Yes
+.stockholm	 Stockholm, Sweden	Used only by the city organisation itself.[13]	Yes[64]	Yes
+.swiss	  Switzerland	[13]	Yes[65]	Yes
+.tatar	Tatarstan Tatar peoples and places	Tatarstan is a region in Russia, though this TLD is meant for the global Tatar community.[66]	Unknown	Yes
+.tirol	 Tyrol, Austria	[67]	Yes[14]	Yes
+.vlaanderen	 Flanders, Belgium	[68]	Latin script[14]	Yes
+.wien	 Vienna, Austria	[69]	Latin script[14]	Yes
+.zuerich	 Zurich, Switzerland	[70]	Unknown	Yes
+.su	 Soviet Union	[71]	Yes[14]	Yes
+North America
+Name	Entity	Notes	IDN	DNSSEC	Alternatives
+.boston	 Boston, United States	[13]		Yes	.boston.ma.us
+.miami	 Miami, United States	[72]	Unknown	Yes	.miami.us
+.nyc	 New York City, United States	[73]	Spanish[14]	Yes	.new-york.ny.us
+.quebec	 Quebec, Canada	[74]	Unknown	Yes	.qc.ca
+.vegas	 Las Vegas, United States	[75]	Yes	Yes	.las-vegas.nv.us
+Oceania
+Name	Entity	Notes	IDN	DNSSEC
+.kiwi	New Zealand New Zealanders	[76]	Latin script[14]	Yes
+.melbourne	 Melbourne, Australia	[77]	Unknown	Yes
+.sydney	 Sydney, Australia	[78]	Unknown	Yes
+South America
+Name	Entity	Notes	IDN	DNSSEC
+.lat	 Latin America	[79]	Spanish[80]	Yes
+.rio	 Rio de Janeiro, Brazil	[81]	Unknown	Yes
+Internationalized geographic top-level domains
+DNS name	Display name	Entity	Language	Script	Transliteration	Notes	Other TLD	IDN	DNSSEC
+xn--1qqw23a[22]	.佛山	Foshan, China	Chinese	Chinese (Simplified)	fat6 saan1	[82]		Yes	Yes
+xn--xhq521b[22]	.广东	Guangdong, China	Chinese	Chinese (Simplified)	gwong2 dung1	[13]			
+xn--80adxhks[22]	.москва [ru]	Moscow Moscow, Russia	Russian	Cyrillic (Russian)	moskva	[83]	.moscow	Russian[14]	Yes
+xn--p1acf[22]	.рус	Russia Russian language, post-Soviet states	Russian	Cyrillic (Russian)	rus	[13]	.su		
+xn--mgbca7dzdo[22]	.ابوظبي	Emirate of Abu Dhabi Abu Dhabi	Arabic	Arabic	Abū Ẓabī	[13]	.abudhabi		
+xn--ngbrx[22]	.عرب	Arab League Arab	Arabic	Arabic	‘Arab	[13]			
+Brand and corporate top-level domains
+Name: DNS name
+Entity: company and/or brand
+Notes: general remarks
+IDN: support for internationalized domain names (IDN)
+DNSSEC: presence of DS records for Domain Name System Security Extensions
+Name	Entity	Notes	IDN	DNSSEC
+.aaa	American Automobile Association	[13]		Yes
+.aarp	AARP	[13]		Yes
+.abarth	Fiat Chrysler Automobiles (Abarth)	[13]		
+.abb	ABB	[13]		Yes
+.abbott	Abbott Laboratories	[13]		Yes
+.abbvie	AbbVie	[13]		Yes
+.abc	American Broadcasting Company[84]	[13]		Yes
+.accenture	Accenture	[13]		Yes
+.aco	ACO Severin Ahlmann GmbH & Co. KG	[13]		Yes
+.aeg	Aktiebolaget Electrolux	[13]		Yes
+.aetna	Aetna	[13]		Yes
+.afl	Australian Football League	[13]		Yes
+.agakhan	Aga Khan Foundation	[13]		Yes
+.aig	American International Group	[13]		Yes
+.aigo	Aigo	[13]		
+.airbus	Airbus	[13]		Yes
+.airtel	Bharti Airtel	[13]		Yes
+.akdn	Aga Khan Foundation	[13]		Yes
+.alfaromeo	Fiat Chrysler Automobiles (Alfa Romeo)	[13]		
+.alibaba	Alibaba Group	[13]		Yes
+.alipay	Alibaba Group	[13]		Yes
+.allfinanz	Allfinanz Deutsche Vermögensberatung Aktiengesellschaft	[85]	Unknown	Yes
+.allstate	Allstate	[13]		Yes
+.ally	Ally Financial	[13]		Yes
+.alstom	Alstom	[13]		Yes
+.amazon	Amazon			Yes
+.americanexpress	American Express	[13]		Yes
+.amex	American Express	[13]		Yes
+.amica	Amica Mutual Insurance	[13]		Yes
+.android	Google (Android)	[86]	Unknown	Yes
+.anz	Australia & New Zealand Banking Group	[13]		Yes
+.aol	AOL	[13]		Yes
+.apple	Apple	[13][87]		Yes
+.aquarelle	Aquarelle.com Group	[88]	Unknown	Yes
+.aramco	Aramco	[13]		Yes
+.arte	Arte			Yes
+.audi	Audi	[13]		Yes
+.audible	Audible (Amazon Registry Services, Inc.)			Yes
+.auspost	Australia Post	[13]		Yes
+.aws	Amazon Web Services	[13]		Yes
+.axa	Axa	[89]	Yes[14]	Yes
+.azure	Microsoft (Azure)	[13]		Yes
+.baidu	Baidu	[13]		Yes
+.bananarepublic	Gap (Banana Republic)	[13]		
+.barclaycard	Barclays	[90]	Unknown	Yes
+.barclays	Barclays	[90]	Unknown	Yes
+.basketball	FIBA	[91]		Yes
+.bauhaus	Werkhaus GmbH	[13]		Yes
+.bbc	BBC	[13]		Yes
+.bbt	BB&T	[13]		Yes
+.bbva	Banco Bilbao Vizcaya Argentaria	[13]		Yes
+.bcg	Boston Consulting Group	[13]		Yes
+.bentley	Bentley	[13]		Yes
+.bestbuy	Best Buy (BBY Solutions, Inc.)			Yes
+.bharti	Bharti Enterprises	[13]		Yes
+.bing	Microsoft (Bing)	[13]		Yes
+.blanco	BLANCO GmbH + Co KG	[13]		
+.bloomberg	Bloomberg	[92]	Unknown	Yes
+.bms	Bristol-Myers Squibb	[13]		Yes
+.bmw	BMW	[93]	No	Yes
+.bnl	Banca Nazionale del Lavoro	[94]	Unknown	
+.bnpparibas	BNP Paribas	[95]	Unknown	Yes
+.boehringer	Boehringer Ingelheim	[13]		Yes
+.bond	Bond University[13]	Later became a gTLD on 26 November 2019		Yes
+.booking	Booking.com	[13]		Yes
+.bosch	Robert Bosch GmbH	[13]		Yes
+.bostik	Bostik	[13]		Yes
+.bradesco	Bradesco	[96]	Unknown	Yes
+.brave	Brave Software	[13]		Yes
+.bridgestone	Bridgestone	[13]		Yes
+.brother	Brother Industries	[13]		Yes
+.bugatti	Bugatti	[13]		
+.cal	Google (Calendar)	[97]	Unknown	Yes
+.calvinklein	PVH	[13]		Yes
+.canon	Canon	[13]		Yes
+.capitalone	Capital One	[13]		Yes
+.caravan	Caravan International	[98]	Unknown	Yes
+.cartier	Richemont DNS	[13]		
+.cba	Commonwealth Bank	[13]		Yes
+.cbn	Christian Broadcasting Network	[13]		Yes
+.cbre	CBRE Group	[13]		Yes
+.cbs	CBS	[13]		
+.cern	CERN	[99]	Unknown	Yes
+.cfa	CFA Institute	[13]		Yes
+.chanel	Chanel	[13]		Yes
+.chase	Chase Bank	[13]		Yes
+.chintai	Chintai Corporation [ja]	[13]		Yes
+.chrome	Google (Chrome)	[100]	Unknown	Yes
+.chrysler	Chrysler	[13]		
+.cipriani	Hotel Cipriani Srl	[13]		Yes
+.cisco	Cisco Systems	[13]		Yes
+.citadel	Citadel Domain	[13]		Yes
+.citi	Citigroup	[13]		Yes
+.citic	CITIC Group	[101]	No	Yes
+.clubmed	Club Med	[13]		Yes
+.comcast	Comcast	[13]		
+.commbank	Commonwealth Bank	[13]		Yes
+.creditunion	CUNA Performance Resources	[13]		Yes
+.crown	Crown Equipment Corporation	[13]		Yes
+.crs	Federated Co-operatives
+(Co-Operative Retailing System)	[102]	Unknown	Yes
+.csc	DXC Technology			
+.cuisinella	Société Alsacienne de Meubles (Cuisinella)	[103]	Unknown	Yes
+.dabur	Dabur	[13]		Yes
+.datsun	Nissan (Datsun)	[13]		Yes
+.dealer	Dealer Dot Com	[13]		Yes
+.dell	Dell	[13]		Yes
+.deloitte	Deloitte	[13]		Yes
+.delta	Delta Air Lines	[13]		Yes
+.dhl	Deutsche Post	[13]		Yes
+.discover	Discover Financial Services	[13]		Yes
+.dish	Dish Network	[13]		Yes
+.dnp	Dai Nippon Printing	[104]	Unknown	Yes
+.dodge	Chrysler (Dodge)	[13]		
+.dunlop	Goodyear Tire and Rubber Company (Dunlop Tyres)	[13]		Yes
+.dupont	DuPont	[13]		Yes
+.dvag	Deutsche Vermögensberatung	[105]	Unknown	Yes
+.edeka	Edeka	[106]	Unknown	Yes
+.emerck	Merck Group	[107]	Unknown	Yes
+.epson	Seiko Epson	[13]		Yes
+.ericsson	Ericsson	[13]		Yes
+.erni	ERNI Group Holding AG	[13]		Yes
+.esurance	Esurance	[13]		
+.etisalat	Etisalat	[13]		
+.eurovision	European Broadcasting Union (Eurovision)	[13]		Yes
+.everbank	EverBank	[108]	Unknown	
+.extraspace	Extra Space Storage	[13]		Yes
+.fage	Fage	[13]		Yes
+.fairwinds	FairWinds Partners	[13]		Yes
+.farmers	Farmers Insurance Exchange	[13]		Yes
+.fedex	FedEx	[13]		Yes
+.ferrari	Fiat Chrysler Automobiles (Ferrari)	[13]		Yes
+.ferrero	Ferrero	[13]		Yes
+.fiat	Fiat Chrysler Automobiles	[13]		
+.fidelity	Fidelity Investments	[13]		Yes
+.firestone	Bridgestone	[13]		Yes
+.firmdale	Firmdale Holdings	[109]	Unknown	Yes
+.flickr	Yahoo! (Flickr)	[13]		Yes
+.flir	FLIR Systems	[13]		Yes
+.flsmidth	FLSmidth	[110]	Unknown	
+.ford	Ford	[13]		Yes
+.fox	Fox Broadcasting Company	[13]		Yes
+.fresenius	Fresenius Immobilien-Verwaltungs-GmbH	[13]		Yes
+.frogans	OP3FT	Solely for use by the Frogans technology[111]	Yes[14]	Yes
+.frontier	Frontier Communications	[13]		Yes
+.fujitsu	Fujitsu	[13]		Yes
+.fujixerox	Fuji Xerox	[13]		
+.gallo	E & J Gallo Winery	[13]		Yes
+.gallup	Gallup	[13]		Yes
+.gap	Gap	[13]		Yes
+.gbiz	Google	[112]	Unknown	Yes
+.gea	GEA Group	[13]		Yes
+.genting	Genting Group	[13]		Yes
+.giving	Public Interest Registry	[13]		Yes
+.gle	Google	[113]	Unknown	Yes
+.globo	Grupo Globo	[114]	No	Yes
+.gmail	Google (Gmail)	[115]	Unknown	Yes
+.gmo	GMO Internet	[116]	Unknown	Yes
+.gmx	1&1 Mail & Media (GMX, Global Message Exchange)	[117]	Unknown	Yes
+.godaddy	Go Daddy	[13]		Yes
+.goldpoint	Yodobashi Camera	[13]		Yes
+.goodyear	Goodyear Tire and Rubber Company	[13]		Yes
+.goog	Google	[118]	Unknown	Yes
+.google	Google	[119]	Unknown	Yes
+.grainger	Grainger Registry Services, LLC	[13]		Yes
+.guardian	Guardian Life Insurance Company of America	[13]		
+.gucci	Gucci	[13]		Yes
+.hbo	HBO	[13]		Yes
+.hdfc	Housing Development Finance Corporation	[13]		Yes
+.hdfcbank	HDFC Bank	[13]		Yes
+.hermes	Hermès	[13]		Yes
+.hisamitsu	Hisamitsu Pharmaceutical	[13]		Yes
+.hitachi	Hitachi	[13]		Yes
+.hkt	Hong Kong Telecom	[13]		Yes
+.homegoods	HomeGoods (The TJX Companies, Inc.)			Yes
+.homesense	HomeSense (The TJX Companies, Inc.)			Yes
+.honda	Honda	[13]		Yes
+.honeywell	Honeywell	[13]		
+.hotmail	Microsoft (Hotmail)	[13]		Yes
+.hsbc	HSBC	[120]	Unknown	Yes
+.hughes	Hughes Network Systems	[13]		Yes
+.hyatt	Hyatt	[13]		Yes
+.hyundai	Hyundai Motor Company	[13]		Yes
+.ibm	IBM	[121]	Unknown	Yes
+.ice	Intercontinental Exchange			Yes
+.ieee	Institute of Electrical & Electronics Engineers	[13]		Yes
+.ifm	ifm electronic gmbh	[13]		Yes
+.ikano	Ikano	[13]		Yes
+.imdb	Amazon (IMDb)	[13]		Yes
+.infiniti	Nissan (Infiniti)	[13]		Yes
+.intel	Intel	[13]		
+.intuit	Intuit	[13]		Yes
+.ipiranga	Ipiranga	[13]		Yes
+.iselect	iSelect	[13]		
+.itau	Itaú Unibanco	[13]		Yes
+.itv	ITV	[13]		Yes
+.iveco	CNH Industrial (Iveco)	[13]		
+.jaguar	Jaguar Land Rover	[13]		Yes
+.java	Oracle (Java)	[13]		Yes
+.jcb	JCB	[13]		Yes
+.jcp	JCP Media	[13]		
+.jeep	Chrysler (Jeep)	[13]		Yes
+.jio	Reliance Industries (Jio)	[13]		Yes
+.jpmorgan	JPMorgan Chase	[13]		Yes
+.juniper	Juniper Networks	[13]		Yes
+.kddi	KDDI	[13]		Yes
+.kerryhotels	Kerry Trading Co. Limited	[13]		Yes
+.kerryproperties	Kerry Trading Co. Limited	[13]		Yes
+.kfh	Kuwait Finance House	[13]		Yes
+.kia	Kia Motors Corporation	[13]		Yes
+.kinder	Ferrero (Kinder Surprise)	[13]		
+.kindle	Amazon (Kindle)	[13]		Yes
+.komatsu	Komatsu	[13]		Yes
+.kpmg	KPMG	[13]		Yes
+.kred	KredTLD	[122]	Unknown	Yes
+.kuokgroup	Kerry Trading Co. Limited	[13]		Yes
+.lacaixa	Caixa d’Estalvis i Pensions de Barcelona	[123]	Unknown	Yes
+.ladbrokes	Ladbrokes	[13]		
+.lamborghini	Lamborghini	[13]		Yes
+.lancaster	Lancaster (Coty)	[13]		Yes
+.lancia	Fiat Chrysler Automobiles (Lancia)	[13]		
+.lancome	L'Oréal (Lancôme)	[13]		
+.landrover	Jaguar Land Rover	[13]		Yes
+.lanxess	Lanxess	[13]		Yes
+.lasalle	JLL	[13]		Yes
+.latrobe	La Trobe University	[124]	Unknown	Yes
+.lds	The Church of Jesus Christ of Latter-day Saints (LDS Church)[125]	[126]	Unknown	Yes
+.leclerc	E.Leclerc	[127]	Yes
+.lego	Lego Group	[13]		Yes
+.liaison	Liaison Technologies	[13]		
+.lexus	Toyota (Lexus)	[13]		Yes
+.lidl	Lidl	[13]		Yes
+.lifestyle	Lifestyle Domain Holdings, Inc.	[13]		Yes
+.lilly	Eli Lilly and Company	[13]		Yes
+.lincoln	Ford (Lincoln)	[13]		Yes
+.linde	Linde	[13]		
+.lipsy	Lipsy Ltd	[13]		Yes
+.lixil	Lixil Group	[13]		
+.locus	Locus Analytics	[13]		Yes
+.lotte	Lotte Holdings	[13]		Yes
+.lpl	LPL Financial	[13]		Yes
+.lplfinancial	LPL Financial	[13]		Yes
+.lundbeck	Lundbeck	[13]		Yes
+.lupin	Lupin Limited	[13]		
+.macys	Macy's	[13]		
+.maif	MAIF	[13]		Yes
+.man	MAN	[13]		Yes
+.mango	Mango	[128]	Latin script[14]	Yes
+.marriott	Marriott International	[13]		Yes
+.maserati	Fiat Chrysler Automobiles (Maserati)	[13]		
+.mattel	Mattel	[13]		Yes
+.mckinsey	McKinsey & Company	[13]		Yes
+.metlife	MetLife	[13]		
+.microsoft	Microsoft	[13]		Yes
+.mini	BMW (Mini)	[129]	No	Yes
+.mint	Intuit Mint (Intuit Administrative Services, Inc.)			Yes
+.mit	Massachusetts Institute of Technology	[13]		Yes
+.mitsubishi	Mitsubishi Corporation	[13]		Yes
+.mlb	MLB Advanced Media	[13]		Yes
+.mma	MMA IARD	[13]		Yes
+.monash	Monash University	[130][131]	No	Yes
+.mormon	The Church of Jesus Christ of Latter-day Saints (LDS Church)[125]	[132]	Unknown	Yes
+.moto	Motorola	[13]		Yes
+.movistar	Telefónica (Movistar)	[13]		
+.msd	MSD Registry Holdings, Inc.	[13]		Yes
+.mtn	MTN	[13]		Yes
+.mtr	MTR Corporation	[13]		Yes
+.mutual	Northwestern Mutual	[13]		
+.nadex	Nadex	[13]		
+.nationwide	Nationwide Mutual Insurance Company	[13]		
+.natura	Natura & Co	[13]		
+.nba	National Basketball Association	[13]		Yes
+.nec	NEC	[13]		Yes
+.netflix	Netflix	[13]		Yes
+.neustar	Neustar	[133]	No	Yes
+.newholland	CNH Industrial (New Holland Agriculture, New Holland Construction)	[13]		
+.nfl	National Football League	[13]		Yes
+.nhk	NHK	[134]	Unknown	Yes
+.nico	Dwango (Niconico)	[135]	Unknown	Yes
+.nike	Nike	[13]		Yes
+.nikon	Nikon	[13]		Yes
+.nissan	Nissan	[13]		Yes
+.nissay	Nippon Life	[13]		Yes
+.nokia	Nokia	[13]		Yes
+.northwesternmutual	Northwestern Mutual	[13]		
+.norton	NortonLifeLock	[13]		Yes
+.nra	National Rifle Association of America	[136]	Unknown	Yes
+.ntt	Nippon Telegraph & Telephone	[13]		Yes
+.obi	OBI Group Holding SE & Co. KGaA	[13]		Yes
+.office	Microsoft (Office)	[13]		Yes
+.omega	Swatch Group (Omega)	[13]		Yes
+.oracle	Oracle	[13]		Yes
+.orange	Orange	[13]		Yes
+.origins	Origins (The Estée Lauder Companies Inc.)			Yes
+.otsuka	Otsuka Pharmaceutical	[137]	Unknown	Yes
+.ovh	OVH	[138]	French[14]	Yes
+.panasonic	Panasonic	[13]		Yes
+.pccw	PCCW	[13]		Yes
+.pfizer	Pfizer	[13]		Yes
+.philips	Philips	[13]		Yes
+.piaget	Piaget	[139]	Unknown	
+.pictet	Pictet	[13]		Yes
+.ping	Ping	[13]		Yes
+.pioneer	Pioneer Corporation	[13]		Yes
+.play	Google (Google Play)	[13]		Yes
+.playstation	Sony (PlayStation)	[13]		Yes
+.pohl	Deutsche Vermögensberatung
+(founder Reinfried Pohl)	[140]	Unknown	Yes
+.politie	Politie Nederland	[13]		Yes
+.praxi	Praxi	[141]	Unknown	Yes
+.prod	Google (products)	[142]	Unknown	Yes
+.progressive	Progressive Corporation	[13]		Yes
+.pru	Prudential Financial	[13]		Yes
+.prudential	Prudential Financial	[13]		Yes
+.pwc	PwC	[143]	Unknown	Yes
+.quest	Quest Software	[13]		Yes
+.qvc	QVC	[13]		
+.redstone	Redstone Haute Couture Co	[13]		Yes
+.reliance	Reliance Industries	[13]		Yes
+.rexroth	Robert Bosch GmbH	[13]		Yes
+.ricoh	Ricoh	[13]		Yes
+.ril	Reliance Industries	[13]		Yes
+.rmit	Royal Melbourne Institute of Technology	[13]		
+.rocher	Ferrero (Ferrero Rocher)	[13]		
+.rogers	Rogers Communications	[13]		Yes
+.rwe	RWE	[13]		Yes
+.safety	Safety Registry Services, LLC.	[13]		Yes
+.sakura	Sakura Internet [ja]	[13]		Yes
+.samsung	Samsung SDS	[13]		Yes
+.sandvik	Sandvik	[13]		Yes
+.sandvikcoromant	Sandvik Coromant	[144]	Unknown	Yes
+.sanofi	Sanofi	[13]		Yes
+.sap	SAP	[145]		Yes
+.saxo	Saxo Bank	[13]		Yes
+.sbi	State Bank of India	[13]		Yes
+.sbs	Special Broadcasting Service[13]	Later became a gTLD on 15 June 2021		Yes
+.sca	Svenska Cellulosa	[146]	Unknown	
+.scb	Siam Commercial Bank		Thai[14]	Yes
+.schaeffler	Schaeffler Technologies	[13]		Yes
+.schmidt	Schmidt Groupe [fr]	[147]	Unknown	Yes
+.schwarz	Schwarz Gruppe	[13]		Yes
+.scjohnson	S. C. Johnson & Son	[13]		
+.scor	SCOR	[13]		
+.seat	SEAT	[13]		Yes
+.sener	Sener Ingeniería y Sistemas, S.A.	[13]		Yes
+.ses	SES	[13]		
+.sew	SEW Eurodrive	[13]		Yes
+.seven	Seven West Media	[13]		Yes
+.sfr	SFR	[13]		Yes
+.seek	Seek	[148]	No	Yes
+.shangrila	Shangri-La Hotels and Resorts	[13]		Yes
+.sharp	Sharp Corporation	[13]		Yes
+.shaw	Shaw Cablesystems G.P.	[13]		Yes
+.shell	Shell	[13]		Yes
+.shriram	Shriram Capital	[13]		
+.sina	Sina Corp	[13]		Yes
+.sky	Sky Group	[13]		Yes
+.skype	Microsoft (Skype)	[13]		Yes
+.smart	Smart Communications	[13]		Yes
+.sncf	SNCF	[13]		Yes
+.softbank	SoftBank	[13]		Yes
+.sohu	Sohu	[149]	Unknown	Yes
+.sony	Sony	[13]		Yes
+.spiegel	Der Spiegel	[150]	Unknown	
+.stada	Stada Arzneimittel	[13]		Yes
+.staples	Staples	[13]		Yes
+.star	Disney Star	[13]		Yes
+.starhub	StarHub	[13]		
+.statebank	State Bank of India	[13]		Yes
+.statefarm	State Farm	[13]		Yes
+.statoil	Statoil	[13]		
+.stc	Saudi Telecom Company	[13]		Yes
+.stcgroup	Saudi Telecom Company	[13]		Yes
+.suzuki	Suzuki	[151]	Unknown	Yes
+.swatch	Swatch Group	[13]		Yes
+.swiftcover	Swiftcover	[13]		
+.symantec	Gen Digital	[13]		
+.taobao	Alibaba Group (Taobao)	[13]		Yes
+.target	Target	[13]		Yes
+.tatamotors	Tata Motors	[13]		Yes
+.tdk	TDK	[13]		Yes
+.telecity	TelecityGroup	[13]		
+.telefonica	Telefónica	[13]		
+.temasek	Temasek Holdings	[13]		Yes
+.teva	Teva Pharmaceuticals	[13]		Yes
+.tiffany	Tiffany & Co.	[13]		
+.tjx	TJX Companies	[13]		Yes
+.toray	Toray Industries	[13]		Yes
+.toshiba	Toshiba	[13]		Yes
+.total	Total	[13]		Yes
+.toyota	Toyota	[13]		Yes
+.travelers	Travelers TLD, LLC (The Travelers Companies)	[13]		Yes
+.travelersinsurance	Travelers TLD, LLC (The Travelers Companies)	[13]		Yes
+.tui	TUI	[152]	Unknown	Yes
+.tvs	T V Sundram Iyengar & Sons Private Limited	[13]		Yes
+.ubs	UBS	[13]		Yes
+.unicom	China Unicom	[13]		Yes
+.uol	Universo Online	Delegated to UOL subsidiary UBN Internet.[153]	Unknown	Yes
+.ups	United Parcel Service	[13]		Yes
+.vanguard	Vanguard Group	[13]		Yes
+.verisign	VeriSign	[13]		Yes
+.vig	Vienna Insurance Group	[13]		Yes
+.viking	Viking River Cruises	[13]		Yes
+.virgin	Virgin Group	[13]		Yes
+.visa	Visa	[13]		Yes
+.vista	Vistaprint	[13]		
+.vistaprint	Vistaprint	[13]		
+.vivo	Telefônica Brasil	[13]		Yes
+.volkswagen	Volkswagen Group of America	[13]		
+.volvo	Volvo	[13]		Yes
+.walmart	Walmart	[13]		Yes
+.walter	Sandvik	[13]		Yes
+.weatherchannel	IBM (The Weather Company)	[13]		Yes
+.weber	Saint-Gobain	[13]		Yes
+.weir	Weir Group	[13]		Yes
+.williamhill	William Hill	[154]	Unknown	Yes
+.windows	Microsoft (Windows)	[13]		Yes
+.wme	Endeavor	[155]	Unknown	Yes
+.wolterskluwer	Wolters Kluwer	[13]		Yes
+.woodside	Woodside Energy	[13]		Yes
+.wtc	World Trade Centers Association	[156]	Unknown	Yes
+.xbox	Microsoft (Xbox)	[13]		Yes
+.xerox	Fuji Xerox	[13]		Yes
+.xfinity	Comcast	[13]		
+.yahoo	Yahoo!	[13]		Yes
+.yamaxun	Amazon (Amazon China)	[13]		Yes
+.yandex	Yandex	[157]	Unknown	Yes
+.yodobashi	Yodobashi Camera	[13]		Yes
+.youtube	Google (YouTube)	[158]	Unknown	Yes
+.zappos	Amazon (Zappos)	[13]		Yes
+.zara	Inditex (Zara)	[13]		Yes
+.zippo	Zippo	[13]		
+Internationalized brand top-level domains
+DNS name	IDN TLD	Entity	Script	Transliteration	Comments	DNSSEC
+xn--jlq480n2rg	.亚马逊	Amazon	Chinese (Simplified)	Yàmǎxùn	[159]	Yes
+xn--cckwcxetd	.アマゾン	Amazon	Katakana	amazon	[160]	Yes
+xn--mgba3a3ejt	.ارامكو	Aramco Services Company	Arabic		[13]	
+xn--mgbaakc7dvf	.اتصالات	Emirates Telecommunications Corporation (trading as Etisalat)	Arabic		[13]	
+xn--8y0a063a	.联通	China United Network Communications Corporation Limited	Chinese (Simplified)	Liántōng	[13]	
+xn--6frz82g	.移动	China Mobile Communications Corporation	Chinese (Simplified)	Yídòng		
+xn--fiq64b	.中信	CITIC Group	Chinese	zhōngxìn	[161]	Yes
+xn--5su34j936bgsg	.香格里拉	Shangri‐La International Hotel Management Limited	Chinese	Xiānggélǐlā	[13]	
+xn--b4w605ferd	.淡马锡	Temasek Holdings (Private) Limited	Chinese (Simplified)	Dànmǎxī	[13]	
+xn--3oq18vl8pn36a	.大众汽车	Volkswagen (China) Investment Co., Ltd.	Chinese (Simplified)	Dàzhòngqìchē	[13]	
+xn--vermgensberater-ctb	.vermögensberater	Deutsche Vermögensberatung Aktiengesellschaft	Latin		[162]	Yes
+xn--vermgensberatung-pwb	.vermögensberatung	Deutsche Vermögensberatung Aktiengesellschaft	Latin		[163]	Yes
+xn--qcka1pmc	.グーグル	Google	Katakana	gūguru	[164]	Yes
+xn--flw351e	.谷歌	Google	Chinese	gǔgē	[165]	Yes
+xn--estv75g	.工行	Industrial and Commercial Bank of China Limited	Chinese	Gōngháng	[13]	
+xn--w4rs40l	.嘉里	Kerry Trading Co. Limited	Chinese	Jiālǐ	[13]	
+xn--w4r85el8fhu5dnra	.嘉里大酒店	Kerry Trading Co. Limited	Chinese	Jiālǐdàjiǔdiàn	[13]	
+xn--kcrx77d1x4a	.飞利浦	Koninklijke Philips N.V.	Chinese (Simplified)	Fēilìpǔ	[13]	
+xn--jlq61u9w7b	.诺基亚	Nokia Corporation	Chinese (Simplified)	Nuòjīyà	[13][166]	
+xn--fzys8d69uvgm	.電訊盈科	PCCW Enterprises Limited	Chinese (Traditional)	din6 soen3 jing4 fo1	[13]	
+xn--cg4bki	.삼성	Samsung	Hangul	samseong	[167]	Yes
+Special-use domains
+ICANN/IANA has created some special-use domain names which are meant for technical purposes. ICANN/IANA owns all of the special-use domain names.[168]
+
+Name	Entity	Notes	IDN
+.example		Not installed as a domain name, but usable in text as an example.
+(example.com, example.net, and example.org are also reserved for this purpose but are active sites.)	Unknown
+.internal		Not installed as a domain name, but usable in private and internal networks.	Unknown
+.invalid		Not installed as a domain name, but usable in testing as a domain which wouldn't work.	Unknown
+.local		Local network. Must be used with multicast DNS (mDNS).[169]	Unknown
+.onion		Connection to the Tor network.	Unknown
+.test		Meant for testing DNS software.	Unknown
+Non-IANA domains
+Besides the TLDs managed (or at least tracked) by IANA or ICANN, other independent groups have created, or had attempted to create, their own TLDs with varying technical specifications, functions, and outcomes.
+
+Microsoft Windows
+Within Microsoft Windows there are some special purpose domain names that partially conflict with publicly assigned ones.
+
+Name	Still used	Conflicting IANA domain registration	Purpose
+.ipv6-literal.net	YES	Registered by an independent 3rd party (as of writing). Microsoft gave up the domain in January 2014.[170] In addition Microsoft also never requested it to become an ICANN/IANA owned special-use domain name.	A special-use domain primarily for representing IPv6 addresses in UNC paths as ":" is a reserved character in Windows. Usage is not restricted to UNC paths. Compared to ip6.arpa reverse lookup domains it will return an IPv6 address but without generating any DNS queries.
+Internet Engineering Task Force proposals for local TLDs
+The IETF has submitted several requests for comments on TLDs that could be used to represent local devices and services.
+
+Name	RFC	Notes
+.home.arpa	RFC 8375[171]	A special-use domain for non-unique use in residential home networks.
+.internal	RFC 6762 Appendix G[172]	ICANN has registered this top-level domain for private use.[173]
+.intranet	The IETF does not recommend use of unregistered top-level domains at all, but should network operators decide to do this, the following top-level domains have been used on private internal networks without the problems caused by trying to reuse ".local" for this purpose.
+.private
+.corp	Mentioned by ICANN for causing a name collision.[174]
+.home
+.lan	Many routers automatically append ".lan" to local device hostnames, including those that use OpenWrt.
+Blockchain-registered
+Blockchain-based domains are registered and exchanged using a public blockchain like Ethereum. Oftentimes, these domains serve specific functions such as creating human-readable references to smart contract addresses used in DApps or personal wallet addresses.[175] Generally, these non-standard domains are unreachable through the normal DNS resolution process and instead require clients to use some sort of transparent web proxy or gateway to access them
+
+Name	Blockchain	Notes
+.agt	Polygon	The .agt (agent) TLD is a decentralized top-level domain operating within the Web3 ecosystem, primarily positioned as an identifier for AI agents and autonomous systems.[176] The TLD is offered by Web3 domain providers, such as Freename, an ICANN-accredited registrar[177] that bridges traditional DNS with blockchain technology. .agt domains can be minted as NFTs across multiple blockchains (Polygon, Solana, BNBChain, BASE, Aurora, Sei, Abstract, Chiliz, and Etherlink), eliminating traditional renewal fees and providing registrants lifetime ownership. Popular .agt domains function as human-readable aliases for AI agents, agentic and tool-calling functions, cryptocurrency wallets, decentralized digital identities, AI agent ID, and addresses for hosting decentralized websites.
+N/A	Handshake	Handshake is both an alternative DNS root zone and a domain name-centric blockchain meant for managing TLDs in a decentralized way which allows virtually any domain to be registered as a TLD by end users. The project intends to be a more resilient and distributed implementation of the global root zone without needing a centralized organization, like ICANN, to manage or operate it. However, it doesn't aim to outright replace the existing root zone, as it reserves all existing TLDs so that a query for wikipedia.org, for example, that is sent to a Handshake node can be redirected to the traditional root.[178]
+.eth	Ethereum	Domains under the .eth TLD are primarily used as human-readable aliases to Ethereum wallet addresses, rather than IP addresses,[179] though some efforts into expanding the use of .eth into the traditional DNS space have been made.
+.crypto	Ethereum	.crypto aims to make cryptocurrency wallet address resolution easier, with the exception that, unlike the other examples mentioned here, the TLD is the product of a for-profit company, Unstoppable Domains, that markets the domain as an alternative DNS root despite being entirely dependent on the traditional root zone.[180]
+.bit	Namecoin	Namecoin's .bit TLD technically operates as a single-domain DNS root, though has historically peered with the OpenNIC root zone to provide greater accessibility. The popularity and usage of .bit domains is much lower than the other projects mentioned, despite it being the earliest example. This is primarily due to the negative reputation Namecoin has garnered after .bit domains became popular for sharing and distributing illegal or illicit content such as malware, which ultimately prompted OpenNIC to end its peering agreement and stop serving the TLD in its root zone in 2018.[181]
+Alternate roots
+In the case of alternative DNS roots, organizations or projects make use of the same mechanisms of the DNS but instead take on the role of ICANN in managing and administering an entirely separate root zone, thus having the ability to create new TLDs independently. However, this doesn't make these domains any less isolated from the rest of the internet, as the ability for clients to resolve them theoretically only requires switching to a recursive DNS resolver that recognizes and serves records underneath the alternate root zone.
+
+Name	Root	Notes
+N/A	Handshake	The list of registered TLDs on the Handshake blockchain is too large and dynamic to enumerate here.
+.bbs .chan .cyb .dyn .geek .gopher .indy .libre .neo .null .o .oss .oz .parody .pirate	OpenNIC	
+.fur	FurNIC	
+.lib .coin .emc .bazar	Emercoin	
+.ku .te .ti .uu .ko .rm	New Nations
+
+This should trap any emails - not currently seen

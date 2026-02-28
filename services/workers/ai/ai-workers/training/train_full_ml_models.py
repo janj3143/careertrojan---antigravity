@@ -53,7 +53,7 @@ except ImportError as e:
 
 
 class FullMLTrainer:
-    """Train remaining 6 ML models for IntelliCV."""
+    """Train remaining 6 ML models for CareerTrojan."""
     
     def __init__(self, base_path: str = None):
         self.base_path = Path(base_path or ".")

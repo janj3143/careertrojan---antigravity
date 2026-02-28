@@ -30,7 +30,7 @@ import json
 import uvicorn
 from services.company_intelligence_parser import CompanyIntel
 
-app = FastAPI(title="IntelliCV Company Intelligence API")
+app = FastAPI(title="CareerTrojan Company Intelligence API")
 ci = CompanyIntel()
 
 @app.get("/enrich")
@@ -53,7 +53,7 @@ def get_companies():
 
 # Flask version for compatibility
 from flask import Flask, request, jsonify
-flask_app = Flask("intelliCV_company_intel")
+flask_app = Flask("careertrojan_company_intel")
 
 @flask_app.route("/enrich", methods=["GET"])
 def flask_enrich():

@@ -29,7 +29,7 @@ class ExpertSystemBuilder:
 
     def __init__(self, base_path: str):
         self.base_path = Path(base_path)
-        self.data_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.data_path = Path(os.getenv("CAREERTROJAN_AI_DATA", os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data"), "ai_data_final")))
         self.models_path = self.base_path / "trained_models" / "expert"
         self.models_path.mkdir(parents=True, exist_ok=True)
 
@@ -45,7 +45,7 @@ class ExpertSystemBuilder:
                 "metadata": {
                     "version": "1.0",
                     "created_at": datetime.now().isoformat(),
-                    "description": "IntelliCV Candidate Assessment Rules"
+                    "description": "CareerTrojan Candidate Assessment Rules"
                 },
                 "rules": [
                     {

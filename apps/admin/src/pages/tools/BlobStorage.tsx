@@ -8,7 +8,7 @@ export default function BlobStorage() {
             <PageTemplate 
                 title="Blob Storage"
                 subtitle="Admin portal page"
-                endpoint="/ops/blob"
+                endpoint="/api/ops/v1/blob"
             />
         </AdminLayout>
     );

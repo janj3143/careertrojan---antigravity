@@ -12,7 +12,7 @@ Features:
 - Integration with existing authentication system
 - Real-time user feedback and recommendations
 
-Author: IntelliCV AI Team
+Author: CareerTrojan AI Team
 Purpose: Seamless login-triggered AI data screening
 Environment: SANDBOX Admin Portal
 """
@@ -337,7 +337,7 @@ def get_login_handler() -> LoginEventHandler:
 if __name__ == "__main__":
     # Test the login handler
     handler = LoginEventHandler()
-    print("🔐 IntelliCV Login Event Handler Test")
+    print("🔐 CareerTrojan Login Event Handler Test")
     print("=" * 40)
     
     # Test login handling

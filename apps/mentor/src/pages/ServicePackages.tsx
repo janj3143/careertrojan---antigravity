@@ -37,10 +37,10 @@ export default function ServicePackages() {
     const fetchPackages = async () => {
         try {
             setLoading(true);
-            const profileRes = await fetch(`/api/mentor/profile-by-user/${user?.id}`);
+            const profileRes = await fetch(`/api/mentor/v1/profile-by-user/${user?.id}`);
             const profile = await profileRes.json();
 
-            const packagesRes = await fetch(`/api/mentor/${profile.mentor_profile_id}/packages`);
+            const packagesRes = await fetch(`/api/mentor/v1/${profile.mentor_profile_id}/packages`);
             const data = await packagesRes.json();
             setPackages(data.packages || []);
         } catch (err) {
@@ -53,10 +53,10 @@ export default function ServicePackages() {
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const profileRes = await fetch(`/api/mentor/profile-by-user/${user?.id}`);
+            const profileRes = await fetch(`/api/mentor/v1/profile-by-user/${user?.id}`);
             const profile = await profileRes.json();
 
-            const response = await fetch(`/api/mentor/${profile.mentor_profile_id}/packages`, {
+            const response = await fetch(`/api/mentor/v1/${profile.mentor_profile_id}/packages`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

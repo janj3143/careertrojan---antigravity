@@ -1,5 +1,5 @@
 """
-SQLite Database Manager for IntelliCV AI Learning System
+SQLite Database Manager for CareerTrojan AI Learning System
 Backend-only database operations.
 
 Policy: no file-based fallback persistence and no fabricated/sample records.
@@ -39,14 +39,14 @@ if not SQLITE_AVAILABLE:
 if not SQLITE_AVAILABLE:
     print("[ERROR] SQLite not available")
 
-class IntelliCVSQLiteManager:
+class CareerTrojanSQLiteManager:
     """
     Comprehensive SQLite manager for AI learning system
     """
 
     def __init__(self, db_path: Optional[str] = None):
         """Initialize SQLite manager with database path"""
-        self.db_path = db_path or "ai_data_system/ai_learning/intellicv_ai_learning.db"
+        self.db_path = db_path or "ai_data_system/ai_learning/careertrojan_ai_learning.db"
         self.db_directory = Path(self.db_path).parent
         self.db_directory.mkdir(parents=True, exist_ok=True)
 
@@ -322,11 +322,11 @@ class IntelliCVSQLiteManager:
 # Global instance for easy access
 _sqlite_manager = None
 
-def get_sqlite_manager() -> IntelliCVSQLiteManager:
+def get_sqlite_manager() -> CareerTrojanSQLiteManager:
     """Get global SQLite manager instance"""
     global _sqlite_manager
     if _sqlite_manager is None:
-        _sqlite_manager = IntelliCVSQLiteManager()
+        _sqlite_manager = CareerTrojanSQLiteManager()
     return _sqlite_manager
 
 if __name__ == "__main__":

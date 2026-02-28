@@ -1,0 +1,22 @@
+# Build artefacts & deps
+node_modules
+dist
+build
+.git
+.gitignore
+.env
+.env.*
+*.md
+.vscode
+.idea
+__tests__
+coverage
+.nyc_output
+*.log
+
+# Legacy Streamlit / Python files — React/Vite only in Docker
+**/*.py
+**/*.pyc
+**/__pycache__
+pages/
+fragments/

@@ -1,6 +1,6 @@
 """
 =============================================================================
-IntelliCV Unified AI Engine - Production Ready Intelligence System
+CareerTrojan Unified AI Engine - Production Ready Intelligence System
 =============================================================================
 
 Combines ALL AI techniques into a single, cohesive engine:
@@ -14,9 +14,9 @@ Combines ALL AI techniques into a single, cohesive engine:
 This engine replaces the scattered AI functionality across pages 08 and 09,
 providing a unified, production-ready AI system for the parser page 06.
 
-Author: IntelliCV AI Integration Team
+Author: CareerTrojan AI Integration Team
 Purpose: Production-ready AI with real algorithms and learning capabilities
-Environment: IntelliCV\env310 with full AI/ML stack
+Environment: CareerTrojan\env310 with full AI/ML stack
 """
 
 import numpy as np
@@ -1068,7 +1068,7 @@ class LLMIntegrationEngine:
 # UNIFIED AI ENGINE - MAIN CLASS
 # =============================================================================
 
-class UnifiedIntelliCVAIEngine:
+class UnifiedCareerTrojanAIEngine:
     """
     Unified AI engine that combines all AI techniques into a single, cohesive system.
     This is the main class that orchestrates all AI engines and provides a unified interface.
@@ -1104,7 +1104,7 @@ class UnifiedIntelliCVAIEngine:
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
 
-        self.logger.info("Unified IntelliCV AI Engine initialized successfully")
+        self.logger.info("Unified CareerTrojan AI Engine initialized successfully")
 
     def process_document_intelligent(self, document_path: str, run_mode: str = "medium") -> Dict[str, Any]:
         """
@@ -1589,7 +1589,7 @@ class UnifiedIntelliCVAIEngine:
 
 if __name__ == "__main__":
     # Example usage and testing
-    print("IntelliCV Unified AI Engine - Testing")
+    print("CareerTrojan Unified AI Engine - Testing")
 
     # Initialize engine
     config = {
@@ -1598,7 +1598,7 @@ if __name__ == "__main__":
         'openai_api_key': None  # Add your API key here for full functionality
     }
 
-    engine = UnifiedIntelliCVAIEngine(config)
+    engine = UnifiedCareerTrojanAIEngine(config)
 
     # Test with sample document
     sample_content = """

@@ -5,7 +5,7 @@ Enhanced Job Title & LinkedIn Industry Integration Engine
 This module combines job title enhancement with comprehensive LinkedIn industry
 classification and business software categorization for advanced AI enrichment.
 
-Author: IntelliCV-AI Team
+Author: CareerTrojan Team
 Date: September 30, 2025
 """
 

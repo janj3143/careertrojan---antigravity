@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AdminAuthProvider, useAdminAuth } from './context/AdminAuthContext';
 import AdminLogin from './pages/AdminLogin';
+import { SupportButton } from './components/support';
 
 // Main Pages
 import AdminHome from './pages/AdminHome';
@@ -178,6 +179,7 @@ export default function App() {
                     {/* Fallback */}
                     <Route path="*" element={<Navigate to="/admin" />} />
                 </Routes>
+                <SupportButton />
             </BrowserRouter>
         </AdminAuthProvider>
     );

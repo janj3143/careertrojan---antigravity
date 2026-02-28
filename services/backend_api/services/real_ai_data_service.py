@@ -1,5 +1,5 @@
 """
-Real AI Data Service for IntelliCV Admin Portal
+Real AI Data Service for CareerTrojan Admin Portal
 Connects to actual ai_data_final and live data sources instead of mock data
 """
 

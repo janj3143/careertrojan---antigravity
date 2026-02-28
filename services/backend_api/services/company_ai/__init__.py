@@ -1,7 +1,7 @@
 """
-IntelliCV-AI Company Intelligence Package
+CareerTrojan Company Intelligence Package
 
-This package provides modular, production-grade company intelligence and enrichment tools for the IntelliCV platform.
+This package provides modular, production-grade company intelligence and enrichment tools for the CareerTrojan platform.
 
 Modules:
 - nlp_extraction: AI/NLP entity extraction (spaCy)

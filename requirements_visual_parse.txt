@@ -1,0 +1,88 @@
+# CareerTrojan — Visual, Parsing & Scraping Requirements (Consolidated)
+# Merged from requirements_visual_parse.txt and requirements-visual.txt
+# Python 3.10+ compatible
+
+############################
+# Document Parsing
+############################
+PyPDF2>=3.0.1
+pdfminer.six>=20221105
+python-docx>=0.8.11
+docx2txt>=0.8
+fpdf2>=2.8.0  # Updated to fpdf2 for better compatibility
+openpyxl>=3.1.5
+python-pptx>=0.6.23
+striprtf>=0.0.16
+extract-msg>=0.23.1
+lxml>=4.9.4
+pdfplumber>=0.11.0
+chardet>=5.2.0
+python-magic-bin>=0.4.14; sys_platform == "win32"
+python-magic>=0.4.27; sys_platform != "win32"
+
+############################
+# Visualization & Graphics
+############################
+matplotlib>=3.7.0
+seaborn>=0.13.2
+plotly>=5.22.0
+altair>=4.2.0  # More compatible version
+networkx>=3.1  # Use >= for flexibility
+wordcloud>=1.9.0
+opencv-python>=4.8.0
+
+############################
+# Enhanced Dashboard Visualization
+############################
+plotly-dash>=2.17.1          # Interactive dashboards
+dash-bootstrap-components>=1.6.0  # Bootstrap components for Dash
+kaleido>=0.2.1               # Static image export for Plotly
+bokeh>=3.4.0                 # Interactive visualization library
+pygraphviz>=1.13             # Graph visualization
+pyvis>=0.3.2                 # Interactive network visualization
+folium>=0.16.0               # Interactive maps
+geopandas>=0.14.4            # Geospatial data visualization
+streamlit-plotly-events>=0.0.6  # Plotly events in Streamlit
+streamlit-aggrid>=1.0.5      # Advanced data tables
+streamlit-echarts>=0.4.0     # ECharts integration
+streamlit-option-menu>=0.4.0 # Enhanced menu components
+
+############################
+# Export & Report Generation
+############################
+reportlab>=4.2.2             # Advanced PDF generation
+weasyprint>=62.3             # HTML/CSS to PDF conversion
+jinja2>=3.1.4                # Template engine for reports
+pdfkit>=1.0.0                # HTML to PDF conversion
+xlsxwriter>=3.2.0            # Enhanced Excel writing
+
+############################
+# Web Scraping & Automation
+############################
+beautifulsoup4>=4.12.2
+selenium>=4.11.2
+fake-useragent>=1.4.0
+playwright>=1.40.0
+
+############################
+# Audio & Text-to-Speech
+############################
+sounddevice>=0.4.6
+edge-tts>=6.1.0
+
+############################
+# Testing Framework
+############################
+pytest>=8.1.1
+pytest-mock>=3.12.0
+pytest-xdist>=3.5.0
+pytest-cov>=4.1.0
+pytest-html>=4.1.1
+pytest-asyncio>=0.23.5
+
+############################
+# Additional Testing Dependencies
+############################
+coverage>=7.4.0
+hypothesis>=6.98.0  # Property-based testing
+factory-boy>=3.3.0  # Test data factories

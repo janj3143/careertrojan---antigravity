@@ -1,0 +1,88 @@
+# CareerTrojan CORE ONLY - Minimal Dependencies
+# Install first to establish base environment
+# Python 3.10+ compatible
+# Date: November 6, 2025
+#
+# Installation Order: Install THIS file FIRST
+# pip install -r requirements-core-only.txt
+
+############################
+# Essential Base
+############################
+setuptools>=69.0.0
+wheel>=0.42.0
+pip>=24.0
+
+############################
+# Core Web Framework
+############################
+streamlit>=1.39.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.31.0
+python-multipart>=0.0.9
+
+############################
+# Database Drivers (small, essential)
+############################
+psycopg2-binary>=2.9.0
+asyncpg>=0.29.0
+redis>=5.0.4
+
+############################
+# Azure SDK Essentials
+############################
+azure-storage-blob>=12.23.0
+azure-identity>=1.17.1
+azure-core>=1.29.0
+
+############################
+# Data Processing Basics
+############################
+pandas>=2.2.2
+numpy>=1.26.4
+plotly>=5.18.0       # Interactive charts
+extract-msg>=0.55.0  # Email/MSG parsing
+pypdf>=3.17.0        # PDF parsing
+python-docx>=1.1.0   # DOCX parsing
+openpyxl>=3.1.0      # Excel parsing
+
+############################
+# Configuration
+############################
+pydantic>=2.7.4
+pydantic-settings>=2.3.0
+python-dotenv>=1.0.0
+PyYAML>=6.0.1
+
+############################
+# HTTP & Networking
+############################
+httpx>=0.28.0
+requests>=2.32.0
+urllib3>=2.5.0
+
+############################
+# Security Essentials
+############################
+cryptography>=46.0.0
+bcrypt>=4.2.0
+
+############################
+# Utilities
+############################
+python-dateutil>=2.8.2
+click>=8.1.0
+rich>=13.9.0
+tqdm>=4.66.0
+
+############################
+# Logging
+############################
+loguru>=0.7.2
+structlog>=24.1.0
+
+############################
+# Compatibility
+############################
+protobuf>=4.25.3,<5.0.0
+grpcio-status>=1.56.0

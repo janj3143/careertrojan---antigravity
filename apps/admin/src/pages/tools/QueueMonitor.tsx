@@ -8,7 +8,7 @@ export default function QueueMonitor() {
             <PageTemplate 
                 title="Queue Monitor"
                 subtitle="Admin portal page"
-                endpoint="/ops/queue"
+                endpoint="/api/ops/v1/queue"
             />
         </AdminLayout>
     );

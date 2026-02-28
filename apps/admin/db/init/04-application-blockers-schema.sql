@@ -1,9 +1,9 @@
 -- ========================================
--- IntelliCV Application Blockers Schema
+-- CareerTrojan Application Blockers Schema
 -- ========================================
 -- Purpose: Track qualification gaps opposite to touch points
 -- Features: Gap detection, severity ranking, improvement tracking, objection handling
--- Author: IntelliCV AI System
+-- Author: CareerTrojan AI System
 -- Date: 2025-11-XX
 -- ========================================
 

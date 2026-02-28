@@ -21,9 +21,9 @@ RULES = [
     # Hardcoded localhost ports
     (r'http://localhost:(\d{4})/api/', r'/api/', "Remove hardcoded localhost port"),
     (r'http://127\.0\.0\.1:(\d{4})/api/', r'/api/', "Remove hardcoded 127.0.0.1 port"),
-    # Legacy IntelliCV paths
-    (r'/intellicv-api/', r'/api/', "Replace legacy /intellicv-api/ prefix"),
-    (r'/intellicv/', r'/api/', "Replace legacy /intellicv/ prefix"),
+    # Legacy CareerTrojan paths
+    (r'/careertrojan-api/', r'/api/', "Replace legacy /careertrojan-api/ prefix"),
+    (r'/careertrojan/', r'/api/', "Replace legacy /careertrojan/ prefix"),
 ]
 
 

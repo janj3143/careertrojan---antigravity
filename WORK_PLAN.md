@@ -1,7 +1,7 @@
 # CareerTrojan "Best of Breed" Master Work Plan
 
 **Domain**: careertrojan.com  
-**Objective**: Create the definitive runtime environment at `C:\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\VS ai_data final - version` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
+**Objective**: Create the definitive runtime environment at `C:\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\antigravity_version_ai_data_final` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
 
 **Last Updated**: 2026-02-10 (Session 6 continued — Visual wiring, nginx bridge, model hot-reload, backup scripts)
 
@@ -11,7 +11,7 @@
 - [x] **Inventory Sources**: All legacy platforms audited.
 - [x] **Runtime Consolidation (`C:\careertrojan`)**: Structure established with apps/, services/, shared/, infra/, scripts/.
 - [x] **Backend**: FastAPI backend operational at `services/backend_api/`.
-- [x] **Data Link**: Junctions created in `data-mounts/` → `L:\VS ai_data final - version`.
+- [x] **Data Link**: Junctions created in `data-mounts/` → `L:\antigravity_version_ai_data_final`.
 
 ## 2. React Frontend Overhaul
 - [x] **Logo Update**: CareerTrojan Horse logo applied.
@@ -25,8 +25,8 @@
 - [x] **Touch-Points Overlay Panel**: Zustand selection store drives evidence + touch-nots panel on every chart click. ✅ Session 6
 
 ## 3. Data & Training Loop Verification
-- [x] **Data Mounts**: `ai-data` junction → `L:\VS ai_data final - version`, `parser` junction → automated_parser.
-- [x] **USER DATA Mount**: Junction verified at `data-mounts/user-data` → `L:\VS ai_data final - version\USER DATA`.
+- [x] **Data Mounts**: `ai-data` junction → `L:\antigravity_version_ai_data_final`, `parser` junction → automated_parser.
+- [x] **USER DATA Mount**: Junction verified at `data-mounts/user-data` → `L:\antigravity_version_ai_data_final\USER DATA`.
 - [x] **Tandem Sync Trap**: `scripts/sync_user_data.py` — watchdog-based, 5-second mirror, 24-hour quarantine on delete, 15-minute full sync.
 - [x] **Session History**: `services/backend_api/routers/sessions.py` — 234 lines, logging + sync-status + consolidated-user endpoints with `_write_with_mirror()`.
 - [x] **AI Orchestrator Feedback**: `services/workers/ai_orchestrator_enrichment.py` — watches interactions/, routes by action type to ai_data_final enrichment.
@@ -118,7 +118,7 @@ Zustand store propagates selection to Touch-Points panel + other pinned visuals 
 ### 7.3 Python Runtime Governance
 - **Source of truth**: `C:\Python` (**3.11.9**) — cleaned 2026-02-08, all 3.14 / 3.11.7 remnants removed
 - **Unified requirements**: `requirements.lock.txt` (pinned, all sections)
-- **Venv**: `C:\Python\venvs\intellicv311\` or `.venv` in project root
+- **Venv**: `C:\careertrojan\.venv\` or `.venv` in project root
 - **Node**: v25.4.0 at `C:\nodej`, npm 11.7.0 — see Section 12 for full matrix
 - **PATH**: `C:\Python\Scripts;C:\Python;C:\nodej;` — no ghost entries
 
@@ -139,7 +139,7 @@ Zustand store propagates selection to Touch-Points panel + other pinned visuals 
 
 ## 10. Data Architecture
 ```
-L:\VS ai_data final - version\       (SOURCE OF TRUTH)
+L:\antigravity_version_ai_data_final\       (SOURCE OF TRUTH)
 ├── ai_data_final/                    → C:\careertrojan\data-mounts\ai-data (junction) ✅
 ├── automated_parser/                 → C:\careertrojan\data-mounts\parser (junction) ✅
 └── USER DATA/                        → C:\careertrojan\data-mounts\user-data (junction) ✅
@@ -149,7 +149,7 @@ L:\VS ai_data final - version\       (SOURCE OF TRUTH)
     ├── user_registry/    quarantine/       trap_reports/
     └── _sync_metadata.json
 
-E:\CareerTrojan\USER_DATA_COPY\       (TANDEM MIRROR — watchdog sync)
+L:\antigravity_version_ai_data_final\USER DATA\       (TANDEM MIRROR — watchdog sync)
 └── [identical structure]
 
 Ubuntu equivalent:
@@ -200,9 +200,9 @@ C:\Tesseract-OCR\
 
 ### 12.2 E: Drive Sync Checklist
 - [ ] **Update E:\Python** to 3.11.9 (currently 3.11.7)
-- [ ] **Verify E:\CareerTrojan** mirror is current with C:\careertrojan runtime code
+- [ ] **Verify C:\careertrojan** mirror is current with C:\careertrojan runtime code
 - [ ] **Add Postgres bin to PATH**: `C:\Posgres\bin\` needs adding to Machine PATH
-- [ ] **Scheduled robocopy**: Script to mirror C:\careertrojan → E:\CareerTrojan nightly
+- [ ] **Scheduled robocopy**: Script to mirror C:\careertrojan → C:\careertrojan nightly
 
 ---
 
@@ -304,14 +304,14 @@ C:\Tesseract-OCR\
 ### 15.1 Backup Tiers
 | Tier | What | Where | Frequency | Retention |
 |------|------|-------|-----------|-----------|
-| **Tier 1 — Live Mirror** | User data (L: → E:) | `E:\CareerTrojan\USER_DATA_COPY\` | Real-time (watchdog) | Continuous |
-| **Tier 2 — Runtime Code** | `C:\careertrojan\` | `E:\CareerTrojan\` + GitHub | Nightly robocopy + git push | 30 days / all commits |
+| **Tier 1 — Live Mirror** | User data (L: → E:) | `L:\antigravity_version_ai_data_final\USER DATA\` | Data-mount junctions | Continuous |
+| **Tier 2 — Runtime Code** | `C:\careertrojan\` | `C:\careertrojan\` + GitHub | Data-mount junctions + git push | 30 days / all commits |
 | **Tier 3 — Database** | PostgreSQL dumps | `E:\Backups\postgres\` | Nightly pg_dump | 7 daily, 4 weekly |
 | **Tier 4 — Model Weights** | `trained_models/` | `E:\Backups\models\` | Post-retrain | Last 5 versions |
 | **Tier 5 — Full Snapshot** | Entire C:\careertrojan + data | External / cloud blob | Weekly | 4 weekly |
 
 ### 15.2 Implementation TODO
-- [ ] **Nightly robocopy script**: `scripts/backup_runtime.ps1` — mirrors C:\careertrojan → E:\CareerTrojan (exclude node_modules, __pycache__, .venv)
+- [ ] **Nightly robocopy script**: `scripts/backup_runtime.ps1` — mirrors C:\careertrojan → C:\careertrojan (exclude node_modules, __pycache__, .venv)
 - [ ] **pg_dump script**: `scripts/backup_postgres.ps1` — dumps all databases, compresses, rotates
 - [ ] **Model versioning**: Save `trained_models/` with timestamp + hash, keep last 5
 - [ ] **Cloud backup (future)**: Azure Blob Storage or S3 for off-site Tier 5

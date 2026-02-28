@@ -4,17 +4,26 @@ from sqlalchemy.orm import sessionmaker
 from .models import Base
 import os
 
-# Ensure DB directory exists
-# Portable: env var or local fallback
+# ---------------------------------------------------------------------------
+# Resolve database URL
+# Priority: CAREERTROJAN_DB_URL > DATABASE_URL > local SQLite fallback
+# Docker compose sets DATABASE_URL; local dev may set CAREERTROJAN_DB_URL.
+# ---------------------------------------------------------------------------
 DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
-DB_PATH = f"sqlite:///{DATA_ROOT}/ai_learning_table.db"
+_sqlite_fallback = f"sqlite:///{DATA_ROOT}/ai_learning_table.db"
 
-if os.getenv("CAREERTROJAN_DB_URL"):
-    DB_PATH = os.getenv("CAREERTROJAN_DB_URL")
-
-engine = create_engine(
-    DB_PATH, connect_args={"check_same_thread": False}
+DATABASE_URL: str = (
+    os.getenv("CAREERTROJAN_DB_URL")
+    or os.getenv("DATABASE_URL")
+    or _sqlite_fallback
 )
+
+# check_same_thread is only valid for SQLite
+_connect_args: dict = {}
+if DATABASE_URL.startswith("sqlite"):
+    _connect_args["check_same_thread"] = False
+
+engine = create_engine(DATABASE_URL, connect_args=_connect_args, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():

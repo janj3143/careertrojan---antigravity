@@ -1,0 +1,117 @@
+.....................................................................F.. [ 23%]
+FFFFFFFF..FF............................................................ [ 47%]
+........................................................................ [ 70%]
+..........................................................s.........ssss [ 94%]
+ss................                                                       [100%]
+================================== FAILURES ===================================
+E   assert 401 == 200
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/plans", "method": "GET", "request_id": "9e11f326-c2e", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.431195Z"}
+{"status_code": 401, "duration_ms": 4.3, "event": "request_completed", "path": "/api/payment/v1/plans", "method": "GET", "request_id": "9e11f326-c2e", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.435203Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/plans', 'method': 'GET', 'request_id': '9e11f326-c2e', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.431195Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 4.3, 'event': 'request_completed', 'path': '/api/payment/v1/plans', 'method': 'GET', 'request_id': '9e11f326-c2e', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.435203Z'}
+C:\careertrojan\tests\unit\test_braintree.py:119: assert 401 == 200
+E   assert 401 == 200
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/process", "method": "POST", "request_id": "08ec6940-1a2", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.505170Z"}
+{"status_code": 401, "duration_ms": 6.6, "event": "request_completed", "path": "/api/payment/v1/process", "method": "POST", "request_id": "08ec6940-1a2", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.511979Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': '08ec6940-1a2', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.505170Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 6.6, 'event': 'request_completed', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': '08ec6940-1a2', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.511979Z'}
+C:\careertrojan\tests\unit\test_braintree.py:141: assert 401 == 200
+E   assert 401 == 400
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/process", "method": "POST", "request_id": "771a080c-d1b", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.533796Z"}
+{"status_code": 401, "duration_ms": 2.6, "event": "request_completed", "path": "/api/payment/v1/process", "method": "POST", "request_id": "771a080c-d1b", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.536392Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': '771a080c-d1b', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.533796Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.6, 'event': 'request_completed', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': '771a080c-d1b', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.536392Z'}
+C:\careertrojan\tests\unit\test_braintree.py:150: assert 401 == 400
+E   assert 401 == 503
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/process", "method": "POST", "request_id": "bd4d069e-bdf", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.560305Z"}
+{"status_code": 401, "duration_ms": 3.6, "event": "request_completed", "path": "/api/payment/v1/process", "method": "POST", "request_id": "bd4d069e-bdf", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.563888Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': 'bd4d069e-bdf', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.560305Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 3.6, 'event': 'request_completed', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': 'bd4d069e-bdf', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.563888Z'}
+C:\careertrojan\tests\unit\test_braintree.py:162: assert 401 == 503
+E   assert 401 == 503
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/process", "method": "POST", "request_id": "c4a36e45-51d", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.588182Z"}
+{"status_code": 401, "duration_ms": 2.4, "event": "request_completed", "path": "/api/payment/v1/process", "method": "POST", "request_id": "c4a36e45-51d", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.590187Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': 'c4a36e45-51d', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.588182Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.4, 'event': 'request_completed', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': 'c4a36e45-51d', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.590187Z'}
+C:\careertrojan\tests\unit\test_braintree.py:176: assert 401 == 503
+E   assert 401 == 400
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/process", "method": "POST", "request_id": "6a2a80df-274", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.606857Z"}
+{"status_code": 401, "duration_ms": 2.4, "event": "request_completed", "path": "/api/payment/v1/process", "method": "POST", "request_id": "6a2a80df-274", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.608857Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': '6a2a80df-274', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.606857Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.4, 'event': 'request_completed', 'path': '/api/payment/v1/process', 'method': 'POST', 'request_id': '6a2a80df-274', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.608857Z'}
+C:\careertrojan\tests\unit\test_braintree.py:183: assert 401 == 400
+E   assert 401 == 200
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/history", "method": "GET", "request_id": "2b692d5e-3ab", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.627650Z"}
+{"status_code": 401, "duration_ms": 2.2, "event": "request_completed", "path": "/api/payment/v1/history", "method": "GET", "request_id": "2b692d5e-3ab", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.630652Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/history', 'method': 'GET', 'request_id': '2b692d5e-3ab', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.627650Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.2, 'event': 'request_completed', 'path': '/api/payment/v1/history', 'method': 'GET', 'request_id': '2b692d5e-3ab', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.630652Z'}
+C:\careertrojan\tests\unit\test_braintree.py:187: assert 401 == 200
+E   assert 401 == 200
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/subscription", "method": "GET", "request_id": "5761d721-b03", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.646898Z"}
+{"status_code": 401, "duration_ms": 2.6, "event": "request_completed", "path": "/api/payment/v1/subscription", "method": "GET", "request_id": "5761d721-b03", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.649952Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/subscription', 'method': 'GET', 'request_id': '5761d721-b03', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.646898Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.6, 'event': 'request_completed', 'path': '/api/payment/v1/subscription', 'method': 'GET', 'request_id': '5761d721-b03', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.649952Z'}
+C:\careertrojan\tests\unit\test_braintree.py:193: assert 401 == 200
+E   assert 401 == 200
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/cancel", "method": "POST", "request_id": "f02dfebc-d1c", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.667623Z"}
+{"status_code": 401, "duration_ms": 2.7, "event": "request_completed", "path": "/api/payment/v1/cancel", "method": "POST", "request_id": "f02dfebc-d1c", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.669651Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/cancel', 'method': 'POST', 'request_id': 'f02dfebc-d1c', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.667623Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.7, 'event': 'request_completed', 'path': '/api/payment/v1/cancel', 'method': 'POST', 'request_id': 'f02dfebc-d1c', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.669651Z'}
+C:\careertrojan\tests\unit\test_braintree.py:199: assert 401 == 200
+E   assert 401 == 200
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/methods", "method": "GET", "request_id": "de41a235-14e", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.749711Z"}
+{"status_code": 401, "duration_ms": 2.2, "event": "request_completed", "path": "/api/payment/v1/methods", "method": "GET", "request_id": "de41a235-14e", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.752718Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/methods', 'method': 'GET', 'request_id': 'de41a235-14e', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.749711Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.2, 'event': 'request_completed', 'path': '/api/payment/v1/methods', 'method': 'GET', 'request_id': 'de41a235-14e', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.752718Z'}
+C:\careertrojan\tests\unit\test_braintree.py:220: assert 401 == 200
+E   assert 401 in (200, 503)
+     +  where 401 = <Response [401 Unauthorized]>.status_code
+---------------------------- Captured stdout call -----------------------------
+{"event": "request_started", "path": "/api/payment/v1/client-token", "method": "GET", "request_id": "df7f205f-97d", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.775021Z"}
+{"status_code": 401, "duration_ms": 2.2, "event": "request_completed", "path": "/api/payment/v1/client-token", "method": "GET", "request_id": "df7f205f-97d", "level": "info", "logger": "request", "timestamp": "2026-02-27T12:11:34.777024Z"}
+------------------------------ Captured log call ------------------------------
+INFO     request:request_correlation.py:36 {'event': 'request_started', 'path': '/api/payment/v1/client-token', 'method': 'GET', 'request_id': 'df7f205f-97d', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.775021Z'}
+INFO     request:request_correlation.py:41 {'status_code': 401, 'duration_ms': 2.2, 'event': 'request_completed', 'path': '/api/payment/v1/client-token', 'method': 'GET', 'request_id': 'df7f205f-97d', 'level': 'info', 'logger': 'request', 'timestamp': '2026-02-27T12:11:34.777024Z'}
+C:\careertrojan\tests\unit\test_braintree.py:240: assert 401 in (200, 503)
+=========================== short test summary info ===========================
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_get_plans_returns_all_tiers
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_process_free_plan_no_payment_needed
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_process_paid_plan_requires_payment_method
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_process_paid_plan_with_stub
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_process_paid_plan_with_promo_code
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_invalid_plan_returns_400
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_payment_history_returns_empty_initially
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_current_subscription_defaults_to_free
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_cancel_no_subscription
+FAILED tests/unit/test_braintree.py::TestPaymentEndpoints::test_list_methods_returns_empty_when_unconfigured
+FAILED tests/unit/test_braintree.py::TestClientToken::test_client_token_503_when_unconfigured

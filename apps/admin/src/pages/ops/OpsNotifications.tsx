@@ -8,7 +8,7 @@ export default function OpsNotifications() {
             <PageTemplate 
                 title="Notifications (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/notifications"
+                endpoint="/api/ops/v1/notifications"
             />
         </AdminLayout>
     );

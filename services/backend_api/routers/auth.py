@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import timedelta
@@ -7,6 +7,7 @@ from datetime import timedelta
 from services.backend_api.db.connection import get_db
 from services.backend_api.db import models
 from services.backend_api.utils import security
+from services.backend_api.middleware.login_protection import login_protection
 
 router = APIRouter(prefix="/api/auth/v1", tags=["auth"])
 
@@ -49,21 +50,129 @@ def register(email: str, password: str, full_name: str = None, db: Session = Dep
     return {"id": new_user.id, "email": new_user.email}
 
 @router.post("/login")
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    # --- Brute-force protection ---
+    forwarded = request.headers.get("x-forwarded-for")
+    client_ip = forwarded.split(",")[0].strip() if forwarded else (request.client.host if request.client else "unknown")
+
+    locked, retry_after = login_protection.is_locked_out(client_ip)
+    if locked:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"Too many failed login attempts. Try again in {retry_after} seconds.",
+            headers={"Retry-After": str(retry_after)},
+        )
+
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
     if not user or not security.verify_password(form_data.password, user.hashed_password):
+        login_protection.record_failure(client_ip)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
+    login_protection.record_success(client_ip)
     access_token_expires = timedelta(minutes=security.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = security.create_access_token(
         data={"sub": user.email, "role": user.role, "user_id": user.id},
         expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    refresh_tok = security.create_refresh_token(data={"sub": user.email})
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_tok,
+        "token_type": "bearer",
+    }
+
+
+# --- Refresh Token Endpoint ---
+@router.post("/refresh")
+def refresh_token(refresh_token: str, db: Session = Depends(get_db)):
+    """Exchange a valid refresh token for a new access + refresh token pair."""
+    try:
+        payload = security.jwt.decode(refresh_token, security.SECRET_KEY, algorithms=[security.ALGORITHM])
+        if payload.get("type") != "refresh":
+            raise HTTPException(status_code=401, detail="Not a refresh token")
+        email = payload.get("sub")
+        if not email:
+            raise HTTPException(status_code=401, detail="Invalid refresh token")
+    except security.JWTError:
+        raise HTTPException(status_code=401, detail="Refresh token expired or invalid")
+
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    new_access = security.create_access_token(
+        data={"sub": user.email, "role": user.role, "user_id": user.id},
+    )
+    new_refresh = security.create_refresh_token(
+        data={"sub": user.email},
+    )
+    return {
+        "access_token": new_access,
+        "refresh_token": new_refresh,
+        "token_type": "bearer",
+    }
+
+
+# --- Google OAuth2 Social Login ---
+@router.post("/google")
+async def google_login(id_token: str, db: Session = Depends(get_db)):
+    """
+    Authenticate via Google OAuth2 ID token.
+    
+    Frontend sends the Google ID token obtained from Google Sign-In.
+    Backend verifies it, creates or finds the user, and returns JWT tokens.
+    
+    Requires GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET env vars.
+    """
+    if not security.GOOGLE_OAUTH_ENABLED:
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="Google OAuth not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.",
+        )
+
+    google_user = await security.verify_google_id_token(id_token)
+    if not google_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid Google token",
+        )
+
+    if not google_user.get("email_verified"):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Google email not verified",
+        )
+
+    email = google_user["email"]
+    user = db.query(models.User).filter(models.User.email == email).first()
+
+    if not user:
+        # Auto-register Google users
+        user = models.User(
+            email=email,
+            hashed_password=security.get_password_hash(security.secrets.token_urlsafe(32)),
+            full_name=google_user.get("name", ""),
+            is_active=True,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+    access_token = security.create_access_token(
+        data={"sub": user.email, "role": user.role, "user_id": user.id},
+    )
+    refresh_tok = security.create_refresh_token(data={"sub": user.email})
+
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_tok,
+        "token_type": "bearer",
+        "is_new_user": user.created_at is not None,
+    }
 
 # --- 2FA Enhancements ---
 import pyotp

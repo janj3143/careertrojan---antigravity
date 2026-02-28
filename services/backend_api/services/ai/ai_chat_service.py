@@ -11,7 +11,7 @@ handles fallback chains, and returns a unified ``LLMResponse``.
 Priority order (configurable in models.yaml):
   Perplexity → Gemini → OpenAI → Anthropic → Ollama
 
-Author: IntelliCV Platform
+Author: CareerTrojan Platform
 Created: November 17, 2025
 Refactored: Wired through llm_gateway
 """

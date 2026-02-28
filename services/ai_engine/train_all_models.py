@@ -1,5 +1,5 @@
 """
-AI Model Training Pipeline for IntelliCV Platform
+AI Model Training Pipeline for CareerTrojan Platform
 ==================================================
 
 This script trains all AI models on your 328k CV records:
@@ -51,7 +51,7 @@ except ImportError:
     SPACY_AVAILABLE = False
 
 
-class IntelliCVModelTrainer:
+class CareerTrojanModelTrainer:
     """Complete AI model training pipeline"""
 
     def __init__(self, data_dir: str = None):
@@ -74,7 +74,7 @@ class IntelliCVModelTrainer:
         }
 
         print("\n" + "="*70)
-        print("🤖 IntelliCV AI Model Training Pipeline")
+        print("🤖 CareerTrojan AI Model Training Pipeline")
         print("="*70)
 
     def load_cv_data(self) -> pd.DataFrame:
@@ -369,8 +369,10 @@ class IntelliCVModelTrainer:
         model_file = self.models_dir / "bayesian_classifier.pkl"
         vectorizer_file = self.models_dir / "tfidf_vectorizer.pkl"
 
-        pickle.dump(model, open(model_file, 'wb'))
-        pickle.dump(vectorizer, open(vectorizer_file, 'wb'))
+        with open(model_file, 'wb') as f:
+            pickle.dump(model, f)
+        with open(vectorizer_file, 'wb') as f:
+            pickle.dump(vectorizer, f)
 
         print(f"   💾 Saved: {model_file.name}")
         print(f"   💾 Saved: {vectorizer_file.name}")
@@ -630,7 +632,7 @@ class IntelliCVModelTrainer:
 
 def main():
     """Main entry point"""
-    trainer = IntelliCVModelTrainer()
+    trainer = CareerTrojanModelTrainer()
     success = trainer.run_full_training()
 
     return 0 if success else 1

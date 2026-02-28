@@ -30,6 +30,16 @@ import logging
 import uuid
 import os
 
+from services.backend_api.utils.auth_deps import get_current_user
+from services.backend_api.db import models as db_models
+
+# ── Canonical plan config (single source of truth) ──
+from services.backend_api.services.plan_config import (
+    PLANS as CANONICAL_PLANS,
+    PlanTier as CanonicalPlanTier,
+    PROMO_CODES,
+)
+
 # Gateway selection — Braintree is primary, Stripe is dormant fallback
 PAYMENT_GATEWAY = os.getenv("PAYMENT_GATEWAY", "braintree").lower()
 
@@ -62,77 +72,21 @@ class PlanTier(str, Enum):
     FREE = "free"
     MONTHLY = "monthly"
     ANNUAL = "annual"
-    ELITE = "elitepro"
+    ELITE = "elite"       # Canonical: "elite" (was "elitepro")
 
 
-# Plan definitions
-PLANS = {
-    "free": {
-        "id": "free",
-        "name": "Free Trial",
-        "price": 0.0,
+# Plan definitions — derived from canonical plan_config.py
+PLANS = {}
+for _tid, _cfg in CANONICAL_PLANS.items():
+    PLANS[_tid] = {
+        "id": _tid,
+        "name": _cfg.name,
+        "price": _cfg.price_annual_usd if _cfg.price_annual_usd else _cfg.price_monthly_usd,
         "currency": "USD",
-        "interval": None,
-        "features": [
-            "Basic resume upload",
-            "Limited AI analysis (5/month)",
-            "Job search",
-            "Basic career advice"
-        ],
-        "token_limit": 50,
-        "ai_calls_per_month": 5
-    },
-    "monthly": {
-        "id": "monthly",
-        "name": "Monthly Pro",
-        "price": 15.99,
-        "currency": "USD",
-        "interval": "month",
-        "features": [
-            "Unlimited resume uploads",
-            "Full AI analysis",
-            "Resume tuning",
-            "Application tracker",
-            "Interview coaching",
-            "Email support"
-        ],
-        "token_limit": 500,
-        "ai_calls_per_month": 100
-    },
-    "annual": {
-        "id": "annual",
-        "name": "Annual Pro",
-        "price": 149.99,
-        "currency": "USD",
-        "interval": "year",
-        "features": [
-            "Everything in Monthly Pro",
-            "Dual Career Suite",
-            "Priority support",
-            "Early access to features",
-            "2 months free"
-        ],
-        "token_limit": 1000,
-        "ai_calls_per_month": 200
-    },
-    "elitepro": {
-        "id": "elitepro",
-        "name": "Elite Pro",
-        "price": 299.99,
-        "currency": "USD",
-        "interval": "year",
-        "features": [
-            "Everything in Annual Pro",
-            "Personal career advisor",
-            "Mentor marketplace access",
-            "Fractional ownership rewards",
-            "White-glove onboarding",
-            "API access"
-        ],
-        "token_limit": 5000,
-        "ai_calls_per_month": 500
+        "interval": {"one_time": None, "monthly": "month", "annual": "year"}.get(_cfg.interval),
+        "features": list(_cfg.features),
+        "credits_per_month": _cfg.credits_per_month,
     }
-}
 
 
 # ============================================================================
@@ -146,8 +100,7 @@ class PlanOut(BaseModel):
     currency: str
     interval: Optional[str]
     features: List[str]
-    token_limit: int
-    ai_calls_per_month: int
+    credits_per_month: int
 
 
 class PlansListOut(BaseModel):
@@ -156,7 +109,7 @@ class PlansListOut(BaseModel):
 
 
 class PaymentProcessIn(BaseModel):
-    plan_id: str = Field(..., description="Plan to purchase: free, monthly, annual, elitepro")
+    plan_id: str = Field(..., description="Plan to purchase: free, monthly, annual, elite")
     payment_method_nonce: Optional[str] = Field(None, description="Braintree payment method nonce (from Drop-in UI)")
     payment_method_token: Optional[str] = Field(None, description="Vaulted payment method token")
     promo_code: Optional[str] = Field(None, description="Optional promo code")
@@ -204,10 +157,11 @@ _payment_history: Dict[str, List[Dict[str, Any]]] = {}
 # HELPER FUNCTIONS
 # ============================================================================
 
-def _get_user_id_from_token() -> str:
-    """Extract user ID from auth token - placeholder"""
-    # TODO: Implement proper auth dependency
-    return "user_demo"
+def _get_user_id_from_token(
+    current_user: db_models.User = Depends(get_current_user),
+) -> str:
+    """Extract user ID from authenticated JWT token."""
+    return str(current_user.id)
 
 
 def _process_braintree_payment(
@@ -249,7 +203,7 @@ def _process_braintree_payment(
 # ============================================================================
 
 @router.get("/plans", response_model=PlansListOut)
-async def get_plans():
+async def get_plans(user_id: str = Depends(_get_user_id_from_token)):
     """
     Get all available subscription plans
     
@@ -257,8 +211,6 @@ async def get_plans():
     """
     plans_list = [PlanOut(**plan) for plan in PLANS.values()]
     
-    # TODO: Get current user's plan from auth
-    user_id = _get_user_id_from_token()
     current_plan = _user_subscriptions.get(user_id, {}).get("plan_id", "free")
     
     return PlansListOut(plans=plans_list, current_plan=current_plan)
@@ -276,7 +228,7 @@ async def get_plan(plan_id: str):
 
 
 @router.post("/process", response_model=PaymentProcessOut)
-async def process_payment(payload: PaymentProcessIn):
+async def process_payment(payload: PaymentProcessIn, user_id: str = Depends(_get_user_id_from_token)):
     """
     Process a subscription payment via Braintree.
     
@@ -290,7 +242,6 @@ async def process_payment(payload: PaymentProcessIn):
         )
     
     plan = PLANS[payload.plan_id]
-    user_id = _get_user_id_from_token()
     
     # Free tier - no payment needed
     if payload.plan_id == "free":
@@ -318,11 +269,9 @@ async def process_payment(payload: PaymentProcessIn):
     # Apply promo code discount
     discount = 0.0
     if payload.promo_code:
-        # TODO: Validate promo code from database
-        if payload.promo_code.upper() == "LAUNCH20":
-            discount = plan["price"] * 0.20
-        elif payload.promo_code.upper() == "CAREER10":
-            discount = plan["price"] * 0.10
+        promo = PROMO_CODES.get(payload.promo_code.upper())
+        if promo:
+            discount = plan["price"] * (promo["discount_percent"] / 100)
     
     final_amount = round(plan["price"] - discount, 2)
     
@@ -378,6 +327,16 @@ async def process_payment(payload: PaymentProcessIn):
         "description": f"Subscription to {plan['name']}"
     })
     
+    # ── CRITICAL: Allocate credits after successful payment ──
+    try:
+        from services.backend_api.services.credit_system import get_credit_manager
+        credit_mgr = get_credit_manager()
+        credit_mgr.set_user_plan(user_id, CanonicalPlanTier(payload.plan_id))
+        logger.info(f"Credits allocated for {user_id} on plan {payload.plan_id}")
+    except Exception as e:
+        logger.error(f"Failed to allocate credits for {user_id}: {e}")
+        # Payment succeeded — don't fail the response; admin can reconcile
+    
     logger.info(f"User {user_id} subscribed to {payload.plan_id}")
     
     return PaymentProcessOut(
@@ -391,9 +350,8 @@ async def process_payment(payload: PaymentProcessIn):
 
 
 @router.get("/history", response_model=PaymentHistoryOut)
-async def get_payment_history():
+async def get_payment_history(user_id: str = Depends(_get_user_id_from_token)):
     """Get user's payment history"""
-    user_id = _get_user_id_from_token()
     transactions = _payment_history.get(user_id, [])
     
     total_spent = sum(t["amount"] for t in transactions if t["status"] == "completed")
@@ -405,9 +363,8 @@ async def get_payment_history():
 
 
 @router.get("/subscription")
-async def get_current_subscription():
+async def get_current_subscription(user_id: str = Depends(_get_user_id_from_token)):
     """Get user's current subscription details"""
-    user_id = _get_user_id_from_token()
     subscription = _user_subscriptions.get(user_id)
     
     if not subscription:
@@ -433,9 +390,8 @@ async def get_current_subscription():
 
 
 @router.post("/cancel", response_model=CancelSubscriptionOut)
-async def cancel_subscription():
+async def cancel_subscription(user_id: str = Depends(_get_user_id_from_token)):
     """Cancel current subscription (effective at end of billing period)"""
-    user_id = _get_user_id_from_token()
     subscription = _user_subscriptions.get(user_id)
     
     if not subscription or subscription["plan_id"] == "free":
@@ -477,7 +433,7 @@ import os
 
 
 @router.get("/client-token")
-async def get_client_token():
+async def get_client_token(user_id: str = Depends(_get_user_id_from_token)):
     """
     Generate a Braintree client token for the Drop-in UI.
 
@@ -489,7 +445,6 @@ async def get_client_token():
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Payment gateway not configured"
         )
-    user_id = _get_user_id_from_token()
     try:
         # Try with customer_id for returning users (pre-fills saved methods)
         try:
@@ -503,14 +458,12 @@ async def get_client_token():
 
 
 @router.post("/methods")
-async def add_payment_method(nonce: str):
+async def add_payment_method(nonce: str, user_id: str = Depends(_get_user_id_from_token)):
     """
     Vault a payment method (card, PayPal) using a nonce from the Drop-in UI.
     """
     if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
         raise HTTPException(status_code=503, detail="Payment gateway not configured")
-
-    user_id = _get_user_id_from_token()
     try:
         braintree_service.find_or_create_customer(user_id)
         method = braintree_service.create_payment_method(user_id, nonce)
@@ -521,12 +474,10 @@ async def add_payment_method(nonce: str):
 
 
 @router.get("/methods")
-async def list_payment_methods():
+async def list_payment_methods(user_id: str = Depends(_get_user_id_from_token)):
     """List all saved payment methods for the current user."""
     if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
         return {"methods": []}
-
-    user_id = _get_user_id_from_token()
     methods = braintree_service.list_payment_methods(user_id)
     return {"methods": methods}
 

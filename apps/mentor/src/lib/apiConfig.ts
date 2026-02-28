@@ -14,6 +14,8 @@ export const API = {
   sessions: `${API_BASE}/api/sessions/v1`,
   user: `${API_BASE}/api/user/v1`,
   payment: `${API_BASE}/api/payment/v1`,
+  aiGateway: `${API_BASE}/api/ai`,  // AI Gateway (unified entry point)
+  support: `${API_BASE}/api/support/v1`,  // Zendesk Support Bridge
 } as const;
 
 export const API_CONFIG = { baseUrl: API_BASE };

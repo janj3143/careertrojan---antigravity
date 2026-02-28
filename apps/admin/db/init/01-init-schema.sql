@@ -1,4 +1,4 @@
--- IntelliCV-AI Admin Portal Database Initialization
+-- CareerTrojan Admin Portal Database Initialization
 -- This script sets up the core database schema for admin portal functionality
 
 SET timezone = 'UTC';

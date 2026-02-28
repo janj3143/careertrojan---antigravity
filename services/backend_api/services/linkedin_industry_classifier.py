@@ -6,7 +6,7 @@ This module provides comprehensive industry categorization based on LinkedIn's
 official industry taxonomy with detailed subcategories and business software
 classifications for advanced job title enrichment.
 
-Author: IntelliCV-AI Team
+Author: CareerTrojan Team
 Date: September 30, 2025
 """
 

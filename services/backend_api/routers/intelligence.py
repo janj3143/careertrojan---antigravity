@@ -1,11 +1,12 @@
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from typing import List, Optional
 from pydantic import BaseModel
 
+from services.backend_api.utils.auth_deps import get_current_user
 from services.backend_api.services.ai.statistical_analysis_engine import StatisticalAnalysisEngine
 
-router = APIRouter(prefix="/api/intelligence/v1", tags=["intelligence"])
+router = APIRouter(prefix="/api/intelligence/v1", tags=["intelligence"], dependencies=[Depends(get_current_user)])
 engine = StatisticalAnalysisEngine()
 
 class DataPoint(BaseModel):

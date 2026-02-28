@@ -1,4 +1,4 @@
--- Sample test data for IntelliCV-AI Admin Portal
+-- Sample test data for CareerTrojan Admin Portal
 -- This script inserts test data for development and testing purposes
 
 -- Insert additional test admin users

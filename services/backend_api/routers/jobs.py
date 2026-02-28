@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from typing import List, Dict, Any
 import uuid
 
-router = APIRouter(prefix="/api/jobs/v1", tags=["jobs"])
+from services.backend_api.utils.auth_deps import get_current_user
+
+router = APIRouter(prefix="/api/jobs/v1", tags=["jobs"], dependencies=[Depends(get_current_user)])
 
 # In-memory storage for demo purposes
 _jobs_db = [

@@ -1,0 +1,411 @@
+# ===========================================================================
+# Antigravity — CareerTrojan  |  Docker Compose (Production · Hetzner)
+# ===========================================================================
+# Project: antigravity-careertrojan
+# Model:   Host NGINX terminates SSL → proxies to container ports on 127.0.0.1
+# No Docker gateway — let the host NGINX handle routing + SSL + caching.
+#
+# Port Map (localhost-only — invisible to public internet):
+#   8700  backend-api     (FastAPI / uvicorn)
+#   8701  admin-portal    (nginx / static React)
+#   8702  user-portal     (nginx / static React)
+#   8703  mentor-portal   (nginx / static React)
+#   8704  redis           (internal only — not exposed)
+#   8705  postgres        (internal only — not exposed)
+#
+# Usage:
+#   docker compose -f compose.production.yaml up -d            # start
+#   docker compose -f compose.production.yaml logs -f backend  # tail logs
+#   docker compose -f compose.production.yaml down             # stop
+#   docker compose -f compose.production.yaml build --no-cache # rebuild all
+# ===========================================================================
+
+name: antigravity-careertrojan
+
+services:
+  # =========================================================================
+  # BACKEND API — FastAPI (production)
+  # =========================================================================
+  backend-api:
+    build:
+      context: ./services/backend_api
+    container_name: antigravity-careertrojan-backend
+    ports:
+      - "127.0.0.1:8700:8000"
+    env_file:
+      - .env.production
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-careertrojan}
+      - REDIS_URL=redis://redis:6379/0
+      - CAREERTROJAN_DATA_ROOT=/app/data
+      - CAREERTROJAN_ROOT=/app
+      - ENVIRONMENT=production
+      - SECRETS_DIR=/run/secrets
+    secrets:
+      - secret_key
+      - postgres_password
+      - braintree_private_key
+    volumes:
+      - ${CAREERTROJAN_DATA_ROOT:-/opt/careertrojan/data/ai-data}:/app/data:ro
+      - ${CAREERTROJAN_USER_DATA:-/opt/careertrojan/data/user-data}:/app/user-data
+      - ${CAREERTROJAN_PARSER_DATA:-/opt/careertrojan/data/parser}:/app/parser:ro
+      - ./config:/app/config:ro
+      - /opt/careertrojan/logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - antigravity-net
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.00'
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "backend-api"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # =========================================================================
+  # FRONTEND — Admin Portal (React / Vite → nginx:alpine)
+  # =========================================================================
+  admin-portal:
+    build:
+      context: ./apps/admin
+    container_name: antigravity-careertrojan-admin
+    ports:
+      - "127.0.0.1:8701:80"
+    depends_on:
+      backend-api:
+        condition: service_healthy
+    networks:
+      - antigravity-net
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 32M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "admin-portal"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  # =========================================================================
+  # FRONTEND — User Portal (React / Vite → nginx:alpine)
+  # =========================================================================
+  user-portal:
+    build:
+      context: ./apps/user
+    container_name: antigravity-careertrojan-user
+    ports:
+      - "127.0.0.1:8702:80"
+    depends_on:
+      backend-api:
+        condition: service_healthy
+    networks:
+      - antigravity-net
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 32M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "user-portal"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  # =========================================================================
+  # FRONTEND — Mentor Portal (React / Vite → nginx:alpine)
+  # =========================================================================
+  mentor-portal:
+    build:
+      context: ./apps/mentor
+    container_name: antigravity-careertrojan-mentor
+    ports:
+      - "127.0.0.1:8703:80"
+    depends_on:
+      backend-api:
+        condition: service_healthy
+    networks:
+      - antigravity-net
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 32M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "mentor-portal"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  # =========================================================================
+  # WORKERS
+  # =========================================================================
+  parser-worker:
+    build:
+      context: ./services/workers/parser
+    container_name: antigravity-careertrojan-worker-parser
+    env_file:
+      - .env.production
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CAREERTROJAN_DATA_ROOT=/app/data
+    volumes:
+      - ${CAREERTROJAN_DATA_ROOT:-/opt/careertrojan/data/ai-data}:/app/data
+      - ${CAREERTROJAN_PARSER_DATA:-/opt/careertrojan/data/parser}:/app/parser
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - antigravity-net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.00'
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "parser-worker"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  enrichment-worker:
+    build:
+      context: ./services/workers/enrichment
+    container_name: antigravity-careertrojan-worker-enrichment
+    env_file:
+      - .env.production
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CAREERTROJAN_DATA_ROOT=/app/data
+    volumes:
+      - ${CAREERTROJAN_DATA_ROOT:-/opt/careertrojan/data/ai-data}:/app/data
+      - ${CAREERTROJAN_USER_DATA:-/opt/careertrojan/data/user-data}:/app/user-data
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - antigravity-net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.00'
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "enrichment-worker"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ai-worker:
+    build:
+      context: ./services/workers/ai
+    container_name: antigravity-careertrojan-worker-ai
+    env_file:
+      - .env.production
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CAREERTROJAN_DATA_ROOT=/app/data
+      - SECRETS_DIR=/run/secrets
+    secrets:
+      - openai_api_key
+      - anthropic_api_key
+    volumes:
+      - ${CAREERTROJAN_DATA_ROOT:-/opt/careertrojan/data/ai-data}:/app/data
+      - ./config:/app/config:ro
+      - ./trained_models:/app/trained_models:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - antigravity-net
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 1G
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "ai-worker"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # =========================================================================
+  # INFRASTRUCTURE
+  # =========================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: antigravity-careertrojan-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-careertrojan}
+    # No host port — only reachable inside the Docker network
+    # Uncomment for debug: "127.0.0.1:8705:5432"
+    networks:
+      - antigravity-net
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.00'
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "postgres"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  redis:
+    image: redis:7-alpine
+    container_name: antigravity-careertrojan-redis
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    # No host port — only reachable inside the Docker network
+    # Uncomment for debug: "127.0.0.1:8704:6379"
+    networks:
+      - antigravity-net
+    volumes:
+      - redis-data:/data
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.50'
+        reservations:
+          memory: 64M
+    restart: unless-stopped
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+      com.careertrojan.service: "redis"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+# ===========================================================================
+# SECRETS — read from /run/secrets/<name> inside containers
+# ===========================================================================
+# Create plain-text files in ./secrets/ (one value per file, no trailing newline)
+#   echo -n "my-jwt-secret" > secrets/secret_key.txt
+# ===========================================================================
+secrets:
+  secret_key:
+    file: ./secrets/secret_key.txt
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+  braintree_private_key:
+    file: ./secrets/braintree_private_key.txt
+  openai_api_key:
+    file: ./secrets/openai_api_key.txt
+  anthropic_api_key:
+    file: ./secrets/anthropic_api_key.txt
+
+# ===========================================================================
+# NETWORKS
+# ===========================================================================
+networks:
+  antigravity-net:
+    driver: bridge
+    name: antigravity-careertrojan-net
+    labels:
+      com.careertrojan.project: "antigravity-careertrojan"
+
+# ===========================================================================
+# VOLUMES
+# ===========================================================================
+volumes:
+  postgres-data:
+    name: antigravity-careertrojan-pgdata
+  redis-data:
+    name: antigravity-careertrojan-redis

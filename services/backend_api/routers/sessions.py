@@ -18,11 +18,14 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
+from services.backend_api.utils.auth_deps import get_current_user
+
 logger = logging.getLogger("backend.sessions")
 
 router = APIRouter(
     prefix="/api/sessions/v1",
     tags=["sessions"],
+    dependencies=[Depends(get_current_user)],
 )
 
 # ── Data Paths — L: drive is source of truth ─────────────────

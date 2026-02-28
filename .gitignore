@@ -33,8 +33,12 @@ apps/mentor/dist/
 .env
 .env.local
 .env.*.local
+.env.production
 *.pem
 *.key
+*.pfx
+secrets/
+infra/nginx/certs/dev.*
 
 # ── Data mounts (junctions to L: drive — never commit raw data) ─────
 data-mounts/ai-data/

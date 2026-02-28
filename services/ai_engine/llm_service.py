@@ -27,17 +27,21 @@ class LLMBackendType(Enum):
     VLLM = "vllm"
     ANTHROPIC = "anthropic"
 
-class LLMRequest(ABC):
-    """Abstract Request Object"""
+from dataclasses import dataclass, field
+
+@dataclass
+class LLMRequest:
+    """Request Object for LLM calls."""
     prompt: str
     max_tokens: int = 1000
     temperature: float = 0.7
 
-class LLMResponse(ABC):
-    """Abstract Response Object"""
+@dataclass
+class LLMResponse:
+    """Response Object from LLM calls."""
     text: str
-    usage: Dict[str, int]
-    model_name: str
+    usage: Dict[str, int] = field(default_factory=dict)
+    model_name: str = ""
 
 class BaseLLMService(ABC):
     """Abstract Base Class for LLM Services"""

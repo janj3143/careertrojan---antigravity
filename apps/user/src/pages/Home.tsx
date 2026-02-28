@@ -88,7 +88,7 @@ export default function Home() {
             <div className="py-24 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Why IntelliCV?</h2>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Why CareerTrojan?</h2>
                         <p className="text-gray-600 text-lg">We combine advanced LLMs with real-time market data to give you an unfair advantage.</p>
                     </div>
 

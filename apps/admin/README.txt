@@ -1,4 +1,4 @@
-IntelliCV – Page 12 Web Company Intelligence (All Endpoints) Patch
+CareerTrojan – Page 12 Web Company Intelligence (All Endpoints) Patch
 ================================================================
 
 What this provides

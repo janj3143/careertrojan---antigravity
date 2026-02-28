@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
     container_name: careertrojan-backend
     ports:
-      - "8500:8500"
+      - "8600:8600"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/careertrojan
       - JWT_SECRET=dev_secret_change_in_production
@@ -23,7 +23,7 @@ services:
       - careertrojan-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8500/shared/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8600/shared/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -37,7 +37,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - VITE_API_URL=http://backend-api:8500
+      - VITE_API_URL=http://backend-api:8600
     volumes:
       - ../../apps/user:/app
       - /app/node_modules
@@ -56,7 +56,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - VITE_API_URL=http://backend-api:8500
+      - VITE_API_URL=http://backend-api:8600
     volumes:
       - ../../apps/admin:/app
       - /app/node_modules
@@ -75,7 +75,7 @@ services:
     ports:
       - "3002:3002"
     environment:
-      - VITE_API_URL=http://backend-api:8500
+      - VITE_API_URL=http://backend-api:8600
     volumes:
       - ../../apps/mentor:/app
       - /app/node_modules

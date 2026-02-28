@@ -8,7 +8,7 @@ export default function OpsAbout() {
             <PageTemplate 
                 title="About (Ops)"
                 subtitle="Admin portal page"
-                endpoint="/ops/about"
+                endpoint="/api/ops/v1/about"
             />
         </AdminLayout>
     );

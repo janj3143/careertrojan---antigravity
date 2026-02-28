@@ -1,9 +1,9 @@
-# IntelliCV Universal Resume & Document Parser (Enterprise Edition)
+# CareerTrojan Universal Resume & Document Parser (Enterprise Edition)
 # (See previous message for full script content)
 # ...full combined parser code here...
 #!/usr/bin/env python3
 """
-IntelliCV Universal Resume & Document Parser (Enterprise Edition)
+CareerTrojan Universal Resume & Document Parser (Enterprise Edition)
 Combines and optimizes all resume/document parsing logic from master_resume_parser, resume_parser, and resume_parser_cli.
 Extracts: candidate info, skills, education, experience, certifications, contact info, file metadata, and advanced intelligence features.
 """
@@ -19,7 +19,12 @@ from datetime import datetime
 from typing import Dict, List, Optional, Any
 
 # --- Smart Resume Enrichment ---
-from enrichment.ats_scorer import ATSScorer
+try:
+    from enrichment.ats_scorer import ATSScorer
+    ATS_AVAILABLE = True
+except ImportError:
+    ATSScorer = None  # type: ignore
+    ATS_AVAILABLE = False
 
 # --- Configuration ---
 
@@ -267,7 +272,7 @@ class ResumeParser:
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description="IntelliCV Universal Document Parser")
+    parser = argparse.ArgumentParser(description="CareerTrojan Universal Document Parser")
     parser.add_argument("--in", dest="input_dir", help="Input directory path")
     parser.add_argument("--out", dest="output_dir", help="Output directory path")
     parser.add_argument("--job", dest="job_target", help="Target job description for enrichment (optional)")

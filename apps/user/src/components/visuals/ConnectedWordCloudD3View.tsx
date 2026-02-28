@@ -6,6 +6,21 @@ import type { ApiConfig } from "../../lib/api";
 import { getTermCloud, getCooccurrence } from "../../lib/api";
 import type { CohortFilters, TermCloudResponse, CooccurrenceResponse } from "../../lib/types";
 import { useSelectionStore } from "../../lib/selection_store";
+import { useSkillTemplateStore } from "../../lib/skill_template_store";
+
+type WordCloudLayerMode = "all" | "dominant" | "growth" | "unknown";
+
+function splitTerms(input: string): string[] {
+    return input
+        .split(",")
+        .map((term) => term.trim().toLowerCase())
+        .filter(Boolean);
+}
+
+function matchesAny(text: string, tokens: string[]): boolean {
+    const lower = text.toLowerCase();
+    return tokens.some((token) => lower.includes(token));
+}
 
 export function ConnectedWordCloudD3View({ api, filters, width = 860, height = 520 }: {
     api: ApiConfig; filters: CohortFilters; width?: number; height?: number;
@@ -15,6 +30,8 @@ export function ConnectedWordCloudD3View({ api, filters, width = 860, height = 5
     const [cloudData, setCloudData] = React.useState<TermCloudResponse | null>(null);
     const [edges, setEdges] = React.useState<CooccurrenceResponse | null>(null);
     const [selected, setSelected] = React.useState<string | null>(null);
+    const [layerMode, setLayerMode] = React.useState<WordCloudLayerMode>("all");
+    const { template } = useSkillTemplateStore();
 
     React.useEffect(() => {
         let cancel = false;
@@ -32,13 +49,25 @@ export function ConnectedWordCloudD3View({ api, filters, width = 860, height = 5
     React.useEffect(() => {
         if (!cloudData || !ref.current) return;
         const svg = d3.select(ref.current); svg.selectAll("*").remove();
-        const words = cloudData.terms.map(t => ({ text: t.text, value: t.value, touchpoint_ids: t.touchpoint_ids ?? [] }));
+        const dominantTerms = splitTerms(template.dominantElements);
+        const growthTerms = splitTerms(template.growthElements);
+
+        const words = cloudData.terms.map(t => {
+            const text = t.text;
+            const isDominant = dominantTerms.length > 0 && matchesAny(text, dominantTerms);
+            const isGrowth = growthTerms.length > 0 && matchesAny(text, growthTerms);
+            const layer = isDominant ? "dominant" : isGrowth ? "growth" : "unknown";
+            return { text, value: t.value, touchpoint_ids: t.touchpoint_ids ?? [], layer };
+        });
+
+        const activeWords = layerMode === "all" ? words : words.filter((w: any) => w.layer === layerMode);
+        const wordsToRender = activeWords.length > 0 ? activeWords : words;
         const maxV = d3.max(words, d => d.value) ?? 1, minV = d3.min(words, d => d.value) ?? 0;
         const sizeScale = d3.scaleLinear().domain([minV, maxV]).range([12, 64]);
 
         const layout = cloud()
             .size([width, height])
-            .words(words.map(w => ({ ...w, size: sizeScale(w.value) } as any)))
+            .words(wordsToRender.map(w => ({ ...w, size: sizeScale(w.value) } as any)))
             .padding(2).rotate(() => (Math.random() > 0.8 ? 90 : 0))
             .font("system-ui").fontSize((d: any) => d.size)
             .on("end", (drawWords: any[]) => {
@@ -58,7 +87,12 @@ export function ConnectedWordCloudD3View({ api, filters, width = 860, height = 5
                     .style("font-size", (d: any) => `${d.size}px`).style("font-family", "system-ui")
                     .style("cursor", "pointer").attr("text-anchor", "middle")
                     .attr("transform", (d: any) => `translate(${d.x},${d.y}) rotate(${d.rotate})`)
-                    .attr("fill", (d: any) => (selected && d.text === selected ? "#111" : "#2b6cb0"))
+                    .attr("fill", (d: any) => {
+                        if (selected && d.text === selected) return "#111";
+                        if (d.layer === "dominant") return "#065F46";
+                        if (d.layer === "growth") return "#B45309";
+                        return "#2b6cb0";
+                    })
                     .attr("opacity", (d: any) => (selected && d.text !== selected ? 0.35 : 0.9))
                     .text((d: any) => d.text)
                     .on("click", (_, d: any) => {
@@ -71,8 +105,32 @@ export function ConnectedWordCloudD3View({ api, filters, width = 860, height = 5
             });
 
         layout.start();
-    }, [cloudData, edges, selected, width, height]);
+    }, [cloudData, edges, selected, width, height, layerMode, template.dominantElements, template.growthElements]);
 
     if (!cloudData) return <div style={{ color: "#666" }}>Loading terms…</div>;
-    return <svg ref={ref} width={width} height={height} style={{ border: "1px solid #ddd", borderRadius: 12 }} />;
+    return (
+        <div className="w-full h-full">
+            <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
+                <span className="text-gray-500">Layer mode</span>
+                {[
+                    { id: "all", label: "All" },
+                    { id: "dominant", label: "Dominant" },
+                    { id: "growth", label: "Growth" },
+                    { id: "unknown", label: "Unknown" },
+                ].map((item) => (
+                    <button
+                        key={item.id}
+                        onClick={() => setLayerMode(item.id as WordCloudLayerMode)}
+                        className={`rounded-full border px-2 py-1 ${layerMode === item.id ? "border-indigo-300 bg-indigo-50 text-indigo-700" : "border-gray-200 bg-white text-gray-600"}`}
+                    >
+                        {item.label}
+                    </button>
+                ))}
+                <span className="ml-2 text-emerald-700">● Dominant</span>
+                <span className="text-amber-700">● Growth</span>
+                <span className="text-blue-700">● Unknown</span>
+            </div>
+            <svg ref={ref} width={width} height={height} style={{ border: "1px solid #ddd", borderRadius: 12 }} />
+        </div>
+    );
 }

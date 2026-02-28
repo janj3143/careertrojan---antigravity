@@ -21,842 +21,842 @@
       "label": "FastAPI Backend"
     },
     {
-      "id": "queue.get.97265252",
+      "id": "queue.get.50755424",
       "type": "endpoint",
       "label": "GET /api/admin/v1/abuse/queue"
     },
     {
-      "id": "content_jobs.get.485963",
+      "id": "content_jobs.get.60630766",
       "type": "endpoint",
       "label": "GET /api/admin/v1/ai/content/jobs"
     },
     {
-      "id": "content_run.post.25812438",
+      "id": "content_run.post.12695340",
       "type": "endpoint",
       "label": "POST /api/admin/v1/ai/content/run"
     },
     {
-      "id": "content_status.get.922322",
+      "id": "content_status.get.59312266",
       "type": "endpoint",
       "label": "GET /api/admin/v1/ai/content/status"
     },
     {
-      "id": "enrichment_jobs.get.9707700",
+      "id": "enrichment_jobs.get.42734855",
       "type": "endpoint",
       "label": "GET /api/admin/v1/ai/enrichment/jobs"
     },
     {
-      "id": "enrichment_run.post.12252286",
+      "id": "enrichment_run.post.52849265",
       "type": "endpoint",
       "label": "POST /api/admin/v1/ai/enrichment/run"
     },
     {
-      "id": "enrichment_status.get.5232958",
+      "id": "enrichment_status.get.89830481",
       "type": "endpoint",
       "label": "GET /api/admin/v1/ai/enrichment/status"
     },
     {
-      "id": "check.post.82538055",
+      "id": "check.post.54647919",
       "type": "endpoint",
       "label": "POST /api/admin/v1/anti-gaming/check"
     },
     {
-      "id": "batch_jobs.get.73654062",
+      "id": "batch_jobs.get.67821208",
       "type": "endpoint",
       "label": "GET /api/admin/v1/batch/jobs"
     },
     {
-      "id": "batch_run.post.91656548",
+      "id": "batch_run.post.99734533",
       "type": "endpoint",
       "label": "POST /api/admin/v1/batch/run"
     },
     {
-      "id": "batch_status.get.62928165",
+      "id": "batch_status.get.67580537",
       "type": "endpoint",
       "label": "GET /api/admin/v1/batch/status"
     },
     {
-      "id": "audit_events.get.85122968",
+      "id": "audit_events.get.78264991",
       "type": "endpoint",
       "label": "GET /api/admin/v1/compliance/audit/events"
     },
     {
-      "id": "compliance_summary.get.13268652",
+      "id": "compliance_summary.get.68962095",
       "type": "endpoint",
       "label": "GET /api/admin/v1/compliance/summary"
     },
     {
-      "id": "dashboard_snapshot.get.47667168",
+      "id": "dashboard_snapshot.get.9659960",
       "type": "endpoint",
       "label": "GET /api/admin/v1/dashboard/snapshot"
     },
     {
-      "id": "email_jobs.get.76139210",
+      "id": "email_jobs.get.74194405",
       "type": "endpoint",
       "label": "GET /api/admin/v1/email/jobs"
     },
     {
-      "id": "email_status.get.73272739",
+      "id": "email_status.get.8608638",
       "type": "endpoint",
       "label": "GET /api/admin/v1/email/status"
     },
     {
-      "id": "email_sync.post.4345404",
+      "id": "email_sync.post.83446763",
       "type": "endpoint",
       "label": "POST /api/admin/v1/email/sync"
     },
     {
-      "id": "tail_log.get.50663972",
+      "id": "tail_log.get.8476787",
       "type": "endpoint",
       "label": "GET /api/admin/v1/logs/tail"
     },
     {
-      "id": "parsers_jobs.get.93133451",
+      "id": "parsers_jobs.get.96726022",
       "type": "endpoint",
       "label": "GET /api/admin/v1/parsers/jobs"
     },
     {
-      "id": "parsers_run.post.47900435",
+      "id": "parsers_run.post.53805318",
       "type": "endpoint",
       "label": "POST /api/admin/v1/parsers/run"
     },
     {
-      "id": "parsers_status.get.65917725",
+      "id": "parsers_status.get.54343614",
       "type": "endpoint",
       "label": "GET /api/admin/v1/parsers/status"
     },
     {
-      "id": "list_admin_parses.get.57570809",
+      "id": "list_admin_parses.get.72965815",
       "type": "endpoint",
       "label": "GET /api/admin/v1/parsing/parse"
     },
     {
-      "id": "admin_parse_file.post.57570809",
+      "id": "admin_parse_file.post.72965815",
       "type": "endpoint",
       "label": "POST /api/admin/v1/parsing/parse"
     },
     {
-      "id": "get_admin_parse.get.86327221",
+      "id": "get_admin_parse.get.60188714",
       "type": "endpoint",
       "label": "GET /api/admin/v1/parsing/parse/{parse_id}"
     },
     {
-      "id": "system_activity.get.45528953",
+      "id": "system_activity.get.86261413",
       "type": "endpoint",
       "label": "GET /api/admin/v1/system/activity"
     },
     {
-      "id": "system_health.get.66006320",
+      "id": "system_health.get.87294933",
       "type": "endpoint",
       "label": "GET /api/admin/v1/system/health"
     },
     {
-      "id": "get_token_config.get.47467184",
+      "id": "get_token_config.get.17228667",
       "type": "endpoint",
       "label": "GET /api/admin/v1/tokens/config"
     },
     {
-      "id": "put_token_config.put.47467184",
+      "id": "put_token_config.put.17228667",
       "type": "endpoint",
       "label": "PUT /api/admin/v1/tokens/config"
     },
     {
-      "id": "get_token_usage.get.67540512",
+      "id": "get_token_usage.get.15414388",
       "type": "endpoint",
       "label": "GET /api/admin/v1/tokens/usage"
     },
     {
-      "id": "user_token_ledger.get.80985665",
+      "id": "user_token_ledger.get.32686913",
       "type": "endpoint",
       "label": "GET /api/admin/v1/tokens/users/{user_id}/ledger"
     },
     {
-      "id": "user_subscriptions.get.3753677",
+      "id": "user_subscriptions.get.20981661",
       "type": "endpoint",
       "label": "GET /api/admin/v1/user_subscriptions"
     },
     {
-      "id": "list_users.get.51722688",
+      "id": "list_users.get.56386097",
       "type": "endpoint",
       "label": "GET /api/admin/v1/users"
     },
     {
-      "id": "user_metrics.get.8626547",
+      "id": "user_metrics.get.80040876",
       "type": "endpoint",
       "label": "GET /api/admin/v1/users/metrics"
     },
     {
-      "id": "user_security.get.55275996",
+      "id": "user_security.get.72168218",
       "type": "endpoint",
       "label": "GET /api/admin/v1/users/security"
     },
     {
-      "id": "get_user.get.83649989",
+      "id": "get_user.get.61922983",
       "type": "endpoint",
       "label": "GET /api/admin/v1/users/{user_id}"
     },
     {
-      "id": "disable_user.put.18699534",
+      "id": "disable_user.put.84756481",
       "type": "endpoint",
       "label": "PUT /api/admin/v1/users/{user_id}/disable"
     },
     {
-      "id": "set_user_plan.put.16406184",
+      "id": "set_user_plan.put.87971068",
       "type": "endpoint",
       "label": "PUT /api/admin/v1/users/{user_id}/plan"
     },
     {
-      "id": "get_automated_candidates.get.73923724",
+      "id": "get_automated_candidates.get.30731884",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/automated/candidates"
     },
     {
-      "id": "get_companies.get.58462202",
+      "id": "get_companies.get.42024812",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/companies"
     },
     {
-      "id": "get_email_extracted.get.14089815",
+      "id": "get_email_extracted.get.75944580",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/email_extracted"
     },
     {
-      "id": "get_job_descriptions.get.19457536",
+      "id": "get_job_descriptions.get.62919199",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/job_descriptions"
     },
     {
-      "id": "get_job_titles.get.13649018",
+      "id": "get_job_titles.get.34519857",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/job_titles"
     },
     {
-      "id": "get_locations.get.69191181",
+      "id": "get_locations.get.54888000",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/locations"
     },
     {
-      "id": "get_metadata.get.28121149",
+      "id": "get_metadata.get.12062039",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/metadata"
     },
     {
-      "id": "get_normalized_data.get.55126136",
+      "id": "get_normalized_data.get.70905577",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/normalized"
     },
     {
-      "id": "get_parsed_resumes.get.25895326",
+      "id": "get_parsed_resumes.get.10953511",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/parsed_resumes"
     },
     {
-      "id": "get_parsed_resume.get.43238922",
+      "id": "get_parsed_resume.get.93717710",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/parsed_resumes/{doc_id}"
     },
     {
-      "id": "get_ai_data_status.get.99166394",
+      "id": "get_ai_data_status.get.4130845",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/status"
     },
     {
-      "id": "list_user_data_files.get.18381828",
+      "id": "list_user_data_files.get.87408206",
       "type": "endpoint",
       "label": "GET /api/ai-data/v1/user_data/files"
     },
     {
-      "id": "get_dashboard_data.get.48457250",
+      "id": "get_dashboard_data.get.28517760",
       "type": "endpoint",
       "label": "GET /api/analytics/v1/dashboard"
     },
     {
-      "id": "get_recent_jobs.get.83792205",
+      "id": "get_recent_jobs.get.29726410",
       "type": "endpoint",
       "label": "GET /api/analytics/v1/recent_jobs"
     },
     {
-      "id": "get_recent_resumes.get.45892209",
+      "id": "get_recent_resumes.get.24535755",
       "type": "endpoint",
       "label": "GET /api/analytics/v1/recent_resumes"
     },
     {
-      "id": "get_statistics.get.41964424",
+      "id": "get_statistics.get.75590873",
       "type": "endpoint",
       "label": "GET /api/analytics/v1/statistics"
     },
     {
-      "id": "get_system_health.get.3496082",
+      "id": "get_system_health.get.52831072",
       "type": "endpoint",
       "label": "GET /api/analytics/v1/system_health"
     },
     {
-      "id": "generate_2fa.post.70076144",
+      "id": "generate_2fa.post.28512710",
       "type": "endpoint",
       "label": "POST /api/auth/v1/2fa/generate"
     },
     {
-      "id": "verify_2fa.post.71550796",
+      "id": "verify_2fa.post.58360283",
       "type": "endpoint",
       "label": "POST /api/auth/v1/2fa/verify"
     },
     {
-      "id": "login.post.55586975",
+      "id": "login.post.21328105",
       "type": "endpoint",
       "label": "POST /api/auth/v1/login"
     },
     {
-      "id": "register.post.85218539",
+      "id": "register.post.12246119",
       "type": "endpoint",
       "label": "POST /api/auth/v1/register"
     },
     {
-      "id": "detect_blockers.post.18881250",
+      "id": "detect_blockers.post.89793237",
       "type": "endpoint",
       "label": "POST /api/blockers/v1/detect"
     },
     {
-      "id": "generate_plans.post.12531053",
+      "id": "generate_plans.post.21145314",
       "type": "endpoint",
       "label": "POST /api/blockers/v1/improvement-plans/generate"
     },
     {
-      "id": "get_user_blockers.get.76228528",
+      "id": "get_user_blockers.get.6060095",
       "type": "endpoint",
       "label": "GET /api/blockers/v1/user/{user_id}"
     },
     {
-      "id": "review_answer.post.98292074",
+      "id": "review_answer.post.94093163",
       "type": "endpoint",
       "label": "POST /api/coaching/v1/answers/review"
     },
     {
-      "id": "get_coaching_bundle.post.16468505",
+      "id": "get_coaching_bundle.post.86245427",
       "type": "endpoint",
       "label": "POST /api/coaching/v1/bundle"
     },
     {
-      "id": "coaching_health.get.18887655",
+      "id": "coaching_health.get.82296390",
       "type": "endpoint",
       "label": "GET /api/coaching/v1/health"
     },
     {
-      "id": "generate_questions.post.88897066",
+      "id": "generate_questions.post.63529713",
       "type": "endpoint",
       "label": "POST /api/coaching/v1/questions/generate"
     },
     {
-      "id": "generate_stories.post.59394244",
+      "id": "generate_stories.post.41184129",
       "type": "endpoint",
       "label": "POST /api/coaching/v1/stories/generate"
     },
     {
-      "id": "get_action_costs.get.85570660",
+      "id": "get_action_costs.get.8005126",
       "type": "endpoint",
       "label": "GET /api/credits/v1/actions"
     },
     {
-      "id": "get_balance.get.15498582",
+      "id": "get_balance.get.44315829",
       "type": "endpoint",
       "label": "GET /api/credits/v1/balance"
     },
     {
-      "id": "can_perform_action.get.97405475",
+      "id": "can_perform_action.get.92361057",
       "type": "endpoint",
       "label": "GET /api/credits/v1/can-perform/{action_id}"
     },
     {
-      "id": "consume_credits.post.15642319",
+      "id": "consume_credits.post.94445235",
       "type": "endpoint",
       "label": "POST /api/credits/v1/consume"
     },
     {
-      "id": "health_check.get.2320439",
+      "id": "health_check.get.49074156",
       "type": "endpoint",
       "label": "GET /api/credits/v1/health"
     },
     {
-      "id": "get_plans.get.9765355",
+      "id": "get_plans.get.13795942",
       "type": "endpoint",
       "label": "GET /api/credits/v1/plans"
     },
     {
-      "id": "get_teaser.post.26769803",
+      "id": "get_teaser.post.82847828",
       "type": "endpoint",
       "label": "POST /api/credits/v1/teaser"
     },
     {
-      "id": "upgrade_plan.post.91068047",
+      "id": "upgrade_plan.post.414765",
       "type": "endpoint",
       "label": "POST /api/credits/v1/upgrade/{plan_tier}"
     },
     {
-      "id": "get_usage_details.get.74084305",
+      "id": "get_usage_details.get.98985754",
       "type": "endpoint",
       "label": "GET /api/credits/v1/usage"
     },
     {
-      "id": "resolve_cohort.post.64703009",
+      "id": "resolve_cohort.post.35558821",
       "type": "endpoint",
       "label": "POST /api/insights/v1/cohort/resolve"
     },
     {
-      "id": "get_graph_data.get.74639216",
+      "id": "get_graph_data.get.1339657",
       "type": "endpoint",
       "label": "GET /api/insights/v1/graph"
     },
     {
-      "id": "get_quadrant_data.get.90452994",
+      "id": "get_quadrant_data.get.97792970",
       "type": "endpoint",
       "label": "GET /api/insights/v1/quadrant"
     },
     {
-      "id": "get_term_cloud.get.74612663",
+      "id": "get_term_cloud.get.40968867",
       "type": "endpoint",
       "label": "GET /api/insights/v1/terms/cloud"
     },
     {
-      "id": "get_cooccurrence.get.67178965",
+      "id": "get_cooccurrence.get.97024635",
       "type": "endpoint",
       "label": "GET /api/insights/v1/terms/cooccurrence"
     },
     {
-      "id": "enrich_resume.post.46206312",
+      "id": "enrich_resume.post.8959192",
       "type": "endpoint",
       "label": "POST /api/intelligence/v1/enrich"
     },
     {
-      "id": "market_intel.get.22439546",
+      "id": "market_intel.get.86914582",
       "type": "endpoint",
       "label": "GET /api/intelligence/v1/market"
     },
     {
-      "id": "get_stats.post.18031140",
+      "id": "get_stats.post.49722876",
       "type": "endpoint",
       "label": "POST /api/intelligence/v1/stats/descriptive"
     },
     {
-      "id": "regression.post.31725569",
+      "id": "regression.post.21722973",
       "type": "endpoint",
       "label": "POST /api/intelligence/v1/stats/regression"
     },
     {
-      "id": "get_job_index.get.41576051",
+      "id": "get_job_index.get.1009673",
       "type": "endpoint",
       "label": "GET /api/jobs/v1/index"
     },
     {
-      "id": "search_jobs.get.93882072",
+      "id": "search_jobs.get.4164554",
       "type": "endpoint",
       "label": "GET /api/jobs/v1/search"
     },
     {
-      "id": "endpoints.get.66457666",
+      "id": "endpoints.get.13581652",
       "type": "endpoint",
       "label": "GET /api/mapping/v1/endpoints"
     },
     {
-      "id": "graph.get.98194714",
+      "id": "graph.get.58783890",
       "type": "endpoint",
       "label": "GET /api/mapping/v1/graph"
     },
     {
-      "id": "registry.get.71048991",
+      "id": "registry.get.53738211",
       "type": "endpoint",
       "label": "GET /api/mapping/v1/registry"
     },
     {
-      "id": "health_check.get.69967763",
+      "id": "health_check.get.11523655",
       "type": "endpoint",
       "label": "GET /api/mentor/v1/health"
     },
     {
-      "id": "list_mentors.get.80001582",
+      "id": "list_mentors.get.16852816",
       "type": "endpoint",
       "label": "GET /api/mentor/v1/list"
     },
     {
-      "id": "get_mentor_profile_by_user.get.91352943",
+      "id": "get_mentor_profile_by_user.get.31638328",
       "type": "endpoint",
       "label": "GET /api/mentor/v1/profile-by-user/{user_id}"
     },
     {
-      "id": "update_availability.put.43788256",
+      "id": "update_availability.put.70891407",
       "type": "endpoint",
       "label": "PUT /api/mentor/v1/{mentor_profile_id}/availability"
     },
     {
-      "id": "get_dashboard_stats.get.64773371",
+      "id": "get_dashboard_stats.get.85006381",
       "type": "endpoint",
       "label": "GET /api/mentor/v1/{mentor_profile_id}/dashboard-stats"
     },
     {
-      "id": "get_mentor_packages.get.86545373",
+      "id": "get_mentor_packages.get.14577586",
       "type": "endpoint",
       "label": "GET /api/mentor/v1/{mentor_profile_id}/packages"
     },
     {
-      "id": "create_package.post.86545373",
+      "id": "create_package.post.14577586",
       "type": "endpoint",
       "label": "POST /api/mentor/v1/{mentor_profile_id}/packages"
     },
     {
-      "id": "delete_package.delete.28041018",
+      "id": "delete_package.delete.76205392",
       "type": "endpoint",
       "label": "DELETE /api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
     },
     {
-      "id": "get_package.get.28041018",
+      "id": "get_package.get.76205392",
       "type": "endpoint",
       "label": "GET /api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
     },
     {
-      "id": "update_package.put.28041018",
+      "id": "update_package.put.76205392",
       "type": "endpoint",
       "label": "PUT /api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
     },
     {
-      "id": "get_mentor_profile.get.83075700",
+      "id": "get_mentor_profile.get.70211021",
       "type": "endpoint",
       "label": "GET /api/mentor/v1/{mentor_profile_id}/profile"
     },
     {
-      "id": "submit_mentor_application.post.60084912",
+      "id": "submit_mentor_application.post.6062417",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/applications"
     },
     {
-      "id": "get_pending_applications.get.48319924",
+      "id": "get_pending_applications.get.59036046",
       "type": "endpoint",
       "label": "GET /api/mentorship/v1/applications/pending"
     },
     {
-      "id": "approve_mentor_application.post.93449160",
+      "id": "approve_mentor_application.post.89292315",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/applications/{application_id}/approve"
     },
     {
-      "id": "create_requirement_document.post.42717547",
+      "id": "create_requirement_document.post.774986",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/documents"
     },
     {
-      "id": "get_requirement_document.get.84140072",
+      "id": "get_requirement_document.get.89362459",
       "type": "endpoint",
       "label": "GET /api/mentorship/v1/documents/{doc_id}"
     },
     {
-      "id": "reject_document.post.68087242",
+      "id": "reject_document.post.71982772",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/documents/{doc_id}/reject"
     },
     {
-      "id": "sign_document.post.60177791",
+      "id": "sign_document.post.42099124",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/documents/{doc_id}/sign"
     },
     {
-      "id": "health_check.get.60124858",
+      "id": "health_check.get.25945551",
       "type": "endpoint",
       "label": "GET /api/mentorship/v1/health"
     },
     {
-      "id": "create_invoice.post.66088405",
+      "id": "create_invoice.post.92377059",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/invoices"
     },
     {
-      "id": "get_mentor_invoices.get.13359159",
+      "id": "get_mentor_invoices.get.51141827",
       "type": "endpoint",
       "label": "GET /api/mentorship/v1/invoices/mentor/{mentor_id}"
     },
     {
-      "id": "confirm_service_completion.post.6354687",
+      "id": "confirm_service_completion.post.70461825",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/invoices/{invoice_id}/confirm-completion"
     },
     {
-      "id": "raise_dispute.post.35497860",
+      "id": "raise_dispute.post.77310213",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/invoices/{invoice_id}/dispute"
     },
     {
-      "id": "mark_invoice_paid.post.84033758",
+      "id": "mark_invoice_paid.post.2374673",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/invoices/{invoice_id}/mark-paid"
     },
     {
-      "id": "mark_service_delivered.post.14674007",
+      "id": "mark_service_delivered.post.7257409",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/invoices/{invoice_id}/service-delivered"
     },
     {
-      "id": "create_mentorship_link.post.15808573",
+      "id": "create_mentorship_link.post.92066523",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/links"
     },
     {
-      "id": "get_mentor_connections.get.86297583",
+      "id": "get_mentor_connections.get.71768193",
       "type": "endpoint",
       "label": "GET /api/mentorship/v1/links/mentor/{mentor_id}"
     },
     {
-      "id": "get_user_connections.get.2259864",
+      "id": "get_user_connections.get.74465987",
       "type": "endpoint",
       "label": "GET /api/mentorship/v1/links/user/{user_id}"
     },
     {
-      "id": "update_link_status.patch.7145256",
+      "id": "update_link_status.patch.27438146",
       "type": "endpoint",
       "label": "PATCH /api/mentorship/v1/links/{link_id}/status"
     },
     {
-      "id": "create_note.post.91621080",
+      "id": "create_note.post.49503272",
       "type": "endpoint",
       "label": "POST /api/mentorship/v1/notes"
     },
     {
-      "id": "get_notes_for_link.get.55663988",
+      "id": "get_notes_for_link.get.28039527",
       "type": "endpoint",
       "label": "GET /api/mentorship/v1/notes/{link_id}"
     },
     {
-      "id": "update_note.patch.58342759",
+      "id": "update_note.patch.55768170",
       "type": "endpoint",
       "label": "PATCH /api/mentorship/v1/notes/{note_id}"
     },
     {
-      "id": "check_abuse.post.45268151",
+      "id": "check_abuse.post.76646829",
       "type": "endpoint",
       "label": "POST /api/ops/v1/anti-gaming/check"
     },
     {
-      "id": "lock_audit_logs.post.46697532",
+      "id": "lock_audit_logs.post.39601421",
       "type": "endpoint",
       "label": "POST /api/ops/v1/logs/lock"
     },
     {
-      "id": "start_processing.post.6497905",
+      "id": "start_processing.post.25867673",
       "type": "endpoint",
       "label": "POST /api/ops/v1/processing/start"
     },
     {
-      "id": "processing_status.get.33599494",
+      "id": "processing_status.get.55633559",
       "type": "endpoint",
       "label": "GET /api/ops/v1/processing/status"
     },
     {
-      "id": "get_public_stats.get.683598",
+      "id": "get_public_stats.get.90337286",
       "type": "endpoint",
       "label": "GET /api/ops/v1/stats/public"
     },
     {
-      "id": "get_token_config.get.77011301",
+      "id": "get_token_config.get.39361810",
       "type": "endpoint",
       "label": "GET /api/ops/v1/tokens/config"
     },
     {
-      "id": "cancel_subscription.post.3752940",
+      "id": "cancel_subscription.post.37125275",
       "type": "endpoint",
       "label": "POST /api/payment/v1/cancel"
     },
     {
-      "id": "health_check.get.49799242",
+      "id": "health_check.get.86952712",
       "type": "endpoint",
       "label": "GET /api/payment/v1/health"
     },
     {
-      "id": "get_payment_history.get.72512810",
+      "id": "get_payment_history.get.80323150",
       "type": "endpoint",
       "label": "GET /api/payment/v1/history"
     },
     {
-      "id": "get_plans.get.46027493",
+      "id": "get_plans.get.51951719",
       "type": "endpoint",
       "label": "GET /api/payment/v1/plans"
     },
     {
-      "id": "get_plan.get.3453224",
+      "id": "get_plan.get.94311957",
       "type": "endpoint",
       "label": "GET /api/payment/v1/plans/{plan_id}"
     },
     {
-      "id": "process_payment.post.82012890",
+      "id": "process_payment.post.67277184",
       "type": "endpoint",
       "label": "POST /api/payment/v1/process"
     },
     {
-      "id": "get_current_subscription.get.94759115",
+      "id": "get_current_subscription.get.4881203",
       "type": "endpoint",
       "label": "GET /api/payment/v1/subscription"
     },
     {
-      "id": "list_resumes.get.79663496",
+      "id": "list_resumes.get.3438092",
       "type": "endpoint",
       "label": "GET /api/resume/v1"
     },
     {
-      "id": "enrich.post.62181050",
+      "id": "enrich.post.83088804",
       "type": "endpoint",
       "label": "POST /api/resume/v1/enrich"
     },
     {
-      "id": "parse.post.46825025",
+      "id": "parse.post.1169721",
       "type": "endpoint",
       "label": "POST /api/resume/v1/parse"
     },
     {
-      "id": "upload_resume.post.28140479",
+      "id": "upload_resume.post.13790925",
       "type": "endpoint",
       "label": "POST /api/resume/v1/upload"
     },
     {
-      "id": "get_resume.get.28564150",
+      "id": "get_resume.get.91705007",
       "type": "endpoint",
       "label": "GET /api/resume/v1/{resume_id}"
     },
     {
-      "id": "health_check.get.90154042",
+      "id": "health_check.get.28043974",
       "type": "endpoint",
       "label": "GET /api/rewards/v1/health"
     },
     {
-      "id": "get_leaderboard.get.77033214",
+      "id": "get_leaderboard.get.71948834",
       "type": "endpoint",
       "label": "GET /api/rewards/v1/leaderboard"
     },
     {
-      "id": "get_ownership_stats.get.55842144",
+      "id": "get_ownership_stats.get.1245514",
       "type": "endpoint",
       "label": "GET /api/rewards/v1/ownership-stats"
     },
     {
-      "id": "get_referral_code.get.53316753",
+      "id": "get_referral_code.get.41091533",
       "type": "endpoint",
       "label": "GET /api/rewards/v1/referral"
     },
     {
-      "id": "claim_referral.post.76311096",
+      "id": "claim_referral.post.53742991",
       "type": "endpoint",
       "label": "POST /api/rewards/v1/referral/claim"
     },
     {
-      "id": "get_rewards.get.15496384",
+      "id": "get_rewards.get.40419058",
       "type": "endpoint",
       "label": "GET /api/rewards/v1/rewards"
     },
     {
-      "id": "get_available_rewards.get.66970259",
+      "id": "get_available_rewards.get.84737110",
       "type": "endpoint",
       "label": "GET /api/rewards/v1/rewards/available"
     },
     {
-      "id": "redeem_rewards.post.73323283",
+      "id": "redeem_rewards.post.8937044",
       "type": "endpoint",
       "label": "POST /api/rewards/v1/rewards/redeem"
     },
     {
-      "id": "get_my_suggestions.get.75964904",
+      "id": "get_my_suggestions.get.95530418",
       "type": "endpoint",
       "label": "GET /api/rewards/v1/suggestions"
     },
     {
-      "id": "submit_suggestion.post.75964904",
+      "id": "submit_suggestion.post.95530418",
       "type": "endpoint",
       "label": "POST /api/rewards/v1/suggestions"
     },
     {
-      "id": "get_consolidated_user_data.get.19373996",
+      "id": "get_consolidated_user_data.get.3800237",
       "type": "endpoint",
       "label": "GET /api/sessions/v1/consolidated/{user_id}"
     },
     {
-      "id": "log_session_event.post.51611943",
+      "id": "log_session_event.post.93462931",
       "type": "endpoint",
       "label": "POST /api/sessions/v1/log"
     },
     {
-      "id": "get_session_summary.get.28878642",
+      "id": "get_session_summary.get.649638",
       "type": "endpoint",
       "label": "GET /api/sessions/v1/summary/{user_id}"
     },
     {
-      "id": "get_sync_status.get.12465596",
+      "id": "get_sync_status.get.64124183",
       "type": "endpoint",
       "label": "GET /api/sessions/v1/sync-status"
     },
     {
-      "id": "health_check.get.49233530",
+      "id": "health_check.get.29050533",
       "type": "endpoint",
       "label": "GET /api/shared/v1/health"
     },
     {
-      "id": "list_industries.get.37654732",
+      "id": "list_industries.get.70132831",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/industries"
     },
     {
-      "id": "list_subindustries.get.46367242",
+      "id": "list_subindustries.get.88120727",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/industries/{high_level}/subindustries"
     },
     {
-      "id": "infer_industries.get.34200137",
+      "id": "infer_industries.get.48796509",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/job-titles/infer-industries"
     },
     {
-      "id": "job_title_metadata.get.22538169",
+      "id": "job_title_metadata.get.52972662",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/job-titles/metadata"
     },
     {
-      "id": "job_title_to_naics.get.58202260",
+      "id": "job_title_to_naics.get.46073181",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/job-titles/naics-mapping"
     },
     {
-      "id": "search_job_titles.get.1738029",
+      "id": "search_job_titles.get.78502760",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/job-titles/search"
     },
     {
-      "id": "search_naics.get.19423953",
+      "id": "search_naics.get.23270660",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/naics/search"
     },
     {
-      "id": "naics_title.get.29275467",
+      "id": "naics_title.get.38854665",
       "type": "endpoint",
       "label": "GET /api/taxonomy/v1/naics/title"
     },
     {
-      "id": "status.get.8893823",
+      "id": "status.get.64764195",
       "type": "endpoint",
       "label": "GET /api/telemetry/v1/status"
     },
     {
-      "id": "get_evidence.get.28527475",
+      "id": "get_evidence.get.88605851",
       "type": "endpoint",
       "label": "GET /api/touchpoints/v1/evidence"
     },
     {
-      "id": "get_touchnots.get.28156728",
+      "id": "get_touchnots.get.42291728",
       "type": "endpoint",
       "label": "GET /api/touchpoints/v1/touchnots"
     },
     {
-      "id": "read_users_me.get.3278992",
+      "id": "read_users_me.get.52779871",
       "type": "endpoint",
       "label": "GET /api/user/v1/me"
     },
     {
-      "id": "get_profile.get.40645832",
+      "id": "get_profile.get.18078000",
       "type": "endpoint",
       "label": "GET /api/user/v1/profile"
     },
     {
-      "id": "update_profile.put.40645832",
+      "id": "update_profile.put.18078000",
       "type": "endpoint",
       "label": "PUT /api/user/v1/profile"
     }
@@ -864,842 +864,907 @@
   "edges": [
     {
       "from": "backend_api",
-      "to": "queue.get.97265252",
+      "to": "queue.get.50755424",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "content_jobs.get.485963",
+      "to": "content_jobs.get.60630766",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "content_run.post.25812438",
+      "to": "content_run.post.12695340",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "content_status.get.922322",
+      "to": "content_status.get.59312266",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "enrichment_jobs.get.9707700",
+      "to": "enrichment_jobs.get.42734855",
       "label": "exposes"
     },
     {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
+    },
+    {
       "from": "backend_api",
-      "to": "enrichment_run.post.12252286",
+      "to": "enrichment_run.post.52849265",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "enrichment_status.get.5232958",
+      "to": "enrichment_status.get.89830481",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "check.post.82538055",
+      "to": "check.post.54647919",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "batch_jobs.get.73654062",
+      "to": "batch_jobs.get.67821208",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "batch_run.post.91656548",
+      "to": "batch_run.post.99734533",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "batch_status.get.62928165",
+      "to": "batch_status.get.67580537",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "audit_events.get.85122968",
+      "to": "audit_events.get.78264991",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "compliance_summary.get.13268652",
+      "to": "compliance_summary.get.68962095",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "dashboard_snapshot.get.47667168",
+      "to": "dashboard_snapshot.get.9659960",
       "label": "exposes"
     },
     {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
+    },
+    {
       "from": "backend_api",
-      "to": "email_jobs.get.76139210",
+      "to": "email_jobs.get.74194405",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "email_status.get.73272739",
+      "to": "email_status.get.8608638",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "email_sync.post.4345404",
+      "to": "email_sync.post.83446763",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "tail_log.get.50663972",
+      "to": "tail_log.get.8476787",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "parsers_jobs.get.93133451",
+      "to": "parsers_jobs.get.96726022",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "parsers_run.post.47900435",
+      "to": "parsers_run.post.53805318",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "parsers_status.get.65917725",
+      "to": "parsers_status.get.54343614",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "list_admin_parses.get.57570809",
+      "to": "list_admin_parses.get.72965815",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "admin_parse_file.post.57570809",
+      "to": "admin_parse_file.post.72965815",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "get_admin_parse.get.86327221",
+      "to": "get_admin_parse.get.60188714",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "system_activity.get.45528953",
+      "to": "system_activity.get.86261413",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "system_health.get.66006320",
+      "to": "system_health.get.87294933",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "get_token_config.get.47467184",
+      "to": "get_token_config.get.17228667",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "put_token_config.put.47467184",
+      "to": "put_token_config.put.17228667",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_token_usage.get.67540512",
+      "to": "get_token_usage.get.15414388",
       "label": "exposes"
     },
     {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
+    },
+    {
       "from": "backend_api",
-      "to": "user_token_ledger.get.80985665",
+      "to": "user_token_ledger.get.32686913",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "user_subscriptions.get.3753677",
+      "to": "user_subscriptions.get.20981661",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "list_users.get.51722688",
+      "to": "list_users.get.56386097",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "user_metrics.get.8626547",
+      "to": "user_metrics.get.80040876",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "user_security.get.55275996",
+      "to": "user_security.get.72168218",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_user.get.83649989",
+      "to": "get_user.get.61922983",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "disable_user.put.18699534",
+      "to": "disable_user.put.84756481",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "set_user_plan.put.16406184",
+      "to": "set_user_plan.put.87971068",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_automated_candidates.get.73923724",
+      "to": "get_automated_candidates.get.30731884",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_companies.get.58462202",
+      "to": "get_companies.get.42024812",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_email_extracted.get.14089815",
+      "to": "get_email_extracted.get.75944580",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_job_descriptions.get.19457536",
+      "to": "get_job_descriptions.get.62919199",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_job_titles.get.13649018",
+      "to": "get_job_titles.get.34519857",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_locations.get.69191181",
+      "to": "get_locations.get.54888000",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_metadata.get.28121149",
+      "to": "get_metadata.get.12062039",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_normalized_data.get.55126136",
+      "to": "get_normalized_data.get.70905577",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_parsed_resumes.get.25895326",
+      "to": "get_parsed_resumes.get.10953511",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_parsed_resume.get.43238922",
+      "to": "get_parsed_resume.get.93717710",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_ai_data_status.get.99166394",
+      "to": "get_ai_data_status.get.4130845",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "list_user_data_files.get.18381828",
+      "to": "list_user_data_files.get.87408206",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_dashboard_data.get.48457250",
+      "to": "get_dashboard_data.get.28517760",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_recent_jobs.get.83792205",
+      "to": "get_recent_jobs.get.29726410",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_recent_resumes.get.45892209",
+      "to": "get_recent_resumes.get.24535755",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_statistics.get.41964424",
+      "to": "get_statistics.get.75590873",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_system_health.get.3496082",
+      "to": "get_system_health.get.52831072",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "generate_2fa.post.70076144",
+      "to": "generate_2fa.post.28512710",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "verify_2fa.post.71550796",
+      "to": "verify_2fa.post.58360283",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "login.post.55586975",
+      "to": "login.post.21328105",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "register.post.85218539",
+      "to": "register.post.12246119",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "detect_blockers.post.18881250",
+      "to": "detect_blockers.post.89793237",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "generate_plans.post.12531053",
+      "to": "generate_plans.post.21145314",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_user_blockers.get.76228528",
+      "to": "get_user_blockers.get.6060095",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "review_answer.post.98292074",
+      "to": "review_answer.post.94093163",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_coaching_bundle.post.16468505",
+      "to": "get_coaching_bundle.post.86245427",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "coaching_health.get.18887655",
+      "to": "coaching_health.get.82296390",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "generate_questions.post.88897066",
+      "to": "generate_questions.post.63529713",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "generate_stories.post.59394244",
+      "to": "generate_stories.post.41184129",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_action_costs.get.85570660",
+      "to": "get_action_costs.get.8005126",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_balance.get.15498582",
+      "to": "get_balance.get.44315829",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "can_perform_action.get.97405475",
+      "to": "can_perform_action.get.92361057",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "consume_credits.post.15642319",
+      "to": "consume_credits.post.94445235",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "health_check.get.2320439",
+      "to": "health_check.get.49074156",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_plans.get.9765355",
+      "to": "get_plans.get.13795942",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_teaser.post.26769803",
+      "to": "get_teaser.post.82847828",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "upgrade_plan.post.91068047",
+      "to": "upgrade_plan.post.414765",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_usage_details.get.74084305",
+      "to": "get_usage_details.get.98985754",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "resolve_cohort.post.64703009",
+      "to": "resolve_cohort.post.35558821",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_graph_data.get.74639216",
+      "to": "get_graph_data.get.1339657",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_quadrant_data.get.90452994",
+      "to": "get_quadrant_data.get.97792970",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_term_cloud.get.74612663",
+      "to": "get_term_cloud.get.40968867",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_cooccurrence.get.67178965",
+      "to": "get_cooccurrence.get.97024635",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "enrich_resume.post.46206312",
+      "to": "enrich_resume.post.8959192",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "market_intel.get.22439546",
+      "to": "market_intel.get.86914582",
       "label": "exposes"
     },
     {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
+    },
+    {
       "from": "backend_api",
-      "to": "get_stats.post.18031140",
+      "to": "get_stats.post.49722876",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "regression.post.31725569",
+      "to": "regression.post.21722973",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_job_index.get.41576051",
+      "to": "get_job_index.get.1009673",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "search_jobs.get.93882072",
+      "to": "search_jobs.get.4164554",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "endpoints.get.66457666",
+      "to": "endpoints.get.13581652",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "graph.get.98194714",
+      "to": "graph.get.58783890",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "registry.get.71048991",
+      "to": "registry.get.53738211",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "health_check.get.69967763",
+      "to": "health_check.get.11523655",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "list_mentors.get.80001582",
+      "to": "list_mentors.get.16852816",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_mentor_profile_by_user.get.91352943",
+      "to": "get_mentor_profile_by_user.get.31638328",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "update_availability.put.43788256",
+      "to": "update_availability.put.70891407",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_dashboard_stats.get.64773371",
+      "to": "get_dashboard_stats.get.85006381",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_mentor_packages.get.86545373",
+      "to": "get_mentor_packages.get.14577586",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "create_package.post.86545373",
+      "to": "create_package.post.14577586",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "delete_package.delete.28041018",
+      "to": "delete_package.delete.76205392",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_package.get.28041018",
+      "to": "get_package.get.76205392",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "update_package.put.28041018",
+      "to": "update_package.put.76205392",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_mentor_profile.get.83075700",
+      "to": "get_mentor_profile.get.70211021",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "submit_mentor_application.post.60084912",
+      "to": "submit_mentor_application.post.6062417",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_pending_applications.get.48319924",
+      "to": "get_pending_applications.get.59036046",
       "label": "exposes"
+    },
+    {
+      "from": "user_portal",
+      "to": "backend_api",
+      "label": "calls"
     },
     {
       "from": "backend_api",
-      "to": "approve_mentor_application.post.93449160",
+      "to": "approve_mentor_application.post.89292315",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "create_requirement_document.post.42717547",
+      "to": "create_requirement_document.post.774986",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_requirement_document.get.84140072",
+      "to": "get_requirement_document.get.89362459",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "reject_document.post.68087242",
+      "to": "reject_document.post.71982772",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "sign_document.post.60177791",
+      "to": "sign_document.post.42099124",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "health_check.get.60124858",
+      "to": "health_check.get.25945551",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "create_invoice.post.66088405",
+      "to": "create_invoice.post.92377059",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_mentor_invoices.get.13359159",
+      "to": "get_mentor_invoices.get.51141827",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "confirm_service_completion.post.6354687",
+      "to": "confirm_service_completion.post.70461825",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "raise_dispute.post.35497860",
+      "to": "raise_dispute.post.77310213",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "mark_invoice_paid.post.84033758",
+      "to": "mark_invoice_paid.post.2374673",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "mark_service_delivered.post.14674007",
+      "to": "mark_service_delivered.post.7257409",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "create_mentorship_link.post.15808573",
+      "to": "create_mentorship_link.post.92066523",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_mentor_connections.get.86297583",
+      "to": "get_mentor_connections.get.71768193",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_user_connections.get.2259864",
+      "to": "get_user_connections.get.74465987",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "update_link_status.patch.7145256",
+      "to": "update_link_status.patch.27438146",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "create_note.post.91621080",
+      "to": "create_note.post.49503272",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_notes_for_link.get.55663988",
+      "to": "get_notes_for_link.get.28039527",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "update_note.patch.58342759",
+      "to": "update_note.patch.55768170",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "check_abuse.post.45268151",
+      "to": "check_abuse.post.76646829",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "lock_audit_logs.post.46697532",
+      "to": "lock_audit_logs.post.39601421",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "start_processing.post.6497905",
+      "to": "start_processing.post.25867673",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "processing_status.get.33599494",
+      "to": "processing_status.get.55633559",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_public_stats.get.683598",
+      "to": "get_public_stats.get.90337286",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_token_config.get.77011301",
+      "to": "get_token_config.get.39361810",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "cancel_subscription.post.3752940",
+      "to": "cancel_subscription.post.37125275",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "health_check.get.49799242",
+      "to": "health_check.get.86952712",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_payment_history.get.72512810",
+      "to": "get_payment_history.get.80323150",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_plans.get.46027493",
+      "to": "get_plans.get.51951719",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_plan.get.3453224",
+      "to": "get_plan.get.94311957",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "process_payment.post.82012890",
+      "to": "process_payment.post.67277184",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_current_subscription.get.94759115",
+      "to": "get_current_subscription.get.4881203",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "list_resumes.get.79663496",
+      "to": "list_resumes.get.3438092",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "enrich.post.62181050",
+      "to": "enrich.post.83088804",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "parse.post.46825025",
+      "to": "parse.post.1169721",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "upload_resume.post.28140479",
+      "to": "upload_resume.post.13790925",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_resume.get.28564150",
+      "to": "get_resume.get.91705007",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "health_check.get.90154042",
+      "to": "health_check.get.28043974",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_leaderboard.get.77033214",
+      "to": "get_leaderboard.get.71948834",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_ownership_stats.get.55842144",
+      "to": "get_ownership_stats.get.1245514",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_referral_code.get.53316753",
+      "to": "get_referral_code.get.41091533",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "claim_referral.post.76311096",
+      "to": "claim_referral.post.53742991",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_rewards.get.15496384",
+      "to": "get_rewards.get.40419058",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_available_rewards.get.66970259",
+      "to": "get_available_rewards.get.84737110",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "redeem_rewards.post.73323283",
+      "to": "redeem_rewards.post.8937044",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_my_suggestions.get.75964904",
+      "to": "get_my_suggestions.get.95530418",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "submit_suggestion.post.75964904",
+      "to": "submit_suggestion.post.95530418",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_consolidated_user_data.get.19373996",
+      "to": "get_consolidated_user_data.get.3800237",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "log_session_event.post.51611943",
+      "to": "log_session_event.post.93462931",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_session_summary.get.28878642",
+      "to": "get_session_summary.get.649638",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_sync_status.get.12465596",
+      "to": "get_sync_status.get.64124183",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "health_check.get.49233530",
+      "to": "health_check.get.29050533",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "list_industries.get.37654732",
+      "to": "list_industries.get.70132831",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "list_subindustries.get.46367242",
+      "to": "list_subindustries.get.88120727",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "infer_industries.get.34200137",
+      "to": "infer_industries.get.48796509",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "job_title_metadata.get.22538169",
+      "to": "job_title_metadata.get.52972662",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "job_title_to_naics.get.58202260",
+      "to": "job_title_to_naics.get.46073181",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "search_job_titles.get.1738029",
+      "to": "search_job_titles.get.78502760",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "search_naics.get.19423953",
+      "to": "search_naics.get.23270660",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "naics_title.get.29275467",
+      "to": "naics_title.get.38854665",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "status.get.8893823",
+      "to": "status.get.64764195",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_evidence.get.28527475",
+      "to": "get_evidence.get.88605851",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_touchnots.get.28156728",
+      "to": "get_touchnots.get.42291728",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "read_users_me.get.3278992",
+      "to": "read_users_me.get.52779871",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "get_profile.get.40645832",
+      "to": "get_profile.get.18078000",
       "label": "exposes"
     },
     {
       "from": "backend_api",
-      "to": "update_profile.put.40645832",
+      "to": "update_profile.put.18078000",
       "label": "exposes"
     }
   ]

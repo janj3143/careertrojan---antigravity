@@ -11,9 +11,39 @@ try:
 except ImportError:
     # Fallback
     import os
-    PROFILES_DIR = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final")) / "ai_data_final" / "profiles"
+    PROFILES_DIR = Path(os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\Codec-Antigravity Data set")) / "ai_data_final" / "profiles"
 
 logger = logging.getLogger("AI_DataLoader")
+
+
+def _derive_match_score(profile: Dict[str, Any]) -> float:
+    years = float(profile.get("experience_years") or 0)
+    skills = profile.get("skills") or []
+    skills_count = len(skills) if isinstance(skills, list) else 0
+    role = str(profile.get("role") or "").lower()
+
+    score = 0.15
+    score += min(years / 15.0, 0.45)
+    score += min(skills_count / 30.0, 0.35)
+    if any(token in role for token in ["senior", "lead", "principal", "manager"]):
+        score += 0.08
+    return round(min(max(score, 0.05), 0.99) * 100, 2)
+
+
+def _load_enhanced_keywords() -> Dict[str, List[str]]:
+    try:
+        from services.shared.paths import CareerTrojanPaths
+
+        paths = CareerTrojanPaths()
+        target = paths.ai_data_final / "metadata" / "enhanced_keywords.json"
+        if not target.exists():
+            return {}
+        return json.loads(target.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+_ENHANCED_KW = _load_enhanced_keywords()
 
 class DataLoader:
     _instance = None
@@ -50,7 +80,7 @@ class DataLoader:
                         "seniority": data.get("seniority", "Mid"),
                         "skills": data.get("skills", []),
                         "experience_years": data.get("experience_years", 0),
-                        "match_score": data.get("match_score", random.random() * 100), # Mock score if missing
+                        "match_score": data.get("match_score") if data.get("match_score") is not None else _derive_match_score(data),
                         "industry": data.get("industry", "Tech"),
                         "touchpoints": data.get("touchpoints", [])
                     }
@@ -71,4 +101,10 @@ class DataLoader:
             for s in p.get("skills", []):
                 s = s.lower().strip()
                 freq[s] = freq.get(s, 0) + 1
+
+        for term in _ENHANCED_KW.get("skills", []):
+            normalized = str(term).lower().strip()
+            if normalized:
+                freq[normalized] = freq.get(normalized, 0) + 1
+
         return freq

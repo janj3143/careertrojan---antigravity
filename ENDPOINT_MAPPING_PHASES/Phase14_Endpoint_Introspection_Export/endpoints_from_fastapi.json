@@ -1,7 +1,7 @@
 {
-  "generated": "2026-02-09",
+  "generated": "2026-02-20",
   "source": "services.backend_api.main:app",
-  "count": 170,
+  "count": 194,
   "endpoints": [
     {
       "method": "GET",
@@ -214,14 +214,6 @@
     {
       "method": "GET",
       "path": "/api/admin/v1/tokens/config",
-      "name": "tokens_config",
-      "tags": [
-        "admin"
-      ]
-    },
-    {
-      "method": "GET",
-      "path": "/api/admin/v1/tokens/config",
       "name": "get_token_config",
       "tags": [
         "admin-tokens"
@@ -233,14 +225,6 @@
       "name": "put_token_config",
       "tags": [
         "admin-tokens"
-      ]
-    },
-    {
-      "method": "GET",
-      "path": "/api/admin/v1/tokens/usage",
-      "name": "tokens_usage",
-      "tags": [
-        "admin"
       ]
     },
     {
@@ -532,6 +516,30 @@
       ]
     },
     {
+      "method": "GET",
+      "path": "/api/coaching/v1/history",
+      "name": "get_coaching_history",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/learning/feedback",
+      "name": "submit_interview_learning_feedback",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/learning/profile",
+      "name": "fetch_interview_learning_profile",
+      "tags": [
+        "coaching"
+      ]
+    },
+    {
       "method": "POST",
       "path": "/api/coaching/v1/questions/generate",
       "name": "generate_questions",
@@ -620,6 +628,46 @@
       ]
     },
     {
+      "method": "GET",
+      "path": "/api/gdpr/v1/audit-log",
+      "name": "my_audit_log",
+      "tags": [
+        "gdpr"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/consent",
+      "name": "get_consent",
+      "tags": [
+        "gdpr"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/gdpr/v1/consent",
+      "name": "grant_consent",
+      "tags": [
+        "gdpr"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/gdpr/v1/delete-account",
+      "name": "delete_my_account",
+      "tags": [
+        "gdpr"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/export",
+      "name": "export_my_data",
+      "tags": [
+        "gdpr"
+      ]
+    },
+    {
       "method": "POST",
       "path": "/api/insights/v1/cohort/resolve",
       "name": "resolve_cohort",
@@ -645,6 +693,14 @@
     },
     {
       "method": "GET",
+      "path": "/api/insights/v1/skills/radar",
+      "name": "get_skills_radar",
+      "tags": [
+        "insights"
+      ]
+    },
+    {
+      "method": "GET",
       "path": "/api/insights/v1/terms/cloud",
       "name": "get_term_cloud",
       "tags": [
@@ -655,6 +711,14 @@
       "method": "GET",
       "path": "/api/insights/v1/terms/cooccurrence",
       "name": "get_cooccurrence",
+      "tags": [
+        "insights"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/visuals",
+      "name": "get_visual_catalogue",
       "tags": [
         "insights"
       ]
@@ -988,6 +1052,30 @@
       ]
     },
     {
+      "method": "GET",
+      "path": "/api/mentorship/v1/summary",
+      "name": "get_mentorship_summary",
+      "tags": [
+        "mentorship"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases",
+      "name": "list_phrases",
+      "tags": [
+        "ontology"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases/summary",
+      "name": "phrases_summary",
+      "tags": [
+        "ontology"
+      ]
+    },
+    {
       "method": "POST",
       "path": "/api/ops/v1/anti-gaming/check",
       "name": "check_abuse",
@@ -1045,6 +1133,22 @@
     },
     {
       "method": "GET",
+      "path": "/api/payment/v1/client-token",
+      "name": "get_client_token",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/gateway-info",
+      "name": "gateway_info",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
       "path": "/api/payment/v1/health",
       "name": "health_check",
       "tags": [
@@ -1055,6 +1159,30 @@
       "method": "GET",
       "path": "/api/payment/v1/history",
       "name": "get_payment_history",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/methods",
+      "name": "list_payment_methods",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/methods",
+      "name": "add_payment_method",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/payment/v1/methods/{token}",
+      "name": "remove_payment_method",
       "tags": [
         "payment"
       ]
@@ -1084,9 +1212,25 @@
       ]
     },
     {
+      "method": "POST",
+      "path": "/api/payment/v1/refund/{transaction_id}",
+      "name": "refund_transaction",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
       "method": "GET",
       "path": "/api/payment/v1/subscription",
       "name": "get_current_subscription",
+      "tags": [
+        "payment"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/transactions/{transaction_id}",
+      "name": "get_transaction",
       "tags": [
         "payment"
       ]
@@ -1253,6 +1397,14 @@
     },
     {
       "method": "GET",
+      "path": "/api/shared/v1/health/deep",
+      "name": "deep_health_check",
+      "tags": [
+        "shared"
+      ]
+    },
+    {
+      "method": "GET",
       "path": "/api/taxonomy/v1/industries",
       "name": "list_industries",
       "tags": [
@@ -1341,6 +1493,22 @@
     },
     {
       "method": "GET",
+      "path": "/api/user/v1/activity",
+      "name": "get_user_activity",
+      "tags": [
+        "user"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/matches/summary",
+      "name": "get_match_summary",
+      "tags": [
+        "user"
+      ]
+    },
+    {
+      "method": "GET",
       "path": "/api/user/v1/me",
       "name": "read_users_me",
       "tags": [
@@ -1359,6 +1527,30 @@
       "method": "PUT",
       "path": "/api/user/v1/profile",
       "name": "update_profile",
+      "tags": [
+        "user"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/resume/latest",
+      "name": "get_latest_resume",
+      "tags": [
+        "user"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/sessions/summary",
+      "name": "get_user_session_summary",
+      "tags": [
+        "user"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/stats",
+      "name": "get_user_stats",
       "tags": [
         "user"
       ]

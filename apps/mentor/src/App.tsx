@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MentorAuthProvider, useMentorAuth } from './context/MentorAuthContext';
 import MentorLogin from './pages/MentorLogin';
+import { initHelpdeskStub } from './lib/helpdeskStub';
 
 // Mentor Pages
 import Dashboard from './pages/Dashboard';
@@ -26,6 +27,10 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+    React.useEffect(() => {
+        initHelpdeskStub('mentor');
+    }, []);
+
     return (
         <MentorAuthProvider>
             <BrowserRouter>

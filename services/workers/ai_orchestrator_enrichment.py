@@ -21,6 +21,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from time import sleep
 
+from services.shared.paths import CareerTrojanPaths
+
 try:
     from watchdog.observers import Observer
     from watchdog.events import FileSystemEventHandler
@@ -29,20 +31,10 @@ except ImportError:
     sys.exit(1)
 
 # ── Paths (cross-platform) ──────────────────────────────────
-INTERACTIONS_DIR = Path(os.getenv(
-    "CAREERTROJAN_USER_DATA",
-    r"L:\VS ai_data final - version\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
-)) / "interactions"
-
-AI_DATA_ROOT = Path(os.getenv(
-    "CAREERTROJAN_AI_DATA",
-    r"L:\VS ai_data final - version\ai_data_final" if sys.platform == "win32" else "/mnt/careertrojan/ai_data_final"
-))
-
-LOG_DIR = Path(os.getenv(
-    "CAREERTROJAN_APP_LOGS",
-    r"C:\careertrojan\logs" if sys.platform == "win32" else "/mnt/careertrojan/logs"
-))
+_paths = CareerTrojanPaths()
+INTERACTIONS_DIR = _paths.interactions
+AI_DATA_ROOT = _paths.ai_data_final
+LOG_DIR = _paths.logs
 
 # ── Logging ──────────────────────────────────────────────────
 LOG_DIR.mkdir(parents=True, exist_ok=True)

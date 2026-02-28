@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AdminAuthProvider, useAdminAuth } from './context/AdminAuthContext';
 import AdminLogin from './pages/AdminLogin';
+import { initHelpdeskStub } from './lib/helpdeskStub';
 
 // Main Pages
 import AdminHome from './pages/AdminHome';
@@ -36,6 +37,9 @@ import MentorAppReview from './pages/MentorAppReview';
 import ConnectivityAudit from './pages/ConnectivityAudit';
 import BlockerDetectionTest from './pages/BlockerDetectionTest';
 import AdminPortalEntry from './pages/AdminPortalEntry';
+import AdminCoachingInsights from './pages/AdminCoachingInsights';
+import AdminSupportOps from './pages/AdminSupportOps';
+import AdminPipelineOps from './pages/AdminPipelineOps';
 
 // Tools Pages
 import DataRootsHealth from './pages/tools/DataRootsHealth';
@@ -89,6 +93,10 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+    React.useEffect(() => {
+        initHelpdeskStub('admin');
+    }, []);
+
     return (
         <AdminAuthProvider>
             <BrowserRouter>
@@ -129,6 +137,9 @@ export default function App() {
                     <Route path="/admin/connectivity" element={<PrivateRoute><ConnectivityAudit /></PrivateRoute>} />
                     <Route path="/admin/blocker-test" element={<PrivateRoute><BlockerDetectionTest /></PrivateRoute>} />
                     <Route path="/admin/portal-entry" element={<PrivateRoute><AdminPortalEntry /></PrivateRoute>} />
+                    <Route path="/admin/coaching-insights" element={<PrivateRoute><AdminCoachingInsights /></PrivateRoute>} />
+                    <Route path="/admin/support-ops" element={<PrivateRoute><AdminSupportOps /></PrivateRoute>} />
+                    <Route path="/admin/pipeline-ops" element={<PrivateRoute><AdminPipelineOps /></PrivateRoute>} />
 
                     {/* Tools Pages (99_tools - 29 pages) */}
                     <Route path="/admin/tools/data-health" element={<PrivateRoute><DataRootsHealth /></PrivateRoute>} />

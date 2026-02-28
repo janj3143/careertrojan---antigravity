@@ -9,19 +9,20 @@ from pydantic import BaseModel
 from typing import Optional, Any
 from services.backend_api.utils.file_parser import extract_text_from_upload
 from services.backend_api.routers.auth import get_current_user as require_user
+from services.backend_api.services.company_intel_service import get_company_intel_service
+from services.shared.paths import CareerTrojanPaths
 
 router = APIRouter(prefix="/api/resume/v1", tags=["resume"])
 
 # ============================================================================
 # Persistent Storage Setup
 # ============================================================================
-# Portable: driven by CAREERTROJAN_DATA_ROOT env var
-STORAGE_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
+# Portable: driven by shared path resolver
+STORAGE_ROOT = CareerTrojanPaths().user_data
 if not STORAGE_ROOT.exists():
-    STORAGE_ROOT = Path("storage/data")  # Fallback for local dev
     STORAGE_ROOT.mkdir(parents=True, exist_ok=True)
 
-RESUME_DIR = STORAGE_ROOT / "user_uploads/resumes"
+RESUME_DIR = STORAGE_ROOT / "user_uploads" / "resumes"
 RESUME_DIR.mkdir(parents=True, exist_ok=True)
 
 RESUME_DB_FILE = STORAGE_ROOT / "resumes_db.json"
@@ -77,32 +78,34 @@ async def upload_resume(file: UploadFile = File(...), auth=Depends(require_user)
         with open(file_path, "wb") as f:
             shutil.copyfileobj(file.file, f)
 
-        # Parse text
-        text_content = await extract_text_from_upload(file, file.filename) # Note: extract_text might need file path or bytes
-        # Re-read file if extract_text consumed it, or pass path if supported.
-        # Assuming extract_text handles bytes or we need to re-open.
-        # Ideally extract_text should take the saved file path if possible.
-        # If extract_text takes UploadFile, we need to seek(0) if we read it? 
-        # shutil.copyfileobj reads it all.
-        
-        # Let's try to read from the saved file for parsing to be safe
-        # Or better, just implement a simple parse here for now if extract_text is complex
-        
-        # Simplified parsing logic for stability:
-        # If extract_text fails or is empty, we use a placeholder
+        # Parse text from saved bytes
+        file_bytes = file_path.read_bytes()
+        text_content = await extract_text_from_upload(file_bytes, file.filename)
         if not text_content:
-             text_content = "Could not extract text. (OCR/Parsing placeholder)"
+            raise HTTPException(status_code=422, detail="Unable to extract text from resume")
 
-        # Simulate parsing result
         parse_result = {
             "doc_id": file_id,
             "detected_type": "Resume",
             "raw_text": text_content[:1000] + "..." if len(text_content) > 1000 else text_content,
             "word_count": len(text_content.split()),
-            "email": "extracted@example.com", # Placeholder
-            "phone": "555-0100",               # Placeholder
-            "skills": ["Python", "React", "FastAPI"] # Placeholder
         }
+
+        # Company Intelligence hook (non-blocking): mine company names from uploaded text
+        company_summary = {}
+        try:
+            company_summary = get_company_intel_service().ingest_resume_text(
+                text=text_content,
+                user_id=user_id,
+                source="resume_upload",
+            )
+            parse_result["company_intel"] = company_summary
+        except Exception:
+            parse_result["company_intel"] = {
+                "companies_found": 0,
+                "companies_added": 0,
+                "companies_updated": 0,
+            }
 
         # Update DB
         db = load_resume_db()

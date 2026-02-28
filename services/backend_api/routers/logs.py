@@ -6,6 +6,7 @@ import os
 from pydantic import BaseModel
 from typing import List
 from services.backend_api.routers.auth import get_current_active_admin as require_admin
+from services.shared.paths import CareerTrojanPaths
 
 class LogTailResponse(BaseModel):
     file: str
@@ -21,7 +22,7 @@ def tail_log(
     error_pattern: str = Query("ERROR|Traceback"),
 ):
     # Default log folder: sibling 'logs' next to your data_root
-    log_dir = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")).parent / "logs"
+    log_dir = CareerTrojanPaths().logs
     fp = (log_dir / file).resolve()
 
     if not fp.exists():

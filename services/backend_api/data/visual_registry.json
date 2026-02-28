@@ -76,6 +76,20 @@
                 }
             ],
             "selection_type": "node"
+        },
+        {
+            "id": "structural_capability_radar",
+            "title": "Structural Capability Radar",
+            "category": "Capability Architecture",
+            "react_component": "StructuralCapabilityRadarView",
+            "required_endpoints": [
+                {
+                    "method": "GET",
+                    "path": "/insights/skills/radar",
+                    "purpose": "Legacy or structural radar model payload (Strategic / Leadership / Operational)"
+                }
+            ],
+            "selection_type": "domain"
         }
     ]
 }

@@ -4,6 +4,23 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
+import json
+
+from services.backend_api.utils import security
+from services.backend_api.db.connection import get_db
+from services.backend_api.db import models
+from services.backend_api.services.career.interview_coach_service import (
+    generate_interview_questions,
+    review_interview_answer,
+    generate_star_stories,
+    infer_role_family,
+    record_interview_feedback,
+    get_learning_profile,
+)
+from services.backend_api.services.interview_coaching_service import (
+    get_interview_coaching_service,
+)
 
 try:
     from services.backend_api.services.career.career_coach import (
@@ -46,8 +63,23 @@ class CoachingResponse(BaseModel):
     insights: Optional[Any] = None
 
 
-def get_current_user_id() -> str:
-    return "demo-user-id"
+def get_current_user(token: str = Depends(security.oauth2_scheme), db: Session = Depends(get_db)):
+    try:
+        payload = security.decode_access_token(token)
+        email: str = payload.get("sub")
+        if email is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    except security.TokenValidationError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    return user
+
+
+def get_current_user_id(current_user: models.User = Depends(get_current_user)) -> str:
+    return str(current_user.id)
 
 
 def build_taxonomy_context_from_resume(resume_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -152,6 +184,41 @@ async def coaching_health() -> Dict[str, str]:
         "coach_service": "available" if COACH_SERVICE_AVAILABLE else "unavailable",
     }
 
+
+@router.get("/history")
+def get_coaching_history(
+    limit: int = 50,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    interactions = (
+        db.query(models.Interaction)
+        .filter(
+            models.Interaction.user_id == current_user.id,
+            models.Interaction.action_type.in_(["coaching_session", "coaching"]),
+        )
+        .order_by(models.Interaction.created_at.desc())
+        .limit(limit)
+        .all()
+    )
+
+    history = []
+    for entry in interactions:
+        try:
+            metadata = json.loads(entry.metadata_json) if entry.metadata_json else None
+        except Exception:
+            metadata = None
+
+        history.append({
+            "id": entry.id,
+            "action_type": entry.action_type,
+            "path": entry.path,
+            "created_at": entry.created_at.isoformat() if entry.created_at else None,
+            "metadata": metadata,
+        })
+
+    return {"history": history}
+
 # --- Expanded Endpoints for Coaching Hub ---
 
 class QuestionGenRequest(BaseModel):
@@ -173,95 +240,149 @@ class StarStoryRequest(BaseModel):
     job: Optional[Dict[str, Any]] = None
 
 
-# Deterministic fallback (Ported from Legacy)
-BASE_QUESTIONS = {
-    "General competency": [
-        "Tell me about yourself.",
-        "What is your greatest strength?",
-        "What is your greatest development area and how are you working on it?",
-        "Describe a time you had to adapt to a major change.",
-        "Where do you see yourself in 5 years?",
-    ],
-    "Role-specific": [
-        "Walk me through a recent project that best reflects your fit for this role.",
-        "How do you stay up to date with developments in this field?",
-        "Describe a time you solved a role-specific problem from end to end.",
-        "What tools and technologies do you prefer for this type of work?",
-    ],
-    "Culture & values": [
-        "What kind of environment do you do your best work in?",
-        "Tell me about a time you contributed to a positive team culture.",
-        "Describe a time you disagreed with a decision and how you handled it.",
-        "What values are most important to you in a workplace?",
-    ],
-    "Leadership": [
-        "Tell me about a time you led a team through a challenging situation.",
-        "How do you motivate others, even when you have no formal authority?",
-        "Describe a difficult decision you had to make as a leader.",
-        "How do you handle conflict within a team?",
-    ],
-    "Problem-solving": [
-        "Describe a complex problem you faced and how you approached it.",
-        "Tell me about a time something went wrong and you had to fix it quickly.",
-        "Walk me through your process for diagnosing and resolving issues.",
-        "Give an example of a creative solution you implemented.",
-    ],
-}
+class InterviewLearningFeedbackRequest(BaseModel):
+    question_type: str = "Role-specific"
+    question: str
+    helpful: Optional[bool] = None
+    answer_score: Optional[int] = None
+    session_outcome: Optional[str] = None
+    resume: Optional[Dict[str, Any]] = None
+    job: Optional[Dict[str, Any]] = None
+
+
+class RoleDetectionRequest(BaseModel):
+    job_data: Optional[Dict[str, Any]] = None
+    resume_data: Optional[Dict[str, Any]] = None
+    resume_experience: Optional[List[Dict[str, Any]]] = None
+
+
+class NinetyDayPlanRequest(BaseModel):
+    role_function: str = "EXEC"
+    seniority: str = "mid"
+
+
+def _require_ai_service():
+    raise HTTPException(
+        status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+        detail="Coaching AI service is not configured",
+    )
 
 @router.post("/questions/generate")
 async def generate_questions(payload: QuestionGenRequest):
-    # In a full vLLM setup, we would call the LLM here.
-    # For now, we return high-quality deterministic patterns + optional logic
-    
-    # Simple logic: If we have job context, maybe prepend a custom one
-    pool = BASE_QUESTIONS.get(payload.question_type, BASE_QUESTIONS["General competency"])[:]
-    
-    if payload.job and "title" in payload.job:
-        pool.insert(0, f"Why do you think you are a good fit for the {payload.job['title']} role?")
-        
-    return pool[:payload.count]
+    try:
+        questions = generate_interview_questions(
+            question_type=payload.question_type,
+            count=payload.count,
+            resume=payload.resume,
+            job=payload.job,
+            fit=payload.fit,
+        )
+        return questions
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Question generation failed: {e}",
+        )
 
 
 @router.post("/answers/review")
 async def review_answer(payload: AnswerReviewRequest):
-    # Simulated Feedback logic
-    # In vLLM, we would prompt the model.
-    
-    length = len(payload.answer.split())
-    if length < 20:
-        return {
-            "summary": "Your answer is quite short. Try to expand on the details.",
-            "suggestions": ["Use the STAR method (Situation, Task, Action, Result).", "Provide specific metrics or outcomes."],
-            "engine": "rule-based"
-        }
-    
-    return {
-        "summary": "Solid attempt. The structure is clear.",
-        "suggestions": [
-            "Ensure you clearly state your personal contribution ('I' vs 'We').",
-            "Quantify the result if possible (e.g., 'improved by 20%')."
-        ],
-        "engine": "rule-based"
-    }
+    try:
+        feedback = review_interview_answer(
+            question=payload.question,
+            answer=payload.answer,
+            resume=payload.resume,
+            job=payload.job,
+        )
+        return feedback
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Answer review failed: {e}",
+        )
 
 @router.post("/stories/generate")
 async def generate_stories(payload: StarStoryRequest):
-    # Simulated STAR extraction
-    return [
-        {
-            "title": "Project Leadership",
-            "situation": "In my previous role, we faced a tight deadline...",
-            "task": "I needed to coordinate across three teams...",
-            "action": "I implemented a daily standup and used Jira...",
-            "result": "We delivered on time and under budget.",
-            "source": "simulated"
-        },
-        {
-            "title": "Technical Problem Solving",
-            "situation": "Our system was experiencing high latency...",
-            "task": "I needed to identify the bottleneck...",
-            "action": "I profiled the database queries and added indexes...",
-            "result": "Latency dropped by 50%.",
-            "source": "simulated"
+    try:
+        stories = generate_star_stories(
+            focus_areas=payload.focus_areas,
+            resume=payload.resume,
+            job=payload.job,
+        )
+        return stories
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"STAR story generation failed: {e}",
+        )
+
+
+@router.post("/learning/feedback")
+async def submit_interview_learning_feedback(
+    payload: InterviewLearningFeedbackRequest,
+    user_id: str = Depends(get_current_user_id),
+):
+    try:
+        role_family = infer_role_family(payload.resume, payload.job)
+        return record_interview_feedback(
+            role_family=role_family,
+            question_type=payload.question_type,
+            question=payload.question,
+            answer_score=payload.answer_score,
+            helpful=payload.helpful,
+            session_outcome=payload.session_outcome,
+            user_id=user_id,
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Learning feedback failed: {e}",
+        )
+
+
+@router.get("/learning/profile")
+async def fetch_interview_learning_profile(
+    role_family: Optional[str] = None,
+    user_id: str = Depends(get_current_user_id),
+):
+    try:
+        return {
+            "user_id": user_id,
+            "profile": get_learning_profile(role_family=role_family),
         }
-    ]
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Learning profile fetch failed: {e}",
+        )
+
+
+@router.post("/role/detect")
+async def detect_role(payload: RoleDetectionRequest):
+    try:
+        service = get_interview_coaching_service()
+        return service.detect_role_function(
+            job_data=payload.job_data,
+            resume_data=payload.resume_data,
+            resume_experience=payload.resume_experience,
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Role detection failed: {e}",
+        )
+
+
+@router.post("/plan/90day")
+async def generate_90day_plan(payload: NinetyDayPlanRequest):
+    try:
+        service = get_interview_coaching_service()
+        return service.get_90day_plan(
+            role_function=payload.role_function,
+            seniority=payload.seniority,
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"90-day plan generation failed: {e}",
+        )

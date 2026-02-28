@@ -26,10 +26,14 @@ INTELLICV_ROOT = Path(os.getenv(
 ))
 
 # Core data directories — driven by CAREERTROJAN_DATA_ROOT env var
-AI_DATA_DIR = Path(os.getenv(
-    "CAREERTROJAN_DATA_ROOT",
-    str(INTELLICV_ROOT / "data" / "ai_data_final")
-))
+_env_ai_data = os.getenv("CAREERTROJAN_AI_DATA")
+_env_data_root = os.getenv("CAREERTROJAN_DATA_ROOT")
+if _env_ai_data:
+    AI_DATA_DIR = Path(_env_ai_data)
+elif _env_data_root:
+    AI_DATA_DIR = Path(_env_data_root) / "ai_data_final"
+else:
+    AI_DATA_DIR = Path(INTELLICV_ROOT / "data" / "ai_data_final")
 RAW_DATA_DIR = INTELLICV_ROOT / "raw_data"
 WORKING_COPY_DIR = INTELLICV_ROOT / "working"
 

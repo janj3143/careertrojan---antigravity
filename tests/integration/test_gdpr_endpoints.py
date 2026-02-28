@@ -16,6 +16,26 @@ Base.metadata.create_all(bind=engine)
 client = TestClient(app)
 
 
+def _clear_rate_limiter(app_instance):
+    """Walk ASGI middleware stack and clear in-memory rate limiter hits."""
+    obj = getattr(app_instance, "middleware_stack", app_instance)
+    for _ in range(20):
+        if hasattr(obj, "_hits"):
+            obj._hits.clear()
+            return
+        obj = getattr(obj, "app", None)
+        if obj is None:
+            break
+
+
+@pytest.fixture(autouse=True)
+def _reset_rate_limiter_between_tests():
+    """Prevent cross-test/suite rate-limit contamination for GDPR integration tests."""
+    _clear_rate_limiter(app)
+    yield
+    _clear_rate_limiter(app)
+
+
 def _get_auth_headers(email: str = "gdpr-test@careertrojan.com", role: str = "user"):
     """Create a valid JWT for testing authenticated endpoints."""
     token = security.create_access_token(data={"sub": email, "role": role})

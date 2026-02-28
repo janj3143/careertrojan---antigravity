@@ -8,12 +8,14 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 
 from services.backend_api.db.connection import get_db
+from services.shared.paths import CareerTrojanPaths
 
 router = APIRouter(
     prefix="/api/shared/v1",
     tags=["shared"],
     responses={404: {"description": "Not found"}},
 )
+paths = CareerTrojanPaths()
 
 
 @router.get("/health")
@@ -47,7 +49,8 @@ def deep_health_check(db: Session = Depends(get_db)):
 
     # 2. Disk space (working directory)
     try:
-        usage = shutil.disk_usage(os.getcwd())
+        disk_root = paths.working_root if paths.working_root.exists() else paths.app_root
+        usage = shutil.disk_usage(disk_root)
         free_gb = round(usage.free / (1024 ** 3), 2)
         total_gb = round(usage.total / (1024 ** 3), 2)
         checks["disk"] = {
@@ -62,15 +65,15 @@ def deep_health_check(db: Session = Depends(get_db)):
 
     # 3. Key directories
     dirs_to_check = {
-        "interactions": os.path.join(os.getcwd(), "interactions"),
-        "ai_data_final": os.path.join(os.getcwd(), "ai_data_final"),
-        "logs": os.path.join(os.getcwd(), "logs"),
+        "interactions": paths.interactions,
+        "ai_data_final": paths.ai_data_final,
+        "logs": paths.logs,
     }
     dir_results = {}
     for name, path in dirs_to_check.items():
         dir_results[name] = {
-            "exists": os.path.isdir(path),
-            "writable": os.access(path, os.W_OK) if os.path.isdir(path) else False,
+            "exists": path.is_dir(),
+            "writable": os.access(path, os.W_OK) if path.is_dir() else False,
         }
     checks["directories"] = dir_results
 

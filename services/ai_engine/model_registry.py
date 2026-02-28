@@ -21,26 +21,31 @@ from datetime import datetime
 from typing import Dict, Optional, List, Any
 import hashlib
 
+from services.shared.paths import CareerTrojanPaths
+
 
 class ModelRegistry:
     """Central registry for all trained AI models"""
 
-    def __init__(self, registry_dir: str = "admin_portal/models", models_dir: str = "admin_portal/models"):
-        """
-        Initialize model registry
-
-        Args:
-            registry_dir: Directory where registry.json is stored
-            models_dir: Directory where model files are stored
-        """
-        self.registry_dir = Path(registry_dir)
-        self.models_dir = Path(models_dir)
-        self.registry_file = self.registry_dir / "registry.json"
+    def __init__(self, registry_dir: str | None = None, models_dir: str | None = None):
+        paths = CareerTrojanPaths()
+        self.registry_dir = Path(registry_dir or paths.trained_models)
+        self.models_dir = Path(models_dir or paths.trained_models)
 
         self.registry_dir.mkdir(parents=True, exist_ok=True)
         self.models_dir.mkdir(parents=True, exist_ok=True)
 
+        self.registry_file = self._resolve_registry_file()
         self.registry = self._load_registry()
+
+    def _resolve_registry_file(self) -> Path:
+        preferred = self.registry_dir / "model_registry.json"
+        legacy = self.registry_dir / "registry.json"
+        if preferred.exists():
+            return preferred
+        if legacy.exists():
+            return legacy
+        return preferred
 
     def _load_registry(self) -> Dict[str, Any]:
         """Load existing registry or create new one"""
@@ -93,12 +98,13 @@ class ModelRegistry:
         version_id = f"v{existing_versions + 1}.0.0"
 
         # Calculate file hash for integrity checking
-        file_hash = self._calculate_file_hash(model_file)
+        model_path = Path(model_file)
+        file_hash = self._calculate_file_hash(model_path)
 
         # Store model metadata
         self.registry['models'][model_name]['versions'][version_id] = {
             'timestamp': datetime.now().isoformat(),
-            'file': model_file,
+            'file': str(model_path),
             'file_hash': file_hash,
             'type': model_type,
             'metadata': metadata,
@@ -136,11 +142,12 @@ class ModelRegistry:
         # Use same version as associated model
         version_id = self.registry['models'][model_name]['latest']
 
-        file_hash = self._calculate_file_hash(vectorizer_file)
+        vectorizer_path = Path(vectorizer_file)
+        file_hash = self._calculate_file_hash(vectorizer_path)
 
         self.registry['models'][model_key]['versions'][version_id] = {
             'timestamp': datetime.now().isoformat(),
-            'file': vectorizer_file,
+            'file': str(vectorizer_path),
             'file_hash': file_hash,
             'type': 'vectorizer',
             'metadata': metadata,
@@ -273,7 +280,7 @@ class ModelRegistry:
 
         return model_info['versions'][version]
 
-    def _calculate_file_hash(self, file_path: str) -> str:
+    def _calculate_file_hash(self, file_path: str | Path) -> str:
         """Calculate SHA256 hash of model file for integrity checking"""
         sha256_hash = hashlib.sha256()
 

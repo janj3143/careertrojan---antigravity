@@ -16,19 +16,19 @@ class AdminAPIClientContactCommunicationMixin:
     # Integrations
     # ---------------------------
     def get_integrations_status(self) -> Dict[str, Any]:
-        return self._request("GET", "/admin/integrations/status")
+        return self._request("GET", "/api/admin/v1/integrations/status")
 
     def configure_sendgrid(self, api_key: str) -> Dict[str, Any]:
-        return self._request("POST", "/admin/integrations/sendgrid/configure", json={"api_key": api_key})
+        return self._request("POST", "/api/admin/v1/integrations/sendgrid/configure", json={"api_key": api_key})
 
     def configure_gmail(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        return self._request("POST", "/admin/integrations/gmail/configure", json=payload)
+        return self._request("POST", "/api/admin/v1/integrations/gmail/configure", json=payload)
 
     def configure_klaviyo(self, api_key: str) -> Dict[str, Any]:
-        return self._request("POST", "/admin/integrations/klaviyo/configure", json={"api_key": api_key})
+        return self._request("POST", "/api/admin/v1/integrations/klaviyo/configure", json={"api_key": api_key})
 
     def disconnect_integration(self, provider: str) -> Dict[str, Any]:
-        return self._request("POST", f"/admin/integrations/{provider}/disconnect")
+        return self._request("POST", f"/api/admin/v1/integrations/{provider}/disconnect")
 
     # ---------------------------
     # Contacts
@@ -73,13 +73,13 @@ class AdminAPIClientContactCommunicationMixin:
     # Email send / logs / analytics
     # ---------------------------
     def send_test_email(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        return self._request("POST", "/admin/email/send_test", json=payload)
+        return self._request("POST", "/api/admin/v1/email/send_test", json=payload)
 
     def send_bulk_email(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        return self._request("POST", "/admin/email/send_bulk", json=payload)
+        return self._request("POST", "/api/admin/v1/email/send_bulk", json=payload)
 
     def get_email_logs(self, days: int = 30) -> Dict[str, Any]:
-        return self._request("GET", "/admin/email/logs", params={"days": int(days)})
+        return self._request("GET", "/api/admin/v1/email/logs", params={"days": int(days)})
 
     def get_email_analytics(self, days: int = 30) -> Dict[str, Any]:
-        return self._request("GET", "/admin/email/analytics", params={"days": int(days)})
+        return self._request("GET", "/api/admin/v1/email/analytics", params={"days": int(days)})

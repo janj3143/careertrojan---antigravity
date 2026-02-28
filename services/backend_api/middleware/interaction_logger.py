@@ -29,12 +29,13 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
 
+from services.shared.paths import CareerTrojanPaths
+
 logger = logging.getLogger("interaction_logger")
 
 # ── Resolve data root (portable) ──────────────────────────────
-_DATA_ROOT = Path(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
-
-INTERACTIONS_DIR = _DATA_ROOT / "USER DATA" / "interactions"
+_paths = CareerTrojanPaths()
+INTERACTIONS_DIR = _paths.interactions
 
 # ── Endpoints to SKIP (health checks, static, docs) ──────────
 SKIP_PREFIXES = (

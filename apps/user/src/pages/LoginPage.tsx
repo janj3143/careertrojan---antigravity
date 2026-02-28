@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ApiConfig } from '../lib/api';
 
 const API: ApiConfig = { baseUrl: "http://localhost:8500" }; // Updated to runtime port
@@ -8,6 +8,33 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const hash = window.location.hash.startsWith('#') ? window.location.hash.slice(1) : '';
+        if (!hash) {
+            return;
+        }
+
+        const params = new URLSearchParams(hash);
+        const token = params.get('access_token');
+        const oauthError = params.get('oauth_error');
+        const nextPath = params.get('next') || '/';
+
+        if (oauthError) {
+            setError(`Google sign-in failed: ${oauthError}`);
+            window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+            return;
+        }
+
+        if (token) {
+            localStorage.setItem("token", token);
+            const safeNext = nextPath.startsWith('/') ? nextPath : '/';
+            window.location.href = safeNext;
+            return;
+        }
+
+        window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+    }, []);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,6 +61,12 @@ export default function LoginPage() {
         } catch (err: any) {
             setError(err.message);
         }
+    };
+
+    const handleGoogleLogin = () => {
+        const nextPath = '/';
+        const url = `${API.baseUrl}/api/auth/v1/google/login?next_path=${encodeURIComponent(nextPath)}`;
+        window.location.href = url;
     };
 
     return (
@@ -85,6 +118,15 @@ export default function LoginPage() {
                             className="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Sign in
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            type="button"
+                            onClick={handleGoogleLogin}
+                            className="group relative flex w-full justify-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                        >
+                            Continue with Google
                         </button>
                     </div>
                 </form>

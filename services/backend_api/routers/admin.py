@@ -5,23 +5,69 @@ from sqlalchemy import func
 from typing import List
 import os, glob, json, logging
 from datetime import datetime, timedelta
+from uuid import uuid4
 
 from services.backend_api.db.connection import get_db
 from services.backend_api.db import models
 from services.backend_api.utils import security
+from services.shared.paths import CareerTrojanPaths
 
 logger = logging.getLogger("admin")
 router = APIRouter(prefix="/api/admin/v1", tags=["admin"])
+paths = CareerTrojanPaths()
+
+
+def _mask_api_key(raw: str | None) -> str | None:
+    if not raw:
+        return None
+    value = str(raw)
+    if len(value) <= 6:
+        return "*" * len(value)
+    return f"{value[:3]}...{value[-3:]}"
+
+
+_integration_state = {
+    "sendgrid": {
+        "configured": bool(os.getenv("SENDGRID_API_KEY")),
+        "api_key_masked": _mask_api_key(os.getenv("SENDGRID_API_KEY")),
+        "last_configured_at": None,
+        "mode": "local"
+    },
+    "klaviyo": {
+        "configured": bool(os.getenv("KLAVIYO_API_KEY")),
+        "api_key_masked": _mask_api_key(os.getenv("KLAVIYO_API_KEY")),
+        "last_configured_at": None,
+        "mode": "mass_mail"
+    },
+    "gmail": {
+        "configured": False,
+        "api_key_masked": None,
+        "last_configured_at": None,
+        "mode": "local"
+    },
+}
+
+_email_dispatch_log = []
 
 # Dependency for Admin Auth
 def require_admin(token: str = Depends(security.oauth2_scheme), db: Session = Depends(get_db)):
     try:
-        payload = security.jwt.decode(token, security.SECRET_KEY, algorithms=[security.ALGORITHM])
+        payload = security.decode_access_token(token)
         email: str = payload.get("sub")
         role: str = payload.get("role")
-        if role != "admin":
-             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin privileges required")
-    except Exception:
+        provider = security.get_auth_provider()
+        has_admin_scope = security.token_has_scopes(payload, ["admin:access"])
+
+        if provider == "auth0":
+            if not (has_admin_scope or role == "admin"):
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin scope required")
+        else:
+            if role != "admin":
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin privileges required")
+
+        if email is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    except security.TokenValidationError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     return True
 
@@ -68,13 +114,228 @@ def compliance_summary(_: bool = Depends(require_admin), db: Session = Depends(g
         "timestamp": datetime.utcnow().isoformat(),
     }
 
+
+@router.get("/integrations/status")
+def integrations_status(_: bool = Depends(require_admin)):
+    providers = {
+        name: {
+            "configured": cfg.get("configured", False),
+            "api_key_masked": cfg.get("api_key_masked"),
+            "last_configured_at": cfg.get("last_configured_at"),
+            "mode": cfg.get("mode"),
+        }
+        for name, cfg in _integration_state.items()
+    }
+    return {
+        "providers": providers,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+
+@router.post("/integrations/sendgrid/configure")
+def configure_sendgrid(payload: dict, _: bool = Depends(require_admin)):
+    api_key = str(payload.get("api_key") or "").strip()
+    if not api_key:
+        raise HTTPException(status_code=400, detail="api_key is required")
+
+    _integration_state["sendgrid"].update({
+        "configured": True,
+        "api_key_masked": _mask_api_key(api_key),
+        "last_configured_at": datetime.utcnow().isoformat(),
+    })
+    return {"status": "configured", "provider": "sendgrid"}
+
+
+@router.post("/integrations/klaviyo/configure")
+def configure_klaviyo(payload: dict, _: bool = Depends(require_admin)):
+    api_key = str(payload.get("api_key") or "").strip()
+    if not api_key:
+        raise HTTPException(status_code=400, detail="api_key is required")
+
+    _integration_state["klaviyo"].update({
+        "configured": True,
+        "api_key_masked": _mask_api_key(api_key),
+        "last_configured_at": datetime.utcnow().isoformat(),
+    })
+    return {"status": "configured", "provider": "klaviyo"}
+
+
+@router.post("/integrations/gmail/configure")
+def configure_gmail(payload: dict, _: bool = Depends(require_admin)):
+    _integration_state["gmail"].update({
+        "configured": True,
+        "api_key_masked": None,
+        "last_configured_at": datetime.utcnow().isoformat(),
+    })
+    return {"status": "configured", "provider": "gmail", "config": payload}
+
+
+@router.post("/integrations/{provider}/disconnect")
+def disconnect_integration(provider: str, _: bool = Depends(require_admin)):
+    key = provider.strip().lower()
+    if key not in _integration_state:
+        raise HTTPException(status_code=404, detail=f"Unknown provider: {provider}")
+
+    _integration_state[key].update({
+        "configured": False,
+        "api_key_masked": None,
+        "last_configured_at": datetime.utcnow().isoformat(),
+    })
+    return {"status": "disconnected", "provider": key}
+
+
+def _resolve_provider(provider: str | None) -> str:
+    requested = (provider or "").strip().lower()
+    if requested:
+        if requested not in _integration_state:
+            raise HTTPException(status_code=400, detail=f"Unsupported provider: {provider}")
+        return requested
+
+    if _integration_state["sendgrid"]["configured"]:
+        return "sendgrid"
+    if _integration_state["klaviyo"]["configured"]:
+        return "klaviyo"
+    if _integration_state["gmail"]["configured"]:
+        return "gmail"
+    raise HTTPException(status_code=400, detail="No configured provider. Configure SendGrid/Klaviyo/Gmail first")
+
+
+@router.post("/email/send_test")
+def send_test_email(payload: dict, _: bool = Depends(require_admin)):
+    to_email = str(payload.get("to") or payload.get("to_email") or "").strip()
+    subject = str(payload.get("subject") or "Test Email").strip()
+    body = str(payload.get("body") or "").strip()
+    if not to_email:
+        raise HTTPException(status_code=400, detail="to (or to_email) is required")
+
+    provider = _resolve_provider(payload.get("provider"))
+    if not _integration_state[provider]["configured"]:
+        raise HTTPException(status_code=400, detail=f"Provider not configured: {provider}")
+
+    item = {
+        "id": f"msg_{uuid4().hex[:12]}",
+        "provider": provider,
+        "mode": "test",
+        "to": [to_email],
+        "subject": subject,
+        "body": body,
+        "status": "queued",
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    _email_dispatch_log.append(item)
+    return {"status": "queued", "provider": provider, "message": item}
+
+
+@router.post("/email/send_bulk")
+def send_bulk_email(payload: dict, _: bool = Depends(require_admin)):
+    recipients = payload.get("recipients") or payload.get("to") or []
+    if isinstance(recipients, str):
+        recipients = [recipients]
+    recipients = [str(r).strip() for r in recipients if str(r).strip()]
+    if not recipients:
+        raise HTTPException(status_code=400, detail="recipients (or to) is required")
+
+    subject = str(payload.get("subject") or "Bulk Email").strip()
+    body = str(payload.get("body") or "").strip()
+    provider = _resolve_provider(payload.get("provider"))
+    if not _integration_state[provider]["configured"]:
+        raise HTTPException(status_code=400, detail=f"Provider not configured: {provider}")
+
+    item = {
+        "id": f"bulk_{uuid4().hex[:12]}",
+        "provider": provider,
+        "mode": "bulk",
+        "to": recipients,
+        "subject": subject,
+        "body": body,
+        "status": "queued",
+        "recipient_count": len(recipients),
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    _email_dispatch_log.append(item)
+    return {
+        "status": "queued",
+        "provider": provider,
+        "recipient_count": len(recipients),
+        "message": item,
+    }
+
+
+@router.get("/email/logs")
+def email_logs(days: int = Query(default=30, ge=1, le=365), _: bool = Depends(require_admin)):
+    cutoff = datetime.utcnow() - timedelta(days=days)
+    records = []
+    for item in _email_dispatch_log:
+        created_at = item.get("created_at")
+        try:
+            when = datetime.fromisoformat(created_at)
+        except Exception:
+            when = datetime.utcnow()
+        if when >= cutoff:
+            records.append(item)
+
+    return {
+        "days": days,
+        "count": len(records),
+        "records": list(reversed(records[-500:])),
+    }
+
+
+@router.get("/email/analytics")
+def email_analytics(days: int = Query(default=30, ge=1, le=365), _: bool = Depends(require_admin)):
+    cutoff = datetime.utcnow() - timedelta(days=days)
+    total = 0
+    test_count = 0
+    bulk_count = 0
+    recipients = 0
+    by_provider = {"sendgrid": 0, "klaviyo": 0, "gmail": 0}
+
+    for item in _email_dispatch_log:
+        created_at = item.get("created_at")
+        try:
+            when = datetime.fromisoformat(created_at)
+        except Exception:
+            when = datetime.utcnow()
+        if when < cutoff:
+            continue
+
+        total += 1
+        mode = item.get("mode")
+        if mode == "test":
+            test_count += 1
+        if mode == "bulk":
+            bulk_count += 1
+        recipients += int(item.get("recipient_count") or len(item.get("to") or []))
+
+        provider = str(item.get("provider") or "").lower()
+        if provider in by_provider:
+            by_provider[provider] += 1
+
+    return {
+        "days": days,
+        "total_messages": total,
+        "test_messages": test_count,
+        "bulk_messages": bulk_count,
+        "recipient_count": recipients,
+        "by_provider": by_provider,
+    }
+
 @router.get("/email/status")
 def email_status(_: bool = Depends(require_admin)):
     _not_impl("Implement email status")
 
 @router.get("/parsers/status")
 def parsers_status(_: bool = Depends(require_admin)):
-    return {"status": "idle", "jobs_queued": 0} # Mock return
+    parser_root = paths.parser_root
+    if not parser_root.exists():
+        raise HTTPException(status_code=503, detail="Parser root not available")
+
+    incoming = parser_root / "incoming"
+    queue_count = 0
+    if incoming.exists():
+        queue_count = sum(1 for p in incoming.rglob("*") if p.is_file())
+
+    return {"status": "ok", "jobs_queued": queue_count}
 
 # --- Extended Stubs (Migrated from Legacy) ---
 
@@ -92,9 +353,9 @@ def system_activity(_: bool = Depends(require_admin), db: Session = Depends(get_
     exports_24h = db.query(func.count(models.DataExportRequest.id)).filter(models.DataExportRequest.requested_at >= day_ago).scalar() or 0
 
     # File-level interaction count for today
-    interactions_dir = os.path.join(os.getcwd(), "interactions")
-    today_dir = os.path.join(interactions_dir, now.strftime("%Y-%m-%d"))
-    file_interactions_today = len(glob.glob(os.path.join(today_dir, "*.json"))) if os.path.isdir(today_dir) else 0
+    interactions_dir = paths.interactions
+    today_dir = interactions_dir / now.strftime("%Y-%m-%d")
+    file_interactions_today = len(list(today_dir.glob("*.json"))) if today_dir.is_dir() else 0
 
     return {
         "new_users_24h": new_users_24h,
@@ -115,13 +376,13 @@ def dashboard_snapshot(_: bool = Depends(require_admin), db: Session = Depends(g
     total_mentorships = db.query(func.count(models.Mentorship.id)).scalar() or 0
 
     # AI data directory sizes
-    ai_data_root = os.path.join(os.getcwd(), "ai_data_final")
+    ai_data_root = paths.ai_data_final
     ai_stats = {}
-    if os.path.isdir(ai_data_root):
+    if ai_data_root.is_dir():
         for subdir in ["parsed_resumes", "job_matching", "learning_library", "profiles", "trained_models"]:
-            subpath = os.path.join(ai_data_root, subdir)
-            if os.path.isdir(subpath):
-                ai_stats[subdir] = len(os.listdir(subpath))
+            subpath = ai_data_root / subdir
+            if subpath.is_dir():
+                ai_stats[subdir] = len(list(subpath.iterdir()))
             else:
                 ai_stats[subdir] = 0
 
@@ -231,28 +492,27 @@ def batch_jobs(_: bool = Depends(require_admin)):
 @router.get("/ai/enrichment/status")
 def enrichment_status(_: bool = Depends(require_admin)):
     """AI enrichment pipeline status — scans interactions/ dir for pending/processed."""
-    interactions_dir = os.path.join(os.getcwd(), "interactions")
-    ai_data_root = os.path.join(os.getcwd(), "ai_data_final")
+    interactions_dir = paths.interactions
+    ai_data_root = paths.ai_data_final
 
     # Count pending interactions (files in interactions/ directory)
     pending = 0
     processed_dirs = 0
-    if os.path.isdir(interactions_dir):
-        for entry in os.listdir(interactions_dir):
-            day_dir = os.path.join(interactions_dir, entry)
-            if os.path.isdir(day_dir):
+    if interactions_dir.is_dir():
+        for entry in interactions_dir.iterdir():
+            if entry.is_dir():
                 processed_dirs += 1
-                pending += len(glob.glob(os.path.join(day_dir, "*.json")))
+                pending += len(list(entry.glob("*.json")))
 
     # Knowledge base size
     kb_files = 0
-    if os.path.isdir(ai_data_root):
+    if ai_data_root.is_dir():
         for root, dirs, files in os.walk(ai_data_root):
             kb_files += len(files)
 
     # Last enrichment run (check most recent file in ai_data_final)
     last_enrichment = None
-    if os.path.isdir(ai_data_root):
+    if ai_data_root.is_dir():
         latest_time = 0
         for root, dirs, files in os.walk(ai_data_root):
             for f in files:
@@ -284,14 +544,14 @@ def enrichment_run(_: bool = Depends(require_admin)):
 @router.get("/ai/enrichment/jobs")
 def enrichment_jobs(_: bool = Depends(require_admin)):
     """List recent enrichment jobs by scanning interaction date directories."""
-    interactions_dir = os.path.join(os.getcwd(), "interactions")
+    interactions_dir = paths.interactions
     jobs = []
-    if os.path.isdir(interactions_dir):
-        for entry in sorted(os.listdir(interactions_dir), reverse=True)[:30]:
-            day_dir = os.path.join(interactions_dir, entry)
-            if os.path.isdir(day_dir):
-                count = len(glob.glob(os.path.join(day_dir, "*.json")))
-                jobs.append({"date": entry, "interaction_count": count})
+    if interactions_dir.is_dir():
+        day_dirs = sorted([p.name for p in interactions_dir.iterdir() if p.is_dir()], reverse=True)[:30]
+        for day in day_dirs:
+            day_dir = interactions_dir / day
+            count = len(list(day_dir.glob("*.json")))
+            jobs.append({"date": day, "interaction_count": count})
     return {"jobs": jobs}
 
 @router.get("/ai/content/status")

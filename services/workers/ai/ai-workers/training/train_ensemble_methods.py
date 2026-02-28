@@ -17,6 +17,9 @@ import json
 import numpy as np
 from datetime import datetime
 
+from services.shared.paths import CareerTrojanPaths
+from services.shared.training_data_loader import TrainingDataLoader
+
 if sys.platform == 'win32':
     os.environ['PYTHONIOENCODING'] = 'utf-8'
 
@@ -29,9 +32,10 @@ class EnsembleTrainer:
 
     def __init__(self, base_path: str):
         self.base_path = Path(base_path)
-        self.data_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.data_path = CareerTrojanPaths().ai_data_final
         self.models_path = self.base_path / "trained_models" / "ensemble"
         self.models_path.mkdir(parents=True, exist_ok=True)
+        self.loader = TrainingDataLoader(limit_per_source=5000)
 
         logger.info(f"Ensemble Methods Trainer initialized")
         logger.info(f"Models will be saved to: {self.models_path}")
@@ -40,46 +44,10 @@ class EnsembleTrainer:
         """Load candidate profiles for training"""
         logger.info("Loading training data...")
 
-        profiles_dir = self.data_path / "profiles"
-        if not profiles_dir.exists():
-            logger.error(f"Profiles directory not found")
-            return None, None
+        records = self.loader.load_records()
+        X, y = self.loader.build_feature_matrix(records)
 
-        features = []
-        labels = []
-        json_files = list(profiles_dir.glob("*.json"))[:5000]
-
-        for json_file in json_files:
-            try:
-                with open(json_file, 'r', encoding='utf-8') as f:
-                    profile = json.load(f)
-
-                    skills = profile.get('skills', [])
-                    experience = profile.get('work_experience', [])
-                    education = profile.get('education', [])
-
-                    feature_dict = {
-                        'skills_count': len(skills),
-                        'experience_years': len(experience),
-                        'education_count': len(education),
-                        'has_technical_skills': int(any('technical' in str(s).lower() for s in skills)),
-                        'has_management': int(any('manag' in str(exp).lower() for exp in experience)),
-                        'has_degree': int(any('degree' in str(edu).lower() for edu in education))
-                    }
-
-                    features.append(list(feature_dict.values()))
-
-                    # Label: seniority level
-                    label = len(experience) // 3
-                    labels.append(min(label, 2))
-
-            except Exception as e:
-                logger.error(f"Error loading {json_file}: {e}")
-
-        X = np.array(features)
-        y = np.array(labels)
-
-        logger.info(f"âœ… Loaded {len(X)} samples")
+        logger.info(f"✅ Loaded {len(X)} samples")
         return X, y
 
     def train_random_forest(self, X, y):

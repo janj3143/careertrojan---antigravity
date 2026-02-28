@@ -3,6 +3,8 @@ import yaml
 from loguru import logger
 from threading import Lock
 
+from services.shared.paths import CareerTrojanPaths
+
 class CapabilityRegistry:
     _instance = None
     _lock = Lock()
@@ -12,7 +14,7 @@ class CapabilityRegistry:
             if cls._instance is None:
                 cls._instance = super().__new__(cls)
                 cls._instance.config = {}
-                cls._instance.data_root = os.getenv("CAREERTROJAN_DATA_ROOT", r"L:\antigravity_version_ai_data_final")
+                cls._instance.data_root = str(CareerTrojanPaths().data_root)
                 cls._instance.config_path = os.path.join(cls._instance.data_root, "config", "registry.yaml")
                 cls._instance.load_registry()
         return cls._instance

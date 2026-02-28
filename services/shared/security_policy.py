@@ -60,4 +60,4 @@ def mock_masquerade_access(admin_user: str, target_user: str):
     
     # This specific log should definitely be immutable
     print(audit_entry)
-    # In production: write to C:\careertrojan\logs\audit_security.log
+    # In production: write to <runtime-root>\logs\audit_security.log

@@ -143,6 +143,8 @@ class FullMLTrainer:
             
             return results
             
+                from services.shared.training_data_loader import TrainingDataLoader
+                self.loader = TrainingDataLoader(limit_per_source=20000)
         except Exception as e:
             logger.error(f"   âŒ Linear Regression failed: {e}")
             return {'error': str(e)}

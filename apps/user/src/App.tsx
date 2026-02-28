@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { initHelpdeskStub } from './lib/helpdeskStub';
 import MobileNav from './components/mobile/MobileNav';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
 import PWAInstallBanner from './components/mobile/PWAInstallBanner';
@@ -25,6 +26,7 @@ const DualCareer             = lazy(() => import('./pages/DualCareer'));
 const RewardsPage            = lazy(() => import('./pages/RewardsPage'));
 const VisualisationsHub      = lazy(() => import('./pages/VisualisationsHub'));
 const ConsolidationPage      = lazy(() => import('./pages/ConsolidationPage'));
+const GlossaryInsights       = lazy(() => import('./pages/GlossaryInsights'));
 
 // ── Lazy: mobile-only pages ──────────────────────────────
 const MobileQuickDash  = lazy(() => import('./components/mobile/MobileQuickDash'));
@@ -52,6 +54,10 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+    React.useEffect(() => {
+        initHelpdeskStub('user');
+    }, []);
+
     return (
         <AuthProvider>
             <BrowserRouter>
@@ -84,6 +90,7 @@ export default function App() {
                             <Route path="/rewards" element={<PrivateRoute><RewardsPage /></PrivateRoute>} />
                             <Route path="/visuals" element={<PrivateRoute><VisualisationsHub /></PrivateRoute>} />
                             <Route path="/consolidation" element={<PrivateRoute><ConsolidationPage /></PrivateRoute>} />
+                            <Route path="/glossary" element={<PrivateRoute><GlossaryInsights /></PrivateRoute>} />
                         </Routes>
                     </Suspense>
                 </main>

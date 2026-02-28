@@ -53,7 +53,7 @@
 ---
 
 # TRACK A: FINISH THE RUNTIME (Windows)
-**Where**: Windows machine, VS Code, C:\careertrojan
+**Where**: Windows machine, VS Code, J:\Codec - runtime version\Antigravity\careertrojan
 **AI**: CO (Claude Opus 4.6)
 **Timeline**: Current phase
 
@@ -159,8 +159,8 @@ B6. ⬜ Rebuild Python virtual environment (2 minutes)
 
 B7. ⬜ Update path references (Copilot does this in one pass)
         WHAT CHANGES:
-            conftest.py:  C:\careertrojan        → ~/careertrojan
-            conftest.py:  L:\antigravity_...      → /mnt/ai-data/ai_data_final
+            conftest.py:  J:\Codec - runtime version\Antigravity\careertrojan        → ~/careertrojan
+            conftest.py:  L:\Codec-Antigravity Data set\ai_data_final      → /mnt/ai-data/ai_data_final
             agent_manager: convert .ps1 to .sh   (or keep PowerShell — it runs on Linux)
             .env:         Update all drive letters → Linux mount paths
         WHO: CO
@@ -169,7 +169,7 @@ B7. ⬜ Update path references (Copilot does this in one pass)
 B8. ⬜ Run: docker compose up -d
         WHO: CO
         WHAT HAPPENS: All your services start on native Linux Docker
-        VERIFY: curl http://localhost:8500/docs shows your FastAPI docs
+        VERIFY: curl http://localhost:8600/docs shows your FastAPI docs
 
 B9. ⬜ Run the Antigravity test harness on Ubuntu
         WHO: CO
@@ -1221,6 +1221,140 @@ These are the items that sink projects. Print this page. Check them off.
  Month 6:  Track I Phase 1-2 (responsive CSS + PWA — 4 days work)
  
  Track J runs continuously from Month 2 onwards.
+```
+
+---
+
+---
+
+## Track K — Code Intelligence & Cloud Infrastructure (Added 2026-02-16)
+
+### K1. Entire.io — Code Review & Change Tracking
+
+> **Purpose**: Automated code review, change tracking, and source-code modification intelligence  
+> **Integration**: Repository-level — tracks all diffs, reviews modifications, flags regressions  
+> **Install**:
+> ```bash
+> curl -fsSL https://entire.io/install.sh | bash
+> ```
+> **Enable in repository**:
+> ```bash
+> entire enable
+> ```
+
+#### Steps
+
+```
+K1.1 ⬜ Install Entire.io CLI on development VM (J: drive runtime)
+         CMD: curl -fsSL https://entire.io/install.sh | bash
+         WHO: CO
+
+K1.2 ⬜ Enable Entire.io in careertrojan repository
+         CMD: cd /path/to/careertrojan && entire enable
+         WHO: CO
+
+K1.3 ⬜ Install Entire.io on production VM (Hetzner / Azure)
+         CMD: curl -fsSL https://entire.io/install.sh | bash && entire enable
+         WHO: CO (post-deployment)
+
+K1.4 ⬜ Configure Entire.io integration with GitHub Actions CI
+         WHAT: Add entire review step to PR pipeline
+         WHO: CO
+
+K1.5 ⬜ Set up Entire.io dashboards for code quality tracking
+         WHO: CO + YOU (review thresholds)
+```
+
+### K2. Hetzner Cloud VM — Production Infrastructure
+
+> **Decision (2026-02-16)**: Hetzner selected for primary cloud coverage  
+> **Rationale**: Best price/performance ratio, EU-based (GDPR), solid ARM/x86 options  
+> **Reference**: See C1 above — Hetzner CX21 €5/month starting point  
+> **Timing**: Post data-ingestion completion
+
+#### Steps
+
+```
+K2.1 ⬜ Provision Hetzner CX21 (or CX31) VM
+         SPEC: Ubuntu 22.04/24.04, 2-4 vCPU, 4-8GB RAM, 80GB SSD
+         COST: €5-15/month
+         WHO: YOU (create account + provision)
+
+K2.2 ⬜ Harden VM: SSH keys, fail2ban, ufw, unattended upgrades
+         WHO: CO
+
+K2.3 ⬜ Install Docker + Docker Compose on Hetzner VM
+         WHO: CO
+
+K2.4 ⬜ Deploy CareerTrojan containers to Hetzner
+         WHAT: docker compose up -d (frontend + API + workers)
+         WHO: CO
+
+K2.5 ⬜ DNS A records → Hetzner VM IP (all 3 domains)
+         careertrojan.com      → [Hetzner IP]
+         careertrojan.co.uk    → [Hetzner IP]
+         careertrojan.org      → [Hetzner IP]
+         WHO: YOU (registrar)
+
+K2.6 ⬜ SSL via Let's Encrypt (see Track C8 SSL setup)
+         WHO: CO
+
+K2.7 ⬜ Install Entire.io on Hetzner VM (K1.3)
+         WHO: CO
+
+K2.8 ⬜ Set up monitoring (uptime, disk, memory alerts)
+         WHO: CO
+```
+
+### K2 Status Update (2026-02-22)
+
+```
+K2.1 ✅ Provision Hetzner VM — complete
+K2.2 ✅ Harden VM baseline — complete
+K2.3 ✅ Docker + Compose installed — complete
+K2.4 ✅ CareerTrojan deployed — complete
+K2.5 ✅ DNS routed — complete
+K2.6 ✅ SSL active — complete (https://careertrojan.com)
+K2.7 ⬜ Entire.io on production VM — pending
+K2.8 ⬜ Monitoring alerts finalization — pending
+```
+
+### K4. Admin UI Expansion (Added 2026-02-22)
+
+```
+K4.1 ⬜ Admin Company Intel panel
+        - Searchable registry table
+        - Seen-count + last-seen metrics
+        - Manual extract trigger integration
+
+K4.2 ⬜ Admin Coaching Ops panel
+        - Role detection test form
+        - 90-day plan generator
+        - Learning profile view
+
+K4.3 ⬜ Admin AI Pipeline panel
+        - Ingest run status
+        - Enhancement run status
+        - Model artefact inventory
+
+K4.4 ⬜ Admin Support/Helpdesk panel
+        - Zendesk/helpdesk integration status
+        - Queue/macro shortcut links
+        - SSO health indicator
+```
+
+### K3. Post Data-Ingestion Workflow
+
+> **Sequence**: Complete ingestion → Update gazetteers → Deploy to Hetzner → Enable Entire.io
+
+```
+K3.1 ⬜ Complete full data ingestion (parser with LibreOffice .doc support)
+K3.2 ⬜ Update all gazetteers from parsed data
+K3.3 ⬜ Validate AI readiness score > 70
+K3.4 ⬜ Push updated data + code to GitHub
+K3.5 ⬜ Deploy to Hetzner VM (K2.4)
+K3.6 ⬜ Verify Entire.io tracking on production branch
+K3.7 ⬜ Run smoke tests against production URL
 ```
 
 ---

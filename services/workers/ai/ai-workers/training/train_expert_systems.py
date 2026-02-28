@@ -17,6 +17,8 @@ import json
 import numpy as np
 from datetime import datetime
 
+from services.shared.paths import CareerTrojanPaths
+
 if sys.platform == 'win32':
     os.environ['PYTHONIOENCODING'] = 'utf-8'
 
@@ -29,7 +31,7 @@ class ExpertSystemBuilder:
 
     def __init__(self, base_path: str):
         self.base_path = Path(base_path)
-        self.data_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.data_path = CareerTrojanPaths().ai_data_final
         self.models_path = self.base_path / "trained_models" / "expert"
         self.models_path.mkdir(parents=True, exist_ok=True)
 

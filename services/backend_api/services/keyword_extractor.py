@@ -1,3 +1,5 @@
+from typing import List
+
 # --- User_final integration hook ---
 def attach_keywords_to_user_profile(user_profile: dict, keywords: List[str]) -> dict:
     """
@@ -45,15 +47,22 @@ from typing import List, Dict, Tuple
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-nlp = spacy.load("en_core_web_sm")
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    nlp = spacy.blank("en")
 
 def extract_noun_chunks(text: str, top_n: int = 20) -> List[str]:
     doc = nlp(text)
+    if not doc.has_annotation("DEP"):
+        return []
     noun_chunks = [chunk.text.lower().strip() for chunk in doc.noun_chunks if len(chunk.text.strip()) > 2]
     return [phrase for phrase, _ in Counter(noun_chunks).most_common(top_n)]
 
 def extract_named_entities(text: str, top_n: int = 20) -> List[str]:
     doc = nlp(text)
+    if "ner" not in nlp.pipe_names:
+        return []
     entities = [ent.text.lower() for ent in doc.ents if ent.label_ in {"ORG", "PRODUCT", "GPE", "PERSON"}]
     return [ent for ent, _ in Counter(entities).most_common(top_n)]
 

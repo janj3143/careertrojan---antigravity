@@ -1,0 +1,1967 @@
+{
+  "shared_backend": [
+    {
+      "file": "apps/admin/backend/api/routes/mentorship_routes.py",
+      "line": 20,
+      "snippet": "from shared_backend.services.mentorship_service import MentorshipService"
+    },
+    {
+      "file": "apps/admin/backend/api/routes/mentorship_routes.py",
+      "line": 21,
+      "snippet": "from shared_backend.database.exa_db import get_db_connection"
+    },
+    {
+      "file": "apps/admin/modules/intelligence/company_intelligence.py",
+      "line": 16,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 91,
+      "snippet": "# Add shared_backend to Python path for backend services"
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 94,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 136,
+      "snippet": "# Add shared_backend to Python path for backend services"
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 139,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/17_Mentor_Management.py",
+      "line": 92,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/18_Job_Title_AI_Integration.py",
+      "line": 31,
+      "snippet": "# Add shared_backend to Python path for backend services"
+    },
+    {
+      "file": "apps/admin/pages/18_Job_Title_AI_Integration.py",
+      "line": 32,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/21_AI_Model_Training_Review.py",
+      "line": 38,
+      "snippet": "# Add shared_backend to Python path for backend services"
+    },
+    {
+      "file": "apps/admin/pages/21_AI_Model_Training_Review.py",
+      "line": 41,
+      "snippet": "backend_path = Path(__file__).parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/21_AI_Model_Training_Review.py",
+      "line": 47,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / 'shared_backend'"
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 51,
+      "snippet": "from shared_backend.services.portal_bridge import portal_bridge"
+    },
+    {
+      "file": "apps/admin/pages/25_Exa_Web_Intelligence.py",
+      "line": 43,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/25_Exa_Web_Intelligence.py",
+      "line": 62,
+      "snippet": "from shared_backend.queue.knowledge_hole_queue import get_knowledge_hole_queue_manager"
+    },
+    {
+      "file": "apps/admin/pages/25_Exa_Web_Intelligence.py",
+      "line": 67,
+      "snippet": "from shared_backend.workers.knowledge_hole_worker import process_one_job"
+    },
+    {
+      "file": "apps/admin/pages/25_Exa_Web_Intelligence.py",
+      "line": 384,
+      "snippet": "st.caption(\"Always-on worker command: `python shared_backend/workers/knowledge_hole_worker.py --poll-interval 10`\")"
+    },
+    {
+      "file": "apps/admin/pages/26_Unified_Analytics_Dashboard.py",
+      "line": 41,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/28_Mentor_Application_Review.py",
+      "line": 34,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 29,
+      "snippet": "# Add shared_backend to path"
+    },
+    {
+      "file": "apps/admin/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 30,
+      "snippet": "shared_backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 31,
+      "snippet": "if str(shared_backend_path) not in sys.path:"
+    },
+    {
+      "file": "apps/admin/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 32,
+      "snippet": "sys.path.insert(0, str(shared_backend_path))"
+    },
+    {
+      "file": "apps/admin/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 236,
+      "snippet": "\"Blocker Connector Service\": Path(__file__).parent.parent.parent / \"shared_backend/services/blocker_connector.py\","
+    },
+    {
+      "file": "apps/admin/pages/99_tools/career_intelligence_update.py",
+      "line": 26,
+      "snippet": "from shared_backend.services.portal_bridge import IntelligenceService"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 14,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 23,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 32,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 41,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 49,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/shared/integration_hooks.py",
+      "line": 130,
+      "snippet": "elif target == 'shared_backend' and update_type and data:"
+    },
+    {
+      "file": "apps/admin/pages/shared/integration_hooks.py",
+      "line": 291,
+      "snippet": "Manages integration with shared_backend services."
+    },
+    {
+      "file": "apps/admin/pages/shared/integration_hooks.py",
+      "line": 331,
+      "snippet": "\"\"\"Push updates to shared_backend.\"\"\""
+    },
+    {
+      "file": "apps/admin/pages/shared/integration_hooks.py",
+      "line": 333,
+      "snippet": "self.lockstep_manager.queue_update(update_type, 'shared_backend', data)"
+    },
+    {
+      "file": "apps/admin/scripts/career_intelligence_update.py",
+      "line": 26,
+      "snippet": "from shared_backend.services.portal_bridge import IntelligenceService"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 14,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 23,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 32,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 41,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 49,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/services/ai_chat_integration.py",
+      "line": 22,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "apps/admin/services/ai_chat_integration.py",
+      "line": 28,
+      "snippet": "from shared_backend.queue.knowledge_hole_queue import get_knowledge_hole_queue_manager  # type: ignore"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 27,
+      "snippet": "# Add shared_backend to path for portal bridge access"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 28,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/services/production_web_intelligence.py",
+      "line": 35,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "apps/admin/services/universal_data_ingestor.py",
+      "line": 51,
+      "snippet": "# Add shared_backend to path for taxonomy integration"
+    },
+    {
+      "file": "apps/admin/services/universal_data_ingestor.py",
+      "line": 54,
+      "snippet": "# shared_backend is at .../shared_backend"
+    },
+    {
+      "file": "apps/admin/services/universal_data_ingestor.py",
+      "line": 55,
+      "snippet": "shared_backend_path = Path(__file__).resolve().parents[2] / \"shared_backend\""
+    },
+    {
+      "file": "apps/admin/services/universal_data_ingestor.py",
+      "line": 56,
+      "snippet": "if str(shared_backend_path) not in sys.path:"
+    },
+    {
+      "file": "apps/admin/services/universal_data_ingestor.py",
+      "line": 57,
+      "snippet": "sys.path.append(str(shared_backend_path))"
+    },
+    {
+      "file": "apps/admin/services/web_intelligence_service.py",
+      "line": 16,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "apps/user/pages/08_Profile_Complete.py",
+      "line": 56,
+      "snippet": "SHARED_BACKEND = ROOT / \"shared_backend\""
+    },
+    {
+      "file": "apps/user/pages/08_Profile_Complete.py",
+      "line": 57,
+      "snippet": "if str(SHARED_BACKEND) not in sys.path:"
+    },
+    {
+      "file": "apps/user/pages/08_Profile_Complete.py",
+      "line": 58,
+      "snippet": "sys.path.insert(0, str(SHARED_BACKEND))"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 75,
+      "snippet": "from shared_backend.services.real_ai_connector import get_real_ai_connector"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 111,
+      "snippet": "\\\"\\\"\\\"Return REAL skill keywords filtered by type using the shared_backend connector.\\\"\\\"\\\""
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 236,
+      "snippet": "from shared_backend.services.portal_bridge import ResumeService, IntelligenceService"
+    },
+    {
+      "file": "apps/user/pages/13_Become_A_Mentor.py",
+      "line": 24,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/user/pages/13_Become_A_Mentor.py",
+      "line": 34,
+      "snippet": "from shared_backend.services.portal_bridge import ChatService"
+    },
+    {
+      "file": "apps/user/pages/14_Dual_Career_Suite.py",
+      "line": 25,
+      "snippet": "from shared_backend.services.portal_bridge import ResumeService, IntelligenceService"
+    },
+    {
+      "file": "apps/user/pages/14_Dual_Career_Suite.py",
+      "line": 45,
+      "snippet": "from shared_backend.services.exa_service import get_exa_client"
+    },
+    {
+      "file": "apps/user/pages/14_Dual_Career_Suite.py",
+      "line": 56,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "apps/user/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 19,
+      "snippet": "# Add shared_backend to path"
+    },
+    {
+      "file": "apps/user/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 20,
+      "snippet": "shared_backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "apps/user/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 21,
+      "snippet": "if str(shared_backend_path) not in sys.path:"
+    },
+    {
+      "file": "apps/user/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 22,
+      "snippet": "sys.path.insert(0, str(shared_backend_path))"
+    },
+    {
+      "file": "apps/user/pages/29_🚫_Blocker_Detection_Test.py",
+      "line": 217,
+      "snippet": "\"Blocker Connector Service\": Path(__file__).parent.parent.parent / \"shared_backend/services/blocker_connector.py\","
+    },
+    {
+      "file": "apps/user/pages/career_intelligence_update.py",
+      "line": 26,
+      "snippet": "from shared_backend.services.portal_bridge import IntelligenceService"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 14,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 23,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 32,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 41,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 49,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/services/intelligence_visualizations.py",
+      "line": 41,
+      "snippet": "from shared_backend.services.career_charts import ("
+    },
+    {
+      "file": "apps/user/stubs/you_marketing_you_geographic_integration_stub.py",
+      "line": 150,
+      "snippet": "\"shared_backend_imported\": False,  # Import geographic_intelligence.py"
+    },
+    {
+      "file": "scripts/generate_bridge_touchpoint_report.py",
+      "line": 14,
+      "snippet": "\"shared_backend\","
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 27,
+      "snippet": "# Add shared_backend to path for portal bridge access"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 28,
+      "snippet": "backend_path = Path(__file__).parent.parent.parent / \"shared_backend\""
+    },
+    {
+      "file": "services/backend_api/services/production_web_intelligence.py",
+      "line": 35,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "services/backend_api/services/universal_data_ingestor.py",
+      "line": 51,
+      "snippet": "# Add shared_backend to path for taxonomy integration"
+    },
+    {
+      "file": "services/backend_api/services/universal_data_ingestor.py",
+      "line": 54,
+      "snippet": "# shared_backend is at .../shared_backend"
+    },
+    {
+      "file": "services/backend_api/services/universal_data_ingestor.py",
+      "line": 55,
+      "snippet": "shared_backend_path = Path(__file__).resolve().parents[2] / \"shared_backend\""
+    },
+    {
+      "file": "services/backend_api/services/universal_data_ingestor.py",
+      "line": 56,
+      "snippet": "if str(shared_backend_path) not in sys.path:"
+    },
+    {
+      "file": "services/backend_api/services/universal_data_ingestor.py",
+      "line": 57,
+      "snippet": "sys.path.append(str(shared_backend_path))"
+    },
+    {
+      "file": "services/backend_api/services/web_intelligence_service.py",
+      "line": 16,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "services/backend_api/services/ai/ai_chat_integration.py",
+      "line": 22,
+      "snippet": "from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore"
+    },
+    {
+      "file": "services/backend_api/services/ai/ai_chat_integration.py",
+      "line": 28,
+      "snippet": "from shared_backend.queue.knowledge_hole_queue import get_knowledge_hole_queue_manager  # type: ignore"
+    },
+    {
+      "file": "services/shared/config.py",
+      "line": 45,
+      "snippet": "SHARED_BACKEND_DIR = INTELLICV_ROOT / \"shared_backend\""
+    },
+    {
+      "file": "services/shared_backend/main.py",
+      "line": 3,
+      "snippet": "from services.shared_backend.config import settings"
+    },
+    {
+      "file": "services/workers/ai/ai-workers/run_full_ingest.py",
+      "line": 26,
+      "snippet": "SHARED_BACKEND_ROOT = PROJECT_ROOT / \"shared_backend\""
+    },
+    {
+      "file": "services/workers/ai/ai-workers/run_full_ingest.py",
+      "line": 38,
+      "snippet": "for supplemental_path in (SHARED_BACKEND_ROOT, SHARED_ROOT):"
+    },
+    {
+      "file": "services/workers/ai/ai-workers/run_full_ingest.py",
+      "line": 48,
+      "snippet": "from shared_backend.services.data_path_resolver import (  # type: ignore"
+    }
+  ],
+  "portal_bridge": [
+    {
+      "file": "apps/admin/pages/00_Home.py",
+      "line": 33,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/00_Home.py",
+      "line": 43,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/00_Home.py",
+      "line": 52,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/01_Service_Status_Monitor.py",
+      "line": 20,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/01_Service_Status_Monitor.py",
+      "line": 30,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/01_Service_Status_Monitor.py",
+      "line": 39,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/02_Analytics.py",
+      "line": 34,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/02_Analytics.py",
+      "line": 44,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/02_Analytics.py",
+      "line": 53,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/03_User_Management.py",
+      "line": 40,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/03_User_Management.py",
+      "line": 50,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/03_User_Management.py",
+      "line": 59,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/04_Compliance_Audit.py",
+      "line": 23,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/04_Compliance_Audit.py",
+      "line": 33,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/04_Compliance_Audit.py",
+      "line": 42,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 9,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 19,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 28,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 52,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 62,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 71,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/07_Batch_Processing.py",
+      "line": 26,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/07_Batch_Processing.py",
+      "line": 36,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/07_Batch_Processing.py",
+      "line": 45,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 38,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 48,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 57,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/09_AI_Content_Generator.py",
+      "line": 37,
+      "snippet": "from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred"
+    },
+    {
+      "file": "apps/admin/pages/09_AI_Content_Generator.py",
+      "line": 47,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/09_AI_Content_Generator.py",
+      "line": 56,
+      "snippet": "return None, \"portal_bridge client not available\""
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 51,
+      "snippet": "from shared_backend.services.portal_bridge import portal_bridge"
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 294,
+      "snippet": "metrics = portal_bridge.get_performance_metrics()"
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 369,
+      "snippet": "\"🌉 Portal Bridge Intelligence\": \"portal_bridge\","
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 451,
+      "snippet": "elif service_type == \"portal_bridge\":"
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 452,
+      "snippet": "render_portal_bridge_details(ai_details)"
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 927,
+      "snippet": "metrics = portal_bridge.get_performance_metrics()"
+    },
+    {
+      "file": "apps/admin/pages/23_Intelligence_Hub.py",
+      "line": 1161,
+      "snippet": "def render_portal_bridge_details(ai_details):"
+    },
+    {
+      "file": "apps/admin/pages/26_Unified_Analytics_Dashboard.py",
+      "line": 215,
+      "snippet": "portal_bridge_status = service_metrics.get(\"portal_bridge\", {}).get(\"status\", \"Unknown\")"
+    },
+    {
+      "file": "apps/admin/pages/26_Unified_Analytics_Dashboard.py",
+      "line": 216,
+      "snippet": "st.metric(\"Portal Bridge\", portal_bridge_status)"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/career_intelligence_update.py",
+      "line": 26,
+      "snippet": "from shared_backend.services.portal_bridge import IntelligenceService"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/career_intelligence_update.py",
+      "line": 28,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = True"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/career_intelligence_update.py",
+      "line": 30,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = False"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/career_intelligence_update.py",
+      "line": 103,
+      "snippet": "# Call portal_bridge for career analysis"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/career_intelligence_update.py",
+      "line": 104,
+      "snippet": "if PORTAL_BRIDGE_AVAILABLE and intelligence_service:"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 4,
+      "snippet": "Updates all user portal pages to use portal_bridge for admin backend integration."
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 10,
+      "snippet": "# Pages that need portal_bridge integration"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 14,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 17,
+      "snippet": "'Replace local parsing with portal_bridge.resume.parse()',"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 18,
+      "snippet": "'Replace local analysis with portal_bridge.resume.analyze()'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 23,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 26,
+      "snippet": "'Replace local enrichment with portal_bridge.intelligence.enrich()',"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 27,
+      "snippet": "'Replace local market intel with portal_bridge.intelligence.get_market_intelligence()'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 32,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 35,
+      "snippet": "'Replace local chat with portal_bridge.chat.ask()',"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 36,
+      "snippet": "'Replace local coaching with portal_bridge.chat.get_coaching_advice()'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 41,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 44,
+      "snippet": "'Use portal_bridge.intelligence.analyze_career() for trajectory analysis'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 49,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 52,
+      "snippet": "'Use backend cloud maker via portal_bridge'"
+    },
+    {
+      "file": "apps/admin/pages/99_tools/update_portal_integration.py",
+      "line": 57,
+      "snippet": "print(\"User Portal Pages requiring portal_bridge integration:\")"
+    },
+    {
+      "file": "apps/admin/pages/shared/ai_data_integration_status.py",
+      "line": 66,
+      "snippet": "\"data_source\": \"portal_bridge (backend services)\","
+    },
+    {
+      "file": "apps/admin/pages/shared/ai_data_integration_status.py",
+      "line": 111,
+      "snippet": "st.markdown(\"🌐 **portal_bridge** - Backend services\")"
+    },
+    {
+      "file": "apps/admin/scripts/career_intelligence_update.py",
+      "line": 26,
+      "snippet": "from shared_backend.services.portal_bridge import IntelligenceService"
+    },
+    {
+      "file": "apps/admin/scripts/career_intelligence_update.py",
+      "line": 28,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = True"
+    },
+    {
+      "file": "apps/admin/scripts/career_intelligence_update.py",
+      "line": 30,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = False"
+    },
+    {
+      "file": "apps/admin/scripts/career_intelligence_update.py",
+      "line": 103,
+      "snippet": "# Call portal_bridge for career analysis"
+    },
+    {
+      "file": "apps/admin/scripts/career_intelligence_update.py",
+      "line": 104,
+      "snippet": "if PORTAL_BRIDGE_AVAILABLE and intelligence_service:"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 4,
+      "snippet": "Updates all user portal pages to use portal_bridge for admin backend integration."
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 10,
+      "snippet": "# Pages that need portal_bridge integration"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 14,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 17,
+      "snippet": "'Replace local parsing with portal_bridge.resume.parse()',"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 18,
+      "snippet": "'Replace local analysis with portal_bridge.resume.analyze()'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 23,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 26,
+      "snippet": "'Replace local enrichment with portal_bridge.intelligence.enrich()',"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 27,
+      "snippet": "'Replace local market intel with portal_bridge.intelligence.get_market_intelligence()'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 32,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 35,
+      "snippet": "'Replace local chat with portal_bridge.chat.ask()',"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 36,
+      "snippet": "'Replace local coaching with portal_bridge.chat.get_coaching_advice()'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 41,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 44,
+      "snippet": "'Use portal_bridge.intelligence.analyze_career() for trajectory analysis'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 49,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 52,
+      "snippet": "'Use backend cloud maker via portal_bridge'"
+    },
+    {
+      "file": "apps/admin/scripts/update_portal_integration.py",
+      "line": 57,
+      "snippet": "print(\"User Portal Pages requiring portal_bridge integration:\")"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 38,
+      "snippet": "self.portal_bridge = None"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 66,
+      "snippet": "from services.portal_bridge import portal_bridge"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 67,
+      "snippet": "self.portal_bridge = portal_bridge"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 76,
+      "snippet": "self.portal_bridge is not None"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 139,
+      "snippet": "if self.portal_bridge:"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 141,
+      "snippet": "bridge_health = self.portal_bridge.health_check()"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 142,
+      "snippet": "metrics[\"engine_details\"][\"portal_bridge\"] = bridge_health"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 143,
+      "snippet": "metrics[\"service_health\"][\"portal_bridge\"] = \"healthy\" if bridge_health.get(\"status\") == \"healthy\" else \"warning\""
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 146,
+      "snippet": "metrics[\"service_health\"][\"portal_bridge\"] = \"error\""
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 270,
+      "snippet": "\"portal_bridge\": \"unavailable\","
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 286,
+      "snippet": "\"portal_bridge\": \"not_tested\","
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 309,
+      "snippet": "if self.portal_bridge:"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 311,
+      "snippet": "health = self.portal_bridge.health_check()"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 312,
+      "snippet": "test_results[\"portal_bridge\"] = \"operational\" if health.get(\"status\") == \"healthy\" else \"warning\""
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 314,
+      "snippet": "test_results[\"portal_bridge\"] = f\"error: {str(e)}\""
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 236,
+      "snippet": "from shared_backend.services.portal_bridge import ResumeService, IntelligenceService"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 239,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = True"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 241,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = False"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 1029,
+      "snippet": "if not (PORTAL_BRIDGE_AVAILABLE and resume_service):"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 1056,
+      "snippet": "if not parsed_data or not (PORTAL_BRIDGE_AVAILABLE and intelligence_service):"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 1153,
+      "snippet": "if PORTAL_BRIDGE_AVAILABLE and resume_service:"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 1577,
+      "snippet": "\"📄 Deep content parsing with portal_bridge...\","
+    },
+    {
+      "file": "apps/user/pages/13_Become_A_Mentor.py",
+      "line": 34,
+      "snippet": "from shared_backend.services.portal_bridge import ChatService"
+    },
+    {
+      "file": "apps/user/pages/14_Dual_Career_Suite.py",
+      "line": 25,
+      "snippet": "from shared_backend.services.portal_bridge import ResumeService, IntelligenceService"
+    },
+    {
+      "file": "apps/user/pages/career_intelligence_update.py",
+      "line": 26,
+      "snippet": "from shared_backend.services.portal_bridge import IntelligenceService"
+    },
+    {
+      "file": "apps/user/pages/career_intelligence_update.py",
+      "line": 28,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = True"
+    },
+    {
+      "file": "apps/user/pages/career_intelligence_update.py",
+      "line": 30,
+      "snippet": "PORTAL_BRIDGE_AVAILABLE = False"
+    },
+    {
+      "file": "apps/user/pages/career_intelligence_update.py",
+      "line": 64,
+      "snippet": "if not (PORTAL_BRIDGE_AVAILABLE and intelligence_service):"
+    },
+    {
+      "file": "apps/user/pages/career_intelligence_update.py",
+      "line": 108,
+      "snippet": "# Call portal_bridge for career analysis"
+    },
+    {
+      "file": "apps/user/pages/career_intelligence_update.py",
+      "line": 109,
+      "snippet": "if PORTAL_BRIDGE_AVAILABLE and intelligence_service:"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 4,
+      "snippet": "Updates all user portal pages to use portal_bridge for admin backend integration."
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 10,
+      "snippet": "# Pages that need portal_bridge integration"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 14,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 17,
+      "snippet": "'Replace local parsing with portal_bridge.resume.parse()',"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 18,
+      "snippet": "'Replace local analysis with portal_bridge.resume.analyze()'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 23,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 26,
+      "snippet": "'Replace local enrichment with portal_bridge.intelligence.enrich()',"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 27,
+      "snippet": "'Replace local market intel with portal_bridge.intelligence.get_market_intelligence()'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 32,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 35,
+      "snippet": "'Replace local chat with portal_bridge.chat.ask()',"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 36,
+      "snippet": "'Replace local coaching with portal_bridge.chat.get_coaching_advice()'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 41,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 44,
+      "snippet": "'Use portal_bridge.intelligence.analyze_career() for trajectory analysis'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 49,
+      "snippet": "'from shared_backend.services.portal_bridge import portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 52,
+      "snippet": "'Use backend cloud maker via portal_bridge'"
+    },
+    {
+      "file": "apps/user/pages/update_portal_integration.py",
+      "line": 57,
+      "snippet": "print(\"User Portal Pages requiring portal_bridge integration:\")"
+    },
+    {
+      "file": "scripts/generate_bridge_touchpoint_report.py",
+      "line": 13,
+      "snippet": "\"portal_bridge\","
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 38,
+      "snippet": "self.portal_bridge = None"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 66,
+      "snippet": "from services.portal_bridge import portal_bridge"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 67,
+      "snippet": "self.portal_bridge = portal_bridge"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 76,
+      "snippet": "self.portal_bridge is not None"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 139,
+      "snippet": "if self.portal_bridge:"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 141,
+      "snippet": "bridge_health = self.portal_bridge.health_check()"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 142,
+      "snippet": "metrics[\"engine_details\"][\"portal_bridge\"] = bridge_health"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 143,
+      "snippet": "metrics[\"service_health\"][\"portal_bridge\"] = \"healthy\" if bridge_health.get(\"status\") == \"healthy\" else \"warning\""
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 146,
+      "snippet": "metrics[\"service_health\"][\"portal_bridge\"] = \"error\""
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 270,
+      "snippet": "\"portal_bridge\": \"unavailable\","
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 286,
+      "snippet": "\"portal_bridge\": \"not_tested\","
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 309,
+      "snippet": "if self.portal_bridge:"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 311,
+      "snippet": "health = self.portal_bridge.health_check()"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 312,
+      "snippet": "test_results[\"portal_bridge\"] = \"operational\" if health.get(\"status\") == \"healthy\" else \"warning\""
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 314,
+      "snippet": "test_results[\"portal_bridge\"] = f\"error: {str(e)}\""
+    },
+    {
+      "file": "services/workers/ai/ai-workers/shared/real_ai_connector.py",
+      "line": 4,
+      "snippet": "Connects portal_bridge to actual parsed AI data (ai_data_final/)"
+    },
+    {
+      "file": "services/workers/ai/ai-workers/training/train_hybrid_career_engine.py",
+      "line": 320,
+      "snippet": "'portal_bridge': 'pages 06, 09, 11',"
+    }
+  ],
+  "AdminFastAPIClient": [
+    {
+      "file": "apps/admin/pages/01_Service_Status_Monitor.py",
+      "line": 54,
+      "snippet": "from services.api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "apps/admin/pages/01_Service_Status_Monitor.py",
+      "line": 56,
+      "snippet": "AdminFastAPIClient = None"
+    },
+    {
+      "file": "apps/admin/pages/01_Service_Status_Monitor.py",
+      "line": 74,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "apps/admin/pages/01_Service_Status_Monitor.py",
+      "line": 78,
+      "snippet": "st.session_state[\"_admin_api_client\"] = AdminFastAPIClient()"
+    },
+    {
+      "file": "apps/admin/pages/03_User_Management.py",
+      "line": 67,
+      "snippet": "from services.admin_api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "apps/admin/pages/03_User_Management.py",
+      "line": 69,
+      "snippet": "AdminFastAPIClient = None  # type: ignore"
+    },
+    {
+      "file": "apps/admin/pages/03_User_Management.py",
+      "line": 90,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "apps/admin/pages/03_User_Management.py",
+      "line": 94,
+      "snippet": "st.session_state[\"_admin_api_client_v1\"] = AdminFastAPIClient()"
+    },
+    {
+      "file": "apps/admin/pages/04_Compliance_Audit.py",
+      "line": 129,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "apps/admin/pages/04_Compliance_Audit.py",
+      "line": 133,
+      "snippet": "st.session_state[\"_admin_api_client\"] = AdminFastAPIClient()"
+    },
+    {
+      "file": "apps/admin/pages/04_Compliance_Audit.py",
+      "line": 317,
+      "snippet": "from services.api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "apps/admin/pages/04_Compliance_Audit.py",
+      "line": 319,
+      "snippet": "AdminFastAPIClient = None"
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 59,
+      "snippet": "from services.api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 61,
+      "snippet": "AdminFastAPIClient = None"
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 191,
+      "snippet": "\"\"\"Return cached AdminFastAPIClient instance.\"\"\""
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 192,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "apps/admin/pages/05_Email_Integration.py",
+      "line": 196,
+      "snippet": "st.session_state[\"_admin_api_client\"] = AdminFastAPIClient()"
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 111,
+      "snippet": "from services.api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 113,
+      "snippet": "AdminFastAPIClient = None"
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 196,
+      "snippet": "\"\"\"Return cached AdminFastAPIClient instance if available.\"\"\""
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 197,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "apps/admin/pages/06_Complete_Data_Parser.py",
+      "line": 203,
+      "snippet": "st.session_state[\"_admin_api_client\"] = AdminFastAPIClient()"
+    },
+    {
+      "file": "apps/admin/pages/13_API_Integration.py",
+      "line": 44,
+      "snippet": "from services.api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "apps/admin/pages/13_API_Integration.py",
+      "line": 46,
+      "snippet": "AdminFastAPIClient = None"
+    },
+    {
+      "file": "apps/admin/pages/13_API_Integration.py",
+      "line": 103,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "apps/admin/pages/13_API_Integration.py",
+      "line": 109,
+      "snippet": "st.session_state[\"_admin_api_client\"] = AdminFastAPIClient()"
+    },
+    {
+      "file": "apps/admin/services/admin_api_client.py",
+      "line": 11,
+      "snippet": "class AdminFastAPIClient:"
+    },
+    {
+      "file": "apps/admin/services/admin_api_client.py",
+      "line": 166,
+      "snippet": "def get_admin_api_client(access_token: str) -> AdminFastAPIClient:"
+    },
+    {
+      "file": "apps/admin/services/admin_api_client.py",
+      "line": 169,
+      "snippet": "return AdminFastAPIClient(base_url=base_url, access_token=access_token, timeout_s=timeout_s)"
+    },
+    {
+      "file": "apps/admin/services/admin_api_client_ci_endpoints.py",
+      "line": 3,
+      "snippet": "Copy these methods into your existing AdminFastAPIClient (or the class"
+    },
+    {
+      "file": "apps/admin/services/api_client.py",
+      "line": 12,
+      "snippet": "class AdminFastAPIClient:"
+    },
+    {
+      "file": "apps/admin/services/api_client.py",
+      "line": 87,
+      "snippet": "__all__ = [\"AdminFastAPIClient\"]"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 3,
+      "snippet": "Provides cached access to the AdminFastAPIClient plus reusable"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 17,
+      "snippet": "from .api_client import AdminFastAPIClient  # type: ignore"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 20,
+      "snippet": "from services.api_client import AdminFastAPIClient  # type: ignore"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 22,
+      "snippet": "AdminFastAPIClient = None  # type: ignore"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 28,
+      "snippet": "def get_admin_api_client() -> Optional[\"AdminFastAPIClient\"]:"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 29,
+      "snippet": "\"\"\"Return (and cache) a singleton AdminFastAPIClient instance.\"\"\""
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 30,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 36,
+      "snippet": "client = AdminFastAPIClient()"
+    },
+    {
+      "file": "apps/admin/services/backend_telemetry.py",
+      "line": 46,
+      "snippet": "fetcher: Callable[[\"AdminFastAPIClient\"], Dict[str, Any]],"
+    },
+    {
+      "file": "apps/admin/services/user_data_service.py",
+      "line": 15,
+      "snippet": "from api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "apps/admin/services/user_data_service.py",
+      "line": 17,
+      "snippet": "AdminFastAPIClient = None"
+    },
+    {
+      "file": "apps/admin/services/user_data_service.py",
+      "line": 30,
+      "snippet": "self.api_client = AdminFastAPIClient() if AdminFastAPIClient else None"
+    },
+    {
+      "file": "scripts/generate_bridge_touchpoint_report.py",
+      "line": 16,
+      "snippet": "\"AdminFastAPIClient\","
+    },
+    {
+      "file": "services/backend_api/services/admin_api_client.py",
+      "line": 11,
+      "snippet": "class AdminFastAPIClient:"
+    },
+    {
+      "file": "services/backend_api/services/admin_api_client.py",
+      "line": 166,
+      "snippet": "def get_admin_api_client(access_token: str) -> AdminFastAPIClient:"
+    },
+    {
+      "file": "services/backend_api/services/admin_api_client.py",
+      "line": 169,
+      "snippet": "return AdminFastAPIClient(base_url=base_url, access_token=access_token, timeout_s=timeout_s)"
+    },
+    {
+      "file": "services/backend_api/services/admin_api_client_ci_endpoints.py",
+      "line": 3,
+      "snippet": "Copy these methods into your existing AdminFastAPIClient (or the class"
+    },
+    {
+      "file": "services/backend_api/services/api_client.py",
+      "line": 12,
+      "snippet": "class AdminFastAPIClient:"
+    },
+    {
+      "file": "services/backend_api/services/api_client.py",
+      "line": 87,
+      "snippet": "__all__ = [\"AdminFastAPIClient\"]"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 3,
+      "snippet": "Provides cached access to the AdminFastAPIClient plus reusable"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 17,
+      "snippet": "from .api_client import AdminFastAPIClient  # type: ignore"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 20,
+      "snippet": "from services.api_client import AdminFastAPIClient  # type: ignore"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 22,
+      "snippet": "AdminFastAPIClient = None  # type: ignore"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 28,
+      "snippet": "def get_admin_api_client() -> Optional[\"AdminFastAPIClient\"]:"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 29,
+      "snippet": "\"\"\"Return (and cache) a singleton AdminFastAPIClient instance.\"\"\""
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 30,
+      "snippet": "if AdminFastAPIClient is None:"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 36,
+      "snippet": "client = AdminFastAPIClient()"
+    },
+    {
+      "file": "services/backend_api/services/backend_telemetry.py",
+      "line": 46,
+      "snippet": "fetcher: Callable[[\"AdminFastAPIClient\"], Dict[str, Any]],"
+    },
+    {
+      "file": "services/backend_api/services/user_data_service.py",
+      "line": 15,
+      "snippet": "from api_client import AdminFastAPIClient"
+    },
+    {
+      "file": "services/backend_api/services/user_data_service.py",
+      "line": 17,
+      "snippet": "AdminFastAPIClient = None"
+    },
+    {
+      "file": "services/backend_api/services/user_data_service.py",
+      "line": 30,
+      "snippet": "self.api_client = AdminFastAPIClient() if AdminFastAPIClient else None"
+    }
+  ],
+  "real_ai_connector": [
+    {
+      "file": "apps/admin/pages/07_Batch_Processing.py",
+      "line": 66,
+      "snippet": "from real_ai_connector import RealAIConnector"
+    },
+    {
+      "file": "apps/admin/pages/07_Batch_Processing_REAL_DATA.py",
+      "line": 37,
+      "snippet": "from real_ai_connector import RealAIConnector"
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 128,
+      "snippet": "from shared.real_ai_data_connector import get_real_ai_connector, get_real_sample_data, get_real_analytics_data"
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 129,
+      "snippet": "REAL_AI_CONNECTOR_AVAILABLE = True"
+    },
+    {
+      "file": "apps/admin/pages/08_AI_Enrichment.py",
+      "line": 131,
+      "snippet": "REAL_AI_CONNECTOR_AVAILABLE = False"
+    },
+    {
+      "file": "apps/admin/pages/10_Market_Intelligence_Center.py",
+      "line": 92,
+      "snippet": "get_real_ai_connector,"
+    },
+    {
+      "file": "apps/admin/pages/17_Mentor_Management.py",
+      "line": 81,
+      "snippet": "from real_ai_connector import RealAIConnector"
+    },
+    {
+      "file": "apps/admin/pages/17_Mentor_Management.py",
+      "line": 126,
+      "snippet": "st.error(\"❌ CRITICAL: AI data loader (real_ai_connector) not available\")"
+    },
+    {
+      "file": "apps/admin/pages/19_Job_Title_Overlap_Cloud.py",
+      "line": 55,
+      "snippet": "from real_ai_connector import RealAIConnector"
+    },
+    {
+      "file": "apps/admin/pages/shared/ai_data_integration_status.py",
+      "line": 135,
+      "snippet": "from shared.real_ai_data_connector import get_real_ai_connector, get_real_analytics_data"
+    },
+    {
+      "file": "apps/admin/pages/shared/ai_data_integration_status.py",
+      "line": 137,
+      "snippet": "connector = get_real_ai_connector()"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 462,
+      "snippet": "_real_ai_connector = None"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 464,
+      "snippet": "def get_real_ai_connector() -> RealAIDataConnector:"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 466,
+      "snippet": "global _real_ai_connector"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 468,
+      "snippet": "if _real_ai_connector is None:"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 469,
+      "snippet": "_real_ai_connector = RealAIDataConnector()"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 471,
+      "snippet": "return _real_ai_connector"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 484,
+      "snippet": "connector = get_real_ai_connector()"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 508,
+      "snippet": "connector = get_real_ai_connector()"
+    },
+    {
+      "file": "apps/admin/pages/shared/real_ai_data_connector.py",
+      "line": 546,
+      "snippet": "connector = get_real_ai_connector()"
+    },
+    {
+      "file": "apps/admin/services/ai_router.py",
+      "line": 31,
+      "snippet": "from real_ai_connector import RealAIConnector"
+    },
+    {
+      "file": "apps/admin/services/automatic_data_ingestion_service.py",
+      "line": 65,
+      "snippet": "# Destination directory (where real_ai_connector reads from)"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 37,
+      "snippet": "self.real_ai_connector = None"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 58,
+      "snippet": "from services.real_ai_connector import get_real_ai_connector"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 59,
+      "snippet": "self.real_ai_connector = get_real_ai_connector()"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 75,
+      "snippet": "self.real_ai_connector is not None,"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 122,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 124,
+      "snippet": "real_stats = self.real_ai_connector.get_connection_stats()"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 180,
+      "snippet": "elif engine_type == \"real_data\" and self.real_ai_connector:"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 182,
+      "snippet": "connector_info = self.real_ai_connector.get_detailed_analytics()"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 188,
+      "snippet": "\"data_source\": \"real_ai_connector_34k_cvs\""
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 236,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 238,
+      "snippet": "real_analytics = self.real_ai_connector.get_comprehensive_analytics()"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 301,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "apps/admin/services/intelligence_hub_connector.py",
+      "line": 303,
+      "snippet": "stats = self.real_ai_connector.get_connection_stats()"
+    },
+    {
+      "file": "apps/user/job_title_backend_integration.py",
+      "line": 1159,
+      "snippet": "from real_ai_connector import get_real_job_titles, get_ai_insights"
+    },
+    {
+      "file": "apps/user/job_title_backend_integration.py",
+      "line": 1236,
+      "snippet": "from real_ai_connector import get_ai_insights, get_real_skills"
+    },
+    {
+      "file": "apps/user/job_title_backend_integration.py",
+      "line": 1309,
+      "snippet": "from real_ai_connector import get_ai_insights, get_real_job_titles"
+    },
+    {
+      "file": "apps/user/job_title_backend_integration.py",
+      "line": 1401,
+      "snippet": "from real_ai_connector import get_ai_insights, get_real_companies"
+    },
+    {
+      "file": "apps/user/job_title_backend_integration.py",
+      "line": 1473,
+      "snippet": "from real_ai_connector import get_ai_insights, get_real_job_titles"
+    },
+    {
+      "file": "apps/user/real_ai_connector.py",
+      "line": 368,
+      "snippet": "real_ai_connector = RealAIConnector()"
+    },
+    {
+      "file": "apps/user/real_ai_connector.py",
+      "line": 373,
+      "snippet": "return real_ai_connector.load_real_job_titles(limit)"
+    },
+    {
+      "file": "apps/user/real_ai_connector.py",
+      "line": 377,
+      "snippet": "return real_ai_connector.load_real_skills_data()[:limit]"
+    },
+    {
+      "file": "apps/user/real_ai_connector.py",
+      "line": 381,
+      "snippet": "return real_ai_connector.load_real_companies_data()[:limit]"
+    },
+    {
+      "file": "apps/user/real_ai_connector.py",
+      "line": 385,
+      "snippet": "return real_ai_connector.get_ai_generated_insights(job_title)"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 45,
+      "snippet": "self.real_ai_connector = None"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 74,
+      "snippet": "self.real_ai_connector = RealAIDataConnector()"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 98,
+      "snippet": "self.real_ai_connector,"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 128,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 129,
+      "snippet": "ai_insights = self.real_ai_connector.analyze_with_real_data(resume_file, user_data)"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 179,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 180,
+      "snippet": "market_data = self.real_ai_connector.get_job_market_intelligence(search_criteria)"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 199,
+      "snippet": "if not self.real_ai_connector:"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 203,
+      "snippet": "statistical_analysis = self.real_ai_connector.get_user_statistical_analysis(user_id, analysis_type)"
+    },
+    {
+      "file": "apps/user/user_portal_admin_integration.py",
+      "line": 285,
+      "snippet": "status = \"✅ Active\" if self.real_ai_connector else \"❌ Not Available\""
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 75,
+      "snippet": "from shared_backend.services.real_ai_connector import get_real_ai_connector"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 76,
+      "snippet": "real_ai_connector = get_real_ai_connector()"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 77,
+      "snippet": "REAL_AI_CONNECTOR_AVAILABLE = True"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 79,
+      "snippet": "real_ai_connector = None"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 80,
+      "snippet": "REAL_AI_CONNECTOR_AVAILABLE = False"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 112,
+      "snippet": "if not REAL_AI_CONNECTOR_AVAILABLE or not real_ai_connector:"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 139,
+      "snippet": "all_skills = real_ai_connector.get_real_skills_from_cvs()"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 166,
+      "snippet": "all_skills = real_ai_connector.load_real_skills_data()"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 571,
+      "snippet": "if not REAL_AI_CONNECTOR_AVAILABLE or not real_ai_connector:"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 2457,
+      "snippet": "if REAL_AI_CONNECTOR_AVAILABLE and real_ai_connector:"
+    },
+    {
+      "file": "apps/user/pages/09_Resume_Upload_Analysis.py",
+      "line": 2710,
+      "snippet": "tech_keywords = get_dynamic_keywords('technical') if REAL_AI_CONNECTOR_AVAILABLE else []"
+    },
+    {
+      "file": "scripts/generate_bridge_touchpoint_report.py",
+      "line": 17,
+      "snippet": "\"real_ai_connector\","
+    },
+    {
+      "file": "services/backend_api/services/automatic_data_ingestion_service.py",
+      "line": 65,
+      "snippet": "# Destination directory (where real_ai_connector reads from)"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 37,
+      "snippet": "self.real_ai_connector = None"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 58,
+      "snippet": "from services.real_ai_connector import get_real_ai_connector"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 59,
+      "snippet": "self.real_ai_connector = get_real_ai_connector()"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 75,
+      "snippet": "self.real_ai_connector is not None,"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 122,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 124,
+      "snippet": "real_stats = self.real_ai_connector.get_connection_stats()"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 180,
+      "snippet": "elif engine_type == \"real_data\" and self.real_ai_connector:"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 182,
+      "snippet": "connector_info = self.real_ai_connector.get_detailed_analytics()"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 188,
+      "snippet": "\"data_source\": \"real_ai_connector_34k_cvs\""
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 236,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 238,
+      "snippet": "real_analytics = self.real_ai_connector.get_comprehensive_analytics()"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 301,
+      "snippet": "if self.real_ai_connector:"
+    },
+    {
+      "file": "services/backend_api/services/intelligence_hub_connector.py",
+      "line": 303,
+      "snippet": "stats = self.real_ai_connector.get_connection_stats()"
+    },
+    {
+      "file": "services/backend_api/services/ai/ai_router.py",
+      "line": 31,
+      "snippet": "from real_ai_connector import RealAIConnector"
+    },
+    {
+      "file": "services/workers/ai/ai-workers/inference/unified_ai_engine.py",
+      "line": 35,
+      "snippet": "from shared.real_ai_connector import RealAIDataConnector"
+    },
+    {
+      "file": "services/workers/ai/ai-workers/inference/unified_ai_engine.py",
+      "line": 39,
+      "snippet": "from real_ai_connector import RealAIDataConnector"
+    },
+    {
+      "file": "services/workers/ai/ai-workers/shared/real_ai_connector.py",
+      "line": 267,
+      "snippet": "def get_real_ai_connector() -> RealAIDataConnector:"
+    }
+  ],
+  "post_bridge_payload": [
+    {
+      "file": "apps/admin/services/api_client.py",
+      "line": 64,
+      "snippet": "def post_bridge_payload(self, bridge: str, payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:"
+    },
+    {
+      "file": "scripts/generate_bridge_touchpoint_report.py",
+      "line": 15,
+      "snippet": "\"post_bridge_payload\","
+    },
+    {
+      "file": "services/backend_api/services/api_client.py",
+      "line": 64,
+      "snippet": "def post_bridge_payload(self, bridge: str, payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:"
+    }
+  ]
+}

@@ -42,8 +42,8 @@ class AdvancedAnalyticsService:
             data_dir: Path to ai_data_final directory
         """
         if data_dir is None:
-            # Default to SANDBOX ai_data_final
-            data_dir = Path(__file__).parent.parent.parent.parent / "ai_data_final"
+            from services.shared.paths import CareerTrojanPaths
+            data_dir = CareerTrojanPaths().ai_data_final
 
         self.data_dir = Path(data_dir)
         self.stats_engine = get_stats_engine(data_dir=self.data_dir)

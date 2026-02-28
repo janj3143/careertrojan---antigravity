@@ -34,7 +34,7 @@ except ImportError:
 # ── Resolve paths from env (cross-platform) ─────────────────
 SOURCE = Path(os.getenv(
     "CAREERTROJAN_USER_DATA",
-    r"L:\VS ai_data final - version\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
+    r"L:\Codec-Antigravity Data set\USER DATA" if sys.platform == "win32" else "/mnt/careertrojan/user_data"
 ))
 MIRROR = Path(os.getenv(
     "CAREERTROJAN_USER_DATA_MIRROR",
@@ -42,7 +42,7 @@ MIRROR = Path(os.getenv(
 ))
 LOG_DIR = Path(os.getenv(
     "CAREERTROJAN_APP_LOGS",
-    r"C:\careertrojan\logs" if sys.platform == "win32" else "/mnt/careertrojan/logs"
+    str(Path(__file__).resolve().parents[1] / "logs") if sys.platform == "win32" else "/mnt/careertrojan/logs"
 ))
 FULL_SYNC_INTERVAL = 900  # 15 minutes
 

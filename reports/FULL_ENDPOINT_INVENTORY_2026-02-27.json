@@ -1,0 +1,1106 @@
+{
+  "generated_at": "2026-02-27T15:55:31.659323+00:00",
+  "total_endpoints": 275,
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/admin/subscriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/analytics"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/config"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/costs"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/costs/update"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/costs/{feature}"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/ledger/emit"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/ledger/{user_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/logs"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/plans"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/plans"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/plans"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/subscriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/unit-economics"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/usage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/abuse/queue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/content/run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/enrichment/run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/anti-gaming/check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/batch/run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/audit/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/dashboard/snapshot"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/analytics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/jobs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/logs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_bulk"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_test"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/sync"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/gmail/configure"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/klaviyo/configure"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/sendgrid/configure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/integrations/status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/{provider}/disconnect"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/logs/tail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsers/run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsing/parse"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse/{parse_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/config"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/tokens/config"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/usage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/users/{user_id}/ledger"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/user_subscriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/metrics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/security"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/{user_id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/disable"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/plan"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/automated/candidates"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/companies"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/email_extracted"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/diagnostics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}/guarded-payload"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai-data/v1/emails/tracking"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking/reroute-targets"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_descriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_titles"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/locations"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/metadata"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/normalized"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes/{doc_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parser/ingestion-status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/user_data/files"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/dashboard"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_jobs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_resumes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/statistics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/system_health"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/generate"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/verify"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/login"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/detect"
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/improvement-plans/generate"
+    },
+    {
+      "method": "GET",
+      "path": "/api/blockers/v1/user/{user_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/answers/review"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/bundle"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/history"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/learning/feedback"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/learning/profile"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/plan/90day"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/questions/generate"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/role/detect"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/stories/generate"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/actions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/balance"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/can-perform/{action_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/consume"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/plans"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/teaser"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/upgrade/{plan_tier}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/usage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/categories"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/industries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/industries/search"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/locations"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/locations/search"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/skills"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/skills/search"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/dependencies"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/by-category/{category}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/manifest-stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/new-data-summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/since"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/health"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/ai-data"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/full"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/incremental"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/parser"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/file-types"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/runs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/parser/runs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/audit-log"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/consent"
+    },
+    {
+      "method": "POST",
+      "path": "/api/gdpr/v1/consent"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/gdpr/v1/delete-account"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/export"
+    },
+    {
+      "method": "POST",
+      "path": "/api/insights/v1/cohort/resolve"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/graph"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/quadrant"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/skills/radar"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cloud"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cooccurrence"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/visuals"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/company/briefing"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/company/extract"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry/analytics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/enrich"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/market"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/pipeline/ops-summary"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/descriptive"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/regression"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/support/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/index"
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/search"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/endpoints"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/graph"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/registry"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/profile-by-user/{user_id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/availability"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/dashboard-stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/profile"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/applications/pending"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications/{application_id}/approve"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications/{application_id}/reject"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/documents/{doc_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/reject"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/sign"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/health"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/invoices/mentor/{mentor_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/confirm-completion"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/dispute"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/mark-paid"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/service-delivered"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/links"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/mentor/{mentor_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/user/{user_id}"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/links/{link_id}/status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/notes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/notes/{link_id}"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/notes/{note_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases/summary"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/anti-gaming/check"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/logs/lock"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/processing/start"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/processing/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/stats/public"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/tokens/config"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/cancel"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/client-token"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/gateway-info"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/history"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/methods"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/methods"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/payment/v1/methods/{token}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans/{plan_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/process"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/refund/{transaction_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/subscription"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/transactions/{transaction_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/enrich"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/parse"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/upload"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1/{resume_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/leaderboard"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/ownership-stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/referral"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/referral/claim"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards/available"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/award/{action_key}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/redeem"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/suggestions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/suggestions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/consolidated/{user_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/sessions/v1/log"
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/summary/{user_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/sync-status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/shared/v1/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/shared/v1/health/deep"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/providers"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/readiness"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/tickets"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets/{ticket_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/token"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/webhooks/zendesk"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/widget-config"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/wiring-test"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries/{high_level}/subindustries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/infer-industries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/metadata"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/naics-mapping"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/search"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/search"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/title"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/v1/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/evidence"
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/touchnots"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/matches/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/profile"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/user/v1/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/resume/latest"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/sessions/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/stats"
+    },
+    {
+      "method": "GET",
+      "path": "/health"
+    }
+  ]
+}

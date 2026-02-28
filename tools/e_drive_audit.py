@@ -1,16 +1,17 @@
 """
 E: Drive Isolation Audit
-Scans all project files under C:\careertrojan for any E:\ drive references.
+Scans all project files under the current runtime root for any E:\ drive references.
 Excludes vendored SDKs, data dumps, and caches.
 """
 import os
 import re
 import sys
+from pathlib import Path
 
-ROOT = r"C:\careertrojan"
+ROOT = str(Path(__file__).resolve().parents[1])
 SKIP_DIRS = {
     "node_modules", ".git", "__pycache__", "trained_models",
-    "ai_data_final", "Klayiyo - sdk", ".venv", "venv",
+    "ai_data_final", "Klayiyo - sdk", ".venv", ".venv-j", "venv",
     "data-mounts"  # exclude raw data dumps - they have email content with RE:\"
 }
 EXTS = {".py", ".yaml", ".yml", ".env", ".toml", ".cfg", ".ini", ".json", ".md", ".txt", ".sh", ".ps1", ".bat"}

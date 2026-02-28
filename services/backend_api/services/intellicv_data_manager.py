@@ -1,9 +1,9 @@
 """
-IntelliCV Data Directory Manager
-==============================
+CareerTrojan Data Directory Manager
+===================================
 
-Manages the proper data directory structure for IntelliCV, including:
-- AI training data in SANDBOX/ai_data_final
+Manages the proper data directory structure for CareerTrojan, including:
+- AI training data in ai_data_final
 - Email integration data
 - CV/candidate data for processing
 - Backend AI services data (neural network, expert system, etc.)
@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.logging_config import setup_logging, get_logger, LoggingMixin
 from utils.exception_handler import ExceptionHandler, SafeOperationsMixin
+from services.shared.paths import CareerTrojanPaths
 
 # Initialize logging
 setup_logging()
@@ -28,29 +29,26 @@ logger = get_logger(__name__)
 
 
 class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
-    """Manages the proper data directory structure for IntelliCV"""
+    """Manages the proper data directory structure for CareerTrojan"""
     
     def __init__(self):
         super().__init__()
-        # Main IntelliCV root directory
-        self.intellicv_root = Path("c:/IntelliCV-AI/IntelliCV")
-        
-        # SANDBOX data paths (primary location for AI training data)
-        self.sandbox_root = self.intellicv_root / "SANDBOX" / "admin_portal"
-        self.ai_data_path = self.sandbox_root / "ai_data_final"
-        
-        # Email integration data (can be in IntelliCV-data or SANDBOX)
-        self.intellicv_data_path = self.intellicv_root / "IntelliCV-data"
-        self.email_data_path = self.intellicv_data_path / "email_integration"
-        self.email_extracted_path = self.intellicv_data_path / "email_extracted"
-        
-        # Candidate data paths (multiple sources)
-        self.candidate_data_path = self.intellicv_data_path / "candidate_data"
-        self.sandbox_candidate_data = self.sandbox_root / "candidate_data"
-        
-        # Backend AI services data (for neural network, expert system, etc.)
-        self.backend_data_path = self.sandbox_root / "backend" / "data"
-        self.backend_logs_path = self.sandbox_root / "backend" / "logs"
+        paths = CareerTrojanPaths()
+
+        # Main data root and AI training data
+        self.data_root = paths.data_root
+        self.ai_data_path = paths.ai_data_final
+
+        # Email integration data
+        self.email_data_path = self.data_root / "email_integration"
+        self.email_extracted_path = self.data_root / "email_extracted"
+
+        # Candidate data paths
+        self.candidate_data_path = self.data_root / "candidate_data"
+
+        # Backend AI services data
+        self.backend_data_path = self.data_root / "backend" / "data"
+        self.backend_logs_path = paths.logs
         self.backend_models_path = self.backend_data_path / "models"
         self.backend_rules_path = self.backend_data_path / "rules"
         self.backend_feedback_path = self.backend_data_path / "feedback"
@@ -70,9 +68,9 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         """Build the complete data directory structure"""
         directories_to_create = [
             # Main data directories
-            self.intellicv_data_path,
+            self.data_root,
             self.ai_data_path,
-            self.sandbox_candidate_data,
+            self.candidate_data_path,
             
             # Email integration directories
             self.email_data_path,
@@ -92,7 +90,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
             self.email_extracted_path / "outlook", 
             self.email_extracted_path / "yahoo",
             
-            # AI integration directories (SANDBOX/ai_data_final)
+            # AI integration directories (ai_data_final)
             self.ai_data_path / "exported_cvs",
             self.ai_data_path / "candidate_profiles",
             self.ai_data_path / "enrichment_results",
@@ -129,8 +127,8 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         # Data directory configuration
         directory_config_file = self.config_path / "directory_config.json"
         directory_config = {
-            "intellicv_data_path": str(self.intellicv_data_path),
-            "sandbox_ai_data_path": str(self.ai_data_path),
+            "data_root": str(self.data_root),
+            "ai_data_path": str(self.ai_data_path),
             "email_data_path": str(self.email_data_path),
             "email_extracted_path": str(self.email_extracted_path),
             "backend_data_path": str(self.backend_data_path),
@@ -138,7 +136,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
             "backend_rules_path": str(self.backend_rules_path),
             "backend_feedback_path": str(self.backend_feedback_path),
             "created_at": datetime.now().isoformat(),
-            "version": "2.0"
+            "version": "3.0"
         }
         with open(directory_config_file, 'w') as f:
             json.dump(directory_config, f, indent=2)
@@ -169,8 +167,8 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         )
         
         self.logger = logging.getLogger(__name__)
-        self.logger.info(f"IntelliCV Data Directory Manager initialized")
-        self.logger.info(f"Main data path: {self.intellicv_data_path}")
+        self.logger.info("CareerTrojan Data Directory Manager initialized")
+        self.logger.info(f"Main data path: {self.data_root}")
     
     def get_directory_status(self):
         """Get the status of all directories"""
@@ -185,8 +183,8 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         
         # Check main directories
         main_dirs = [
-            ("IntelliCV Data Root", self.intellicv_data_path),
-            ("SANDBOX AI Data", self.ai_data_path),
+            ("Data Root", self.data_root),
+            ("AI Data", self.ai_data_path),
             ("Email Integration", self.email_data_path),
             ("Email Extracted", self.email_extracted_path),
             ("Backend Data", self.backend_data_path),
@@ -230,7 +228,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
                 "other_files": len(email_files) - len(pdf_files) - len(doc_files)
             }
         
-        # Check AI data files (SANDBOX/ai_data_final)
+        # Check AI data files (ai_data_final)
         if self.ai_data_path.exists():
             ai_files = list(self.ai_data_path.rglob("*"))
             cv_files = [f for f in ai_files if f.suffix.lower() in ['.pdf', '.doc', '.docx']]
@@ -278,7 +276,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
                     "extension": file_path.suffix.lower()
                 })
         
-        # Collect from SANDBOX/ai_data_final
+        # Collect from ai_data_final
         if source in ['ai_data', 'all'] and self.ai_data_path.exists():
             ai_files = list(self.ai_data_path.rglob("*"))
             pdf_and_doc_files = [f for f in ai_files if f.suffix.lower() in ['.pdf', '.doc', '.docx'] and f.is_file()]
@@ -292,7 +290,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
                     "size_mb": round(stat.st_size / (1024 * 1024), 3),
                     "modified": datetime.fromtimestamp(stat.st_mtime).isoformat(),
                     "source": "ai_data_final",
-                    "provider": "sandbox",
+                    "provider": "runtime",
                     "extension": file_path.suffix.lower()
                 })
         
@@ -382,7 +380,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
         
         return {
             "data_directory_exists": self.intellicv_data_path.exists(),
-            "sandbox_ai_data_exists": self.ai_data_path.exists(),
+            "ai_data_exists": self.ai_data_path.exists(),
             "email_data_exists": self.email_data_path.exists(),
             "backend_data_exists": self.backend_data_path.exists(),
             
@@ -391,7 +389,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
             "email_pdf_files": email_counts.get("pdf_files", 0),
             "email_doc_files": email_counts.get("doc_files", 0),
             
-            # AI data stats (SANDBOX/ai_data_final)
+            # AI data stats (ai_data_final)
             "ai_data_files": ai_counts.get("total_files", 0),
             "ai_cv_files": ai_counts.get("cv_files", 0),
             "ai_json_files": ai_counts.get("json_files", 0),
@@ -403,7 +401,7 @@ class IntelliCVDataDirectoryManager(LoggingMixin, SafeOperationsMixin):
             
             "data_paths": {
                 "intellicv_data": str(self.intellicv_data_path),
-                "sandbox_ai_data": str(self.ai_data_path),
+                "ai_data_path": str(self.ai_data_path),
                 "email_data": str(self.email_data_path),
                 "email_extracted": str(self.email_extracted_path),
                 "backend_data": str(self.backend_data_path),

@@ -6,7 +6,7 @@ Job Title Similarity and Migration Module
 """
 from typing import List, Dict, Tuple
 from difflib import SequenceMatcher
-from services.keyword_extractor import extract_keywords, build_thesaurus
+from services.backend_api.services.keyword_extractor import extract_keywords, build_thesaurus
 
 # Example: Industry migration map (expandable)
 INDUSTRY_MIGRATIONS = {

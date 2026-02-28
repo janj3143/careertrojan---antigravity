@@ -89,9 +89,8 @@ class TestLegacyCleanup:
 
     def test_streamlit_demos_renamed(self):
         import os
-        # Old names should not exist
         assert not os.path.exists("apps/user/test_advanced_features.py")
         assert not os.path.exists("apps/user/test_resume_upload.py")
-        # New names should exist
-        assert os.path.exists("apps/user/demo_advanced_features.py")
-        assert os.path.exists("apps/user/demo_resume_upload.py")
+        assert not os.path.exists("apps/user/demo_advanced_features.py")
+        assert not os.path.exists("apps/user/demo_resume_upload.py")
+        assert not os.path.exists("apps/user/visual_demo_resume_analysis.py")

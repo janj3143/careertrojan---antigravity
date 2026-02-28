@@ -2,7 +2,7 @@
 
 **Created**: 2026-02-08  
 **Target OS**: Ubuntu 22.04 LTS or 24.04 LTS (x86_64)  
-**Source**: Windows runtime at `C:\careertrojan`
+**Source**: Windows runtime at `J:\Codec - runtime version\Antigravity\careertrojan`
 
 ---
 
@@ -75,13 +75,13 @@ sudo chown -R $USER:$USER /mnt/careertrojan /opt/careertrojan
 
 | Windows Path | Ubuntu Path | Purpose |
 |-------------|-------------|---------|
-| `C:\careertrojan\` | `/opt/careertrojan/runtime/` | Application code |
-| `L:\VS ai_data final - version\ai_data_final\` | `/mnt/careertrojan/ai_data_final/` | AI knowledge base |
-| `L:\VS ai_data final - version\automated_parser\` | `/mnt/careertrojan/ai_data_final/automated_parser/` | Parser input |
-| `L:\VS ai_data final - version\USER DATA\` | `/mnt/careertrojan/user_data/` | User sessions & data |
+| `J:\Codec - runtime version\Antigravity\careertrojan\` | `/opt/careertrojan/runtime/` | Application code |
+| `L:\Codec-Antigravity Data set\ai_data_final\` | `/mnt/careertrojan/ai_data_final/` | AI knowledge base |
+| `L:\Codec-Antigravity Data set\automated_parser\` | `/mnt/careertrojan/ai_data_final/automated_parser/` | Parser input |
+| `L:\Codec-Antigravity Data set\USER DATA\` | `/mnt/careertrojan/user_data/` | User sessions & data |
 | `E:\CareerTrojan\USER_DATA_COPY\` | `/mnt/careertrojan/backups/user_data/` | Mirror backup |
-| `C:\careertrojan\logs\` | `/mnt/careertrojan/logs/` | Application logs |
-| `C:\careertrojan\trained_models\` | `/opt/careertrojan/runtime/trained_models/` | ML models |
+| `J:\Codec - runtime version\Antigravity\careertrojan\logs\` | `/mnt/careertrojan/logs/` | Application logs |
+| `J:\Codec - runtime version\Antigravity\careertrojan\trained_models\` | `/opt/careertrojan/runtime/trained_models/` | ML models |
 
 ---
 
@@ -94,7 +94,7 @@ rsync -avz --exclude 'node_modules' --exclude '__pycache__' --exclude '.venv' \
     //WINDOWS_HOST/careertrojan/ /opt/careertrojan/runtime/
 
 # Option B: zip and transfer
-# On Windows: tar -czf careertrojan.tar.gz -C C:\ careertrojan --exclude=node_modules
+# On Windows: tar -czf careertrojan.tar.gz -C "J:\Codec - runtime version\Antigravity" careertrojan --exclude=node_modules
 # On Ubuntu:
 tar -xzf careertrojan.tar.gz -C /opt/careertrojan/runtime/
 
@@ -211,7 +211,8 @@ npm run build
 ```bash
 cd /opt/careertrojan/runtime
 source .venv/bin/activate
-bash scripts/start_and_map.sh
+python scripts/sync_user_data.py --daemon
+python -m uvicorn services.backend_api.main:app --host 0.0.0.0 --port 8500 --reload
 ```
 
 ### Option B: Docker Compose (production)
@@ -364,10 +365,10 @@ ls -la /mnt/careertrojan/user_data/
 ### Windows-Only (have Ubuntu equivalents)
 | Windows Script | Ubuntu Equivalent |
 |---------------|-------------------|
-| `scripts/Start-And-Map.ps1` | `scripts/start_and_map.sh` |
+| `scripts/Start-And-Map.ps1` | run `sync_user_data.py --daemon` + `uvicorn` (Option A) |
 | `scripts/bootstrap.ps1` | Install steps in this guide |
 | `scripts/setup_mounts.ps1` | Section 4 (symlinks) |
-| `scripts/validate_ai_integrity.ps1` | `scripts/smoke_test.sh` (from launcher pack) |
+| `scripts/validate_ai_integrity.ps1` | use Section 11 smoke checks and endpoint probes |
 | `scripts/verify_endpoint_counts.ps1` | `curl` commands in Section 11 |
 
 ### Path Resolution

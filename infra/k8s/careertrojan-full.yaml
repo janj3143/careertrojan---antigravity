@@ -1,0 +1,622 @@
+# CareerTrojan full Kubernetes manifest
+# Includes: namespace, config, secrets, postgres, redis, backend, portals, workers, ingress, PVCs
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: careertrojan
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: careertrojan-config
+  namespace: careertrojan
+data:
+  CAREERTROJAN_ROOT: /app
+  CAREERTROJAN_DATA_ROOT: /app/data
+  REDIS_URL: redis://redis:6379/0
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: careertrojan-secrets
+  namespace: careertrojan
+type: Opaque
+stringData:
+  DATABASE_URL: postgresql://postgres:postgres@postgres:5432/careertrojan
+  SECRET_KEY: CHANGE_ME_IN_PRODUCTION
+  JWT_SECRET: CHANGE_ME_IN_PRODUCTION
+  OPENAI_API_KEY: ""
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: careertrojan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: POSTGRES_DB
+          value: careertrojan
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        livenessProbe:
+          exec:
+            command: ["sh", "-c", "pg_isready -U postgres"]
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command: ["sh", "-c", "pg_isready -U postgres"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: careertrojan
+spec:
+  selector:
+    app: postgres
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: careertrojan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        livenessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: careertrojan
+spec:
+  selector:
+    app: redis
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-api
+  namespace: careertrojan
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-api
+  template:
+    metadata:
+      labels:
+        app: backend-api
+    spec:
+      containers:
+      - name: backend-api
+        image: careertrojan/backend-api:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: DATABASE_URL
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: SECRET_KEY
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: JWT_SECRET
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: REDIS_URL
+        - name: CAREERTROJAN_ROOT
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: CAREERTROJAN_ROOT
+        - name: CAREERTROJAN_DATA_ROOT
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: CAREERTROJAN_DATA_ROOT
+        volumeMounts:
+        - name: ai-data
+          mountPath: /app/data
+        resources:
+          requests:
+            memory: 512Mi
+            cpu: 500m
+          limits:
+            memory: 2Gi
+            cpu: 2000m
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      volumes:
+      - name: ai-data
+        persistentVolumeClaim:
+          claimName: ai-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-api
+  namespace: careertrojan
+spec:
+  selector:
+    app: backend-api
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-portal
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: admin-portal
+  template:
+    metadata:
+      labels:
+        app: admin-portal
+    spec:
+      containers:
+      - name: admin-portal
+        image: careertrojan/admin-portal:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: VITE_API_URL
+          value: http://backend-api:8000
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 500m
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-portal
+  namespace: careertrojan
+spec:
+  selector:
+    app: admin-portal
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-portal
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-portal
+  template:
+    metadata:
+      labels:
+        app: user-portal
+    spec:
+      containers:
+      - name: user-portal
+        image: careertrojan/user-portal:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: VITE_API_URL
+          value: http://backend-api:8000
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 500m
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-portal
+  namespace: careertrojan
+spec:
+  selector:
+    app: user-portal
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mentor-portal
+  namespace: careertrojan
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mentor-portal
+  template:
+    metadata:
+      labels:
+        app: mentor-portal
+    spec:
+      containers:
+      - name: mentor-portal
+        image: careertrojan/mentor-portal:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: VITE_API_URL
+          value: http://backend-api:8000
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 500m
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mentor-portal
+  namespace: careertrojan
+spec:
+  selector:
+    app: mentor-portal
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parser-worker
+  namespace: careertrojan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parser-worker
+  template:
+    metadata:
+      labels:
+        app: parser-worker
+    spec:
+      containers:
+      - name: parser-worker
+        image: careertrojan/parser-worker:latest
+        env:
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: REDIS_URL
+        - name: CAREERTROJAN_DATA_ROOT
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: CAREERTROJAN_DATA_ROOT
+        volumeMounts:
+        - name: ai-data
+          mountPath: /app/data
+      volumes:
+      - name: ai-data
+        persistentVolumeClaim:
+          claimName: ai-data-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enrichment-worker
+  namespace: careertrojan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: enrichment-worker
+  template:
+    metadata:
+      labels:
+        app: enrichment-worker
+    spec:
+      containers:
+      - name: enrichment-worker
+        image: careertrojan/enrichment-worker:latest
+        env:
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: REDIS_URL
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-worker
+  namespace: careertrojan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-worker
+  template:
+    metadata:
+      labels:
+        app: ai-worker
+    spec:
+      containers:
+      - name: ai-worker
+        image: careertrojan/ai-worker:latest
+        env:
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: REDIS_URL
+        - name: CAREERTROJAN_DATA_ROOT
+          valueFrom:
+            configMapKeyRef:
+              name: careertrojan-config
+              key: CAREERTROJAN_DATA_ROOT
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: careertrojan-secrets
+              key: OPENAI_API_KEY
+        volumeMounts:
+        - name: ai-data
+          mountPath: /app/data
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 500m
+          limits:
+            memory: 4Gi
+            cpu: 2000m
+      volumes:
+      - name: ai-data
+        persistentVolumeClaim:
+          claimName: ai-data-pvc
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: careertrojan-ingress
+  namespace: careertrojan
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - careertrojan.com
+    secretName: careertrojan-tls
+  rules:
+  - host: careertrojan.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-api
+            port:
+              number: 8000
+      - path: /admin
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-portal
+            port:
+              number: 80
+      - path: /mentor
+        pathType: Prefix
+        backend:
+          service:
+            name: mentor-portal
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: user-portal
+            port:
+              number: 80
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-data-pvc
+  namespace: careertrojan
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Gi
+  storageClassName: standard
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-pvc
+  namespace: careertrojan
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: standard
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-pvc
+  namespace: careertrojan
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: standard

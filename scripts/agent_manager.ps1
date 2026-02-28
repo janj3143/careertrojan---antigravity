@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     CareerTrojan Agent Manager — Runtime Review & Background SA Testing
 .DESCRIPTION
@@ -43,6 +43,8 @@ $ErrorActionPreference = "Continue"
 $LogDir   = Join-Path $ProjectRoot "logs"
 $LogFile  = Join-Path $LogDir "agent_manager_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir -Force | Out-Null }
+$script:PythonBin = $null
+$script:DockerBin = $null
 
 function Write-Log {
     param([string]$Message, [string]$Level = "INFO")
@@ -56,6 +58,40 @@ function Write-Log {
         default { "White" }
     })
     Add-Content -Path $LogFile -Value $line
+}
+
+function Resolve-PythonBin {
+    $candidates = @(
+        $env:CAREERTROJAN_PYTHON_BIN,
+        "J:\Python311\python.exe",
+        (Join-Path $ProjectRoot ".venv-j\Scripts\python.exe"),
+        (Join-Path $ProjectRoot ".venv\Scripts\python.exe")
+    ) | Where-Object { $_ -and ($_ -ne "") }
+
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) {
+            return $candidate
+        }
+    }
+    $cmd = Get-Command python -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    return $null
+}
+
+function Resolve-DockerBin {
+    $candidates = @(
+        $env:CAREERTROJAN_DOCKER_BIN,
+        "J:\docker-cli\docker.exe"
+    ) | Where-Object { $_ -and ($_ -ne "") }
+
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) {
+            return $candidate
+        }
+    }
+    $cmd = Get-Command docker -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    return $null
 }
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -73,7 +109,8 @@ function Invoke-RuntimeReview {
     $maxScore++
     Write-Log "Checking Python version..."
     try {
-        $pyVer = & python --version 2>&1
+        if (-not $script:PythonBin) { throw "Python not configured." }
+        $pyVer = & $script:PythonBin --version 2>&1
         if ($pyVer -match "3\.1[1-3]") {
             Write-Log "Python: $pyVer" "PASS"
             $score++
@@ -86,7 +123,8 @@ function Invoke-RuntimeReview {
     $maxScore++
     Write-Log "Checking Docker..."
     try {
-        $dv = & docker --version 2>&1
+        if (-not $script:DockerBin) { throw "Docker not configured." }
+        $dv = & $script:DockerBin --version 2>&1
         Write-Log "Docker: $dv" "PASS"
         $score++
     } catch { Write-Log "Docker not available" "ERROR" }
@@ -145,7 +183,7 @@ if failures:
 else:
     print('IMPORTS_OK')
 "@
-    $result = $importTest | python 2>&1
+    $result = $importTest | & $script:PythonBin 2>&1
     if ($result -match "IMPORTS_OK") {
         Write-Log "All critical imports succeeded" "PASS"
         $score++
@@ -186,7 +224,8 @@ else:
     # ── 9. Docker Compose services parse ─────────────────────────────────────
     $maxScore++
     try {
-        $services = & docker compose -f $composeFile config --services 2>&1
+        if (-not $script:DockerBin) { throw "Docker not configured." }
+        $services = & $script:DockerBin compose -f $composeFile config --services 2>&1
         if ($LASTEXITCODE -eq 0) {
             $svcList = ($services -split "`n").Count
             Write-Log "Docker Compose: $svcList services defined" "PASS"
@@ -199,8 +238,9 @@ else:
     # ── 10. Test infrastructure ──────────────────────────────────────────────
     $maxScore++
     $pytestIni = Join-Path $ProjectRoot "pytest.ini"
-    $conftest  = Join-Path $ProjectRoot "tests" "conftest.py"
-    if ((Test-Path $pytestIni) -and (Test-Path $conftest)) {
+    $conftestRoot  = Join-Path $ProjectRoot "conftest.py"
+    $conftestTests = Join-Path $ProjectRoot "tests/conftest.py"
+    if ((Test-Path $pytestIni) -and ((Test-Path $conftestRoot) -or (Test-Path $conftestTests))) {
         Write-Log "Test infrastructure (pytest.ini + conftest.py) present" "PASS"
         $score++
     } else { Write-Log "Test infrastructure incomplete" "WARN" }
@@ -236,7 +276,7 @@ function Invoke-TestLadder {
     Write-Log "  MODE B — SA TESTING LADDER" "PHASE"
     Write-Log "═══════════════════════════════════════════════════" "PHASE"
 
-    $resultsDir = Join-Path $ProjectRoot "logs" "test_results"
+    $resultsDir = Join-Path $ProjectRoot "logs/test_results"
     if (-not (Test-Path $resultsDir)) { New-Item -ItemType Directory -Path $resultsDir -Force | Out-Null }
 
     $PassThreshold = 80.0
@@ -247,7 +287,7 @@ function Invoke-TestLadder {
     $unitLog = Join-Path $resultsDir "unit_output.txt"
 
     Push-Location $ProjectRoot
-    & python -m pytest tests/unit/ -m unit `
+    & $script:PythonBin -m pytest tests/unit/ -m unit `
         --tb=short -q `
         --junitxml="$unitXml" `
         2>&1 | Tee-Object -FilePath $unitLog
@@ -268,7 +308,7 @@ function Invoke-TestLadder {
     $intLog = Join-Path $resultsDir "integration_output.txt"
 
     Push-Location $ProjectRoot
-    & python -m pytest tests/integration/ -m integration `
+    & $script:PythonBin -m pytest tests/integration/ -m integration `
         --tb=short -q `
         --junitxml="$intXml" `
         2>&1 | Tee-Object -FilePath $intLog
@@ -288,7 +328,7 @@ function Invoke-TestLadder {
     $e2eLog = Join-Path $resultsDir "e2e_output.txt"
 
     Push-Location $ProjectRoot
-    & python -m pytest tests/e2e/ -m e2e `
+    & $script:PythonBin -m pytest tests/e2e/ -m e2e `
         --tb=short -q `
         --junitxml="$e2eXml" `
         2>&1 | Tee-Object -FilePath $e2eLog
@@ -306,8 +346,14 @@ function Invoke-TestLadder {
 # ═══════════════════════════════════════════════════════════════════════════════
 Write-Log "╔═══════════════════════════════════════════════════════════╗" "PHASE"
 Write-Log "║   CareerTrojan Agent Manager — $(Get-Date -Format 'yyyy-MM-dd HH:mm')          ║" "PHASE"
-Write-Log "║   Mode: $Mode   Watch: $(if($Watch -gt 0){"${Watch}s"}else{'off'})                                     ║" "PHASE"
+$watchLabel = if ($Watch -gt 0) { "$($Watch)s" } else { "off" }
+Write-Log "║   Mode: $Mode   Watch: $watchLabel                                     ║" "PHASE"
 Write-Log "╚═══════════════════════════════════════════════════════════╝" "PHASE"
+
+$script:PythonBin = Resolve-PythonBin
+$script:DockerBin = Resolve-DockerBin
+if ($script:PythonBin) { Write-Log "Resolved Python: $script:PythonBin" "INFO" } else { Write-Log "Resolved Python: none" "WARN" }
+if ($script:DockerBin) { Write-Log "Resolved Docker: $script:DockerBin" "INFO" } else { Write-Log "Resolved Docker: none" "WARN" }
 
 do {
     # ── Mode A: Review ───────────────────────────────────────────────────────
@@ -343,3 +389,4 @@ do {
 } while ($Watch -gt 0)
 
 Write-Log "Agent Manager complete." "INFO"
+

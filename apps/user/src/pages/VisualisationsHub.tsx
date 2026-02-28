@@ -10,18 +10,11 @@ interface VisualEntry {
     react_component: string;
 }
 
-// Inline fallback if backend is unreachable
-const FALLBACK_REGISTRY: VisualEntry[] = [
-    { id: "quadrant_fit_d3", title: "Market Fit Quadrant", category: "Positioning", react_component: "QuadrantFitD3View" },
-    { id: "wordcloud_connected_d3", title: "Skill Cloud Analysis", category: "Market Trends", react_component: "ConnectedWordCloudD3View" },
-    { id: "touchpoint_network_cytoscape", title: "Network Touchpoints", category: "Explainability", react_component: "TouchpointNetworkCytoscapeView" },
-    { id: "mindmap_reactflow", title: "Career Path Mind Map", category: "User Directed", react_component: "MindMapReactFlowView" },
-];
-
 export default function VisualisationsHub() {
-    const [registry, setRegistry] = useState<VisualEntry[]>(FALLBACK_REGISTRY);
-    const [selectedVisual, setSelectedVisual] = useState<string>(FALLBACK_REGISTRY[0].id);
+    const [registry, setRegistry] = useState<VisualEntry[]>([]);
+    const [selectedVisual, setSelectedVisual] = useState<string>("");
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetch(`${API_BASE}/api/insights/v1/visuals`)
@@ -30,9 +23,16 @@ export default function VisualisationsHub() {
                 if (data.visuals && data.visuals.length > 0) {
                     setRegistry(data.visuals);
                     setSelectedVisual(data.visuals[0].id);
+                } else {
+                    setRegistry([]);
+                    setSelectedVisual("");
                 }
             })
-            .catch(() => { /* keep fallback */ })
+            .catch(() => {
+                setError("Unable to load visual registry from the backend.");
+                setRegistry([]);
+                setSelectedVisual("");
+            })
             .finally(() => setLoading(false));
     }, []);
 
@@ -48,6 +48,9 @@ export default function VisualisationsHub() {
                     <p className="text-xs text-gray-500 mt-1">
                         {loading ? "Loading…" : `${registry.length} visualisations`}
                     </p>
+                    {error && (
+                        <p className="text-xs text-red-600 mt-2">{error}</p>
+                    )}
                 </div>
                 <div className="flex-1 overflow-y-auto p-4 space-y-2">
                     {registry.map(v => (
@@ -82,11 +85,18 @@ export default function VisualisationsHub() {
                                 <Component
                                     width={800}
                                     height={600}
-                                    data={{}} // Placeholder data, components should handle empty data gracefully or mock it internally
+                                    data={{}}
+                                    api={{ baseUrl: API_BASE }}
+                                    filters={{}}
+                                    elements={[]}
+                                    initialNodes={[]}
+                                    initialEdges={[]}
+                                    onSelect={() => { }}
+                                    onSave={() => { }}
                                 />
                             </div>
                         ) : (
-                            <div className="text-gray-400">Component not found or not loaded</div>
+                            <div className="text-gray-400">No visual data available</div>
                         )}
                     </div>
                 </div>

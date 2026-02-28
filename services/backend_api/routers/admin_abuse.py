@@ -6,11 +6,11 @@ from typing import Any, Dict, List
 
 from fastapi import APIRouter
 
+from services.shared.paths import CareerTrojanPaths
+
 router = APIRouter(prefix="/api/admin/v1/abuse", tags=["admin-abuse"])
 
-import os
-PROJECT_ROOT = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
-STORE = PROJECT_ROOT / "resume_store"
+STORE = CareerTrojanPaths().data_root / "resume_store"
 
 
 @router.get("/queue")

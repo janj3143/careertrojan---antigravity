@@ -1245,6 +1245,42 @@ class MentorshipService:
             logger.error(f"Error approving application: {e}")
             raise
 
+    def reject_mentor_application(
+        self,
+        application_id: int,
+        reviewer_admin_id: str,
+    ) -> bool:
+        """
+        Reject mentor application.
+
+        Args:
+            application_id: Application ID
+            reviewer_admin_id: Guardian who rejected
+
+        Returns:
+            True if successful
+        """
+        try:
+            query = """
+                UPDATE mentor_applications
+                SET status = 'rejected',
+                    reviewed_date = NOW(),
+                    reviewer_admin_id = %s
+                WHERE application_id = %s
+            """
+
+            cursor = self.db.cursor()
+            cursor.execute(query, (reviewer_admin_id, application_id))
+            self.db.commit()
+
+            logger.info(f"Rejected mentor application {application_id}")
+            return True
+
+        except Exception as e:
+            self.db.rollback()
+            logger.error(f"Error rejecting mentor application: {e}")
+            raise
+
     # ========================================================================
     # MENTOR PAYOUT DETAILS (BANK TRANSFER)
     # ========================================================================

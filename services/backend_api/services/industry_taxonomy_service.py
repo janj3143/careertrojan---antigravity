@@ -61,6 +61,8 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 import pandas as pd
 
+from services.shared.paths import paths as runtime_paths
+
 
 # ---------------------------------------------------------------------
 # Dataclasses
@@ -122,14 +124,18 @@ class IndustryTaxonomyService:
         naics_structure_path: Optional[Path] = None,
         naics_desc_path: Optional[Path] = None,
     ) -> None:
-        # Default to env var or portable local path
-        default_root = os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final/ai_data_final")
-        
-        self.data_root = (
-            Path(data_root)
-            if data_root
-            else Path(os.environ.get("INTELLICV_DATA_ROOT", default_root)).expanduser()
+        # Resolve to canonical ai_data_final path (handles root-vs-subfolder env ambiguity)
+        default_root = (
+            os.environ.get("INTELLICV_DATA_ROOT")
+            or os.environ.get("CAREERTROJAN_AI_DATA")
+            or str(runtime_paths.ai_data_final)
         )
+
+        self.data_root = Path(data_root).expanduser() if data_root else Path(default_root).expanduser()
+        if self.data_root.name.casefold() != "ai_data_final":
+            nested_ai_data = self.data_root / "ai_data_final"
+            if nested_ai_data.exists():
+                self.data_root = nested_ai_data
 
         # Allow explicit overrides; otherwise derive from data_root if present
         self.soc_structure_path = self._resolve_path(

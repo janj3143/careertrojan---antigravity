@@ -120,6 +120,22 @@ async def naics_title(
     return {"data": {"code": code, "title": title}, "meta": {}}
 
 
+@router.get("/summary")
+async def taxonomy_summary() -> Dict[str, Any]:
+    """
+    Lightweight taxonomy summary for admin dashboard/tooling surfaces.
+    """
+    _require_taxonomy()
+    industries = tax.list_high_level_industries()
+    return {
+        "data": {
+            "industry_count": len(industries),
+            "industries": industries,
+        },
+        "meta": {"count": len(industries)},
+    }
+
+
 @router.get("/job-titles/naics-mapping")
 async def job_title_to_naics(
     title: str = Query(..., min_length=1),

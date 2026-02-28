@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
-import { ApiConfig, generateQuestions, reviewAnswer, generateStarStories, detectBlockers } from '../lib/api';
+import { ApiConfig, generateQuestions, reviewAnswer, generateStarStories, detectBlockers, submitInterviewLearningFeedback, getCompanyBriefing, CompanyBriefingResponse } from '../lib/api';
 import { AlertCircle, Plus, CheckCircle, Brain, Target, MessageSquare } from 'lucide-react';
 
 // Configuration
-const API_CONFIG: ApiConfig = { baseUrl: "http://localhost:8500" };
+const API_CONFIG: ApiConfig = { baseUrl: "http://localhost:8600" };
 
 type Tab = 'overview' | 'questions' | 'practice' | 'star';
 
@@ -29,6 +29,11 @@ export default function CoachingHub() {
     const [practiceQ, setPracticeQ] = useState("");
     const [practiceA, setPracticeA] = useState("");
     const [feedback, setFeedback] = useState<any>(null);
+    const [feedbackSaved, setFeedbackSaved] = useState<string | null>(null);
+    const [companyTarget, setCompanyTarget] = useState('');
+    const [companyBriefing, setCompanyBriefing] = useState<CompanyBriefingResponse | null>(null);
+    const [companyLoading, setCompanyLoading] = useState(false);
+    const [companyError, setCompanyError] = useState<string | null>(null);
 
     // Initialize & Load Data
     useEffect(() => {
@@ -101,6 +106,7 @@ export default function CoachingHub() {
     const handleReview = async () => {
         if (!practiceQ || !practiceA) return;
         setLoading(true);
+        setFeedbackSaved(null);
         try {
             const fb = await reviewAnswer(API_CONFIG, {
                 question: practiceQ,
@@ -113,6 +119,60 @@ export default function CoachingHub() {
             alert("Feedback failed");
         }
         setLoading(false);
+    };
+
+    const markQuestionUsefulness = async (question: string, helpful: boolean) => {
+        try {
+            await submitInterviewLearningFeedback(API_CONFIG, {
+                question_type: qType,
+                question,
+                helpful,
+                resume: resumeContext,
+                job: jobContext,
+            });
+        } catch (e) {
+            console.error('Failed to save question feedback', e);
+        }
+    };
+
+    const markAnswerFeedback = async (helpful: boolean) => {
+        if (!practiceQ || !feedback) return;
+        try {
+            await submitInterviewLearningFeedback(API_CONFIG, {
+                question_type: qType,
+                question: practiceQ,
+                helpful,
+                answer_score: typeof feedback?.score === 'number' ? feedback.score : undefined,
+                resume: resumeContext,
+                job: jobContext,
+            });
+            setFeedbackSaved(helpful ? 'Thanks — this coaching was marked helpful.' : 'Saved — we will improve this coaching path.');
+        } catch (e) {
+            console.error('Failed to save answer feedback', e);
+            setFeedbackSaved('Could not save feedback just now.');
+        }
+    };
+
+    const handleCompanyResearch = async () => {
+        const company_name = companyTarget.trim();
+        if (!company_name) {
+            setCompanyError('Enter a target company first.');
+            return;
+        }
+        setCompanyLoading(true);
+        setCompanyError(null);
+        try {
+            const result = await getCompanyBriefing(API_CONFIG, {
+                company_name,
+                resume: resumeContext || {},
+                job: jobContext || {},
+                max_profile_files: 300,
+            });
+            setCompanyBriefing(result);
+        } catch (e: any) {
+            setCompanyError(e?.message || 'Company research failed.');
+        }
+        setCompanyLoading(false);
     };
 
     return (
@@ -215,6 +275,85 @@ export default function CoachingHub() {
                                 ))}
                             </div>
                         )}
+
+                        <h2 className="text-xl font-bold mt-10 mb-4 flex items-center gap-2">
+                            <Brain className="w-5 h-5 text-indigo-600" />
+                            Target Company Interview Intelligence
+                        </h2>
+
+                        <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4">
+                            <div className="flex flex-col md:flex-row gap-3">
+                                <input
+                                    type="text"
+                                    value={companyTarget}
+                                    onChange={(e) => setCompanyTarget(e.target.value)}
+                                    className="flex-1 rounded-md border-gray-300 shadow-sm p-3 border"
+                                    placeholder="e.g. Microsoft"
+                                />
+                                <button
+                                    onClick={handleCompanyResearch}
+                                    disabled={companyLoading}
+                                    className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+                                >
+                                    {companyLoading ? 'Researching...' : 'Research Company'}
+                                </button>
+                            </div>
+                            {companyError && <p className="text-sm text-rose-600 mt-2">{companyError}</p>}
+                        </div>
+
+                        {companyBriefing && (
+                            <div className="space-y-4">
+                                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                                    <h3 className="font-semibold text-gray-900 mb-2">What does the company do?</h3>
+                                    <p className="text-sm text-gray-700">{companyBriefing.company_overview.what_they_do || 'No summary available yet.'}</p>
+                                    <p className="text-xs text-gray-500 mt-2">
+                                        Industry: {companyBriefing.company_overview.industry || 'Unknown'}
+                                        {companyBriefing.company_overview.website ? ` • Website: ${companyBriefing.company_overview.website}` : ''}
+                                    </p>
+                                </div>
+
+                                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                                    <h3 className="font-semibold text-gray-900 mb-2">Have they employed someone like me before? When?</h3>
+                                    <p className="text-sm text-gray-700">
+                                        {companyBriefing.similar_hiring_history.employed_similar_profiles
+                                            ? `Yes — ${companyBriefing.similar_hiring_history.count} similar profiles found.`
+                                            : 'No similar profile evidence found in scanned history yet.'}
+                                    </p>
+                                    <p className="text-xs text-gray-500 mt-2">
+                                        Years: {companyBriefing.similar_hiring_history.years.length > 0
+                                            ? companyBriefing.similar_hiring_history.years.join(', ')
+                                            : 'No year data found'}
+                                    </p>
+                                    {companyBriefing.similar_hiring_history.sample_roles.length > 0 && (
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            Sample roles: {companyBriefing.similar_hiring_history.sample_roles.join(', ')}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                                    <h3 className="font-semibold text-gray-900 mb-2">Key highlights (news, appointments, products, developments)</h3>
+                                    <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                        {companyBriefing.highlights.recent_news.slice(0, 4).map((n, idx) => (
+                                            <li key={idx}>{n.title || n.snippet || 'Untitled update'}</li>
+                                        ))}
+                                        {companyBriefing.highlights.recent_news.length === 0 && (
+                                            <li>No recent headline data returned.</li>
+                                        )}
+                                    </ul>
+                                    {companyBriefing.highlights.new_appointments.length > 0 && (
+                                        <p className="text-xs text-gray-500 mt-2">
+                                            Appointments: {companyBriefing.highlights.new_appointments.join(' | ')}
+                                        </p>
+                                    )}
+                                    {companyBriefing.highlights.new_products_or_developments.length > 0 && (
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            Products/Developments: {companyBriefing.highlights.new_products_or_developments.join(' | ')}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -233,6 +372,14 @@ export default function CoachingHub() {
                                 >
                                     <option>General competency</option>
                                     <option>Role-specific</option>
+                                    <option>Role-specific & Performance Questions</option>
+                                    <option>Marketing</option>
+                                    <option>Technical</option>
+                                    <option>Development</option>
+                                    <option>Finance</option>
+                                    <option>Sales</option>
+                                    <option>Engineering</option>
+                                    <option>Management</option>
                                     <option>Culture & values</option>
                                     <option>Leadership</option>
                                     <option>Problem-solving</option>
@@ -252,6 +399,18 @@ export default function CoachingHub() {
                                 <div key={i} className="p-4 bg-gray-50 rounded-lg border border-gray-200 flex gap-3">
                                     <span className="font-bold text-gray-400">Q{i + 1}</span>
                                     <p className="text-gray-800 font-medium">{q}</p>
+                                    <button
+                                        className="ml-2 text-xs text-emerald-600 hover:text-emerald-800"
+                                        onClick={() => markQuestionUsefulness(q, true)}
+                                    >
+                                        👍 Useful
+                                    </button>
+                                    <button
+                                        className="text-xs text-rose-600 hover:text-rose-800"
+                                        onClick={() => markQuestionUsefulness(q, false)}
+                                    >
+                                        👎 Not useful
+                                    </button>
                                     <button
                                         className="ml-auto text-sm text-indigo-600 hover:text-indigo-800"
                                         onClick={() => {
@@ -312,6 +471,23 @@ export default function CoachingHub() {
                                 <h3 className="text-lg font-bold mb-4">AI Feedback</h3>
                                 <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100 mb-4">
                                     <p className="text-indigo-900">{feedback.summary}</p>
+                                </div>
+
+                                <div className="flex items-center gap-3 mb-4">
+                                    <span className="text-sm text-gray-600">Was this coaching useful?</span>
+                                    <button
+                                        onClick={() => markAnswerFeedback(true)}
+                                        className="text-xs px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
+                                    >
+                                        👍 Yes
+                                    </button>
+                                    <button
+                                        onClick={() => markAnswerFeedback(false)}
+                                        className="text-xs px-2 py-1 rounded bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100"
+                                    >
+                                        👎 No
+                                    </button>
+                                    {feedbackSaved && <span className="text-xs text-gray-500">{feedbackSaved}</span>}
                                 </div>
 
                                 {feedback.suggestions && (

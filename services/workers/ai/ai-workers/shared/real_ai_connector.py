@@ -18,6 +18,9 @@ import json
 import random
 from datetime import datetime
 
+from services.shared.paths import CareerTrojanPaths
+
+
 class RealAIDataConnector:
     """
     Connects to REAL AI data from ai_data_final directory.
@@ -25,7 +28,7 @@ class RealAIDataConnector:
     """
     
     def __init__(self):
-        self.base_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.base_path = CareerTrojanPaths().ai_data_final
         self.pattern_report_path = self.base_path / "pattern_analysis_report.json"
         self.normalized_path = self.base_path / "normalized"
         

@@ -1,31 +1,53 @@
 $ErrorActionPreference = "Stop"
 
-Write-Host "Starting CareerTrojan Backend Service..." -ForegroundColor Cyan
-Write-Host "Port: 8500" -ForegroundColor Yellow
-Write-Host "Host: 0.0.0.0" -ForegroundColor Yellow
-Write-Host "Environment: Production/Runtime" -ForegroundColor Magenta
+function Resolve-Python {
+    $candidates = @(
+        "J:\Python311\python.exe",
+        (Join-Path $APP_ROOT ".venv-j\Scripts\python.exe"),
+        (Join-Path $APP_ROOT ".venv\Scripts\python.exe")
+    )
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) {
+            return $candidate
+        }
+    }
+    $cmd = Get-Command python -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    return $null
+}
 
-# 1. Set Environment Variables
-$Env:PYTHONPATH = "C:\careertrojan"
-$Env:CAREERTROJAN_DATA_ROOT = "L:\antigravity_version_ai_data_final\ai_data_final"
-$Env:INTELLICV_DATA_ROOT = "L:\antigravity_version_ai_data_final\ai_data_final"
+$APP_ROOT = Resolve-Path (Join-Path $PSScriptRoot "..")
+$hostValue = if ($env:CAREERTROJAN_HOST) { $env:CAREERTROJAN_HOST } else { "0.0.0.0" }
+$portValue = if ($env:CAREERTROJAN_PORT) { $env:CAREERTROJAN_PORT } else { "8500" }
+
+Write-Host "Starting CareerTrojan Backend Service..." -ForegroundColor Cyan
+Write-Host "Root: $APP_ROOT" -ForegroundColor Yellow
+Write-Host "Port: $portValue" -ForegroundColor Yellow
+Write-Host "Host: $hostValue" -ForegroundColor Yellow
+Write-Host "Environment: Runtime (J-drive)" -ForegroundColor Magenta
+
+# 1. Set Environment Variables (J-drive relative)
+$Env:PYTHONPATH = "$APP_ROOT"
+if (-not $Env:CAREERTROJAN_DATA_ROOT) { $Env:CAREERTROJAN_DATA_ROOT = "L:\Codec-Antigravity Data set" }
+if (-not $Env:CAREERTROJAN_AI_DATA) { $Env:CAREERTROJAN_AI_DATA = "L:\Codec-Antigravity Data set\ai_data_final" }
+if (-not $Env:INTELLICV_DATA_ROOT) { $Env:INTELLICV_DATA_ROOT = $Env:CAREERTROJAN_AI_DATA }
 
 # 2. Check Python
-$PYTHON_PATH = "C:\Python\python.exe"
-if (-not (Test-Path $PYTHON_PATH)) {
-    Write-Error "Python not found at $PYTHON_PATH"
+$PYTHON_PATH = Resolve-Python
+if (-not $PYTHON_PATH) {
+    Write-Error "Python not found. Expected J:\Python311\python.exe or project venv."
     exit 1
 }
 
-# 3. Ensure Directories Exist (Fixes Uvicorn Watcher Crash)
-if (-not (Test-Path "$Env:PYTHONPATH\tests")) { New-Item -ItemType Directory -Force -Path "$Env:PYTHONPATH\tests" | Out-Null }
-if (-not (Test-Path "$Env:PYTHONPATH\logs")) { New-Item -ItemType Directory -Force -Path "$Env:PYTHONPATH\logs" | Out-Null }
+# 3. Ensure runtime directories exist
+if (-not (Test-Path (Join-Path $APP_ROOT "tests"))) { New-Item -ItemType Directory -Force -Path (Join-Path $APP_ROOT "tests") | Out-Null }
+if (-not (Test-Path (Join-Path $APP_ROOT "logs"))) { New-Item -ItemType Directory -Force -Path (Join-Path $APP_ROOT "logs") | Out-Null }
 
 # 4. Launch Uvicorn
-Write-Host "Launching Uvicorn..." -ForegroundColor Green
-& $PYTHON_PATH -m uvicorn services.backend_api.main:app --host 0.0.0.0 --port 8500 --reload --reload-dir "$Env:PYTHONPATH"
+Set-Location $APP_ROOT
+Write-Host "Launching Uvicorn with $PYTHON_PATH..." -ForegroundColor Green
+& $PYTHON_PATH -m uvicorn services.backend_api.main:app --host $hostValue --port $portValue --reload --reload-dir "$APP_ROOT"
 
-# Keep window open if it crashes immediately
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Service crashed or stopped." -ForegroundColor Red
     Read-Host "Press Enter to exit..."

@@ -1,11 +1,12 @@
 version: '3.8'
+name: careertrojan-antigravity
 
 services:
   reverse-proxy:
     image: nginx:alpine
-    container_name: CaReerTroJan-Antigravity
+    container_name: careertrojan-antigravity
     ports:
-      - "8500:80"
+      - "8600:80"
       - "8643:443"
     volumes:
       - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -19,12 +20,12 @@ services:
       - careertrojan-net
 
   portal-bridge:
-    container_name: CaReerTroJan-Antigravity-Bridge
+    container_name: careertrojan-antigravity-bridge
     build:
       context: ../../
       dockerfile: infra/docker/Dockerfile.bridge
     environment:
-      - CAREERTROJAN_DATA_ROOT=/data/ai_data_final
+      - CAREERTROJAN_DATA_ROOT=/data
       - CAREERTROJAN_WORKING_ROOT=/data/working_copy
       - ALLOW_MOCK_DATA=false
       - SERVICE_NAME=portal-bridge
@@ -33,23 +34,23 @@ services:
     networks:
       - careertrojan-net
     ports:
-      - "8001:8001"
+      - "8601:8001"
 
 
   shared-backend-api:
-    container_name: CaReerTroJan-Antigravity-Backend
+    container_name: careertrojan-antigravity-backend
     build:
       context: ../../
       dockerfile: infra/docker/Dockerfile.api
     environment:
-      - CAREERTROJAN_DATA_ROOT=/data/ai_data_final
+      - CAREERTROJAN_DATA_ROOT=/data
       - CAREERTROJAN_WORKING_ROOT=/data/working_copy
       - ALLOW_MOCK_DATA=false
       - ALLOW_FALLBACKS=false
       - DATABASE_URL=postgresql://user:pass@postgres:5432/careertrojan
       - REDIS_URL=redis://redis:6379/0
     volumes:
-      - ${CAREERTROJAN_DATA_ROOT}:/data/ai_data_final:ro
+      - ${CAREERTROJAN_DATA_ROOT}:/data:ro
       - ${CAREERTROJAN_WORKING_ROOT}:/data/working_copy:rw
     depends_on:
       - postgres
@@ -60,9 +61,11 @@ services:
       resources:
         limits:
           memory: 1G
+    ports:
+      - "8602:8000"
 
   parser-worker:
-    container_name: CaReerTroJan-Antigravity-Parser
+    container_name: careertrojan-antigravity-parser
     build:
       context: ../../
       dockerfile: infra/docker/Dockerfile.worker
@@ -81,16 +84,16 @@ services:
           memory: 2G
 
   enrichment-worker:
-    container_name: CaReerTroJan-Antigravity-Enrichment
+    container_name: careertrojan-antigravity-enrichment
     build:
       context: ../../
       dockerfile: infra/docker/Dockerfile.worker
     environment:
       - SERVICE_NAME=enrichment-worker
-      - CAREERTROJAN_DATA_ROOT=/data/ai_data_final
+      - CAREERTROJAN_DATA_ROOT=/data
       - CAREERTROJAN_WORKING_ROOT=/data/working_copy
     volumes:
-      - ${CAREERTROJAN_DATA_ROOT}:/data/ai_data_final:ro
+      - ${CAREERTROJAN_DATA_ROOT}:/data:ro
       - ${CAREERTROJAN_WORKING_ROOT}:/data/working_copy:rw
     depends_on:
       - redis
@@ -111,11 +114,15 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - careertrojan-net
+    ports:
+      - "8605:5432"
 
   redis:
     image: redis:7-alpine
     networks:
       - careertrojan-net
+    ports:
+      - "8604:6379"
 
 networks:
   careertrojan-net:

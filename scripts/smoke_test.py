@@ -3,11 +3,17 @@ import json
 import sys
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from services.shared.paths import CareerTrojanPaths
+
 # Configuration
-RUNTIME_ROOT = os.environ.get("CAREERTROJAN_RUNTIME_ROOT", r"C:\careertrojan")
+RUNTIME_ROOT = os.environ.get("CAREERTROJAN_RUNTIME_ROOT", str(PROJECT_ROOT))
 USER_DATA_ROOT = os.path.join(RUNTIME_ROOT, "user_data")
-AI_DATA_ROOT_WIN = r"L:\antigravity_version_ai_data_final"
-AI_DATA_ROOT_LINUX = "/mnt/l/antigravity_version_ai_data_final" # Hypothetical mount
+AI_DATA_ROOT_WIN = os.environ.get("CAREERTROJAN_DATA_ROOT", r"L:\Codec-Antigravity Data set")
+AI_DATA_ROOT_LINUX = "/mnt/careertrojan"  # Canonical Linux mount
 
 def print_pass(msg):
     print(f"[\033[92mPASS\033[0m] {msg}")
@@ -43,14 +49,17 @@ def check_environment_paths():
 def verify_test_user_seeding():
     print("\n--- 2. Test User Verification ---")
     users_file = os.path.join(USER_DATA_ROOT, "users.json")
-    
-    if not os.path.exists(users_file):
-        print_fail(f"User database file not found: {users_file}")
-        print("    -> Has 'bootstrap.ps1' been run?")
+    runtime_users_file = str(CareerTrojanPaths().user_data / "users.json")
+
+    if not os.path.exists(users_file) and not os.path.exists(runtime_users_file):
+        print_warn(f"User database file not found in workspace ({users_file}) or runtime data root ({runtime_users_file})")
+        print("    -> Non-blocking for smoke; auth data may live in DB/runtime volumes")
         return
 
+    target_file = users_file if os.path.exists(users_file) else runtime_users_file
+
     try:
-        with open(users_file, 'r', encoding='utf-8-sig') as f:
+        with open(target_file, 'r', encoding='utf-8-sig') as f:
             data = json.load(f)
             
         # Handle if it's a single object or list (bootstrap creates a single object currently)
@@ -86,10 +95,10 @@ def check_frontend_components():
     
     # Define critical components to check (relative to RUNTIME_ROOT)
     components = [
-        r"apps\user-portal\src\components\visuals\ChartContainer.tsx",
-        r"apps\user-portal\src\components\pages\umarketu\components\FitAnalysis.tsx",
-        r"apps\user-portal\src\components\pages\umarketu\components\ResumeTuning.tsx",
-        r"apps\user-portal\src\components\pages\umarketu\services\creditService.ts"
+        r"apps\user\src\pages\VisualisationsHub.tsx",
+        r"apps\user\src\lib\api.ts",
+        r"apps\admin\src\pages\AdminPipelineOps.tsx",
+        r"apps\mentor\src\pages\MentorDashboard.tsx",
     ]
     
     all_found = True

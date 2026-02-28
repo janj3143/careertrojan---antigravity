@@ -19,6 +19,9 @@ Usage:
 import json
 import hashlib
 import re
+import zipfile
+import csv
+import io
 from pathlib import Path
 from datetime import datetime
 import logging
@@ -49,11 +52,19 @@ class AutomatedParserEngine:
         # Create output folders if needed
         self.completed.mkdir(parents=True, exist_ok=True)
         self.output_root.mkdir(parents=True, exist_ok=True)
+        self.processed_index_file = self.output_root / '_processed_sources.txt'
+        self.failed_index_file = self.output_root / '_failed_sources.json'
+        self.status_manifest_file = self.output_root / 'parser_ingestion_status.json'
+        self.status_summary_file = self.output_root / 'parser_ingestion_status_summary.json'
+        self.processed_sources = self._load_processed_sources()
+        self.failed_sources = self._load_failed_sources()
+        self.optional_dependency_status = self._detect_optional_dependencies()
 
         self.results = {
             'total_files': 0,
             'processed': 0,
             'skipped': 0,
+            'skipped_existing': 0,
             'errors': [],
             'file_types': {},
             'created_at': datetime.now().isoformat()
@@ -62,6 +73,217 @@ class AutomatedParserEngine:
         logger.info(f"Parser initialized: {self.parser_root}")
         logger.info(f"Output folder (legacy): {self.completed}")
         logger.info(f"Output folder (primary): {self.output_root}")
+        logger.info(f"Loaded processed index entries: {len(self.processed_sources)}")
+        logger.info(f"Loaded failed index entries: {len(self.failed_sources)}")
+
+    def _detect_optional_dependencies(self) -> Dict[str, bool]:
+        status = {
+            'xlrd': False,
+            'extract_msg': False,
+            'openpyxl': False,
+            'python_docx': False,
+        }
+        try:
+            import xlrd  # type: ignore
+            status['xlrd'] = True
+        except Exception:
+            pass
+        try:
+            import extract_msg  # type: ignore
+            status['extract_msg'] = True
+        except Exception:
+            pass
+        try:
+            import openpyxl  # type: ignore
+            status['openpyxl'] = True
+        except Exception:
+            pass
+        try:
+            import docx  # type: ignore
+            status['python_docx'] = True
+        except Exception:
+            pass
+        return status
+
+    def _discover_all_parseable_sources(self) -> List[Path]:
+        """Discover all parseable source files regardless of processed index state."""
+        extensions = {
+            '.pdf', '.docx', '.doc', '.csv', '.xlsx', '.xls', '.zip', '.msg', '.eml', '.mbox',
+            '.txt', '.json', '.rtf', '.odt', '.ods', '.xml', '.yaml', '.yml', '.html', '.htm', '.md'
+        }
+        ignored_folders = {'incoming', 'completed', '__pycache__', '.git', '.venv', 'node_modules'}
+        skip_files = {'data_ingestion_tracker.py', 'README.md', '.gitignore', 'desktop.ini', 'Thumbs.db'}
+
+        discovered: List[Path] = []
+        for file_path in self.parser_root.rglob('*'):
+            if not file_path.is_file():
+                continue
+            if any(ignored in file_path.parts for ignored in ignored_folders):
+                continue
+            if file_path.name in skip_files:
+                continue
+            if file_path.name.startswith('~$') or file_path.name.startswith('.~lock.'):
+                continue
+            if '~$' in file_path.name:
+                continue
+            if file_path.suffix.lower() not in extensions:
+                continue
+            discovered.append(file_path)
+
+        return discovered
+
+    def _status_for_source(self, file_path: Path) -> str:
+        rel = str(file_path.relative_to(self.parser_root))
+        if rel in self.processed_sources:
+            return 'ingested'
+
+        if rel in self.failed_sources:
+            return 'pending_parse_error'
+
+        ext = file_path.suffix.lower()
+        if ext == '.xls' and not self.optional_dependency_status.get('xlrd', False):
+            return 'blocked_missing_dependency'
+        if ext == '.msg' and not self.optional_dependency_status.get('extract_msg', False):
+            return 'blocked_missing_dependency'
+        if ext == '.xlsx' and not self.optional_dependency_status.get('openpyxl', False):
+            return 'blocked_missing_dependency'
+        if ext == '.docx' and not self.optional_dependency_status.get('python_docx', False):
+            return 'blocked_missing_dependency'
+
+        return 'pending_not_attempted'
+
+    def generate_ingestion_status_manifest(self) -> Path:
+        """Generate full file-level ingestion status manifest for monitoring and trap hooks."""
+        all_sources = self._discover_all_parseable_sources()
+        rows = []
+        status_counts = {
+            'ingested': 0,
+            'pending_not_attempted': 0,
+            'pending_parse_error': 0,
+            'blocked_missing_dependency': 0,
+        }
+
+        for source in all_sources:
+            rel = str(source.relative_to(self.parser_root))
+            status = self._status_for_source(source)
+            status_counts[status] = status_counts.get(status, 0) + 1
+            rows.append(
+                {
+                    'source_path': rel,
+                    'file_name': source.name,
+                    'file_type': source.suffix.lower(),
+                    'size_bytes': source.stat().st_size if source.exists() else 0,
+                    'status': status,
+                    'indexed': rel in self.processed_sources,
+                    'failure_reason': (self.failed_sources.get(rel) or {}).get('reason', ''),
+                    'last_attempt': (self.failed_sources.get(rel) or {}).get('last_attempt', ''),
+                }
+            )
+
+        trap_flags = []
+        if status_counts.get('pending_not_attempted', 0) > 0:
+            trap_flags.append('pending_parser_data_detected')
+        if status_counts.get('pending_parse_error', 0) > 0:
+            trap_flags.append('parser_parse_error_backlog_detected')
+        if status_counts.get('blocked_missing_dependency', 0) > 0:
+            trap_flags.append('parser_blocked_by_missing_dependency')
+
+        payload = {
+            'created_at': datetime.now().isoformat(),
+            'parser_root': str(self.parser_root),
+            'output_root': str(self.output_root),
+            'processed_index_file': str(self.processed_index_file),
+            'processed_index_entries': len(self.processed_sources),
+            'optional_dependencies': self.optional_dependency_status,
+            'status_counts': status_counts,
+            'trap_flags': trap_flags,
+            'records': rows,
+        }
+
+        summary_payload = {
+            'created_at': payload['created_at'],
+            'parser_root': payload['parser_root'],
+            'output_root': payload['output_root'],
+            'processed_index_entries': payload['processed_index_entries'],
+            'optional_dependencies': payload['optional_dependencies'],
+            'status_counts': status_counts,
+            'trap_flags': trap_flags,
+        }
+
+        with open(self.status_manifest_file, 'w', encoding='utf-8') as f:
+            json.dump(payload, f, indent=2, ensure_ascii=False)
+        with open(self.status_summary_file, 'w', encoding='utf-8') as f:
+            json.dump(summary_payload, f, indent=2, ensure_ascii=False)
+
+        logger.info(f"Ingestion status manifest saved: {self.status_manifest_file}")
+        logger.info(f"Ingestion status summary saved: {self.status_summary_file}")
+        return self.status_manifest_file
+
+    def _load_processed_sources(self) -> set:
+        """Load previously processed source paths from index file."""
+        if not self.processed_index_file.exists():
+            return set()
+
+        processed = set()
+        try:
+            with open(self.processed_index_file, 'r', encoding='utf-8') as f:
+                for line in f:
+                    source = line.strip()
+                    if source:
+                        processed.add(source)
+        except Exception as e:
+            logger.warning(f"Could not load processed index: {e}")
+        return processed
+
+    def _load_failed_sources(self) -> Dict[str, Dict[str, Any]]:
+        """Load previously failed source paths and reasons from index file."""
+        if not self.failed_index_file.exists():
+            return {}
+
+        try:
+            raw = json.loads(self.failed_index_file.read_text(encoding='utf-8'))
+            if isinstance(raw, dict):
+                normalized: Dict[str, Dict[str, Any]] = {}
+                for source_path, details in raw.items():
+                    if not isinstance(source_path, str):
+                        continue
+                    if not isinstance(details, dict):
+                        details = {}
+                    normalized[source_path] = {
+                        'status': str(details.get('status') or 'error'),
+                        'reason': str(details.get('reason') or ''),
+                        'last_attempt': str(details.get('last_attempt') or ''),
+                    }
+                return normalized
+        except Exception as e:
+            logger.warning(f"Could not load failed index: {e}")
+        return {}
+
+    def _save_failed_sources(self) -> None:
+        try:
+            with open(self.failed_index_file, 'w', encoding='utf-8') as f:
+                json.dump(self.failed_sources, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.warning(f"Could not save failed index: {e}")
+
+    def _mark_failed_source(self, source_path: str, status: str, reason: str) -> None:
+        self.failed_sources[source_path] = {
+            'status': status,
+            'reason': reason,
+            'last_attempt': datetime.now().isoformat(),
+        }
+
+    def _clear_failed_source(self, source_path: str) -> None:
+        if source_path in self.failed_sources:
+            self.failed_sources.pop(source_path, None)
+
+    def _append_processed_source(self, source_path: str) -> None:
+        """Append a processed source path to index file."""
+        try:
+            with open(self.processed_index_file, 'a', encoding='utf-8') as f:
+                f.write(source_path + '\n')
+        except Exception as e:
+            logger.warning(f"Could not update processed index: {e}")
 
     def discover_source_files(self) -> Dict[str, List[Path]]:
         """
@@ -75,6 +297,7 @@ class AutomatedParserEngine:
             '.csv': 'CSV',
             '.xlsx': 'XLSX',
             '.xls': 'XLS',      # NEW: Legacy Excel
+            '.zip': 'ZIP',      # NEW: Archive bundles (e.g., LinkedIn exports)
             '.msg': 'MSG',
             '.eml': 'EML',      # NEW: Email files
             '.mbox': 'MBOX',    # NEW: Mailbox archives
@@ -111,9 +334,22 @@ class AutomatedParserEngine:
             if file_path.name in skip_files:
                 continue
 
+            # Skip Office/LibreOffice temp lock files and similar volatile artifacts
+            if file_path.name.startswith('~$') or file_path.name.startswith('.~lock.'):
+                continue
+
+            # Skip if name contains embedded temp markers (e.g., 123_~$foo.docx)
+            if '~$' in file_path.name:
+                continue
+
             # Check extension
             ext = file_path.suffix.lower()
             if ext in extensions:
+                source_rel_path = str(file_path.relative_to(self.parser_root))
+                if source_rel_path in self.processed_sources:
+                    self.results['skipped_existing'] += 1
+                    continue
+
                 file_type = extensions[ext]
                 if file_type not in source_files:
                     source_files[file_type] = []
@@ -180,12 +416,14 @@ class AutomatedParserEngine:
                         'status': 'skipped'
                     }
         except Exception as e:
-            logger.error(f"PDF parsing error {file_path.name}: {str(e)}")
+            err_msg = str(e)
+            logger.error(f"PDF parsing error {file_path.name}: {err_msg}")
+            status = 'skipped' if ('no /root object' in err_msg.lower() or 'seek of closed file' in err_msg.lower()) else 'error'
             return {
                 'file_name': file_path.name,
                 'file_type': 'PDF',
-                'error': str(e),
-                'status': 'error'
+                'error': err_msg,
+                'status': status
             }
 
     def parse_docx(self, file_path: Path) -> Dict[str, Any]:
@@ -222,47 +460,52 @@ class AutomatedParserEngine:
                 'status': 'skipped'
             }
         except Exception as e:
-            logger.error(f"DOCX parsing error {file_path.name}: {str(e)}")
+            err_msg = str(e)
+            logger.error(f"DOCX parsing error {file_path.name}: {err_msg}")
+            # Treat corrupt/non-zip docx as skipped instead of fatal
+            status = 'skipped' if 'zip file' in err_msg.lower() else 'error'
             return {
                 'file_name': file_path.name,
                 'file_type': 'DOCX',
-                'error': str(e),
-                'status': 'error'
+                'error': err_msg,
+                'status': status
             }
 
     def parse_doc(self, file_path: Path) -> Dict[str, Any]:
         """Extract text from DOC (try to convert or use fallback)"""
-        try:
-            # Try to use python-docx if it's actually a DOCX
-            return self.parse_docx(file_path)
-        except Exception:
-            # Fallback: try to read as text
-            try:
-                with open(file_path, 'rb') as f:
-                    content = f.read()
-                    # Try to extract readable text
-                    text = ''.join(chr(b) for b in content if 32 <= b < 127)
+        # Try python-docx first in case a .doc is actually OOXML content.
+        docx_result = self.parse_docx(file_path)
+        if docx_result.get('status') not in {'error', 'skipped'}:
+            docx_result['file_type'] = 'DOC'
+            return docx_result
 
-                    return {
-                        'file_name': file_path.name,
-                        'file_type': 'DOC',
-                        'text': text.strip(),
-                        'extraction_method': 'binary_fallback',
-                        'note': 'Limited text extraction from binary format'
-                    }
-            except Exception as e:
-                logger.error(f"DOC parsing error {file_path.name}: {str(e)}")
-                return {
-                    'file_name': file_path.name,
-                    'file_type': 'DOC',
-                    'error': str(e),
-                    'status': 'error'
-                }
+        # Fallback: extract printable text from binary payload.
+        try:
+            with open(file_path, 'rb') as f:
+                content = f.read()
+                text = ''.join(chr(b) for b in content if 32 <= b < 127)
+
+            return {
+                'file_name': file_path.name,
+                'file_type': 'DOC',
+                'text': text.strip(),
+                'extraction_method': 'binary_fallback',
+                'note': 'Limited text extraction from legacy binary DOC format'
+            }
+        except Exception as e:
+            logger.error(f"DOC parsing error {file_path.name}: {str(e)}")
+            return {
+                'file_name': file_path.name,
+                'file_type': 'DOC',
+                'error': str(e),
+                'status': 'error'
+            }
 
     def parse_csv(self, file_path: Path) -> Dict[str, Any]:
         """Parse CSV data"""
         try:
             import csv
+            csv.field_size_limit(1024 * 1024)  # raise limit for large fields
 
             rows = []
             headers = []
@@ -343,6 +586,11 @@ class AutomatedParserEngine:
             from extract_msg import Message
 
             msg = Message(file_path)
+            attachments = []
+            if hasattr(msg, 'attachments'):
+                for att in msg.attachments:
+                    name = getattr(att, 'filename', None) or getattr(att, 'longFilename', None) or ''
+                    attachments.append(name)
 
             return {
                 'file_name': file_path.name,
@@ -354,7 +602,7 @@ class AutomatedParserEngine:
                 'bcc': msg.bcc or [],
                 'body': msg.body,
                 'date': str(msg.date) if hasattr(msg, 'date') else None,
-                'attachments': [att.filename for att in msg.attachments] if hasattr(msg, 'attachments') else [],
+                'attachments': attachments,
                 'extraction_method': 'extract_msg'
             }
         except ImportError:
@@ -787,6 +1035,83 @@ class AutomatedParserEngine:
                 'error': str(e),
                 'status': 'error'
             }
+
+    def parse_zip(self, file_path: Path) -> Dict[str, Any]:
+        """Parse ZIP archive and extract text-like content from supported inner files."""
+        try:
+            supported_text_exts = {'.txt', '.csv', '.json', '.md', '.html', '.htm', '.xml', '.eml'}
+            entries = []
+            aggregate_chunks = []
+
+            with zipfile.ZipFile(file_path, 'r') as zf:
+                for info in zf.infolist():
+                    if info.is_dir():
+                        continue
+
+                    inner_name = info.filename
+                    inner_ext = Path(inner_name).suffix.lower()
+                    if inner_ext not in supported_text_exts:
+                        continue
+
+                    try:
+                        raw = zf.read(info)
+                        text = raw.decode('utf-8', errors='ignore')
+                    except Exception:
+                        continue
+
+                    if not text.strip():
+                        continue
+
+                    # Special handling for CSV summary
+                    row_count = None
+                    if inner_ext == '.csv':
+                        try:
+                            row_count = sum(1 for _ in csv.reader(io.StringIO(text)))
+                        except Exception:
+                            row_count = None
+
+                    preview = text[:5000]
+                    entries.append({
+                        'entry_name': inner_name,
+                        'entry_size': info.file_size,
+                        'row_count': row_count,
+                        'preview': preview,
+                    })
+
+                    aggregate_chunks.append(f"\n--- {inner_name} ---\n")
+                    aggregate_chunks.append(preview)
+
+            if not entries:
+                return {
+                    'file_name': file_path.name,
+                    'file_type': 'ZIP',
+                    'status': 'skipped',
+                    'error': 'No supported text-like entries found in archive'
+                }
+
+            return {
+                'file_name': file_path.name,
+                'file_type': 'ZIP',
+                'entry_count': len(entries),
+                'entries': entries[:200],
+                'text': '\n'.join(aggregate_chunks)[:50000],
+                'extraction_method': 'zipfile',
+            }
+        except zipfile.BadZipFile:
+            return {
+                'file_name': file_path.name,
+                'file_type': 'ZIP',
+                'status': 'error',
+                'error': 'Invalid ZIP archive'
+            }
+        except Exception as e:
+            logger.error(f"ZIP parsing error {file_path.name}: {str(e)}")
+            return {
+                'file_name': file_path.name,
+                'file_type': 'ZIP',
+                'error': str(e),
+                'status': 'error'
+            }
     # HELPER METHODS
 
     def compute_hash(self, file_path: Path) -> str:
@@ -802,20 +1127,27 @@ class AutomatedParserEngine:
         Filename: {original_name}_{timestamp}.json
         """
         timestamp = int(datetime.now().timestamp() * 1000)
-        output_name = f"{file_path.stem}_{timestamp}.json"
+        safe_stem = re.sub(r'[\\/:*?"<>|\r\n\t]+', '_', file_path.stem)
+        safe_stem = re.sub(r'\s+', ' ', safe_stem).strip(' ._') or 'unnamed'
+        safe_stem = safe_stem[:120]
+        output_name = f"{safe_stem}_{timestamp}.json"
         output_file = self.output_root / output_name
 
+        source_path = str(file_path.relative_to(self.parser_root))
         json_data = {
             'source_file': file_path.name,
-            'source_path': str(file_path.relative_to(self.parser_root)),
+            'source_path': source_path,
             'file_type': extracted_data.get('file_type'),
-            'file_hash': self.compute_hash(file_path),
+            'file_hash': self.compute_hash(file_path) if file_path.exists() else None,
             'extracted_data': extracted_data,
             'processed_at': datetime.now().isoformat()
         }
 
         with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(json_data, f, indent=2, ensure_ascii=False)
+            json.dump(json_data, f, indent=2, ensure_ascii=False, default=str)
+
+        self.processed_sources.add(source_path)
+        self._append_processed_source(source_path)
 
         return output_file
 
@@ -837,6 +1169,7 @@ class AutomatedParserEngine:
 
         if self.results['total_files'] == 0:
             logger.warning("No parseable files found!")
+            self.generate_ingestion_status_manifest()
             return self.results
 
         # Step 2: Process each file
@@ -860,17 +1193,34 @@ class AutomatedParserEngine:
                 try:
                     logger.info(f"[{file_count}/{self.results['total_files']}] Processing: {file_path.name}")
 
+                    if not file_path.exists():
+                        logger.warning("  SKIPPED: File no longer exists")
+                        self.results['skipped'] += 1
+                        continue
+
                     # Parse file
                     extracted = parser_method(file_path)
 
                     # Check for errors
                     if extracted.get('status') == 'skipped':
                         logger.warning(f"  SKIPPED: {extracted.get('error', 'Unknown reason')}")
+                        source_rel_path = str(file_path.relative_to(self.parser_root))
+                        self._mark_failed_source(
+                            source_rel_path,
+                            status='skipped',
+                            reason=str(extracted.get('error', 'Unknown reason')),
+                        )
                         self.results['skipped'] += 1
                         continue
 
                     if extracted.get('status') == 'error':
                         logger.error(f"  ERROR: {extracted.get('error')}")
+                        source_rel_path = str(file_path.relative_to(self.parser_root))
+                        self._mark_failed_source(
+                            source_rel_path,
+                            status='error',
+                            reason=str(extracted.get('error') or ''),
+                        )
                         self.results['errors'].append({
                             'file': file_path.name,
                             'error': extracted.get('error')
@@ -879,18 +1229,24 @@ class AutomatedParserEngine:
 
                     # Save as JSON
                     output_file = self.save_as_json(file_path, extracted)
+                    source_rel_path = str(file_path.relative_to(self.parser_root))
+                    self._clear_failed_source(source_rel_path)
                     self.results['processed'] += 1
                     logger.info(f"  âœ“ Saved to {output_file.name}")
 
                 except Exception as e:
                     logger.error(f"  FATAL: {str(e)}")
+                    source_rel_path = str(file_path.relative_to(self.parser_root))
+                    self._mark_failed_source(source_rel_path, status='error', reason=str(e))
                     self.results['errors'].append({
                         'file': file_path.name,
                         'error': str(e)
                     })
 
         # Step 3: Generate report
+        self._save_failed_sources()
         self.generate_report()
+        self.generate_ingestion_status_manifest()
 
         return self.results
 
@@ -924,6 +1280,7 @@ class AutomatedParserEngine:
         logger.info(f"Total files: {total}")
         logger.info(f"Successfully parsed: {success_count}")
         logger.info(f"Skipped: {self.results['skipped']}")
+        logger.info(f"Skipped existing: {self.results.get('skipped_existing', 0)}")
         logger.info(f"Failed: {len(self.results['errors'])}")
         logger.info(f"Success rate: {success_rate:.1f}%")
         logger.info(f"Report saved: {report_file}")

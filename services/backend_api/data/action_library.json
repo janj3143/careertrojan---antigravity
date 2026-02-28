@@ -1,0 +1,78 @@
+[
+  {
+    "action_id": "A01_quantify_outcomes",
+    "title": "Quantify outcomes in recent role",
+    "description": "Add quantified results in recent experience bullets.",
+    "axis_effects": {"evidence_strength": 25, "clarity_structure": 8},
+    "steps": [
+      "Select top 3 bullets from your latest role.",
+      "Rewrite using baseline, action, and measurable result."
+    ],
+    "example_prompts": [
+      "What metric moved and by how much?",
+      "What was the scope of change?"
+    ],
+    "tags": ["cv_edit", "high_roi"],
+    "meta": {"time_minutes": 30, "complexity": 2, "dependency": 0.1}
+  },
+  {
+    "action_id": "A02_fix_keyword_gaps",
+    "title": "Fix top keyword gaps",
+    "description": "Add missing high-signal target terms to summary, skills, and proof bullets.",
+    "axis_effects": {"ats_coverage": 22, "role_fit": 10},
+    "steps": [
+      "Take top 10 missing terms from JD heatmap.",
+      "Integrate terms only where evidence exists."
+    ],
+    "example_prompts": [
+      "Which missing terms can you evidence with a result?"
+    ],
+    "tags": ["ats", "targeting"],
+    "meta": {"time_minutes": 45, "complexity": 2, "dependency": 0.2}
+  },
+  {
+    "action_id": "A03_add_project_proof",
+    "title": "Add project proof blocks",
+    "description": "Add two problem-action-result project proof blocks for target competencies.",
+    "axis_effects": {"project_proof": 20, "domain_fit": 10, "evidence_strength": 10},
+    "steps": [
+      "Choose two highly relevant projects.",
+      "Describe problem, action, tools, and measurable result."
+    ],
+    "example_prompts": [
+      "What changed after your contribution?"
+    ],
+    "tags": ["portfolio", "proof"],
+    "meta": {"time_minutes": 60, "complexity": 3, "dependency": 0.2}
+  },
+  {
+    "action_id": "A04_reorder_for_relevance",
+    "title": "Reorder CV for target relevance",
+    "description": "Move target-relevant work higher and compress low-signal history.",
+    "axis_effects": {"clarity_structure": 15, "role_fit": 12},
+    "steps": [
+      "Move top-relevance roles and projects earlier.",
+      "Condense lower relevance sections."
+    ],
+    "example_prompts": [
+      "Which two experiences best match target requirements?"
+    ],
+    "tags": ["structure"],
+    "meta": {"time_minutes": 25, "complexity": 2, "dependency": 0.0}
+  },
+  {
+    "action_id": "A05_fix_consistency",
+    "title": "Fix timeline and consistency signals",
+    "description": "Standardize dates and explain key transitions for consistency.",
+    "axis_effects": {"consistency": 25, "clarity_structure": 10},
+    "steps": [
+      "Apply one date format across all entries.",
+      "Add one-line context for major transitions."
+    ],
+    "example_prompts": [
+      "Where would a recruiter question continuity?"
+    ],
+    "tags": ["hygiene"],
+    "meta": {"time_minutes": 20, "complexity": 1, "dependency": 0.0}
+  }
+]

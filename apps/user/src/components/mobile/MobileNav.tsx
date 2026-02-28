@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
     Menu, X, Home, LayoutDashboard, FileText, Briefcase, Brain,
-    Users, Award, CreditCard, User, LogOut, BarChart3, Rocket
+    Users, Award, CreditCard, User, LogOut, BarChart3, Rocket, BookOpen
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -16,6 +16,7 @@ const NAV_ITEMS = [
     { to: '/dual-career', icon: Rocket, label: 'Dual Career', auth: true },
     { to: '/rewards', icon: Award, label: 'Rewards', auth: true },
     { to: '/visuals', icon: BarChart3, label: 'Analytics', auth: true },
+    { to: '/glossary', icon: BookOpen, label: 'Glossary', auth: true },
     { to: '/payment', icon: CreditCard, label: 'Billing', auth: true },
     { to: '/profile', icon: User, label: 'Profile', auth: true },
 ];

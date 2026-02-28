@@ -1,7 +1,7 @@
 # ═══════════════════════════════════════════════════════════════
 # Start-And-Map.ps1  — CareerTrojan Runtime Launcher (Windows)
 # ═══════════════════════════════════════════════════════════════
-# 1. Validates drive connections (L:, E:, C:\careertrojan)
+# 1. Validates drive connections (L:, E:, runtime root)
 # 2. Verifies data-mount junctions
 # 3. Ensures USER DATA directory structure exists
 # 4. Starts the sync trap (L: ↔ E: user data mirror)
@@ -9,8 +9,22 @@
 # ═══════════════════════════════════════════════════════════════
 
 $ErrorActionPreference = "Stop"
-$APP_ROOT = "C:\careertrojan"
+$APP_ROOT = Resolve-Path (Join-Path $PSScriptRoot "..")
 $ENV_FILE = Join-Path $APP_ROOT ".env"
+
+function Resolve-Python {
+    $candidates = @(
+        "J:\Python311\python.exe",
+        (Join-Path $APP_ROOT ".venv-j\Scripts\python.exe"),
+        (Join-Path $APP_ROOT ".venv\Scripts\python.exe")
+    )
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) { return $candidate }
+    }
+    $cmd = Get-Command python -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    return $null
+}
 
 Write-Host ""
 Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
@@ -32,9 +46,9 @@ if (Test-Path $ENV_FILE) {
 
 # ── 2. Validate Drive Connections ─────────────────────────────
 $drives = @{
-    "L: (Source of Truth)" = "L:\VS ai_data final - version"
-    "E: (Mirror Backup)"  = "E:\CareerTrojan"
-    "C: (App Root)"        = $APP_ROOT
+    "L: (Source of Truth)" = if ($env:CAREERTROJAN_DATA_ROOT) { $env:CAREERTROJAN_DATA_ROOT } else { "L:\Codec-Antigravity Data set" }
+    "E: (Mirror Backup)"   = if ($env:CAREERTROJAN_USER_DATA_MIRROR) { Split-Path $env:CAREERTROJAN_USER_DATA_MIRROR -Parent } else { "E:\CareerTrojan" }
+    "Runtime Root"         = "$APP_ROOT"
 }
 
 $allDrivesOK = $true
@@ -64,8 +78,8 @@ foreach ($name in $mounts.Keys) {
     $mp = $mounts[$name]
     if (Test-Path $mp) {
         $item = Get-Item $mp
-        if ($item.LinkType -eq "Junction") {
-            Write-Host "[OK] Junction: $name → $($item.Target)" -ForegroundColor Green
+        if ($item.LinkType -eq "Junction" -or $item.LinkType -eq "SymbolicLink") {
+            Write-Host "[OK] Link: $name → $($item.Target)" -ForegroundColor Green
         } else {
             Write-Host "[OK] Directory: $name (not a junction)" -ForegroundColor Yellow
         }
@@ -97,13 +111,7 @@ foreach ($root in @($primaryUD, $mirrorUD)) {
 }
 
 # ── 5. Start Sync Trap (background) ──────────────────────────
-$PYTHON = if (Test-Path "C:\careertrojan\infra\python\python.exe") {
-    "C:\careertrojan\infra\python\python.exe"
-} elseif (Get-Command python -ErrorAction SilentlyContinue) {
-    "python"
-} else {
-    $null
-}
+$PYTHON = Resolve-Python
 
 if ($PYTHON) {
     $syncScript = Join-Path $APP_ROOT "scripts\sync_user_data.py"
@@ -129,5 +137,9 @@ Write-Host ""
 Write-Host "[START] FastAPI backend on ${Host_}:${Port}" -ForegroundColor Cyan
 Set-Location $APP_ROOT
 
-& $PYTHON -m uvicorn services.backend_api.main:app --host $Host_ --port $Port --reload
+if ($PYTHON) {
+    & $PYTHON -m uvicorn services.backend_api.main:app --host $Host_ --port $Port --reload
+} else {
+    Write-Error "Python not found. Expected J:\Python311\python.exe or project-local venv."
+}
 

@@ -3,9 +3,12 @@ import sys
 from fastapi import FastAPI, HTTPException, status
 from loguru import logger
 
+from services.shared.paths import CareerTrojanPaths
+
 # --- Configuration & Environment Validation ---
-DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "/data/ai_data_final")
-WORKING_ROOT = os.getenv("CAREERTROJAN_WORKING_ROOT", "/data/working_copy")
+_paths = CareerTrojanPaths()
+DATA_ROOT = str(_paths.ai_data_final)
+WORKING_ROOT = str(_paths.working_root)
 ALLOW_MOCK_DATA = os.getenv("ALLOW_MOCK_DATA", "false").lower() == "true"
 
 def validate_runtime_state():

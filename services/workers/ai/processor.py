@@ -2,7 +2,12 @@ import os
 import time
 import logging
 import threading
+import json
+import asyncio
+from pathlib import Path
 from typing import Set
+
+from services.backend_api.utils.file_parser import extract_text_from_upload
 
 logger = logging.getLogger("processor")
 
@@ -11,21 +16,12 @@ class ResumeProcessor:
         self.redis = redis_client
         self.data_root = os.getenv("CAREERTROJAN_DATA_ROOT", "/data/ai_data_final")
         self.parser_dir = os.path.join(self.data_root, "automated_parser")
+        self.output_dir = Path(self.data_root) / "ai_data_final"
+        self.output_dir.mkdir(parents=True, exist_ok=True)
         self.processed_files: Set[str] = set()
 
     def start_monitoring(self):
         """Monitors the automated_parser directory for new files."""
-        # For local testing if mount fails or is different in dev
-        if not os.path.exists(self.parser_dir):
-            # Try to recover or create if allowed (usually read-only mount though)
-            logger.warning(f"Parser directory not found at {self.parser_dir}. Checking for local override...")
-            # Fallback for dev environment without full mounts
-            local_fallback = os.path.join(
-                os.getenv("CAREERTROJAN_ROOT", os.getcwd()), "working", "automated_parser"
-            )
-            if os.path.exists(local_fallback):
-                 self.parser_dir = local_fallback
-
         if not os.path.exists(self.parser_dir):
             logger.error(f"Parser directory NOT FOUND: {self.parser_dir}")
             return
@@ -55,6 +51,29 @@ class ResumeProcessor:
             self.processed_files.add(filename)
 
     def _process_file(self, filepath: str, filename: str):
-        """Mock processing logic."""
+        """Parse a resume file into ai_data_final JSON."""
         logger.info(f"Processing {filename}...")
-        logger.info(f"Successfully processed {filename}")
+        file_path = Path(filepath)
+        try:
+            file_bytes = file_path.read_bytes()
+            text = asyncio.run(extract_text_from_upload(file_bytes, filename))
+        except Exception as exc:
+            logger.error(f"Parsing failed for {filename}: {exc}")
+            return
+
+        if not text:
+            logger.error(f"No extractable text for {filename}")
+            return
+
+        payload = {
+            "source_file": filename,
+            "source_path": str(file_path),
+            "file_type": file_path.suffix.lower().lstrip("."),
+            "extracted_text": text,
+            "processed_at": time.time(),
+        }
+
+        output_name = f"{file_path.stem}_{int(time.time() * 1000)}.json"
+        output_path = self.output_dir / output_name
+        output_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        logger.info(f"Saved parsed output: {output_path}")

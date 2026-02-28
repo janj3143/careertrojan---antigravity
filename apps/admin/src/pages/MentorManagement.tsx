@@ -38,7 +38,7 @@ export default function MentorManagement() {
 
     const handleApprove = async (applicationId: string) => {
         try {
-            await fetch(`/api/admin/mentor-applications/${applicationId}/approve`, {
+            await fetch(`/api/mentorship/v1/applications/${applicationId}/approve`, {
                 method: 'POST'
             });
             await fetchApplications();
@@ -49,7 +49,7 @@ export default function MentorManagement() {
 
     const handleReject = async (applicationId: string) => {
         try {
-            await fetch(`/api/admin/mentor-applications/${applicationId}/reject`, {
+            await fetch(`/api/mentorship/v1/applications/${applicationId}/reject`, {
                 method: 'POST'
             });
             await fetchApplications();

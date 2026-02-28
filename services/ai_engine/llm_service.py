@@ -69,7 +69,8 @@ class OpenAIService(BaseLLMService):
 
 class AnthropicService(BaseLLMService):
     def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY")
+        # Accept both canonical Anthropic env var and legacy Claude alias.
+        self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY")
         if not self.api_key:
             print("⚠️ AnthropicService initialized without API Key.")
         

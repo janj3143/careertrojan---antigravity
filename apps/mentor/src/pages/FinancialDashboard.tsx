@@ -30,12 +30,12 @@ export default function FinancialDashboard() {
         try {
             setLoading(true);
             // Get mentor profile first
-            const profileRes = await fetch(`/api/mentor/profile-by-user/${user?.id}`);
+            const profileRes = await fetch(`/api/mentor/v1/profile-by-user/${user?.id}`);
             if (!profileRes.ok) throw new Error('Failed to fetch profile');
             const profile = await profileRes.json();
 
             // Get invoices from mentorship API
-            const invoicesRes = await fetch(`/api/v1/mentorship/invoices/mentor/${profile.mentor_profile_id}`);
+            const invoicesRes = await fetch(`/api/mentorship/v1/invoices/mentor/${profile.mentor_profile_id}`);
             if (invoicesRes.ok) {
                 const data = await invoicesRes.json();
                 setInvoices(data.invoices || []);

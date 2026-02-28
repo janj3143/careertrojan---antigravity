@@ -1,0 +1,332 @@
+# Endpoint Bridge Touchpoint Map
+
+## Coverage Mismatches From Topology
+- Admin unmatched: 0
+- User unmatched: 0
+- Mentor unmatched: 0
+
+## Bridge Touchpoint Inventory
+### `portal_bridge` (147 hits)
+- `apps/admin/pages/00_Home.py:33` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/00_Home.py:43` — return None, "portal_bridge client not available"
+- `apps/admin/pages/00_Home.py:52` — return None, "portal_bridge client not available"
+- `apps/admin/pages/01_Service_Status_Monitor.py:20` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/01_Service_Status_Monitor.py:30` — return None, "portal_bridge client not available"
+- `apps/admin/pages/01_Service_Status_Monitor.py:39` — return None, "portal_bridge client not available"
+- `apps/admin/pages/02_Analytics.py:34` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/02_Analytics.py:44` — return None, "portal_bridge client not available"
+- `apps/admin/pages/02_Analytics.py:53` — return None, "portal_bridge client not available"
+- `apps/admin/pages/03_User_Management.py:40` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/03_User_Management.py:50` — return None, "portal_bridge client not available"
+- `apps/admin/pages/03_User_Management.py:59` — return None, "portal_bridge client not available"
+- `apps/admin/pages/04_Compliance_Audit.py:23` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/04_Compliance_Audit.py:33` — return None, "portal_bridge client not available"
+- `apps/admin/pages/04_Compliance_Audit.py:42` — return None, "portal_bridge client not available"
+- `apps/admin/pages/05_Email_Integration.py:9` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/05_Email_Integration.py:19` — return None, "portal_bridge client not available"
+- `apps/admin/pages/05_Email_Integration.py:28` — return None, "portal_bridge client not available"
+- `apps/admin/pages/06_Complete_Data_Parser.py:52` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/06_Complete_Data_Parser.py:62` — return None, "portal_bridge client not available"
+- `apps/admin/pages/06_Complete_Data_Parser.py:71` — return None, "portal_bridge client not available"
+- `apps/admin/pages/07_Batch_Processing.py:26` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/07_Batch_Processing.py:36` — return None, "portal_bridge client not available"
+- `apps/admin/pages/07_Batch_Processing.py:45` — return None, "portal_bridge client not available"
+- `apps/admin/pages/08_AI_Enrichment.py:38` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/08_AI_Enrichment.py:48` — return None, "portal_bridge client not available"
+- `apps/admin/pages/08_AI_Enrichment.py:57` — return None, "portal_bridge client not available"
+- `apps/admin/pages/09_AI_Content_Generator.py:37` — from portal_bridge.python.intellicv_api_client import IntelliCVApiClient  # preferred
+- `apps/admin/pages/09_AI_Content_Generator.py:47` — return None, "portal_bridge client not available"
+- `apps/admin/pages/09_AI_Content_Generator.py:56` — return None, "portal_bridge client not available"
+- `apps/admin/pages/23_Intelligence_Hub.py:51` — from shared_backend.services.portal_bridge import portal_bridge
+- `apps/admin/pages/23_Intelligence_Hub.py:294` — metrics = portal_bridge.get_performance_metrics()
+- `apps/admin/pages/23_Intelligence_Hub.py:369` — "🌉 Portal Bridge Intelligence": "portal_bridge",
+- `apps/admin/pages/23_Intelligence_Hub.py:451` — elif service_type == "portal_bridge":
+- `apps/admin/pages/23_Intelligence_Hub.py:452` — render_portal_bridge_details(ai_details)
+- `apps/admin/pages/23_Intelligence_Hub.py:927` — metrics = portal_bridge.get_performance_metrics()
+- `apps/admin/pages/23_Intelligence_Hub.py:1161` — def render_portal_bridge_details(ai_details):
+- `apps/admin/pages/26_Unified_Analytics_Dashboard.py:215` — portal_bridge_status = service_metrics.get("portal_bridge", {}).get("status", "Unknown")
+- `apps/admin/pages/26_Unified_Analytics_Dashboard.py:216` — st.metric("Portal Bridge", portal_bridge_status)
+- `apps/admin/pages/99_tools/career_intelligence_update.py:26` — from shared_backend.services.portal_bridge import IntelligenceService
+- `apps/admin/pages/99_tools/career_intelligence_update.py:28` — PORTAL_BRIDGE_AVAILABLE = True
+- `apps/admin/pages/99_tools/career_intelligence_update.py:30` — PORTAL_BRIDGE_AVAILABLE = False
+- `apps/admin/pages/99_tools/career_intelligence_update.py:103` — # Call portal_bridge for career analysis
+- `apps/admin/pages/99_tools/career_intelligence_update.py:104` — if PORTAL_BRIDGE_AVAILABLE and intelligence_service:
+- `apps/admin/pages/99_tools/update_portal_integration.py:4` — Updates all user portal pages to use portal_bridge for admin backend integration.
+- `apps/admin/pages/99_tools/update_portal_integration.py:10` — # Pages that need portal_bridge integration
+- `apps/admin/pages/99_tools/update_portal_integration.py:14` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:17` — 'Replace local parsing with portal_bridge.resume.parse()',
+- `apps/admin/pages/99_tools/update_portal_integration.py:18` — 'Replace local analysis with portal_bridge.resume.analyze()'
+- `apps/admin/pages/99_tools/update_portal_integration.py:23` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:26` — 'Replace local enrichment with portal_bridge.intelligence.enrich()',
+- `apps/admin/pages/99_tools/update_portal_integration.py:27` — 'Replace local market intel with portal_bridge.intelligence.get_market_intelligence()'
+- `apps/admin/pages/99_tools/update_portal_integration.py:32` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:35` — 'Replace local chat with portal_bridge.chat.ask()',
+- `apps/admin/pages/99_tools/update_portal_integration.py:36` — 'Replace local coaching with portal_bridge.chat.get_coaching_advice()'
+- `apps/admin/pages/99_tools/update_portal_integration.py:41` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:44` — 'Use portal_bridge.intelligence.analyze_career() for trajectory analysis'
+- `apps/admin/pages/99_tools/update_portal_integration.py:49` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:52` — 'Use backend cloud maker via portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:57` — print("User Portal Pages requiring portal_bridge integration:")
+- `apps/admin/pages/shared/ai_data_integration_status.py:66` — "data_source": "portal_bridge (backend services)",
+- `apps/admin/pages/shared/ai_data_integration_status.py:111` — st.markdown("🌐 **portal_bridge** - Backend services")
+- `apps/admin/scripts/career_intelligence_update.py:26` — from shared_backend.services.portal_bridge import IntelligenceService
+- `apps/admin/scripts/career_intelligence_update.py:28` — PORTAL_BRIDGE_AVAILABLE = True
+- `apps/admin/scripts/career_intelligence_update.py:30` — PORTAL_BRIDGE_AVAILABLE = False
+- `apps/admin/scripts/career_intelligence_update.py:103` — # Call portal_bridge for career analysis
+- `apps/admin/scripts/career_intelligence_update.py:104` — if PORTAL_BRIDGE_AVAILABLE and intelligence_service:
+- `apps/admin/scripts/update_portal_integration.py:4` — Updates all user portal pages to use portal_bridge for admin backend integration.
+- `apps/admin/scripts/update_portal_integration.py:10` — # Pages that need portal_bridge integration
+- `apps/admin/scripts/update_portal_integration.py:14` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:17` — 'Replace local parsing with portal_bridge.resume.parse()',
+- `apps/admin/scripts/update_portal_integration.py:18` — 'Replace local analysis with portal_bridge.resume.analyze()'
+- `apps/admin/scripts/update_portal_integration.py:23` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:26` — 'Replace local enrichment with portal_bridge.intelligence.enrich()',
+- `apps/admin/scripts/update_portal_integration.py:27` — 'Replace local market intel with portal_bridge.intelligence.get_market_intelligence()'
+- `apps/admin/scripts/update_portal_integration.py:32` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:35` — 'Replace local chat with portal_bridge.chat.ask()',
+- `apps/admin/scripts/update_portal_integration.py:36` — 'Replace local coaching with portal_bridge.chat.get_coaching_advice()'
+- `apps/admin/scripts/update_portal_integration.py:41` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:44` — 'Use portal_bridge.intelligence.analyze_career() for trajectory analysis'
+- ... 67 more
+
+### `shared_backend` (93 hits)
+- `apps/admin/backend/api/routes/mentorship_routes.py:20` — from shared_backend.services.mentorship_service import MentorshipService
+- `apps/admin/backend/api/routes/mentorship_routes.py:21` — from shared_backend.database.exa_db import get_db_connection
+- `apps/admin/modules/intelligence/company_intelligence.py:16` — from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore
+- `apps/admin/pages/06_Complete_Data_Parser.py:91` — # Add shared_backend to Python path for backend services
+- `apps/admin/pages/06_Complete_Data_Parser.py:94` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/08_AI_Enrichment.py:136` — # Add shared_backend to Python path for backend services
+- `apps/admin/pages/08_AI_Enrichment.py:139` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/17_Mentor_Management.py:92` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/18_Job_Title_AI_Integration.py:31` — # Add shared_backend to Python path for backend services
+- `apps/admin/pages/18_Job_Title_AI_Integration.py:32` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/21_AI_Model_Training_Review.py:38` — # Add shared_backend to Python path for backend services
+- `apps/admin/pages/21_AI_Model_Training_Review.py:41` — backend_path = Path(__file__).parent.parent / "shared_backend"
+- `apps/admin/pages/21_AI_Model_Training_Review.py:47` — backend_path = Path(__file__).parent.parent.parent / 'shared_backend'
+- `apps/admin/pages/23_Intelligence_Hub.py:51` — from shared_backend.services.portal_bridge import portal_bridge
+- `apps/admin/pages/25_Exa_Web_Intelligence.py:43` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/25_Exa_Web_Intelligence.py:62` — from shared_backend.queue.knowledge_hole_queue import get_knowledge_hole_queue_manager
+- `apps/admin/pages/25_Exa_Web_Intelligence.py:67` — from shared_backend.workers.knowledge_hole_worker import process_one_job
+- `apps/admin/pages/25_Exa_Web_Intelligence.py:384` — st.caption("Always-on worker command: `python shared_backend/workers/knowledge_hole_worker.py --poll-interval 10`")
+- `apps/admin/pages/26_Unified_Analytics_Dashboard.py:41` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/28_Mentor_Application_Review.py:34` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/29_🚫_Blocker_Detection_Test.py:29` — # Add shared_backend to path
+- `apps/admin/pages/29_🚫_Blocker_Detection_Test.py:30` — shared_backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/pages/29_🚫_Blocker_Detection_Test.py:31` — if str(shared_backend_path) not in sys.path:
+- `apps/admin/pages/29_🚫_Blocker_Detection_Test.py:32` — sys.path.insert(0, str(shared_backend_path))
+- `apps/admin/pages/29_🚫_Blocker_Detection_Test.py:236` — "Blocker Connector Service": Path(__file__).parent.parent.parent / "shared_backend/services/blocker_connector.py",
+- `apps/admin/pages/99_tools/career_intelligence_update.py:26` — from shared_backend.services.portal_bridge import IntelligenceService
+- `apps/admin/pages/99_tools/update_portal_integration.py:14` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:23` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:32` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:41` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/99_tools/update_portal_integration.py:49` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/pages/shared/integration_hooks.py:130` — elif target == 'shared_backend' and update_type and data:
+- `apps/admin/pages/shared/integration_hooks.py:291` — Manages integration with shared_backend services.
+- `apps/admin/pages/shared/integration_hooks.py:331` — """Push updates to shared_backend."""
+- `apps/admin/pages/shared/integration_hooks.py:333` — self.lockstep_manager.queue_update(update_type, 'shared_backend', data)
+- `apps/admin/scripts/career_intelligence_update.py:26` — from shared_backend.services.portal_bridge import IntelligenceService
+- `apps/admin/scripts/update_portal_integration.py:14` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:23` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:32` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:41` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/scripts/update_portal_integration.py:49` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/admin/services/ai_chat_integration.py:22` — from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore
+- `apps/admin/services/ai_chat_integration.py:28` — from shared_backend.queue.knowledge_hole_queue import get_knowledge_hole_queue_manager  # type: ignore
+- `apps/admin/services/intelligence_hub_connector.py:27` — # Add shared_backend to path for portal bridge access
+- `apps/admin/services/intelligence_hub_connector.py:28` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/admin/services/production_web_intelligence.py:35` — from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore
+- `apps/admin/services/universal_data_ingestor.py:51` — # Add shared_backend to path for taxonomy integration
+- `apps/admin/services/universal_data_ingestor.py:54` — # shared_backend is at .../shared_backend
+- `apps/admin/services/universal_data_ingestor.py:55` — shared_backend_path = Path(__file__).resolve().parents[2] / "shared_backend"
+- `apps/admin/services/universal_data_ingestor.py:56` — if str(shared_backend_path) not in sys.path:
+- `apps/admin/services/universal_data_ingestor.py:57` — sys.path.append(str(shared_backend_path))
+- `apps/admin/services/web_intelligence_service.py:16` — from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore
+- `apps/user/pages/08_Profile_Complete.py:56` — SHARED_BACKEND = ROOT / "shared_backend"
+- `apps/user/pages/08_Profile_Complete.py:57` — if str(SHARED_BACKEND) not in sys.path:
+- `apps/user/pages/08_Profile_Complete.py:58` — sys.path.insert(0, str(SHARED_BACKEND))
+- `apps/user/pages/09_Resume_Upload_Analysis.py:75` — from shared_backend.services.real_ai_connector import get_real_ai_connector
+- `apps/user/pages/09_Resume_Upload_Analysis.py:111` — \"\"\"Return REAL skill keywords filtered by type using the shared_backend connector.\"\"\"
+- `apps/user/pages/09_Resume_Upload_Analysis.py:236` — from shared_backend.services.portal_bridge import ResumeService, IntelligenceService
+- `apps/user/pages/13_Become_A_Mentor.py:24` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/user/pages/13_Become_A_Mentor.py:34` — from shared_backend.services.portal_bridge import ChatService
+- `apps/user/pages/14_Dual_Career_Suite.py:25` — from shared_backend.services.portal_bridge import ResumeService, IntelligenceService
+- `apps/user/pages/14_Dual_Career_Suite.py:45` — from shared_backend.services.exa_service import get_exa_client
+- `apps/user/pages/14_Dual_Career_Suite.py:56` — from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore
+- `apps/user/pages/29_🚫_Blocker_Detection_Test.py:19` — # Add shared_backend to path
+- `apps/user/pages/29_🚫_Blocker_Detection_Test.py:20` — shared_backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `apps/user/pages/29_🚫_Blocker_Detection_Test.py:21` — if str(shared_backend_path) not in sys.path:
+- `apps/user/pages/29_🚫_Blocker_Detection_Test.py:22` — sys.path.insert(0, str(shared_backend_path))
+- `apps/user/pages/29_🚫_Blocker_Detection_Test.py:217` — "Blocker Connector Service": Path(__file__).parent.parent.parent / "shared_backend/services/blocker_connector.py",
+- `apps/user/pages/career_intelligence_update.py:26` — from shared_backend.services.portal_bridge import IntelligenceService
+- `apps/user/pages/update_portal_integration.py:14` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/user/pages/update_portal_integration.py:23` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/user/pages/update_portal_integration.py:32` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/user/pages/update_portal_integration.py:41` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/user/pages/update_portal_integration.py:49` — 'from shared_backend.services.portal_bridge import portal_bridge'
+- `apps/user/services/intelligence_visualizations.py:41` — from shared_backend.services.career_charts import (
+- `apps/user/stubs/you_marketing_you_geographic_integration_stub.py:150` — "shared_backend_imported": False,  # Import geographic_intelligence.py
+- `scripts/generate_bridge_touchpoint_report.py:14` — "shared_backend",
+- `services/backend_api/services/intelligence_hub_connector.py:27` — # Add shared_backend to path for portal bridge access
+- `services/backend_api/services/intelligence_hub_connector.py:28` — backend_path = Path(__file__).parent.parent.parent / "shared_backend"
+- `services/backend_api/services/production_web_intelligence.py:35` — from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore
+- ... 13 more
+
+### `post_bridge_payload` (3 hits)
+- `apps/admin/services/api_client.py:64` — def post_bridge_payload(self, bridge: str, payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+- `scripts/generate_bridge_touchpoint_report.py:15` — "post_bridge_payload",
+- `services/backend_api/services/api_client.py:64` — def post_bridge_payload(self, bridge: str, payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+
+### `AdminFastAPIClient` (63 hits)
+- `apps/admin/pages/01_Service_Status_Monitor.py:54` — from services.api_client import AdminFastAPIClient
+- `apps/admin/pages/01_Service_Status_Monitor.py:56` — AdminFastAPIClient = None
+- `apps/admin/pages/01_Service_Status_Monitor.py:74` — if AdminFastAPIClient is None:
+- `apps/admin/pages/01_Service_Status_Monitor.py:78` — st.session_state["_admin_api_client"] = AdminFastAPIClient()
+- `apps/admin/pages/03_User_Management.py:67` — from services.admin_api_client import AdminFastAPIClient
+- `apps/admin/pages/03_User_Management.py:69` — AdminFastAPIClient = None  # type: ignore
+- `apps/admin/pages/03_User_Management.py:90` — if AdminFastAPIClient is None:
+- `apps/admin/pages/03_User_Management.py:94` — st.session_state["_admin_api_client_v1"] = AdminFastAPIClient()
+- `apps/admin/pages/04_Compliance_Audit.py:129` — if AdminFastAPIClient is None:
+- `apps/admin/pages/04_Compliance_Audit.py:133` — st.session_state["_admin_api_client"] = AdminFastAPIClient()
+- `apps/admin/pages/04_Compliance_Audit.py:317` — from services.api_client import AdminFastAPIClient
+- `apps/admin/pages/04_Compliance_Audit.py:319` — AdminFastAPIClient = None
+- `apps/admin/pages/05_Email_Integration.py:59` — from services.api_client import AdminFastAPIClient
+- `apps/admin/pages/05_Email_Integration.py:61` — AdminFastAPIClient = None
+- `apps/admin/pages/05_Email_Integration.py:191` — """Return cached AdminFastAPIClient instance."""
+- `apps/admin/pages/05_Email_Integration.py:192` — if AdminFastAPIClient is None:
+- `apps/admin/pages/05_Email_Integration.py:196` — st.session_state["_admin_api_client"] = AdminFastAPIClient()
+- `apps/admin/pages/06_Complete_Data_Parser.py:111` — from services.api_client import AdminFastAPIClient
+- `apps/admin/pages/06_Complete_Data_Parser.py:113` — AdminFastAPIClient = None
+- `apps/admin/pages/06_Complete_Data_Parser.py:196` — """Return cached AdminFastAPIClient instance if available."""
+- `apps/admin/pages/06_Complete_Data_Parser.py:197` — if AdminFastAPIClient is None:
+- `apps/admin/pages/06_Complete_Data_Parser.py:203` — st.session_state["_admin_api_client"] = AdminFastAPIClient()
+- `apps/admin/pages/13_API_Integration.py:44` — from services.api_client import AdminFastAPIClient
+- `apps/admin/pages/13_API_Integration.py:46` — AdminFastAPIClient = None
+- `apps/admin/pages/13_API_Integration.py:103` — if AdminFastAPIClient is None:
+- `apps/admin/pages/13_API_Integration.py:109` — st.session_state["_admin_api_client"] = AdminFastAPIClient()
+- `apps/admin/services/admin_api_client.py:11` — class AdminFastAPIClient:
+- `apps/admin/services/admin_api_client.py:166` — def get_admin_api_client(access_token: str) -> AdminFastAPIClient:
+- `apps/admin/services/admin_api_client.py:169` — return AdminFastAPIClient(base_url=base_url, access_token=access_token, timeout_s=timeout_s)
+- `apps/admin/services/admin_api_client_ci_endpoints.py:3` — Copy these methods into your existing AdminFastAPIClient (or the class
+- `apps/admin/services/api_client.py:12` — class AdminFastAPIClient:
+- `apps/admin/services/api_client.py:87` — __all__ = ["AdminFastAPIClient"]
+- `apps/admin/services/backend_telemetry.py:3` — Provides cached access to the AdminFastAPIClient plus reusable
+- `apps/admin/services/backend_telemetry.py:17` — from .api_client import AdminFastAPIClient  # type: ignore
+- `apps/admin/services/backend_telemetry.py:20` — from services.api_client import AdminFastAPIClient  # type: ignore
+- `apps/admin/services/backend_telemetry.py:22` — AdminFastAPIClient = None  # type: ignore
+- `apps/admin/services/backend_telemetry.py:28` — def get_admin_api_client() -> Optional["AdminFastAPIClient"]:
+- `apps/admin/services/backend_telemetry.py:29` — """Return (and cache) a singleton AdminFastAPIClient instance."""
+- `apps/admin/services/backend_telemetry.py:30` — if AdminFastAPIClient is None:
+- `apps/admin/services/backend_telemetry.py:36` — client = AdminFastAPIClient()
+- `apps/admin/services/backend_telemetry.py:46` — fetcher: Callable[["AdminFastAPIClient"], Dict[str, Any]],
+- `apps/admin/services/user_data_service.py:15` — from api_client import AdminFastAPIClient
+- `apps/admin/services/user_data_service.py:17` — AdminFastAPIClient = None
+- `apps/admin/services/user_data_service.py:30` — self.api_client = AdminFastAPIClient() if AdminFastAPIClient else None
+- `scripts/generate_bridge_touchpoint_report.py:16` — "AdminFastAPIClient",
+- `services/backend_api/services/admin_api_client.py:11` — class AdminFastAPIClient:
+- `services/backend_api/services/admin_api_client.py:166` — def get_admin_api_client(access_token: str) -> AdminFastAPIClient:
+- `services/backend_api/services/admin_api_client.py:169` — return AdminFastAPIClient(base_url=base_url, access_token=access_token, timeout_s=timeout_s)
+- `services/backend_api/services/admin_api_client_ci_endpoints.py:3` — Copy these methods into your existing AdminFastAPIClient (or the class
+- `services/backend_api/services/api_client.py:12` — class AdminFastAPIClient:
+- `services/backend_api/services/api_client.py:87` — __all__ = ["AdminFastAPIClient"]
+- `services/backend_api/services/backend_telemetry.py:3` — Provides cached access to the AdminFastAPIClient plus reusable
+- `services/backend_api/services/backend_telemetry.py:17` — from .api_client import AdminFastAPIClient  # type: ignore
+- `services/backend_api/services/backend_telemetry.py:20` — from services.api_client import AdminFastAPIClient  # type: ignore
+- `services/backend_api/services/backend_telemetry.py:22` — AdminFastAPIClient = None  # type: ignore
+- `services/backend_api/services/backend_telemetry.py:28` — def get_admin_api_client() -> Optional["AdminFastAPIClient"]:
+- `services/backend_api/services/backend_telemetry.py:29` — """Return (and cache) a singleton AdminFastAPIClient instance."""
+- `services/backend_api/services/backend_telemetry.py:30` — if AdminFastAPIClient is None:
+- `services/backend_api/services/backend_telemetry.py:36` — client = AdminFastAPIClient()
+- `services/backend_api/services/backend_telemetry.py:46` — fetcher: Callable[["AdminFastAPIClient"], Dict[str, Any]],
+- `services/backend_api/services/user_data_service.py:15` — from api_client import AdminFastAPIClient
+- `services/backend_api/services/user_data_service.py:17` — AdminFastAPIClient = None
+- `services/backend_api/services/user_data_service.py:30` — self.api_client = AdminFastAPIClient() if AdminFastAPIClient else None
+
+### `real_ai_connector` (85 hits)
+- `apps/admin/pages/07_Batch_Processing.py:66` — from real_ai_connector import RealAIConnector
+- `apps/admin/pages/07_Batch_Processing_REAL_DATA.py:37` — from real_ai_connector import RealAIConnector
+- `apps/admin/pages/08_AI_Enrichment.py:128` — from shared.real_ai_data_connector import get_real_ai_connector, get_real_sample_data, get_real_analytics_data
+- `apps/admin/pages/08_AI_Enrichment.py:129` — REAL_AI_CONNECTOR_AVAILABLE = True
+- `apps/admin/pages/08_AI_Enrichment.py:131` — REAL_AI_CONNECTOR_AVAILABLE = False
+- `apps/admin/pages/10_Market_Intelligence_Center.py:92` — get_real_ai_connector,
+- `apps/admin/pages/17_Mentor_Management.py:81` — from real_ai_connector import RealAIConnector
+- `apps/admin/pages/17_Mentor_Management.py:126` — st.error("❌ CRITICAL: AI data loader (real_ai_connector) not available")
+- `apps/admin/pages/19_Job_Title_Overlap_Cloud.py:55` — from real_ai_connector import RealAIConnector
+- `apps/admin/pages/shared/ai_data_integration_status.py:135` — from shared.real_ai_data_connector import get_real_ai_connector, get_real_analytics_data
+- `apps/admin/pages/shared/ai_data_integration_status.py:137` — connector = get_real_ai_connector()
+- `apps/admin/pages/shared/real_ai_data_connector.py:462` — _real_ai_connector = None
+- `apps/admin/pages/shared/real_ai_data_connector.py:464` — def get_real_ai_connector() -> RealAIDataConnector:
+- `apps/admin/pages/shared/real_ai_data_connector.py:466` — global _real_ai_connector
+- `apps/admin/pages/shared/real_ai_data_connector.py:468` — if _real_ai_connector is None:
+- `apps/admin/pages/shared/real_ai_data_connector.py:469` — _real_ai_connector = RealAIDataConnector()
+- `apps/admin/pages/shared/real_ai_data_connector.py:471` — return _real_ai_connector
+- `apps/admin/pages/shared/real_ai_data_connector.py:484` — connector = get_real_ai_connector()
+- `apps/admin/pages/shared/real_ai_data_connector.py:508` — connector = get_real_ai_connector()
+- `apps/admin/pages/shared/real_ai_data_connector.py:546` — connector = get_real_ai_connector()
+- `apps/admin/services/ai_router.py:31` — from real_ai_connector import RealAIConnector
+- `apps/admin/services/automatic_data_ingestion_service.py:65` — # Destination directory (where real_ai_connector reads from)
+- `apps/admin/services/intelligence_hub_connector.py:37` — self.real_ai_connector = None
+- `apps/admin/services/intelligence_hub_connector.py:58` — from services.real_ai_connector import get_real_ai_connector
+- `apps/admin/services/intelligence_hub_connector.py:59` — self.real_ai_connector = get_real_ai_connector()
+- `apps/admin/services/intelligence_hub_connector.py:75` — self.real_ai_connector is not None,
+- `apps/admin/services/intelligence_hub_connector.py:122` — if self.real_ai_connector:
+- `apps/admin/services/intelligence_hub_connector.py:124` — real_stats = self.real_ai_connector.get_connection_stats()
+- `apps/admin/services/intelligence_hub_connector.py:180` — elif engine_type == "real_data" and self.real_ai_connector:
+- `apps/admin/services/intelligence_hub_connector.py:182` — connector_info = self.real_ai_connector.get_detailed_analytics()
+- `apps/admin/services/intelligence_hub_connector.py:188` — "data_source": "real_ai_connector_34k_cvs"
+- `apps/admin/services/intelligence_hub_connector.py:236` — if self.real_ai_connector:
+- `apps/admin/services/intelligence_hub_connector.py:238` — real_analytics = self.real_ai_connector.get_comprehensive_analytics()
+- `apps/admin/services/intelligence_hub_connector.py:301` — if self.real_ai_connector:
+- `apps/admin/services/intelligence_hub_connector.py:303` — stats = self.real_ai_connector.get_connection_stats()
+- `apps/user/job_title_backend_integration.py:1159` — from real_ai_connector import get_real_job_titles, get_ai_insights
+- `apps/user/job_title_backend_integration.py:1236` — from real_ai_connector import get_ai_insights, get_real_skills
+- `apps/user/job_title_backend_integration.py:1309` — from real_ai_connector import get_ai_insights, get_real_job_titles
+- `apps/user/job_title_backend_integration.py:1401` — from real_ai_connector import get_ai_insights, get_real_companies
+- `apps/user/job_title_backend_integration.py:1473` — from real_ai_connector import get_ai_insights, get_real_job_titles
+- `apps/user/real_ai_connector.py:368` — real_ai_connector = RealAIConnector()
+- `apps/user/real_ai_connector.py:373` — return real_ai_connector.load_real_job_titles(limit)
+- `apps/user/real_ai_connector.py:377` — return real_ai_connector.load_real_skills_data()[:limit]
+- `apps/user/real_ai_connector.py:381` — return real_ai_connector.load_real_companies_data()[:limit]
+- `apps/user/real_ai_connector.py:385` — return real_ai_connector.get_ai_generated_insights(job_title)
+- `apps/user/user_portal_admin_integration.py:45` — self.real_ai_connector = None
+- `apps/user/user_portal_admin_integration.py:74` — self.real_ai_connector = RealAIDataConnector()
+- `apps/user/user_portal_admin_integration.py:98` — self.real_ai_connector,
+- `apps/user/user_portal_admin_integration.py:128` — if self.real_ai_connector:
+- `apps/user/user_portal_admin_integration.py:129` — ai_insights = self.real_ai_connector.analyze_with_real_data(resume_file, user_data)
+- `apps/user/user_portal_admin_integration.py:179` — if self.real_ai_connector:
+- `apps/user/user_portal_admin_integration.py:180` — market_data = self.real_ai_connector.get_job_market_intelligence(search_criteria)
+- `apps/user/user_portal_admin_integration.py:199` — if not self.real_ai_connector:
+- `apps/user/user_portal_admin_integration.py:203` — statistical_analysis = self.real_ai_connector.get_user_statistical_analysis(user_id, analysis_type)
+- `apps/user/user_portal_admin_integration.py:285` — status = "✅ Active" if self.real_ai_connector else "❌ Not Available"
+- `apps/user/pages/09_Resume_Upload_Analysis.py:75` — from shared_backend.services.real_ai_connector import get_real_ai_connector
+- `apps/user/pages/09_Resume_Upload_Analysis.py:76` — real_ai_connector = get_real_ai_connector()
+- `apps/user/pages/09_Resume_Upload_Analysis.py:77` — REAL_AI_CONNECTOR_AVAILABLE = True
+- `apps/user/pages/09_Resume_Upload_Analysis.py:79` — real_ai_connector = None
+- `apps/user/pages/09_Resume_Upload_Analysis.py:80` — REAL_AI_CONNECTOR_AVAILABLE = False
+- `apps/user/pages/09_Resume_Upload_Analysis.py:112` — if not REAL_AI_CONNECTOR_AVAILABLE or not real_ai_connector:
+- `apps/user/pages/09_Resume_Upload_Analysis.py:139` — all_skills = real_ai_connector.get_real_skills_from_cvs()
+- `apps/user/pages/09_Resume_Upload_Analysis.py:166` — all_skills = real_ai_connector.load_real_skills_data()
+- `apps/user/pages/09_Resume_Upload_Analysis.py:571` — if not REAL_AI_CONNECTOR_AVAILABLE or not real_ai_connector:
+- `apps/user/pages/09_Resume_Upload_Analysis.py:2457` — if REAL_AI_CONNECTOR_AVAILABLE and real_ai_connector:
+- `apps/user/pages/09_Resume_Upload_Analysis.py:2710` — tech_keywords = get_dynamic_keywords('technical') if REAL_AI_CONNECTOR_AVAILABLE else []
+- `scripts/generate_bridge_touchpoint_report.py:17` — "real_ai_connector",
+- `services/backend_api/services/automatic_data_ingestion_service.py:65` — # Destination directory (where real_ai_connector reads from)
+- `services/backend_api/services/intelligence_hub_connector.py:37` — self.real_ai_connector = None
+- `services/backend_api/services/intelligence_hub_connector.py:58` — from services.real_ai_connector import get_real_ai_connector
+- `services/backend_api/services/intelligence_hub_connector.py:59` — self.real_ai_connector = get_real_ai_connector()
+- `services/backend_api/services/intelligence_hub_connector.py:75` — self.real_ai_connector is not None,
+- `services/backend_api/services/intelligence_hub_connector.py:122` — if self.real_ai_connector:
+- `services/backend_api/services/intelligence_hub_connector.py:124` — real_stats = self.real_ai_connector.get_connection_stats()
+- `services/backend_api/services/intelligence_hub_connector.py:180` — elif engine_type == "real_data" and self.real_ai_connector:
+- `services/backend_api/services/intelligence_hub_connector.py:182` — connector_info = self.real_ai_connector.get_detailed_analytics()
+- `services/backend_api/services/intelligence_hub_connector.py:188` — "data_source": "real_ai_connector_34k_cvs"
+- `services/backend_api/services/intelligence_hub_connector.py:236` — if self.real_ai_connector:
+- `services/backend_api/services/intelligence_hub_connector.py:238` — real_analytics = self.real_ai_connector.get_comprehensive_analytics()
+- `services/backend_api/services/intelligence_hub_connector.py:301` — if self.real_ai_connector:
+- ... 5 more
+
+## Immediate Remediation Focus
+- Normalize mentor API calls to `/api/mentor/v1/*` and `/api/mentorship/v1/*`.
+- Replace admin legacy calls under `/api/admin/*` with `/api/admin/v1/*` where missing.
+- Validate taxonomy summary path usage against implemented taxonomy router paths.
+- Keep bridge calls observable via `/api/mapping/v1/endpoints` and telemetry routes.

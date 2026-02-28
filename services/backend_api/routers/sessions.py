@@ -18,6 +18,8 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
+from services.shared.paths import CareerTrojanPaths
+
 logger = logging.getLogger("backend.sessions")
 
 router = APIRouter(
@@ -26,14 +28,9 @@ router = APIRouter(
 )
 
 # ── Data Paths ────────────────────────────────────────────────
-USER_DATA_ROOT = Path(os.getenv(
-    "CAREERTROJAN_USER_DATA",
-    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"), "USER DATA")
-))
-USER_DATA_MIRROR = Path(os.getenv(
-    "CAREERTROJAN_USER_DATA_MIRROR",
-    os.path.join(os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"), "USER_DATA_COPY")
-))
+_paths = CareerTrojanPaths()
+USER_DATA_ROOT = _paths.user_data
+USER_DATA_MIRROR = _paths.user_data_mirror
 
 
 # ── Models ────────────────────────────────────────────────────

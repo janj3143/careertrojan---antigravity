@@ -18,6 +18,9 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
+from services.shared.paths import CareerTrojanPaths
+from services.shared.training_data_loader import TrainingDataLoader
+
 if sys.platform == 'win32':
     os.environ['PYTHONIOENCODING'] = 'utf-8'
 
@@ -30,60 +33,33 @@ class BayesianModelTrainer:
 
     def __init__(self, base_path: str):
         self.base_path = Path(base_path)
-        self.data_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.data_path = CareerTrojanPaths().ai_data_final
         self.models_path = self.base_path / "trained_models" / "bayesian"
         self.models_path.mkdir(parents=True, exist_ok=True)
+        self.loader = TrainingDataLoader(limit_per_source=5000)
 
         logger.info(f"Bayesian Model Trainer initialized")
         logger.info(f"Models will be saved to: {self.models_path}")
 
     def load_training_data(self):
-        """Load candidate profiles"""
-        logger.info("Loading training data...")
-
-        profiles_dir = self.data_path / "profiles"
-        if not profiles_dir.exists():
-            logger.error(f"Profiles directory not found")
-            return None
-
-        all_profiles = []
-        json_files = list(profiles_dir.glob("*.json"))[:5000]  # Limit for training
-
-        for json_file in json_files:
-            try:
-                with open(json_file, 'r', encoding='utf-8') as f:
-                    all_profiles.append(json.load(f))
-            except Exception as e:
-                logger.error(f"Error loading {json_file}: {e}")
-
-        logger.info(f"âœ… Loaded {len(all_profiles)} profiles")
-        return all_profiles
+        """Load candidate profiles and CV files via shared loader"""
+        logger.info("Loading training data (profiles + cv files)...")
+        records = self.loader.load_records()
+        logger.info(f"✅ Loaded {len(records)} records")
+        return records
 
     def prepare_features(self, profiles):
         """Extract features from profiles"""
         features = []
         labels = []
 
-        for profile in profiles:
+        for record in profiles:
             try:
-                skills = profile.get('skills', [])
-                experience = profile.get('work_experience', [])
-                education = profile.get('education', [])
-
-                feature_dict = {
-                    'skills_count': len(skills),
-                    'experience_years': len(experience),
-                    'education_count': len(education),
-                    'has_technical_skills': int(any('technical' in str(s).lower() for s in skills)),
-                    'has_management': int(any('manag' in str(exp).lower() for exp in experience)),
-                    'has_degree': int(any('degree' in str(edu).lower() for edu in education))
-                }
-
+                feature_dict = self.loader.basic_features(record)
                 features.append(list(feature_dict.values()))
 
-                # Label: seniority level
-                label = len(experience) // 3  # 0=Junior, 1=Mid, 2=Senior
-                labels.append(min(label, 2))
+                label = self.loader.infer_seniority(record)
+                labels.append(label)
 
             except Exception as e:
                 logger.error(f"Error preparing features: {e}")

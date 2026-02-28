@@ -3,11 +3,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from .models import Base
 import os
+from pathlib import Path
+
+from services.shared.paths import CareerTrojanPaths
 
 # Ensure DB directory exists
-# Portable: env var or local fallback
-DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
-DB_PATH = f"sqlite:///{DATA_ROOT}/ai_learning_table.db"
+# Portable: env var or working-root fallback
+_paths = CareerTrojanPaths()
+db_root = Path(os.getenv("CAREERTROJAN_DB_DIR", str(_paths.working_root / "db")))
+db_root.mkdir(parents=True, exist_ok=True)
+DB_PATH = f"sqlite:///{db_root / 'ai_learning_table.db'}"
 
 if os.getenv("CAREERTROJAN_DB_URL"):
     DB_PATH = os.getenv("CAREERTROJAN_DB_URL")

@@ -2,8 +2,27 @@
 # Builds all unified portals (Admin, User, Mentor)
 
 $ErrorActionPreference = "Stop"
-$APPS_ROOT = "C:\careertrojan\apps"
-$APPS = @("admin-portal", "user-portal", "mentor-portal")
+$APP_ROOT = Resolve-Path (Join-Path $PSScriptRoot "..")
+$APPS_ROOT = Join-Path $APP_ROOT "apps"
+$APPS = @("admin", "user", "mentor")
+
+function Resolve-Npm {
+    $candidates = @(
+        "J:\nodej\npm.cmd",
+        "J:\nodej\npm"
+    )
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) { return $candidate }
+    }
+    $cmd = Get-Command npm -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+    return $null
+}
+
+$NPM = Resolve-Npm
+if (-not $NPM) {
+    throw "npm not found. Install Node on J: (J:\nodej) or add npm to PATH."
+}
 
 Write-Host "--- CareerTrojan Frontend Build ---" -ForegroundColor Cyan
 
@@ -18,14 +37,17 @@ foreach ($app in $APPS) {
 
     Push-Location $appPath
     try {
+        if (-not (Test-Path "package.json")) {
+            Write-Host " [SKIP] (No package.json)" -ForegroundColor Yellow
+            continue
+        }
+
         if (-not (Test-Path "node_modules")) {
             Write-Host " (Installing dependencies...)" -NoNewline
-            npm install --quiet --no-audit --no-fund | Out-Null
+            & $NPM install --quiet --no-audit --no-fund | Out-Null
         }
         
-        # npm run build | Out-Null
-        # Capturing output for debugging if needed, but keeping console clean
-        $build = npm run build 2>&1
+        $build = & $NPM run build 2>&1
         if ($LASTEXITCODE -eq 0) {
             Write-Host " [OK]" -ForegroundColor Green
         } else {

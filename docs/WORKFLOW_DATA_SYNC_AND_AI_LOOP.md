@@ -24,29 +24,29 @@ This document defines the data architecture, synchronisation strategy, session m
 
 | Location | Purpose | Access Mode |
 |----------|---------|-------------|
-| `L:\VS ai_data final - version\ai_data_final\` | AI knowledge base (JSON, parsed CVs, jobs, skills) | Read/Write |
-| `L:\VS ai_data final - version\automated_parser\` | Raw document ingestion pipeline (CVs, JDs, emails) | Read/Write |
-| `L:\VS ai_data final - version\USER DATA\` | User sessions, profiles, interactions, uploads | Read/Write |
+| `L:\Codec-Antigravity Data set\ai_data_final\` | AI knowledge base (JSON, parsed CVs, jobs, skills) | Read/Write |
+| `L:\Codec-Antigravity Data set\automated_parser\` | Raw document ingestion pipeline (CVs, JDs, emails) | Read/Write |
+| `L:\Codec-Antigravity Data set\USER DATA\` | User sessions, profiles, interactions, uploads | Read/Write |
 
-### 2.2 Runtime Mounts (`C:\careertrojan\data-mounts\`)
+### 2.2 Runtime Mounts (`J:\Codec - runtime version\Antigravity\careertrojan\data-mounts\`)
 
 | Mount Name | Junction Target | Status |
 |-----------|-----------------|--------|
-| `ai-data` | `L:\VS ai_data final - version` | ✅ Active (junction) |
-| `parser` | `L:\VS ai_data final - version\automated_parser` | ✅ Active (junction) |
-| `user-data` | `L:\VS ai_data final - version\USER DATA` | 🔧 TO CREATE |
+| `ai-data` | `L:\Codec-Antigravity Data set` | ✅ Active (junction) |
+| `parser` | `L:\Codec-Antigravity Data set\automated_parser` | ✅ Active (junction) |
+| `user-data` | `L:\Codec-Antigravity Data set\USER DATA` | 🔧 TO CREATE |
 | `logs/` | Local directory | ✅ Active |
 | `models/` | Local directory | ✅ Active |
 
 ### 2.3 Environment Variables (`.env`)
 
 ```env
-CAREERTROJAN_DATA_ROOT=L:\VS ai_data final - version
-CAREERTROJAN_AI_DATA=L:\VS ai_data final - version\ai_data_final
-CAREERTROJAN_PARSER_ROOT=L:\VS ai_data final - version\automated_parser
-CAREERTROJAN_USER_DATA=L:\VS ai_data final - version\USER DATA
+CAREERTROJAN_DATA_ROOT=L:\Codec-Antigravity Data set
+CAREERTROJAN_AI_DATA=L:\Codec-Antigravity Data set\ai_data_final
+CAREERTROJAN_PARSER_ROOT=L:\Codec-Antigravity Data set\automated_parser
+CAREERTROJAN_USER_DATA=L:\Codec-Antigravity Data set\USER DATA
 CAREERTROJAN_USER_DATA_MIRROR=E:\CareerTrojan\USER_DATA_COPY
-CAREERTROJAN_WORKING_ROOT=C:\careertrojan\working\working_copy
+CAREERTROJAN_WORKING_ROOT=J:\Codec - runtime version\Antigravity\careertrojan\working\working_copy
 ```
 
 ### 2.4 Backend Config Mapping
@@ -69,7 +69,7 @@ The FastAPI backend (`services/backend_api/main.py`) reads `CAREERTROJAN_DATA_RO
 
 | Primary (L:) | Mirror (E:) |
 |--------------|-------------|
-| `L:\VS ai_data final - version\USER DATA\` | `E:\CareerTrojan\USER_DATA_COPY\` |
+| `L:\Codec-Antigravity Data set\USER DATA\` | `E:\CareerTrojan\USER_DATA_COPY\` |
 
 ### 3.3 Directory Structure (Both Locations)
 
@@ -115,14 +115,14 @@ The sync trap is implemented as a **filesystem watcher** that runs as a backgrou
 **Trap Rules:**
 1. **On File Create/Modify**: Mirror the file to E: within 5 seconds.
 2. **On File Delete**: Mirror the deletion (with a 24-hour quarantine on E:).
-3. **On Sync Failure**: Log to `C:\careertrojan\logs\sync_trap_errors.log` and raise an alert.
+3. **On Sync Failure**: Log to `J:\Codec - runtime version\Antigravity\careertrojan\logs\sync_trap_errors.log` and raise an alert.
 4. **Periodic Full Sync**: Every 15 minutes, run a full directory comparison.
 5. **Metadata Update**: After every sync, update `_sync_metadata.json` with timestamp, file count, and checksums.
 
 ### 3.5 Sync Trap Script Location
 
-- **Primary**: `C:\careertrojan\scripts\sync_user_data.py`
-- **Service Entry**: `C:\careertrojan\services\workers\user_data_sync_worker.py`
+- **Primary**: `J:\Codec - runtime version\Antigravity\careertrojan\scripts\sync_user_data.py`
+- **Service Entry**: `J:\Codec - runtime version\Antigravity\careertrojan\services\workers\user_data_sync_worker.py`
 - **Invoked by**: `scripts/Start-And-Map.ps1` at runtime startup
 
 ---
@@ -239,7 +239,7 @@ The AI orchestrator (`services/ai_engine/`) reads from `USER DATA/interactions/`
 If E: mirror falls behind:
 ```powershell
 # Full re-sync from L: to E:
-robocopy "L:\VS ai_data final - version\USER DATA" "E:\CareerTrojan\USER_DATA_COPY" /MIR /MT:8 /LOG:C:\careertrojan\logs\resync.log
+robocopy "L:\Codec-Antigravity Data set\USER DATA" "E:\CareerTrojan\USER_DATA_COPY" /MIR /MT:8 /LOG:J:\Codec - runtime version\Antigravity\careertrojan\logs\resync.log
 ```
 
 If L: is unavailable:
@@ -252,7 +252,7 @@ $env:CAREERTROJAN_USER_DATA = "E:\CareerTrojan\USER_DATA_COPY"
 
 ## 7. Task Checklist
 
-- [x] Create `data-mounts/user-data` junction → `L:\VS ai_data final - version\USER DATA`
+- [x] Create `data-mounts/user-data` junction → `L:\Codec-Antigravity Data set\USER DATA`
 - [x] Update `.env` with all data path variables
 - [x] Implement `scripts/sync_user_data.py` (watchdog filesystem watcher + mirror)
 - [x] Implement `services/workers/ai_orchestrator_enrichment.py` (interactions → ai_data_final)

@@ -18,13 +18,30 @@ Output:
 
 import json
 import pickle
+import re
 import pandas as pd
 import numpy as np
+import sys
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Tuple
 import warnings
 warnings.filterwarnings('ignore')
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+try:
+    from services.ai_engine.config import AI_DATA_DIR, models_path as CONFIG_MODELS_PATH
+except Exception:
+    AI_DATA_DIR = None
+    CONFIG_MODELS_PATH = None
+
+try:
+    from services.shared.paths import CareerTrojanPaths
+except Exception:
+    CareerTrojanPaths = None
 
 # Scikit-learn
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -38,16 +55,16 @@ from sklearn.metrics import accuracy_score, classification_report, r2_score
 try:
     from sentence_transformers import SentenceTransformer
     SENTENCE_TRANSFORMERS_AVAILABLE = True
-except ImportError:
-    print("⚠️  sentence-transformers not installed. Install with: pip install sentence-transformers")
+except (ImportError, AttributeError, Exception) as _st_err:
+    print(f"⚠️  sentence-transformers not available: {_st_err}")
     SENTENCE_TRANSFORMERS_AVAILABLE = False
 
 # spaCy
 try:
     import spacy
     SPACY_AVAILABLE = True
-except ImportError:
-    print("⚠️  spaCy not installed. Install with: pip install spacy")
+except (ImportError, Exception) as _sp_err:
+    print(f"⚠️  spaCy not available: {_sp_err}")
     SPACY_AVAILABLE = False
 
 
@@ -55,8 +72,17 @@ class IntelliCVModelTrainer:
     """Complete AI model training pipeline"""
 
     def __init__(self, data_dir: str = "ai_data_final"):
-        self.data_dir = Path(data_dir)
-        self.models_dir = Path("admin_portal/models")
+        if data_dir == "ai_data_final" and CareerTrojanPaths is not None:
+            self.data_dir = CareerTrojanPaths().ai_data_final
+        elif data_dir == "ai_data_final" and AI_DATA_DIR is not None:
+            self.data_dir = Path(AI_DATA_DIR)
+        else:
+            self.data_dir = Path(data_dir)
+
+        if CONFIG_MODELS_PATH is not None:
+            self.models_dir = Path(CONFIG_MODELS_PATH)
+        else:
+            self.models_dir = Path("trained_models")
         self.models_dir.mkdir(parents=True, exist_ok=True)
 
         self.training_report = {
@@ -311,6 +337,59 @@ class IntelliCVModelTrainer:
         # Default
         return 'Other'
 
+    def _derive_salary_estimate(self, row: pd.Series) -> float:
+        title = str(row.get('job_title', '')).lower()
+        years = float(row.get('experience_years', 0) or 0)
+        skills = row.get('skills', [])
+        skills_count = len(skills) if isinstance(skills, list) else 0
+
+        base = 28000.0
+        if any(token in title for token in ['senior', 'lead', 'principal', 'head', 'director']):
+            base += 18000
+        if any(token in title for token in ['manager', 'executive']):
+            base += 12000
+        if any(token in title for token in ['data', 'machine learning', 'devops', 'cloud']):
+            base += 8000
+
+        base += years * 1800
+        base += min(skills_count, 25) * 350
+
+        return max(22000.0, min(base, 220000.0))
+
+    def _derive_experience_years(self, row: pd.Series) -> float:
+        explicit = row.get('experience_years', 0)
+        try:
+            explicit_f = float(explicit)
+            if explicit_f > 0:
+                return explicit_f
+        except Exception:
+            pass
+
+        text = str(row.get('text', '') or '')
+        title = str(row.get('job_title', '') or '').lower()
+
+        for pattern in [
+            r"(\d{1,2})\+?\s*(?:years|yrs)\s*(?:of\s*)?experience",
+            r"experience\s*[:\-]?\s*(\d{1,2})",
+        ]:
+            match = re.search(pattern, text, flags=re.IGNORECASE)
+            if match:
+                try:
+                    value = float(match.group(1))
+                    if value > 0:
+                        return min(value, 50.0)
+                except Exception:
+                    continue
+
+        if any(token in title for token in ['senior', 'lead', 'principal', 'head', 'director']):
+            return 8.0
+        if any(token in title for token in ['manager', 'executive']):
+            return 6.0
+        if any(token in title for token in ['junior', 'graduate', 'intern']):
+            return 1.0
+
+        return 2.0
+
     def train_bayesian_classifier(self, df: pd.DataFrame) -> Tuple[MultinomialNB, TfidfVectorizer]:
         """Train Bayesian job category classifier"""
         print("\n🧠 Training Bayesian Classifier...")
@@ -494,6 +573,26 @@ class IntelliCVModelTrainer:
     def train_statistical_models(self, df: pd.DataFrame):
         """Train regression models for salary/experience prediction"""
         print("\n📊 Training Statistical Models...")
+
+        if 'experience_years' not in df.columns:
+            df['experience_years'] = 0
+
+        missing_exp_mask = (df['experience_years'].isna()) | (df['experience_years'] <= 0)
+        if missing_exp_mask.any():
+            df.loc[missing_exp_mask, 'experience_years'] = df[missing_exp_mask].apply(
+                self._derive_experience_years,
+                axis=1,
+            )
+
+        # Deterministic salary fallback if sparse labels
+        if 'salary' not in df.columns:
+            df['salary'] = np.nan
+        missing_salary = df['salary'].isna().sum()
+        if missing_salary > 0:
+            df.loc[df['salary'].isna(), 'salary'] = df[df['salary'].isna()].apply(
+                self._derive_salary_estimate,
+                axis=1,
+            )
 
         # Filter data with valid salary and experience
         df_valid = df[

@@ -1,0 +1,219 @@
+{
+  "plans": {
+    "free": {
+      "included_tokens_per_month": 50,
+      "soft_limit_pct": 80,
+      "hard_limit_pct": 100,
+      "overage_price_per_1k": null
+    },
+    "monthly": {
+      "included_tokens_per_month": 500,
+      "soft_limit_pct": 80,
+      "hard_limit_pct": 100,
+      "overage_price_per_1k": 0.05
+    },
+    "annual": {
+      "included_tokens_per_month": 1000,
+      "soft_limit_pct": 80,
+      "hard_limit_pct": 100,
+      "overage_price_per_1k": 0.04
+    },
+    "elitepro": {
+      "included_tokens_per_month": 5000,
+      "soft_limit_pct": 80,
+      "hard_limit_pct": 100,
+      "overage_price_per_1k": 0.03
+    }
+  },
+  "usage_rows": [],
+  "costs": [
+    {
+      "feature": "login",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "dashboard_view",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "profile_view",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "profile_update",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "job_search",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "job_view",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "resume_upload",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "resume_view",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "career_analysis_preview",
+      "tokens": 5,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "career_analysis_full",
+      "tokens": 10,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "visual_keyword_overlap",
+      "tokens": 1,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "visual_job_suitability",
+      "tokens": 1,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "visual_connected_cloud",
+      "tokens": 2,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "visual_multi_job_compare",
+      "tokens": 2,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "fit_analysis_preview",
+      "tokens": 5,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "fit_analysis_full",
+      "tokens": 2,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "blocker_detection_preview",
+      "tokens": 5,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "blocker_detection_full",
+      "tokens": 2,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "resume_tuning_preview",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "resume_tuning_full",
+      "tokens": 3,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "application_submit",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "application_update",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "coaching_session",
+      "tokens": 8,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "interview_questions",
+      "tokens": 3,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "star_story_builder",
+      "tokens": 5,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "mentor_search",
+      "tokens": 0,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "mentor_contact",
+      "tokens": 15,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "mentorship_session",
+      "tokens": 25,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "dual_career_analysis",
+      "tokens": 15,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "career_intelligence_report",
+      "tokens": 20,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    },
+    {
+      "feature": "geo_career_analysis",
+      "tokens": 10,
+      "updated_at": "2026-02-27T16:44:16.131209+00:00",
+      "updated_by": "system"
+    }
+  ],
+  "ledger": [],
+  "subscriptions": []
+}

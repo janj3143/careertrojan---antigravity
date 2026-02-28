@@ -18,6 +18,9 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
+from services.shared.paths import CareerTrojanPaths
+from services.shared.training_data_loader import TrainingDataLoader
+
 # UTF-8 encoding for Windows
 if sys.platform == 'win32':
     os.environ['PYTHONIOENCODING'] = 'utf-8'
@@ -31,90 +34,32 @@ class NeuralNetworkTrainer:
 
     def __init__(self, base_path: str):
         self.base_path = Path(base_path)
-        self.data_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.data_path = CareerTrojanPaths().ai_data_final
         self.models_path = self.base_path / "trained_models" / "neural"
         self.models_path.mkdir(parents=True, exist_ok=True)
+        self.loader = TrainingDataLoader(limit_per_source=10000)
 
         logger.info(f"Neural Network Trainer initialized")
         logger.info(f"Base path: {self.base_path}")
         logger.info(f"Models will be saved to: {self.models_path}")
 
     def load_training_data(self):
-        """Load all candidate profiles for training"""
-        logger.info("Loading training data...")
-
-        profiles_dir = self.data_path / "profiles"
-        if not profiles_dir.exists():
-            logger.error(f"Profiles directory not found: {profiles_dir}")
-            return None
-
-        all_profiles = []
-        json_files = list(profiles_dir.glob("*.json"))
-
-        logger.info(f"Found {len(json_files)} profile files")
-
-        for i, json_file in enumerate(json_files[:10000], 1):  # Limit for training
-            try:
-                with open(json_file, 'r', encoding='utf-8') as f:
-                    profile = json.load(f)
-                    all_profiles.append(profile)
-
-                if i % 1000 == 0:
-                    logger.info(f"Loaded {i} profiles...")
-            except Exception as e:
-                logger.error(f"Error loading {json_file}: {e}")
-
-        logger.info(f"âœ… Loaded {len(all_profiles)} profiles for training")
-        return all_profiles
+        """Load and normalize profiles + parsed resumes for training"""
+        logger.info("Loading training data from shared loader (profiles + cv files)...")
+        records = self.loader.load_records()
+        logger.info(f"✅ Loaded {len(records)} normalized records for training")
+        return records
 
     def prepare_features(self, profiles):
-        """Extract features from profiles for neural network training"""
+        """Extract features from normalized records for neural network training"""
         logger.info("Preparing features for neural networks...")
 
-        features = []
-        labels = []
-
-        for profile in profiles:
-            try:
-                # Extract text features
-                skills = profile.get('skills', [])
-                experience = profile.get('work_experience', [])
-                education = profile.get('education', [])
-
-                # Create feature vector
-                feature_dict = {
-                    'skills_count': len(skills),
-                    'experience_years': len(experience),
-                    'education_count': len(education),
-                    'has_technical_skills': any('technical' in str(s).lower() for s in skills),
-                    'has_management': any('manag' in str(exp).lower() for exp in experience),
-                    'has_degree': any('degree' in str(edu).lower() for edu in education)
-                }
-
-                features.append(list(feature_dict.values()))
-
-                # Create label (for classification - e.g., seniority level)
-                label = self._infer_seniority(profile)
-                labels.append(label)
-
-            except Exception as e:
-                logger.error(f"Error preparing features: {e}")
-
-        X = np.array(features)
-        y = np.array(labels)
-
-        logger.info(f"âœ… Prepared {len(X)} feature vectors with shape {X.shape}")
+        X, y = self.loader.build_feature_matrix(profiles)
+        logger.info(f"✅ Prepared {len(X)} feature vectors with shape {X.shape}")
         return X, y
 
     def _infer_seniority(self, profile):
-        """Infer seniority level from profile (0=Junior, 1=Mid, 2=Senior)"""
-        exp_count = len(profile.get('work_experience', []))
-        if exp_count >= 10:
-            return 2  # Senior
-        elif exp_count >= 5:
-            return 1  # Mid
-        else:
-            return 0  # Junior
+        return self.loader.infer_seniority(profile)
 
     def train_dnn_classifier(self, X, y):
         """Train Deep Neural Network classifier"""

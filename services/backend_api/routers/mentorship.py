@@ -20,6 +20,8 @@ import logging
 # Import mentorship service
 from services.backend_api.services.mentorship_service import MentorshipService
 from services.backend_api.db.connection import get_db as get_db_connection
+from services.backend_api.db import models
+from services.backend_api.utils import security
 
 logger = logging.getLogger(__name__)
 
@@ -97,6 +99,21 @@ def get_mentorship_service(db: Session = Depends(get_db)):
     """Dependency to get MentorshipService instance"""
     # MentorshipService uses raw DBAPI connection (cursor based)
     return MentorshipService(db.connection().connection)
+
+
+def get_current_user(token: str = Depends(security.oauth2_scheme), db: Session = Depends(get_db)):
+    try:
+        payload = security.decode_access_token(token)
+        email: str = payload.get("sub")
+        if email is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    except security.TokenValidationError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    return user
 
 # ============================================================================
 # MENTOR-USER LINKING ENDPOINTS
@@ -504,8 +521,8 @@ async def get_pending_applications(
 @router.post("/applications/{application_id}/approve")
 async def approve_mentor_application(
     application_id: int,
-    reviewer_admin_id: str,
-    mentor_id: str,
+    reviewer_admin_id: str = "admin-portal",
+    mentor_id: Optional[str] = None,
     service: MentorshipService = Depends(get_mentorship_service)
 ):
     """
@@ -516,15 +533,66 @@ async def approve_mentor_application(
     - mentor_id: Assigned mentor ID
     """
     try:
+        resolved_mentor_id = mentor_id or f"mentor-{application_id}"
         success = service.approve_mentor_application(
             application_id=application_id,
             reviewer_admin_id=reviewer_admin_id,
-            mentor_id=mentor_id
+            mentor_id=resolved_mentor_id
         )
-        return {"success": success, "application_id": application_id, "mentor_id": mentor_id}
+        return {"success": success, "application_id": application_id, "mentor_id": resolved_mentor_id}
     except Exception as e:
         logger.error(f"Error approving application: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/applications/{application_id}/reject")
+async def reject_mentor_application(
+    application_id: int,
+    reviewer_admin_id: str = "admin-portal",
+    service: MentorshipService = Depends(get_mentorship_service)
+):
+    """
+    Reject mentor application (Guardian action).
+
+    Query params:
+    - reviewer_admin_id: Guardian who rejected
+    """
+    try:
+        success = service.reject_mentor_application(
+            application_id=application_id,
+            reviewer_admin_id=reviewer_admin_id,
+        )
+        return {"success": success, "application_id": application_id, "status": "rejected"}
+    except Exception as e:
+        logger.error(f"Error rejecting application: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/summary")
+async def get_mentorship_summary(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    sessions = (
+        db.query(models.Mentorship)
+        .filter(models.Mentorship.mentee_id == current_user.id)
+        .all()
+    )
+
+    status_counts: Dict[str, int] = {}
+    upcoming = 0
+    now = datetime.utcnow()
+
+    for session in sessions:
+        status_counts[session.status] = status_counts.get(session.status, 0) + 1
+        if session.scheduled_at and session.scheduled_at > now:
+            upcoming += 1
+
+    return {
+        "total": len(sessions),
+        "by_status": status_counts,
+        "upcoming": upcoming,
+    }
 
 # ============================================================================
 # HEALTH CHECK

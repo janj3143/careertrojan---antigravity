@@ -1,0 +1,3103 @@
+{
+  "generated_at": "2026-02-27T15:35:40.727504+00:00",
+  "total_probed": 272,
+  "summary": {
+    "ok": 109,
+    "exists_requires_auth_or_payload": 49,
+    "error": 108,
+    "missing_or_wrong_method": 4,
+    "skipped_heavy": 2
+  },
+  "failures": [
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/generate",
+      "name": "generate_2fa",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/me",
+      "name": "read_users_me",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/profile",
+      "name": "get_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/user/v1/profile",
+      "name": "update_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/stats",
+      "name": "get_user_stats",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/activity",
+      "name": "get_user_activity",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/sessions/summary",
+      "name": "get_user_session_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/resume/latest",
+      "name": "get_latest_resume",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/matches/summary",
+      "name": "get_match_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users",
+      "name": "list_users",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users\n LIMIT ? OFFSET ?]\n[parameters: (100, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/summary",
+      "name": "compliance_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: consent_records\n[SQL: SELECT count(consent_records.id) AS count_1 \nFROM consent_records]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/{provider}/disconnect",
+      "name": "disconnect_integration",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/status",
+      "name": "email_status",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/activity",
+      "name": "system_activity",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT count(users.id) AS count_1 \nFROM users \nWHERE users.created_at >= ?]\n[parameters: ('2026-02-26 15:35:41.401067',)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/dashboard/snapshot",
+      "name": "dashboard_snapshot",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT count(users.id) AS count_1 \nFROM users]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/users/{user_id}/ledger",
+      "name": "user_token_ledger",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/user_subscriptions",
+      "name": "user_subscriptions",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/plan",
+      "name": "set_user_plan",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/disable",
+      "name": "disable_user",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/audit/events",
+      "name": "audit_events",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: audit_log\n[SQL: SELECT audit_log.id AS audit_log_id, audit_log.user_id AS audit_log_user_id, audit_log.actor_id AS audit_log_actor_id, audit_log.action AS audit_log_action, audit_log.resource_type AS audit_log_resource_type, audit_log.resource_id AS audit_log_resource_id, audit_log.detail AS audit_log_detail, audit_log.ip_address AS audit_log_ip_address, audit_log.created_at AS audit_log_created_at \nFROM audit_log ORDER BY audit_log.created_at DESC\n LIMIT ? OFFSET ?]\n[parameters: (100, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/sync",
+      "name": "email_sync",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/jobs",
+      "name": "email_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsers/run",
+      "name": "parsers_run",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/jobs",
+      "name": "parsers_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/status",
+      "name": "batch_status",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/batch/run",
+      "name": "batch_run",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/jobs",
+      "name": "batch_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/status",
+      "name": "enrichment_status",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/status",
+      "name": "content_status",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/content/run",
+      "name": "content_run",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/jobs",
+      "name": "content_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/mentor/{mentor_id}",
+      "name": "get_mentor_connections",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/user/{user_id}",
+      "name": "get_user_connections",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/notes/{link_id}",
+      "name": "get_notes_for_link",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/invoices/mentor/{mentor_id}",
+      "name": "get_mentor_invoices",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/applications/pending",
+      "name": "get_pending_applications",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/summary",
+      "name": "get_mentorship_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/bundle",
+      "name": "get_coaching_bundle",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/history",
+      "name": "get_coaching_history",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/learning/feedback",
+      "name": "submit_interview_learning_feedback",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/learning/profile",
+      "name": "fetch_interview_learning_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/upload",
+      "name": "upload_resume",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1/{resume_id}",
+      "name": "get_resume",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1",
+      "name": "list_resumes",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/parse",
+      "name": "parse",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/enrich",
+      "name": "enrich",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/plans",
+      "name": "get_plans",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/balance",
+      "name": "get_balance",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/can-perform/{action_id}",
+      "name": "can_perform_action",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/consume",
+      "name": "consume_credits",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/usage",
+      "name": "get_usage_details",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/upgrade/{plan_tier}",
+      "name": "upgrade_plan",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes/{doc_id}",
+      "name": "get_parsed_resume",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/companies",
+      "name": "get_companies",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "SKIP",
+      "path": "/api/ai-data/v1/metadata",
+      "name": "get_metadata",
+      "status_code": 0,
+      "classification": "skipped_heavy",
+      "error": "Skipped due to known heavy endpoint"
+    },
+    {
+      "method": "SKIP",
+      "path": "/api/ai-data/v1/normalized",
+      "name": "get_normalized_data",
+      "status_code": 0,
+      "classification": "skipped_heavy",
+      "error": "Skipped due to known heavy endpoint"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}",
+      "name": "get_emails_provider_payload",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}/guarded-payload",
+      "name": "get_guarded_email_provider_payload",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai-data/v1/emails/tracking",
+      "name": "create_emails_tracking_record",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/index",
+      "name": "get_job_index",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries",
+      "name": "list_industries",
+      "status_code": 599,
+      "classification": "error",
+      "error": "module 'services.backend_api.services.industry_taxonomy_service' has no attribute 'list_high_level_industries'"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries/{high_level}/subindustries",
+      "name": "list_subindustries",
+      "status_code": 599,
+      "classification": "error",
+      "error": "module 'services.backend_api.services.industry_taxonomy_service' has no attribute 'list_subindustries_for'"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/summary",
+      "name": "taxonomy_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "module 'services.backend_api.services.industry_taxonomy_service' has no attribute 'list_high_level_industries'"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/ai-data",
+      "name": "trigger_ai_data_index",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/parser",
+      "name": "trigger_parser_index",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans",
+      "name": "get_plans",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans/{plan_id}",
+      "name": "get_plan",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/process",
+      "name": "process_payment",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/history",
+      "name": "get_payment_history",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/subscription",
+      "name": "get_current_subscription",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/cancel",
+      "name": "cancel_subscription",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/client-token",
+      "name": "get_client_token",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/methods",
+      "name": "add_payment_method",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/methods",
+      "name": "list_payment_methods",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/payment/v1/methods/{token}",
+      "name": "remove_payment_method",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/transactions/{transaction_id}",
+      "name": "get_transaction",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/refund/{transaction_id}",
+      "name": "refund_transaction",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/award/{action_key}",
+      "name": "award_action",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards",
+      "name": "get_rewards",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards/available",
+      "name": "get_available_rewards",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "submit_suggestion",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "get_my_suggestions",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/redeem",
+      "name": "redeem_rewards",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/referral",
+      "name": "get_referral_code",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/leaderboard",
+      "name": "get_leaderboard",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/ownership-stats",
+      "name": "get_ownership_stats",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: user_rewards\n[SQL: SELECT sum(user_rewards.tokens) AS sum_1 \nFROM user_rewards]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/profile-by-user/{user_id}",
+      "name": "get_mentor_profile_by_user",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: mentors\n[SQL: SELECT mentors.id AS mentors_id, mentors.user_id AS mentors_user_id, mentors.specialty AS mentors_specialty, mentors.hourly_rate AS mentors_hourly_rate, mentors.availability AS mentors_availability \nFROM mentors \nWHERE mentors.user_id = ?\n LIMIT ? OFFSET ?]\n[parameters: ('{user_id}', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/profile",
+      "name": "get_mentor_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: mentors\n[SQL: SELECT mentors.id AS mentors_id, mentors.user_id AS mentors_user_id, mentors.specialty AS mentors_specialty, mentors.hourly_rate AS mentors_hourly_rate, mentors.availability AS mentors_availability \nFROM mentors \nWHERE mentors.id = ?\n LIMIT ? OFFSET ?]\n[parameters: ('{mentor_profile_id}', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/list",
+      "name": "list_mentors",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: mentors\n[SQL: SELECT mentors.id AS mentors_id, mentors.user_id AS mentors_user_id, mentors.specialty AS mentors_specialty, mentors.hourly_rate AS mentors_hourly_rate, mentors.availability AS mentors_availability \nFROM mentors\n LIMIT ? OFFSET ?]\n[parameters: (20, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "name": "get_mentor_packages",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "get_package",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "update_package",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "delete_package",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/dashboard-stats",
+      "name": "get_dashboard_stats",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/registry",
+      "name": "registry",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/endpoints",
+      "name": "endpoints",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/graph",
+      "name": "graph",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/consent",
+      "name": "get_consent",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/gdpr/v1/consent",
+      "name": "grant_consent",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/export",
+      "name": "export_my_data",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/gdpr/v1/delete-account",
+      "name": "delete_my_account",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/audit-log",
+      "name": "my_audit_log",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "admin_parse_file",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse/{parse_id}",
+      "name": "get_admin_parse",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "list_admin_parses",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "put_token_config",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/plans",
+      "name": "put_token_config",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/plans",
+      "name": "put_token_config",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/costs/{feature}",
+      "name": "update_token_cost",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/costs/update",
+      "name": "update_token_cost",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/ledger/emit",
+      "name": "emit_ledger_event",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/anti-gaming/check",
+      "name": "check",
+      "status_code": 429,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/logs/tail",
+      "name": "tail_log",
+      "status_code": 429,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/v1/status",
+      "name": "status",
+      "status_code": 429,
+      "classification": "error",
+      "error": null
+    }
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "name": "health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/register",
+      "name": "register",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/login",
+      "name": "login",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/generate",
+      "name": "generate_2fa",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/verify",
+      "name": "verify_2fa",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/me",
+      "name": "read_users_me",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/profile",
+      "name": "get_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/user/v1/profile",
+      "name": "update_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/stats",
+      "name": "get_user_stats",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/activity",
+      "name": "get_user_activity",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/sessions/summary",
+      "name": "get_user_session_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/resume/latest",
+      "name": "get_latest_resume",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/matches/summary",
+      "name": "get_match_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users",
+      "name": "list_users",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users\n LIMIT ? OFFSET ?]\n[parameters: (100, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/{user_id}",
+      "name": "get_user",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/health",
+      "name": "system_health",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/summary",
+      "name": "compliance_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: consent_records\n[SQL: SELECT count(consent_records.id) AS count_1 \nFROM consent_records]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/integrations/status",
+      "name": "integrations_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/sendgrid/configure",
+      "name": "configure_sendgrid",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/klaviyo/configure",
+      "name": "configure_klaviyo",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/gmail/configure",
+      "name": "configure_gmail",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/{provider}/disconnect",
+      "name": "disconnect_integration",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_test",
+      "name": "send_test_email",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_bulk",
+      "name": "send_bulk_email",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/logs",
+      "name": "email_logs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/analytics",
+      "name": "email_analytics",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/status",
+      "name": "email_status",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/status",
+      "name": "parsers_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/activity",
+      "name": "system_activity",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT count(users.id) AS count_1 \nFROM users \nWHERE users.created_at >= ?]\n[parameters: ('2026-02-26 15:35:41.401067',)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/dashboard/snapshot",
+      "name": "dashboard_snapshot",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT count(users.id) AS count_1 \nFROM users]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/users/{user_id}/ledger",
+      "name": "user_token_ledger",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/user_subscriptions",
+      "name": "user_subscriptions",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/metrics",
+      "name": "user_metrics",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/security",
+      "name": "user_security",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/plan",
+      "name": "set_user_plan",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/disable",
+      "name": "disable_user",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/audit/events",
+      "name": "audit_events",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: audit_log\n[SQL: SELECT audit_log.id AS audit_log_id, audit_log.user_id AS audit_log_user_id, audit_log.actor_id AS audit_log_actor_id, audit_log.action AS audit_log_action, audit_log.resource_type AS audit_log_resource_type, audit_log.resource_id AS audit_log_resource_id, audit_log.detail AS audit_log_detail, audit_log.ip_address AS audit_log_ip_address, audit_log.created_at AS audit_log_created_at \nFROM audit_log ORDER BY audit_log.created_at DESC\n LIMIT ? OFFSET ?]\n[parameters: (100, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/sync",
+      "name": "email_sync",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/jobs",
+      "name": "email_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsers/run",
+      "name": "parsers_run",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/jobs",
+      "name": "parsers_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/status",
+      "name": "batch_status",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/batch/run",
+      "name": "batch_run",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/jobs",
+      "name": "batch_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/status",
+      "name": "enrichment_status",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/enrichment/run",
+      "name": "enrichment_run",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/jobs",
+      "name": "enrichment_jobs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/status",
+      "name": "content_status",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/content/run",
+      "name": "content_run",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/jobs",
+      "name": "content_jobs",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/shared/v1/health",
+      "name": "health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/shared/v1/health/deep",
+      "name": "deep_health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/links",
+      "name": "create_mentorship_link",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/mentor/{mentor_id}",
+      "name": "get_mentor_connections",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/user/{user_id}",
+      "name": "get_user_connections",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/links/{link_id}/status",
+      "name": "update_link_status",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/notes",
+      "name": "create_note",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/notes/{link_id}",
+      "name": "get_notes_for_link",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/notes/{note_id}",
+      "name": "update_note",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents",
+      "name": "create_requirement_document",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/documents/{doc_id}",
+      "name": "get_requirement_document",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/sign",
+      "name": "sign_document",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/reject",
+      "name": "reject_document",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices",
+      "name": "create_invoice",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/invoices/mentor/{mentor_id}",
+      "name": "get_mentor_invoices",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/mark-paid",
+      "name": "mark_invoice_paid",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/service-delivered",
+      "name": "mark_service_delivered",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/confirm-completion",
+      "name": "confirm_service_completion",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/dispute",
+      "name": "raise_dispute",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications",
+      "name": "submit_mentor_application",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/applications/pending",
+      "name": "get_pending_applications",
+      "status_code": 500,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications/{application_id}/approve",
+      "name": "approve_mentor_application",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications/{application_id}/reject",
+      "name": "reject_mentor_application",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/summary",
+      "name": "get_mentorship_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/health",
+      "name": "health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/descriptive",
+      "name": "get_stats",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/regression",
+      "name": "regression",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/market",
+      "name": "market_intel",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/enrich",
+      "name": "enrich_resume",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/company/briefing",
+      "name": "company_briefing",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry",
+      "name": "company_registry",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry/analytics",
+      "name": "company_registry_analytics",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry/events",
+      "name": "company_registry_events",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/company/extract",
+      "name": "company_extract",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/pipeline/ops-summary",
+      "name": "pipeline_ops_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/support/status",
+      "name": "support_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/bundle",
+      "name": "get_coaching_bundle",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/health",
+      "name": "coaching_health",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/history",
+      "name": "get_coaching_history",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/questions/generate",
+      "name": "generate_questions",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/answers/review",
+      "name": "review_answer",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/stories/generate",
+      "name": "generate_stories",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/learning/feedback",
+      "name": "submit_interview_learning_feedback",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/learning/profile",
+      "name": "fetch_interview_learning_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/role/detect",
+      "name": "detect_role",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/plan/90day",
+      "name": "generate_90day_plan",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/stats/public",
+      "name": "get_public_stats",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/processing/start",
+      "name": "start_processing",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/processing/status",
+      "name": "processing_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/logs/lock",
+      "name": "lock_audit_logs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/tokens/config",
+      "name": "get_token_config",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/anti-gaming/check",
+      "name": "check_abuse",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/upload",
+      "name": "upload_resume",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1/{resume_id}",
+      "name": "get_resume",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1",
+      "name": "list_resumes",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/parse",
+      "name": "parse",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/enrich",
+      "name": "enrich",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/detect",
+      "name": "detect_blockers",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/blockers/v1/user/{user_id}",
+      "name": "get_user_blockers",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/improvement-plans/generate",
+      "name": "generate_plans",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/plans",
+      "name": "get_plans",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/actions",
+      "name": "get_action_costs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/balance",
+      "name": "get_balance",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/can-perform/{action_id}",
+      "name": "can_perform_action",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/consume",
+      "name": "consume_credits",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/usage",
+      "name": "get_usage_details",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/teaser",
+      "name": "get_teaser",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/upgrade/{plan_tier}",
+      "name": "upgrade_plan",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/health",
+      "name": "health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes",
+      "name": "get_parsed_resumes",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes/{doc_id}",
+      "name": "get_parsed_resume",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_descriptions",
+      "name": "get_job_descriptions",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/companies",
+      "name": "get_companies",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_titles",
+      "name": "get_job_titles",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/locations",
+      "name": "get_locations",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "SKIP",
+      "path": "/api/ai-data/v1/metadata",
+      "name": "get_metadata",
+      "status_code": 0,
+      "classification": "skipped_heavy",
+      "error": "Skipped due to known heavy endpoint"
+    },
+    {
+      "method": "SKIP",
+      "path": "/api/ai-data/v1/normalized",
+      "name": "get_normalized_data",
+      "status_code": 0,
+      "classification": "skipped_heavy",
+      "error": "Skipped due to known heavy endpoint"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/email_extracted",
+      "name": "get_email_extracted",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails",
+      "name": "get_emails",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/summary",
+      "name": "get_emails_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/diagnostics",
+      "name": "get_emails_diagnostics",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}",
+      "name": "get_emails_provider_payload",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}/guarded-payload",
+      "name": "get_guarded_email_provider_payload",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking",
+      "name": "get_emails_tracking",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking/summary",
+      "name": "get_emails_tracking_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking/reroute-targets",
+      "name": "get_emails_tracking_reroute_targets",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai-data/v1/emails/tracking",
+      "name": "create_emails_tracking_record",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/status",
+      "name": "get_ai_data_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parser/ingestion-status",
+      "name": "get_parser_ingestion_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/automated/candidates",
+      "name": "get_automated_candidates",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/user_data/files",
+      "name": "list_user_data_files",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/index",
+      "name": "get_job_index",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/search",
+      "name": "search_jobs",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries",
+      "name": "list_industries",
+      "status_code": 599,
+      "classification": "error",
+      "error": "module 'services.backend_api.services.industry_taxonomy_service' has no attribute 'list_high_level_industries'"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries/{high_level}/subindustries",
+      "name": "list_subindustries",
+      "status_code": 599,
+      "classification": "error",
+      "error": "module 'services.backend_api.services.industry_taxonomy_service' has no attribute 'list_subindustries_for'"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/search",
+      "name": "search_job_titles",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/metadata",
+      "name": "job_title_metadata",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/infer-industries",
+      "name": "infer_industries",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/search",
+      "name": "search_naics",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/title",
+      "name": "naics_title",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/summary",
+      "name": "taxonomy_summary",
+      "status_code": 599,
+      "classification": "error",
+      "error": "module 'services.backend_api.services.industry_taxonomy_service' has no attribute 'list_high_level_industries'"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/naics-mapping",
+      "name": "job_title_to_naics",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/sessions/v1/log",
+      "name": "log_session_event",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/summary/{user_id}",
+      "name": "get_session_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/sync-status",
+      "name": "get_sync_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/consolidated/{user_id}",
+      "name": "get_consolidated_user_data",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases",
+      "name": "list_phrases",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases/summary",
+      "name": "phrases_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/health",
+      "name": "support_health",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/status",
+      "name": "support_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/token",
+      "name": "issue_support_token",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/widget-config",
+      "name": "support_widget_config",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/wiring-test",
+      "name": "support_wiring_test",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/providers",
+      "name": "support_providers",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/readiness",
+      "name": "support_readiness",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/status",
+      "name": "get_index_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/ai-data",
+      "name": "trigger_ai_data_index",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/parser",
+      "name": "trigger_parser_index",
+      "status_code": 599,
+      "classification": "error",
+      "error": ""
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/full",
+      "name": "trigger_full_index",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/summary",
+      "name": "get_ai_data_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/categories",
+      "name": "get_ai_data_categories",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/skills",
+      "name": "get_top_skills",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/skills/search",
+      "name": "search_skills",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/industries",
+      "name": "get_top_industries",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/industries/search",
+      "name": "search_industries",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/locations",
+      "name": "get_top_locations",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/locations/search",
+      "name": "search_locations",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/summary",
+      "name": "get_parser_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/status",
+      "name": "get_parser_status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/file-types",
+      "name": "get_parser_file_types",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/runs",
+      "name": "get_parser_runs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/parser/runs",
+      "name": "record_parser_run",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/dependencies",
+      "name": "get_optional_dependencies",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/since",
+      "name": "get_files_since_timestamp",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/new-data-summary",
+      "name": "get_new_data_summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/manifest-stats",
+      "name": "get_file_manifest_stats",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/incremental",
+      "name": "trigger_incremental_index",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/by-category/{category}",
+      "name": "get_files_by_category",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/health",
+      "name": "get_index_health",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans",
+      "name": "get_plans",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans/{plan_id}",
+      "name": "get_plan",
+      "status_code": 404,
+      "classification": "missing_or_wrong_method",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/process",
+      "name": "process_payment",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/history",
+      "name": "get_payment_history",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/subscription",
+      "name": "get_current_subscription",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/cancel",
+      "name": "cancel_subscription",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/health",
+      "name": "health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/client-token",
+      "name": "get_client_token",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/methods",
+      "name": "add_payment_method",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/methods",
+      "name": "list_payment_methods",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/payment/v1/methods/{token}",
+      "name": "remove_payment_method",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/transactions/{transaction_id}",
+      "name": "get_transaction",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/refund/{transaction_id}",
+      "name": "refund_transaction",
+      "status_code": 503,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/gateway-info",
+      "name": "gateway_info",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/award/{action_key}",
+      "name": "award_action",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards",
+      "name": "get_rewards",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards/available",
+      "name": "get_available_rewards",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "submit_suggestion",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "get_my_suggestions",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/redeem",
+      "name": "redeem_rewards",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/referral",
+      "name": "get_referral_code",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/referral/claim",
+      "name": "claim_referral",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/leaderboard",
+      "name": "get_leaderboard",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/ownership-stats",
+      "name": "get_ownership_stats",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: user_rewards\n[SQL: SELECT sum(user_rewards.tokens) AS sum_1 \nFROM user_rewards]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/health",
+      "name": "health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/profile-by-user/{user_id}",
+      "name": "get_mentor_profile_by_user",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: mentors\n[SQL: SELECT mentors.id AS mentors_id, mentors.user_id AS mentors_user_id, mentors.specialty AS mentors_specialty, mentors.hourly_rate AS mentors_hourly_rate, mentors.availability AS mentors_availability \nFROM mentors \nWHERE mentors.user_id = ?\n LIMIT ? OFFSET ?]\n[parameters: ('{user_id}', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/profile",
+      "name": "get_mentor_profile",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: mentors\n[SQL: SELECT mentors.id AS mentors_id, mentors.user_id AS mentors_user_id, mentors.specialty AS mentors_specialty, mentors.hourly_rate AS mentors_hourly_rate, mentors.availability AS mentors_availability \nFROM mentors \nWHERE mentors.id = ?\n LIMIT ? OFFSET ?]\n[parameters: ('{mentor_profile_id}', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/availability",
+      "name": "update_availability",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/list",
+      "name": "list_mentors",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: mentors\n[SQL: SELECT mentors.id AS mentors_id, mentors.user_id AS mentors_user_id, mentors.specialty AS mentors_specialty, mentors.hourly_rate AS mentors_hourly_rate, mentors.availability AS mentors_availability \nFROM mentors\n LIMIT ? OFFSET ?]\n[parameters: (20, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "name": "get_mentor_packages",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "name": "create_package",
+      "status_code": 422,
+      "classification": "exists_requires_auth_or_payload",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "get_package",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "update_package",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "delete_package",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/dashboard-stats",
+      "name": "get_dashboard_stats",
+      "status_code": 501,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/health",
+      "name": "health_check",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/visuals",
+      "name": "get_visual_catalogue",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/skills/radar",
+      "name": "get_skills_radar",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/quadrant",
+      "name": "get_quadrant_data",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cloud",
+      "name": "get_term_cloud",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cooccurrence",
+      "name": "get_cooccurrence",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/graph",
+      "name": "get_graph_data",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/insights/v1/cohort/resolve",
+      "name": "resolve_cohort",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/evidence",
+      "name": "get_evidence",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/touchnots",
+      "name": "get_touchnots",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/registry",
+      "name": "registry",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/endpoints",
+      "name": "endpoints",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/graph",
+      "name": "graph",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/statistics",
+      "name": "get_statistics",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/dashboard",
+      "name": "get_dashboard_data",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_resumes",
+      "name": "get_recent_resumes",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_jobs",
+      "name": "get_recent_jobs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/system_health",
+      "name": "get_system_health",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/consent",
+      "name": "get_consent",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/gdpr/v1/consent",
+      "name": "grant_consent",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/export",
+      "name": "export_my_data",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/gdpr/v1/delete-account",
+      "name": "delete_my_account",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/audit-log",
+      "name": "my_audit_log",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/abuse/queue",
+      "name": "queue",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "admin_parse_file",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse/{parse_id}",
+      "name": "get_admin_parse",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "list_admin_parses",
+      "status_code": 599,
+      "classification": "error",
+      "error": "(sqlite3.OperationalError) no such table: users\n[SQL: SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.role AS users_role, users.otp_secret AS users_otp_secret, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?\n LIMIT ? OFFSET ?]\n[parameters: ('endpoint-audit-admin', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "get_token_config",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/config",
+      "name": "get_token_config",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/plans",
+      "name": "get_token_config",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "put_token_config",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/plans",
+      "name": "put_token_config",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/plans",
+      "name": "put_token_config",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/usage",
+      "name": "get_token_usage",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/usage",
+      "name": "get_token_usage",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/subscriptions",
+      "name": "get_subscriptions",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/subscriptions",
+      "name": "get_subscriptions",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/costs",
+      "name": "get_token_costs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/costs/{feature}",
+      "name": "update_token_cost",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/costs/update",
+      "name": "update_token_cost",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/logs",
+      "name": "get_usage_logs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/analytics",
+      "name": "get_usage_analytics",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/ledger/{user_id}",
+      "name": "get_user_token_ledger",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/unit-economics",
+      "name": "get_token_unit_economics",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/ledger/emit",
+      "name": "emit_ledger_event",
+      "status_code": 400,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/anti-gaming/check",
+      "name": "check",
+      "status_code": 429,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/logs/tail",
+      "name": "tail_log",
+      "status_code": 429,
+      "classification": "error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/v1/status",
+      "name": "status",
+      "status_code": 429,
+      "classification": "error",
+      "error": null
+    }
+  ]
+}

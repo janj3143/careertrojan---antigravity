@@ -9,11 +9,14 @@ from pathlib import Path
 import json
 from typing import Dict, Any
 from datetime import datetime
+import logging
 
-import os
+from services.shared.paths import paths as runtime_paths
+
 router = APIRouter(prefix="/api/analytics/v1", tags=["analytics"])
+logger = logging.getLogger("careertrojan.api.analytics")
 
-AI_DATA_PATH = Path(os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final"))
+AI_DATA_PATH = runtime_paths.ai_data_final
 
 @router.get("/statistics")
 async def get_statistics() -> Dict[str, Any]:
@@ -105,7 +108,7 @@ async def get_dashboard_data() -> Dict[str, Any]:
                         "data": data
                     })
             except Exception as e:
-                print(f"Error loading {json_file}: {e}")
+                logger.warning("Error loading %s: %s", json_file, e)
                 continue
 
     # Get training status
@@ -183,7 +186,7 @@ async def get_recent_resumes(limit: int = 10) -> Dict[str, Any]:
                     "data": data
                 })
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -236,7 +239,7 @@ async def get_recent_jobs(limit: int = 10) -> Dict[str, Any]:
                     "data": data
                 })
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {

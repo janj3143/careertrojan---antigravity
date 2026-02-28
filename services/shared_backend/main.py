@@ -58,12 +58,8 @@ async def get_stats():
 
 @app.get("/api/v1/users")
 async def get_users():
-    """Get all users (Mock for now)"""
-    return [
-        {"id": "1", "name": "Admin User", "email": "admin@careertrojan.com", "role": "Admin", "status": "Active"},
-        {"id": "2", "name": "New User", "email": "user@gmail.com", "role": "User", "status": "Active"},
-        {"id": "3", "name": "Test Account", "email": "test@careertrojan.com", "role": "User", "status": "Inactive"}
-    ]
+    """Get all users (real source required)."""
+    raise HTTPException(status_code=501, detail="User listing is not configured")
 
 if __name__ == "__main__":
     import uvicorn

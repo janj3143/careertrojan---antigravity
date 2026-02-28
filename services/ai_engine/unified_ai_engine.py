@@ -29,6 +29,8 @@ from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, asdict
 from datetime import datetime
 
+from services.shared.paths import CareerTrojanPaths
+
 try:
     from model_registry import ModelRegistry
 except ImportError:
@@ -75,14 +77,10 @@ class EnsembleResult:
 class UnifiedAIEngine:
     """Master inference engine coordinating all AI models"""
 
-    def __init__(self, registry_dir: str = "admin_portal/models"):
-        """
-        Initialize unified AI engine
-
-        Args:
-            registry_dir: Directory containing model registry
-        """
-        self.registry_dir = Path(registry_dir)
+    def __init__(self, registry_dir: str | None = None):
+        """Initialize unified AI engine"""
+        paths = CareerTrojanPaths()
+        self.registry_dir = Path(registry_dir or paths.trained_models)
         self.registry = None
         self.loaded_models = {}
         self.inference_cache = {}
@@ -94,7 +92,7 @@ class UnifiedAIEngine:
 
         # Initialize registry
         if ModelRegistry:
-            self.registry = ModelRegistry(registry_dir=str(self.registry_dir))
+            self.registry = ModelRegistry(registry_dir=str(self.registry_dir), models_dir=str(paths.trained_models))
             print(f"   Registry loaded")
         else:
             print(f"   ModelRegistry not available")

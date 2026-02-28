@@ -20,10 +20,17 @@ export default function Analytics() {
 
     const fetchAnalytics = async () => {
         try {
-            const response = await fetch(`/api/admin/analytics?range=${timeRange}`);
+            const response = await fetch(`/api/analytics/v1/dashboard?range=${timeRange}`);
             if (response.ok) {
-                const analyticsData = await response.json();
-                setData(analyticsData);
+                const payload = await response.json();
+                const source = payload?.data ?? payload ?? {};
+                const normalized: AnalyticsData = {
+                    user_growth: Array.isArray(source.user_growth) ? source.user_growth : [],
+                    revenue_trend: Array.isArray(source.revenue_trend) ? source.revenue_trend : [],
+                    session_stats: source.session_stats ?? { total: 0, completed: 0, cancelled: 0 },
+                    top_mentors: Array.isArray(source.top_mentors) ? source.top_mentors : [],
+                };
+                setData(normalized);
             }
         } catch (err) {
             console.error('Error fetching analytics:', err);

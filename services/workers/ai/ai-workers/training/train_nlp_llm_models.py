@@ -22,6 +22,9 @@ import json
 import numpy as np
 from datetime import datetime
 
+from services.shared.paths import CareerTrojanPaths
+from services.shared.training_data_loader import TrainingDataLoader
+
 if sys.platform == 'win32':
     os.environ['PYTHONIOENCODING'] = 'utf-8'
 
@@ -34,46 +37,22 @@ class NLPLLMTrainer:
 
     def __init__(self, base_path: str):
         self.base_path = Path(base_path)
-        self.data_path = Path(r"L:\antigravity_version_ai_data_final\ai_data_final")
+        self.data_path = CareerTrojanPaths().ai_data_final
         self.models_path = self.base_path / "trained_models" / "nlp"
         self.models_path.mkdir(parents=True, exist_ok=True)
+        self.loader = TrainingDataLoader(limit_per_source=5000)
 
         logger.info(f"NLP & LLM Trainer initialized")
         logger.info(f"Models will be saved to: {self.models_path}")
 
     def load_text_data(self):
-        """Load text data from candidate profiles"""
+        """Load text data from profiles and parsed resumes with schema normalization"""
         logger.info("Loading text data...")
 
-        profiles_dir = self.data_path / "profiles"
-        if not profiles_dir.exists():
-            logger.error(f"Profiles directory not found")
-            return []
+        records = self.loader.load_records()
+        texts = self.loader.build_text_corpus(records)
 
-        texts = []
-        json_files = list(profiles_dir.glob("*.json"))[:5000]
-
-        for json_file in json_files:
-            try:
-                with open(json_file, 'r', encoding='utf-8') as f:
-                    profile = json.load(f)
-
-                    # Extract text from profile
-                    text_parts = []
-                    if profile.get('skills'):
-                        text_parts.append(' '.join(map(str, profile['skills'])))
-                    if profile.get('work_experience'):
-                        for exp in profile['work_experience']:
-                            if isinstance(exp, dict):
-                                text_parts.append(exp.get('description', ''))
-
-                    if text_parts:
-                        texts.append(' '.join(text_parts))
-
-            except Exception as e:
-                logger.error(f"Error loading {json_file}: {e}")
-
-        logger.info(f"âœ… Loaded {len(texts)} text samples")
+        logger.info(f"✅ Loaded {len(texts)} text samples")
         return texts
 
     def train_tokenizer(self, texts):

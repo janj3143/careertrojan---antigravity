@@ -1,0 +1,273 @@
+{
+  "generated_at": "2026-02-28T15:47:20.927528+00:00",
+  "results": [
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/integrations/status",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/sendgrid/configure",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/klaviyo/configure",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_test",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_bulk",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/logs",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/analytics",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/integrations/status",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/sendgrid/configure",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/klaviyo/configure",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_test",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_bulk",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/sendgrid",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/klaviyo",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/sendgrid/guarded-payload",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking/summary",
+      "status_code": 200,
+      "classification": "ok",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/status",
+      "status_code": 501,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/content/run",
+      "status_code": 501,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/jobs",
+      "status_code": 501,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/mentor/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/user/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/notes/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/invoices/mentor/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/applications/pending",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    }
+  ],
+  "problems": [
+    {
+      "method": "GET",
+      "path": "/api/admin/integrations/status",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/sendgrid/configure",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/klaviyo/configure",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_test",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_bulk",
+      "status_code": 404,
+      "classification": "missing",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/status",
+      "status_code": 501,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/content/run",
+      "status_code": 501,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/jobs",
+      "status_code": 501,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/mentor/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/user/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/notes/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/invoices/mentor/sample",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/applications/pending",
+      "status_code": 500,
+      "classification": "server_error",
+      "error": null
+    }
+  ]
+}

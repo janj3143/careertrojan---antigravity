@@ -1,21 +1,21 @@
 # CareerTrojan Runtime Build Plan
 
-This document outlines the strategy for building the **CareerTrojan Runtime Version**, emerging from the **IntelliCV-AI** system. The goal is to create a high-performance, unified platform that links seamlessly with the `L:\antigravity_version_ai_data_final` dataset.
+This document outlines the strategy for building the **CareerTrojan Runtime Version**, emerging from the **IntelliCV-AI** system. The goal is to create a high-performance, unified platform that links seamlessly with the `L:\Codec-Antigravity Data set` dataset.
 
 ## User Review Required
 
 > [!IMPORTANT]
 > **Global Renaming:** Every instance of "Intellicv-AI" will be rebranded to **CareerTrojan**. This includes headers, titles, logging, and metadata across all portals.
 >
-> **Python 3.11 Environment:** We will standardise on **Python 3.11** (located at `C:\careertrojan\infra\python`) to ensure a self-contained runtime on the C: drive.
+> **Python 3.11 Environment:** We will standardise on **Python 3.11** (located at `J:\Python311`) to ensure a self-contained runtime on the J: drive.
 >
 > **Consolidation:** We are moving from a "per-page" fragmented React structure to three unified portals: **Admin**, **User**, and **Mentor**.
 >
-> **Data & AI Linking:** The runtime will expect `ai_data_final` to be mounted at a canonical path: `L:\antigravity_version_ai_data_final`. This folder will also host AI toolsets and scripts required for local model execution and parsing.
+> **Data & AI Linking:** The runtime will expect `ai_data_final` to be mounted at a canonical path: `L:\Codec-Antigravity Data set`. This folder will also host AI toolsets and scripts required for local model execution and parsing.
 >
 > **Configuration Phase 1 (Testing):** A Premium Test User (`janj3143`) will be auto-seeded.
 >
-> **Asset Location:** The Official Logo located at `L:\antigravity_version_ai_data_final\FULL_REACT_PAGES\careertrojan-logo` MUST be used. No variations.
+> **Asset Location:** The Official Logo located at `L:\Codec-Antigravity Data set\FULL_REACT_PAGES\careertrojan-logo` MUST be used. No variations.
 >
 > **Docker Config:** Runtime will expose port **8500** (Web) and use the 8500-8600 range to avoid conflicts >8700. Container name `CaReerTroJan-Antigravity`.
 
@@ -48,7 +48,7 @@ To ensure the system is using **Real AI Data** and not falling back to hardcoded
 
 ## Proposed Architecture
 
-### 1. Code Structure (in `c:\careertrojan`)
+### 1. Code Structure (in `J:\Codec - runtime version\Antigravity\careertrojan`)
 
 ```
 careertrojan/
@@ -74,7 +74,7 @@ careertrojan/
 ### 2. Implementation Phases
 
 #### Phase 1: Foundation & Renaming
-- [ ] Initialize `c:\careertrojan` and create a **Python 3.11** virtual environment.
+- [ ] Initialize `J:\Codec - runtime version\Antigravity\careertrojan` and create a **Python 3.11** virtual environment.
 - [ ] Install mandatory packages from `d:\IntelliCV\requirements_lock_full.txt`.
 - [ ] Run a global search-and-replace to change "Intellicv-AI" to "CareerTrojan".
 - [ ] Set up the `portal-bridge` to handle unified authentication and API requests.
@@ -87,7 +87,7 @@ careertrojan/
 
 #### Phase 3: Backend & Data Linking
 - [ ] Deploy the FastAPI `backend-api` with versioned routes (`/api/v1/*`).
-- [ ] Wire the `L:\antigravity_version_ai_data_final` path to the backend config.
+- [ ] Wire the `L:\Codec-Antigravity Data set` path to the backend config.
 - [ ] Implement the `ai-workers` to process files in the `automated_parser` directory.
 
 #### Phase 4: Page-by-Page Testing & Validation
@@ -172,13 +172,13 @@ All 12 pages from the archive are enacted in `apps/mentor/src/pages/` with React
 ## Phase 6: Data Architecture & Duplication Strategy (Feb 2026)
 
 ### Source of Truth
-- **Primary Data Store**: `L:\VS ai_data final - version\`
+- **Primary Data Store**: `L:\Codec-Antigravity Data set\`
   - `ai_data_final/` — AI knowledge base (JSON, parsed CVs, job data)
   - `automated_parser/` — Raw document ingestion pipeline
   - `USER DATA/` — User sessions, audit logs, profiles, trap data
-- **Runtime Data Mounts**: `C:\careertrojan\data-mounts\`
-  - `ai-data` → junction to `L:\VS ai_data final - version`
-  - `parser` → junction to `L:\VS ai_data final - version\automated_parser`
+- **Runtime Data Mounts**: `J:\Codec - runtime version\Antigravity\careertrojan\data-mounts\`
+  - `ai-data` → junction to `L:\Codec-Antigravity Data set`
+  - `parser` → junction to `L:\Codec-Antigravity Data set\automated_parser`
 
 ### Tandem Duplication (L: ↔ E:)
 - **Mirror Location**: `E:\CareerTrojan\USER_DATA_COPY\`
@@ -241,7 +241,7 @@ Remove from `C:\careertrojan\`:
 
 ### Manual Verification
 1. **Login Flow:** Verify "CareerTrojan" branding on the login page and successful JWT acquisition.
-2. **Resume Upload:** Upload a test resume to the User Portal and verify it appears in `L:\VS ai_data final - version\automated_parser`.
+2. **Resume Upload:** Upload a test resume to the User Portal and verify it appears in `L:\Codec-Antigravity Data set\automated_parser`.
 3. **Admin Monitor:** Check the Admin Status Monitor to see live health checks of all services.
 4. **Data Mapping:** Pick three random pages from `MAPPING.md` and verify they render correctly with live data.
 5. **Page 31:** Verify Admin Portal entry point page loads and authenticates.

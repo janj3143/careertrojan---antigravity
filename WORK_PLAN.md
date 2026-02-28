@@ -1,7 +1,7 @@
 # CareerTrojan "Best of Breed" Master Work Plan
 
 **Domain**: careertrojan.com  
-**Objective**: Create the definitive runtime environment at `C:\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\VS ai_data final - version` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
+**Objective**: Create the definitive runtime environment at `J:\Codec - runtime version\Antigravity\careertrojan` by merging the highest quality code from `C:\AI_Platform`, `C:\AI_Platform2`, and `Q:\Antigravity Work`, linked to the `L:\Codec-Antigravity Data set` data core. Cross-platform: Windows (primary) + Ubuntu (dedicated machine).
 
 **Last Updated**: 2026-02-08 (Session 4 — clean runtime, AI enrichment loop, mobile, backup/SSL/GitHub/API strategy)
 
@@ -9,9 +9,9 @@
 
 ## 1. Source Code Audit & Merge ("Best of Breed")
 - [x] **Inventory Sources**: All legacy platforms audited.
-- [x] **Runtime Consolidation (`C:\careertrojan`)**: Structure established with apps/, services/, shared/, infra/, scripts/.
+- [x] **Runtime Consolidation (`J:\Codec - runtime version\Antigravity\careertrojan`)**: Structure established with apps/, services/, shared/, infra/, scripts/.
 - [x] **Backend**: FastAPI backend operational at `services/backend_api/`.
-- [x] **Data Link**: Junctions created in `data-mounts/` → `L:\VS ai_data final - version`.
+- [x] **Data Link**: Junctions created in `data-mounts/` → `L:\Codec-Antigravity Data set`.
 
 ## 2. React Frontend Overhaul
 - [x] **Logo Update**: CareerTrojan Horse logo applied.
@@ -25,13 +25,29 @@
 - [ ] **Touch-Points Overlay Panel**: Linked selection store (Zustand) drives evidence + touch-nots panel on every chart click.
 
 ## 3. Data & Training Loop Verification
-- [x] **Data Mounts**: `ai-data` junction → `L:\VS ai_data final - version`, `parser` junction → automated_parser.
-- [x] **USER DATA Mount**: Junction verified at `data-mounts/user-data` → `L:\VS ai_data final - version\USER DATA`.
+- [x] **Data Mounts**: `ai-data` junction → `L:\Codec-Antigravity Data set`, `parser` junction → automated_parser.
+- [x] **USER DATA Mount**: Junction verified at `data-mounts/user-data` → `L:\Codec-Antigravity Data set\USER DATA`.
 - [x] **Tandem Sync Trap**: `scripts/sync_user_data.py` — watchdog-based, 5-second mirror, 24-hour quarantine on delete, 15-minute full sync.
 - [x] **Session History**: `services/backend_api/routers/sessions.py` — 234 lines, logging + sync-status + consolidated-user endpoints with `_write_with_mirror()`.
 - [x] **AI Orchestrator Feedback**: `services/workers/ai_orchestrator_enrichment.py` — watches interactions/, routes by action type to ai_data_final enrichment.
-- [ ] **Model Training**: Verify `scripts/train_models.py` uses L: dataset, saves to `trained_models/`.
+- [x] **Incremental Parser Progression**: `automated_parser_engine.py` now uses persistent processed-source index (`_processed_sources.txt`) to avoid reprocessing and continue deep parse in batches.
+- [x] **Collocation Glossary Suite**: Rebuilt with `scripts/build_collocation_glossary.py`; latest run generated refreshed `ai_data_final/collocations_glossary.json` for runtime usage.
+- [ ] **Glossary UI Bridge**: React user page `/glossary` for collocation insights + admin rebuild button in Phrase Manager.
+- [x] **Model Training**: Verified and executed training runs against L: dataset; artifacts present in `trained_models/`.
 - [ ] **FastAPI Middleware**: Add automatic user action logging middleware so every request creates an interaction record.
+
+### 3.1 Interview AI + Training Readiness (NEW — Feb 2026)
+- [x] **Core AI Training Run**: Baseline training executed against `Candidate_database_merged.json`; core classifier + vectorizer artifacts written to `trained_models/`.
+- [x] **Extended ML Training Run**: Additional ML models (regression/logistic/random forest/PCA/clustering) trained and saved to `trained_models/`.
+- [x] **Transformer Stack Compatibility**: Resolved and validated (`torch 2.1.2+cpu`, `transformers 4.36.2`, `sentence-transformers 2.7.0`).
+- [ ] **spaCy Runtime Model**: Install `en_core_web_sm` and re-run NLP model setup.
+- [x] **Interview Question API**: `/api/coaching/v1/questions/generate` wired with role-aware and performance-oriented question generation.
+- [x] **Interview Answer Review API**: `/api/coaching/v1/answers/review` wired with STAR/metrics/role-alignment feedback.
+- [x] **STAR Story API**: `/api/coaching/v1/stories/generate` wired for focus-area story scaffolding.
+- [x] **Role Sections in UI**: Coaching Hub now exposes separate sections: Marketing, Technical, Development, Finance, Sales, Engineering, Management.
+- [x] **Interview Learning Loop**: Added `/api/coaching/v1/learning/feedback` and persisted adaptive learning store (`ai_data_final/interview_learning.json`) so question ranking improves with user feedback.
+- [x] **Intuitive Personalisation Pass**: Coaching Hub now captures in-flow question/answer usefulness signals and feeds role-aware adaptive ranking.
+- [x] **Live Endpoint E2E Validation**: Coaching endpoint smoke/uptime checks rerun; health/question/review/story flows validated.
 
 ## 4. Endpoint & API Reconciliation
 - [x] **17 Routers registered** in FastAPI backend (auth, user, admin, shared, mentorship, intelligence, coaching, ops, resume, blockers, credits, ai_data, jobs, taxonomy, sessions + payment/rewards/mentor optional).
@@ -39,7 +55,7 @@
 - [x] **sessions.router created**: New router for session logging, sync status, consolidated user data.
 - [x] **All prefixes standardised to `/api/{domain}/v1`**: coaching, resume, credits, ai_data, jobs, taxonomy, payment, mentor — all updated.
 - [x] **rewards.router collision fixed**: Changed from `/user` (collision with user.router) to `/api/rewards/v1`.
-- [ ] **Run endpoint pipeline**: `tools/fastapi_introspect_routes.py` → `tools/react_api_scan.py` → `tools/join_endpoint_graph.py` to generate visual endpoint map.
+- [x] **Run endpoint pipeline**: Completed (`194` backend routes, `73` frontend callsites, joined graph artifacts refreshed).
 - [ ] **Update React API calls**: ~25 frontend callsites still reference old prefixes (/coaching, /resume, /jobs, /payment, etc.) — need updating to new `/api/.../v1` paths.
 - [ ] **Portal Bridge**: Verify nginx config routes correctly to all portals + backend.
 - [ ] **Mount unmounted routers**: 10 router files exist but are NOT mounted in main.py (admin_abuse, admin_parsing, admin_tokens, analytics, anti_gaming, insights, logs, mapping, telemetry).
@@ -48,7 +64,14 @@
 - [x] **FastAPI Introspection Exporter**: `tools/fastapi_introspect_routes.py` — imports the app, walks `app.routes`, exports `endpoints_from_fastapi.json`.
 - [x] **React API Scan Exporter**: `tools/react_api_scan.py` — regex scans React src for fetch/axios calls, exports `react_api_calls.json`.
 - [x] **Joiner**: `tools/join_endpoint_graph.py` — merges FastAPI + React exports into `endpoints.json` + `connections.json` for the visual map.
-- [ ] **Run the full pipeline** and verify counts (~160–300 endpoints estimated across all services).
+- [x] **Run the full pipeline** and verify counts (~160–300 endpoints estimated across all services).
+
+### 5.1 Runtime Uptime + Testing Pyramid + Ports (NEW — Feb 2026)
+- [x] **8600+ Docker Port Standard**: Root compose remapped to `8600-8605` (`backend/admin/user/mentor/redis/postgres`), infra compose remapped to `8600+` with TLS on `8643`.
+- [x] **Coaching Endpoint Uptime Script**: Added `scripts/coaching_endpoint_uptime_check.py` (health, auth-login shape, coaching health/questions/review/stories/profile-auth checks).
+- [x] **Full Pyramid + Physical Runner**: Added `scripts/run_testing_pyramid_all_tiers.ps1` to execute tiers + terminal physical checks.
+- [ ] **Portal/API Prefix Drift Cleanup**: Remaining frontend callsites still using old non-versioned paths.
+- [ ] **Unmounted Router Decisions**: Decide whether to mount/fold/remove remaining admin/analytics/telemetry router modules.
 - [ ] **Wire to Phase 13 visual HTML**: Drop joined JSON into visual HTML pack so the endpoint map + table are always current.
 - [ ] **Automate**: Add introspection run to CI/CD so endpoint map regenerates on every deploy.
 
@@ -71,6 +94,14 @@ Registry at `src/lib/visual_registry.ts` — stable IDs, component names, requir
 ### 6.3 Linked Interaction Contract
 Every visual emits: `{ source_visual_id, selection_type, ids[], touchpoint_ids[], filters }`.
 Zustand store propagates selection to Touch-Points panel + other pinned visuals (crossfilter).
+
+### 6.3.1 Frontend Charting Ideas — User Fill Template + Clue Engine (NEW)
+- [ ] **Guided Capability Template Panel**: Add a fill-in panel on visual pages where users can declare dominant skills, weak skills, target role, confidence level, and focus horizon.
+- [ ] **Template → Radar Mapping**: Use template inputs to pre-select spider option (`three_domain`, `leadership_strategy_vision_management`, `operational_execution`) and highlight likely domain imbalances.
+- [ ] **Template → Word Cloud Mapping**: Tag terms as **dominant / growth / unknown** and tune cloud styling to show intensity + underrepresented clusters.
+- [ ] **Intuitive Clues Layer**: Add short clues ("you may be over-indexed in execution", "strategy language is underrepresented") driven by percentile deltas and domain gaps.
+- [ ] **Action Prompt Hooks**: Convert top 1–3 clues into coaching prompts and suggested follow-up activities.
+- [ ] **Progressive Disclosure UX**: Keep default chart simple; expand to diagnostics/template details only on demand.
 
 ### 6.4 Backend Endpoints Required for Visuals
 | Endpoint | Purpose | Status |
@@ -107,30 +138,30 @@ Zustand store propagates selection to Touch-Points panel + other pinned visuals 
 - **Export**: PNG/SVG images, CSV/JSON data slices, "Insight Pack" PDF
 
 ### 7.3 Python Runtime Governance
-- **Source of truth**: `C:\Python` (**3.11.9**) — cleaned 2026-02-08, all 3.14 / 3.11.7 remnants removed
+- **Source of truth**: `J:\Python311` (**3.11.9**) — cleaned 2026-02-08, all 3.14 / 3.11.7 remnants removed
 - **Unified requirements**: `requirements.lock.txt` (pinned, all sections)
-- **Venv**: `C:\Python\venvs\intellicv311\` or `.venv` in project root
-- **Node**: v25.4.0 at `C:\nodej`, npm 11.7.0 — see Section 12 for full matrix
-- **PATH**: `C:\Python\Scripts;C:\Python;C:\nodej;` — no ghost entries
+- **Venv**: `.venv-j` in project root
+- **Node**: v25.4.0 at `J:\nodej`, npm 11.7.0 — see Section 12 for full matrix
+- **PATH**: `J:\Python311;J:\Python311\Scripts;J:\nodej;` — no ghost entries
 
 ## 8. Ubuntu Deployment (NEW)
 - [x] **Cross-platform path resolver**: `services/shared/paths.py` — auto-detects win32 vs linux, reads from env vars.
-- [x] **Bash launcher**: `scripts/start_and_map.sh` — Ubuntu equivalent of Start-And-Map.ps1.
+- [ ] **Bash launcher**: removed from J-runtime cleanup (2026-02-10); reintroduce only if Ubuntu runtime is actively required.
 - [x] **Ubuntu deployment guide**: `docs/UBUNTU_DEPLOYMENT_GUIDE.md` — mount points, symlinks, .env, systemd services, nginx, verification.
 - [x] **Existing launcher pack**: `Q:\CareerTrojan_Ubuntu_LauncherPack_2026-01-15\` — bash scripts, GNOME .desktop files, careertrojan.env.
 - [ ] **Test on Ubuntu**: Deploy to dedicated machine, verify all services start.
 
 ## 9. Cleanup & Script Hygiene
-- [ ] **Audit scripts/**: Remove legacy scripts not part of the runtime.
+- [x] **Audit scripts/**: Removed legacy/non-runtime scripts from `scripts/` in J-runtime cleanup (2026-02-10).
 - [ ] **Remove `.backup.*` files** across portal directories.
 - [ ] **Remove duplicate docker-compose** files in app subdirectories.
 
 ## 10. Data Architecture
 ```
-L:\VS ai_data final - version\       (SOURCE OF TRUTH)
-├── ai_data_final/                    → C:\careertrojan\data-mounts\ai-data (junction) ✅
-├── automated_parser/                 → C:\careertrojan\data-mounts\parser (junction) ✅
-└── USER DATA/                        → C:\careertrojan\data-mounts\user-data (junction) ✅
+L:\Codec-Antigravity Data set\       (SOURCE OF TRUTH)
+├── ai_data_final/                    → J:\Codec - runtime version\Antigravity\careertrojan\data-mounts\ai-data (junction) ✅
+├── automated_parser/                 → J:\Codec - runtime version\Antigravity\careertrojan\data-mounts\parser (junction) ✅
+└── USER DATA/                        → J:\Codec - runtime version\Antigravity\careertrojan\data-mounts\user-data (junction) ✅
     ├── sessions/         profiles/         interactions/
     ├── cv_uploads/       ai_matches/       session_logs/
     ├── admin_2fa/        test_accounts/    trap_profiles/
@@ -153,20 +184,21 @@ Ubuntu equivalent:
 - [x] **Page 31 & Consolidation Page**: Created and routed.
 - [ ] **Endpoint Count**: Run `tools/fastapi_introspect_routes.py`, match against expected router count (~17 mounted + ~10 unmounted).
 - [ ] **React API Call Audit**: Run `tools/react_api_scan.py`, verify all calls use new `/api/.../v1` prefixes.
+- [ ] **Ingestion Smoke Test**: Run `scripts/ingestion_smoke_test.py` and confirm `CAREERTROJAN_DATA_ROOT` resolves to `L:\Codec-Antigravity Data set`.
 
 ---
 
 ## 12. Runtime Environment Matrix (NEW — 2026-02-08)
 
-> **Principle**: Every runtime dependency has ONE authoritative install on C:, ONE mirror on E: for disaster recovery. No ghost versions, no duplicates.
+> **Principle**: Every runtime dependency has ONE authoritative install on J:, ONE mirror on E: for disaster recovery. No ghost versions, no duplicates.
 
-| Component | Authoritative Path (C:) | Version | E: Mirror | Status |
+| Component | Authoritative Path (J:) | Version | E: Mirror | Status |
 |-----------|------------------------|---------|-----------|--------|
-| Python | `C:\Python\python.exe` | **3.11.9** | `E:\Python\` (3.11.7 — needs update) | ✅ Cleaned |
-| pip | `C:\Python\Scripts\pip.exe` | 24.0 | — | ✅ Bootstrapped |
-| Node.js | `C:\nodej\node.exe` | v25.4.0 | `E:\nodej\` | ✅ |
-| npm | `C:\nodej\npm` | 11.7.0 | — | ✅ |
-| Docker Desktop | `C:\Program Files\Docker\` | 29.1.3 | `E:\Docker\` | ✅ Running |
+| Python | `J:\Python311\python.exe` | **3.11.9** | `E:\Python\` (3.11.7 — needs update) | ✅ Cleaned |
+| pip | `J:\Python311\Scripts\pip.exe` | 24.0 | — | ✅ Bootstrapped |
+| Node.js | `J:\nodej\node.exe` | v25.4.0 | `E:\nodej\` | ✅ |
+| npm | `J:\nodej\npm.cmd` | 11.7.0 | — | ✅ |
+| Docker CLI | `J:\docker-cli\docker.exe` | 29.2.1 | — | ✅ |
 | Docker Compose | (bundled) | v5.0.1 | — | ✅ |
 | Git | `C:\Github Desktop\Git\` | 2.52.0 | — | ✅ |
 | Redis | `C:\Redis\redis-cli.exe` | 3.0.504 | `E:\Redis\` | ✅ |
@@ -176,20 +208,19 @@ Ubuntu equivalent:
 
 ### 12.1 PATH Hygiene (Machine PATH — authoritative order)
 ```
-C:\Python\Scripts\
-C:\Python\
-C:\nodej\
+J:\Python311\Scripts\
+J:\Python311\
+J:\nodej\
 C:\Github Desktop\Git\cmd\
 C:\Redis\
 C:\Posgres\bin\                    ← TO ADD
-C:\Program Files\Docker\Docker\resources\bin\
+J:\docker-cli\
 C:\Tesseract-OCR\
 ```
 
 ### 12.2 E: Drive Sync Checklist
-- [ ] **Update E:\Python** to 3.11.9 (currently 3.11.7)
-- [ ] **Verify E:\CareerTrojan** mirror is current with C:\careertrojan runtime code
-- [ ] **Add Postgres bin to PATH**: `C:\Posgres\bin\` needs adding to Machine PATH
+ [ ] **Verify E:\CareerTrojan** mirror is current with J:\Codec - runtime version\Antigravity\careertrojan runtime code
+ [ ] **Scheduled robocopy**: Script to mirror J:\Codec - runtime version\Antigravity\careertrojan → E:\CareerTrojan nightly
 - [ ] **Scheduled robocopy**: Script to mirror C:\careertrojan → E:\CareerTrojan nightly
 
 ---
@@ -239,7 +270,7 @@ C:\Tesseract-OCR\
 - [ ] **FastAPI Middleware Logger**: Add `InteractionLoggerMiddleware` to `main.py` — captures every request with user_id, endpoint, timestamp, response_time, payload_hash
 - [ ] **Embedding Pipeline Worker**: `services/workers/embedding_pipeline.py` — on new CV upload, generate sentence-transformer embeddings, store in `ai_data_final/embeddings/`
 - [ ] **Ranking Feedback Ingester**: `services/workers/ranking_feedback.py` — on match accept/reject, update implicit labels for gradient boosting ranker
-- [ ] **Nightly Retrain Scheduler**: `scripts/nightly_retrain.py` — cron/task-scheduler job that reads enriched data, retrains models, saves to `trained_models/`
+- [ ] **Nightly Retrain Scheduler**: implement scheduler command/service for model refresh (script removed in 2026-02-10 cleanup)
 - [ ] **Model Hot-Reload**: FastAPI endpoint `/api/ai_data/v1/model/reload` — admin-only, reloads model weights without restart
 - [ ] **Data Volume Monitoring**: Dashboard widget showing enrichment pipeline throughput, data growth rate, model freshness
 - [ ] **Privacy Guardrails**: PII scrubbing before enrichment, GDPR-compliant data retention policy, user opt-out mechanism
@@ -430,7 +461,7 @@ main              ← production-ready, tagged releases
 13. [ ] Build insights/touchpoints endpoints (Section 6.4 table)
 14. [ ] PWA manifest + service worker (Section 14.2)
 15. [ ] Responsive breakpoint audit for mobile (Section 14.2)
-16. [ ] nightly_retrain.py + backup scripts (Sections 13.3, 15.2)
+16. [ ] Implement nightly retrain scheduler + backup scripts (Sections 13.3, 15.2)
 
 ### Phase D — Pre-Launch
 17. [ ] SSL/TLS setup with mkcert (local) + Certbot (staging)
@@ -439,3 +470,74 @@ main              ← production-ready, tagged releases
 20. [ ] Lighthouse PWA audit (target > 90)
 21. [ ] Ubuntu deployment test
 22. [ ] Full validation deep-dive (Section 11)
+
+---
+
+## 20. Developer Tooling — Entire.io Code Intelligence (Added 2026-02-16)
+
+**Tool**: [Entire.io](https://entire.io) — AI-powered code review, change tracking, source modification intelligence
+
+### 20.1 Installation
+```bash
+# Install CLI
+curl -fsSL https://entire.io/install.sh | bash
+
+# Enable in repository
+cd /path/to/careertrojan
+entire enable
+```
+
+### 20.2 Integration Points
+| Area | Usage |
+|------|-------|
+| Code Review | Automated review on every PR / commit |
+| Change Tracking | Track all source modifications across branches |
+| Regression Detection | Flag unintended side-effects from refactors |
+| CI/CD | Add `entire review` step to GitHub Actions pipeline |
+| Production VM | Install on Hetzner VM for prod branch tracking |
+
+### 20.3 Workflow
+1. Developer pushes code → Entire.io reviews changes
+2. CI pipeline includes `entire review` gate
+3. Dashboard tracks code quality metrics over time
+4. Production VM mirrors tracking for deployed code
+
+---
+
+## 21. Cloud Infrastructure — Hetzner VM (Added 2026-02-16)
+
+**Decision**: Hetzner selected for primary cloud/production coverage  
+**Rationale**: Best price/performance, EU-based (GDPR compliant), reliable  
+**Timing**: Post data-ingestion completion
+
+### 21.1 VM Specification
+| Item | Value |
+|------|-------|
+| Provider | Hetzner Cloud |
+| Plan | CX21 (starter) / CX31 (production) |
+| OS | Ubuntu 22.04 or 24.04 LTS |
+| vCPU | 2-4 |
+| RAM | 4-8 GB |
+| SSD | 80-160 GB |
+| Cost | €5-15/month |
+| Location | EU (Falkenstein / Nuremberg / Helsinki) |
+
+### 21.2 Deployment Stack
+- Docker + Docker Compose
+- NGINX reverse proxy (SSL termination)
+- Let's Encrypt (certbot) for all 3 domains
+- Entire.io for code tracking
+- fail2ban + ufw for hardening
+
+### 21.3 Post-Ingestion TODO Sequence
+1. [ ] Complete full data ingestion with LibreOffice .doc support
+2. [ ] Update all gazetteers from parsed data
+3. [ ] Validate AI readiness score > 70
+4. [ ] Provision Hetzner VM
+5. [ ] Harden VM (SSH keys, fail2ban, ufw)
+6. [ ] Install Docker + deploy containers
+7. [ ] DNS A records for all 3 domains → Hetzner IP
+8. [ ] SSL certificates via Let's Encrypt
+9. [ ] Install Entire.io on VM
+10. [ ] Smoke test production URLs
+11. [ ] Set up monitoring + alerts

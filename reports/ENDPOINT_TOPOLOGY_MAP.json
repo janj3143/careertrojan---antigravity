@@ -1,0 +1,2436 @@
+{
+  "generated_at": "2026-02-24",
+  "backend_endpoints": [
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/users",
+      "path": "/api/admin/v1/users",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/users/{user_id}",
+      "path": "/api/admin/v1/users/{user_id}",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/system/health",
+      "path": "/api/admin/v1/system/health",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/compliance/summary",
+      "path": "/api/admin/v1/compliance/summary",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/email/status",
+      "path": "/api/admin/v1/email/status",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/parsers/status",
+      "path": "/api/admin/v1/parsers/status",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/system/activity",
+      "path": "/api/admin/v1/system/activity",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/dashboard/snapshot",
+      "path": "/api/admin/v1/dashboard/snapshot",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/tokens/users/{user_id}/ledger",
+      "path": "/api/admin/v1/tokens/users/{user_id}/ledger",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/user_subscriptions",
+      "path": "/api/admin/v1/user_subscriptions",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/users/metrics",
+      "path": "/api/admin/v1/users/metrics",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/users/security",
+      "path": "/api/admin/v1/users/security",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "PUT",
+      "prefix": "/api/admin/v1",
+      "route": "/users/{user_id}/plan",
+      "path": "/api/admin/v1/users/{user_id}/plan",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "PUT",
+      "prefix": "/api/admin/v1",
+      "route": "/users/{user_id}/disable",
+      "path": "/api/admin/v1/users/{user_id}/disable",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/compliance/audit/events",
+      "path": "/api/admin/v1/compliance/audit/events",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/admin/v1",
+      "route": "/email/sync",
+      "path": "/api/admin/v1/email/sync",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/email/jobs",
+      "path": "/api/admin/v1/email/jobs",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/admin/v1",
+      "route": "/parsers/run",
+      "path": "/api/admin/v1/parsers/run",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/parsers/jobs",
+      "path": "/api/admin/v1/parsers/jobs",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/batch/status",
+      "path": "/api/admin/v1/batch/status",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/admin/v1",
+      "route": "/batch/run",
+      "path": "/api/admin/v1/batch/run",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/batch/jobs",
+      "path": "/api/admin/v1/batch/jobs",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/ai/enrichment/status",
+      "path": "/api/admin/v1/ai/enrichment/status",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/admin/v1",
+      "route": "/ai/enrichment/run",
+      "path": "/api/admin/v1/ai/enrichment/run",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/ai/enrichment/jobs",
+      "path": "/api/admin/v1/ai/enrichment/jobs",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/ai/content/status",
+      "path": "/api/admin/v1/ai/content/status",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/admin/v1",
+      "route": "/ai/content/run",
+      "path": "/api/admin/v1/ai/content/run",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1",
+      "route": "/ai/content/jobs",
+      "path": "/api/admin/v1/ai/content/jobs",
+      "router_file": "services/backend_api/routers/admin.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1/abuse",
+      "route": "/queue",
+      "path": "/api/admin/v1/abuse/queue",
+      "router_file": "services/backend_api/routers/admin_abuse.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/admin/v1/parsing",
+      "route": "/parse",
+      "path": "/api/admin/v1/parsing/parse",
+      "router_file": "services/backend_api/routers/admin_parsing.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1/parsing",
+      "route": "/parse/{parse_id}",
+      "path": "/api/admin/v1/parsing/parse/{parse_id}",
+      "router_file": "services/backend_api/routers/admin_parsing.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1/parsing",
+      "route": "/parse",
+      "path": "/api/admin/v1/parsing/parse",
+      "router_file": "services/backend_api/routers/admin_parsing.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1/tokens",
+      "route": "/config",
+      "path": "/api/admin/v1/tokens/config",
+      "router_file": "services/backend_api/routers/admin_tokens.py"
+    },
+    {
+      "method": "PUT",
+      "prefix": "/api/admin/v1/tokens",
+      "route": "/config",
+      "path": "/api/admin/v1/tokens/config",
+      "router_file": "services/backend_api/routers/admin_tokens.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1/tokens",
+      "route": "/usage",
+      "path": "/api/admin/v1/tokens/usage",
+      "router_file": "services/backend_api/routers/admin_tokens.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/parsed_resumes",
+      "path": "/api/ai-data/v1/parsed_resumes",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/parsed_resumes/{doc_id}",
+      "path": "/api/ai-data/v1/parsed_resumes/{doc_id}",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/job_descriptions",
+      "path": "/api/ai-data/v1/job_descriptions",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/companies",
+      "path": "/api/ai-data/v1/companies",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/job_titles",
+      "path": "/api/ai-data/v1/job_titles",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/locations",
+      "path": "/api/ai-data/v1/locations",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/metadata",
+      "path": "/api/ai-data/v1/metadata",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/normalized",
+      "path": "/api/ai-data/v1/normalized",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/email_extracted",
+      "path": "/api/ai-data/v1/email_extracted",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/emails",
+      "path": "/api/ai-data/v1/emails",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/emails/summary",
+      "path": "/api/ai-data/v1/emails/summary",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/emails/diagnostics",
+      "path": "/api/ai-data/v1/emails/diagnostics",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/emails/providers/{provider}",
+      "path": "/api/ai-data/v1/emails/providers/{provider}",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/emails/tracking",
+      "path": "/api/ai-data/v1/emails/tracking",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/emails/tracking/summary",
+      "path": "/api/ai-data/v1/emails/tracking/summary",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/ai-data/v1",
+      "route": "/emails/tracking",
+      "path": "/api/ai-data/v1/emails/tracking",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/status",
+      "path": "/api/ai-data/v1/status",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/parser/ingestion-status",
+      "path": "/api/ai-data/v1/parser/ingestion-status",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/automated/candidates",
+      "path": "/api/ai-data/v1/automated/candidates",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ai-data/v1",
+      "route": "/user_data/files",
+      "path": "/api/ai-data/v1/user_data/files",
+      "router_file": "services/backend_api/routers/ai_data.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/analytics/v1",
+      "route": "/statistics",
+      "path": "/api/analytics/v1/statistics",
+      "router_file": "services/backend_api/routers/analytics.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/analytics/v1",
+      "route": "/dashboard",
+      "path": "/api/analytics/v1/dashboard",
+      "router_file": "services/backend_api/routers/analytics.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/analytics/v1",
+      "route": "/recent_resumes",
+      "path": "/api/analytics/v1/recent_resumes",
+      "router_file": "services/backend_api/routers/analytics.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/analytics/v1",
+      "route": "/recent_jobs",
+      "path": "/api/analytics/v1/recent_jobs",
+      "router_file": "services/backend_api/routers/analytics.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/analytics/v1",
+      "route": "/system_health",
+      "path": "/api/analytics/v1/system_health",
+      "router_file": "services/backend_api/routers/analytics.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/admin/v1/anti-gaming",
+      "route": "/check",
+      "path": "/api/admin/v1/anti-gaming/check",
+      "router_file": "services/backend_api/routers/anti_gaming.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/auth/v1",
+      "route": "/register",
+      "path": "/api/auth/v1/register",
+      "router_file": "services/backend_api/routers/auth.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/auth/v1",
+      "route": "/login",
+      "path": "/api/auth/v1/login",
+      "router_file": "services/backend_api/routers/auth.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/auth/v1",
+      "route": "/2fa/generate",
+      "path": "/api/auth/v1/2fa/generate",
+      "router_file": "services/backend_api/routers/auth.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/auth/v1",
+      "route": "/2fa/verify",
+      "path": "/api/auth/v1/2fa/verify",
+      "router_file": "services/backend_api/routers/auth.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/blockers/v1",
+      "route": "/detect",
+      "path": "/api/blockers/v1/detect",
+      "router_file": "services/backend_api/routers/blockers.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/blockers/v1",
+      "route": "/user/{user_id}",
+      "path": "/api/blockers/v1/user/{user_id}",
+      "router_file": "services/backend_api/routers/blockers.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/blockers/v1",
+      "route": "/improvement-plans/generate",
+      "path": "/api/blockers/v1/improvement-plans/generate",
+      "router_file": "services/backend_api/routers/blockers.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/coaching/v1",
+      "route": "/bundle",
+      "path": "/api/coaching/v1/bundle",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/coaching/v1",
+      "route": "/health",
+      "path": "/api/coaching/v1/health",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/coaching/v1",
+      "route": "/history",
+      "path": "/api/coaching/v1/history",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/coaching/v1",
+      "route": "/questions/generate",
+      "path": "/api/coaching/v1/questions/generate",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/coaching/v1",
+      "route": "/answers/review",
+      "path": "/api/coaching/v1/answers/review",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/coaching/v1",
+      "route": "/stories/generate",
+      "path": "/api/coaching/v1/stories/generate",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/coaching/v1",
+      "route": "/learning/feedback",
+      "path": "/api/coaching/v1/learning/feedback",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/coaching/v1",
+      "route": "/learning/profile",
+      "path": "/api/coaching/v1/learning/profile",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/coaching/v1",
+      "route": "/role/detect",
+      "path": "/api/coaching/v1/role/detect",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/coaching/v1",
+      "route": "/plan/90day",
+      "path": "/api/coaching/v1/plan/90day",
+      "router_file": "services/backend_api/routers/coaching.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/credits/v1",
+      "route": "/plans",
+      "path": "/api/credits/v1/plans",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/credits/v1",
+      "route": "/actions",
+      "path": "/api/credits/v1/actions",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/credits/v1",
+      "route": "/balance",
+      "path": "/api/credits/v1/balance",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/credits/v1",
+      "route": "/can-perform/{action_id}",
+      "path": "/api/credits/v1/can-perform/{action_id}",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/credits/v1",
+      "route": "/consume",
+      "path": "/api/credits/v1/consume",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/credits/v1",
+      "route": "/usage",
+      "path": "/api/credits/v1/usage",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/credits/v1",
+      "route": "/teaser",
+      "path": "/api/credits/v1/teaser",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/credits/v1",
+      "route": "/upgrade/{plan_tier}",
+      "path": "/api/credits/v1/upgrade/{plan_tier}",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/credits/v1",
+      "route": "/health",
+      "path": "/api/credits/v1/health",
+      "router_file": "services/backend_api/routers/credits.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/gdpr/v1",
+      "route": "/consent",
+      "path": "/api/gdpr/v1/consent",
+      "router_file": "services/backend_api/routers/gdpr.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/gdpr/v1",
+      "route": "/consent",
+      "path": "/api/gdpr/v1/consent",
+      "router_file": "services/backend_api/routers/gdpr.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/gdpr/v1",
+      "route": "/export",
+      "path": "/api/gdpr/v1/export",
+      "router_file": "services/backend_api/routers/gdpr.py"
+    },
+    {
+      "method": "DELETE",
+      "prefix": "/api/gdpr/v1",
+      "route": "/delete-account",
+      "path": "/api/gdpr/v1/delete-account",
+      "router_file": "services/backend_api/routers/gdpr.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/gdpr/v1",
+      "route": "/audit-log",
+      "path": "/api/gdpr/v1/audit-log",
+      "router_file": "services/backend_api/routers/gdpr.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/insights/v1",
+      "route": "/visuals",
+      "path": "/api/insights/v1/visuals",
+      "router_file": "services/backend_api/routers/insights.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/insights/v1",
+      "route": "/skills/radar",
+      "path": "/api/insights/v1/skills/radar",
+      "router_file": "services/backend_api/routers/insights.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/insights/v1",
+      "route": "/quadrant",
+      "path": "/api/insights/v1/quadrant",
+      "router_file": "services/backend_api/routers/insights.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/insights/v1",
+      "route": "/terms/cloud",
+      "path": "/api/insights/v1/terms/cloud",
+      "router_file": "services/backend_api/routers/insights.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/insights/v1",
+      "route": "/terms/cooccurrence",
+      "path": "/api/insights/v1/terms/cooccurrence",
+      "router_file": "services/backend_api/routers/insights.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/insights/v1",
+      "route": "/graph",
+      "path": "/api/insights/v1/graph",
+      "router_file": "services/backend_api/routers/insights.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/insights/v1",
+      "route": "/cohort/resolve",
+      "path": "/api/insights/v1/cohort/resolve",
+      "router_file": "services/backend_api/routers/insights.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/intelligence/v1",
+      "route": "/stats/descriptive",
+      "path": "/api/intelligence/v1/stats/descriptive",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/intelligence/v1",
+      "route": "/stats/regression",
+      "path": "/api/intelligence/v1/stats/regression",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/intelligence/v1",
+      "route": "/market",
+      "path": "/api/intelligence/v1/market",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/intelligence/v1",
+      "route": "/enrich",
+      "path": "/api/intelligence/v1/enrich",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/intelligence/v1",
+      "route": "/company/briefing",
+      "path": "/api/intelligence/v1/company/briefing",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/intelligence/v1",
+      "route": "/company/registry",
+      "path": "/api/intelligence/v1/company/registry",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/intelligence/v1",
+      "route": "/company/extract",
+      "path": "/api/intelligence/v1/company/extract",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/intelligence/v1",
+      "route": "/pipeline/ops-summary",
+      "path": "/api/intelligence/v1/pipeline/ops-summary",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/intelligence/v1",
+      "route": "/support/status",
+      "path": "/api/intelligence/v1/support/status",
+      "router_file": "services/backend_api/routers/intelligence.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/jobs/v1",
+      "route": "/index",
+      "path": "/api/jobs/v1/index",
+      "router_file": "services/backend_api/routers/jobs.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/jobs/v1",
+      "route": "/search",
+      "path": "/api/jobs/v1/search",
+      "router_file": "services/backend_api/routers/jobs.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/admin/v1/logs",
+      "route": "/tail",
+      "path": "/api/admin/v1/logs/tail",
+      "router_file": "services/backend_api/routers/logs.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mapping/v1",
+      "route": "/registry",
+      "path": "/api/mapping/v1/registry",
+      "router_file": "services/backend_api/routers/mapping.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mapping/v1",
+      "route": "/endpoints",
+      "path": "/api/mapping/v1/endpoints",
+      "router_file": "services/backend_api/routers/mapping.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mapping/v1",
+      "route": "/graph",
+      "path": "/api/mapping/v1/graph",
+      "router_file": "services/backend_api/routers/mapping.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentor/v1",
+      "route": "/profile-by-user/{user_id}",
+      "path": "/api/mentor/v1/profile-by-user/{user_id}",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/profile",
+      "path": "/api/mentor/v1/{mentor_profile_id}/profile",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "PUT",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/availability",
+      "path": "/api/mentor/v1/{mentor_profile_id}/availability",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentor/v1",
+      "route": "/list",
+      "path": "/api/mentor/v1/list",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/packages",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/packages",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/packages/{package_id}",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "PUT",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/packages/{package_id}",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "DELETE",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/packages/{package_id}",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentor/v1",
+      "route": "/{mentor_profile_id}/dashboard-stats",
+      "path": "/api/mentor/v1/{mentor_profile_id}/dashboard-stats",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentor/v1",
+      "route": "/health",
+      "path": "/api/mentor/v1/health",
+      "router_file": "services/backend_api/routers/mentor.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/links",
+      "path": "/api/mentorship/v1/links",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/links/mentor/{mentor_id}",
+      "path": "/api/mentorship/v1/links/mentor/{mentor_id}",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/links/user/{user_id}",
+      "path": "/api/mentorship/v1/links/user/{user_id}",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "PATCH",
+      "prefix": "/api/mentorship/v1",
+      "route": "/links/{link_id}/status",
+      "path": "/api/mentorship/v1/links/{link_id}/status",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/notes",
+      "path": "/api/mentorship/v1/notes",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/notes/{link_id}",
+      "path": "/api/mentorship/v1/notes/{link_id}",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "PATCH",
+      "prefix": "/api/mentorship/v1",
+      "route": "/notes/{note_id}",
+      "path": "/api/mentorship/v1/notes/{note_id}",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/documents",
+      "path": "/api/mentorship/v1/documents",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/documents/{doc_id}",
+      "path": "/api/mentorship/v1/documents/{doc_id}",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/documents/{doc_id}/sign",
+      "path": "/api/mentorship/v1/documents/{doc_id}/sign",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/documents/{doc_id}/reject",
+      "path": "/api/mentorship/v1/documents/{doc_id}/reject",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/invoices",
+      "path": "/api/mentorship/v1/invoices",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/invoices/mentor/{mentor_id}",
+      "path": "/api/mentorship/v1/invoices/mentor/{mentor_id}",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/invoices/{invoice_id}/mark-paid",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/mark-paid",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/invoices/{invoice_id}/service-delivered",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/service-delivered",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/invoices/{invoice_id}/confirm-completion",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/confirm-completion",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/invoices/{invoice_id}/dispute",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/dispute",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/applications",
+      "path": "/api/mentorship/v1/applications",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/applications/pending",
+      "path": "/api/mentorship/v1/applications/pending",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/applications/{application_id}/approve",
+      "path": "/api/mentorship/v1/applications/{application_id}/approve",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/mentorship/v1",
+      "route": "/applications/{application_id}/reject",
+      "path": "/api/mentorship/v1/applications/{application_id}/reject",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/summary",
+      "path": "/api/mentorship/v1/summary",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/mentorship/v1",
+      "route": "/health",
+      "path": "/api/mentorship/v1/health",
+      "router_file": "services/backend_api/routers/mentorship.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ontology/v1",
+      "route": "/phrases",
+      "path": "/api/ontology/v1/phrases",
+      "router_file": "services/backend_api/routers/ontology.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ontology/v1",
+      "route": "/phrases/summary",
+      "path": "/api/ontology/v1/phrases/summary",
+      "router_file": "services/backend_api/routers/ontology.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ops/v1",
+      "route": "/stats/public",
+      "path": "/api/ops/v1/stats/public",
+      "router_file": "services/backend_api/routers/ops.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/ops/v1",
+      "route": "/processing/start",
+      "path": "/api/ops/v1/processing/start",
+      "router_file": "services/backend_api/routers/ops.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ops/v1",
+      "route": "/processing/status",
+      "path": "/api/ops/v1/processing/status",
+      "router_file": "services/backend_api/routers/ops.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/ops/v1",
+      "route": "/logs/lock",
+      "path": "/api/ops/v1/logs/lock",
+      "router_file": "services/backend_api/routers/ops.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/ops/v1",
+      "route": "/tokens/config",
+      "path": "/api/ops/v1/tokens/config",
+      "router_file": "services/backend_api/routers/ops.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/ops/v1",
+      "route": "/anti-gaming/check",
+      "path": "/api/ops/v1/anti-gaming/check",
+      "router_file": "services/backend_api/routers/ops.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/plans",
+      "path": "/api/payment/v1/plans",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/plans/{plan_id}",
+      "path": "/api/payment/v1/plans/{plan_id}",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/payment/v1",
+      "route": "/process",
+      "path": "/api/payment/v1/process",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/history",
+      "path": "/api/payment/v1/history",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/subscription",
+      "path": "/api/payment/v1/subscription",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/payment/v1",
+      "route": "/cancel",
+      "path": "/api/payment/v1/cancel",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/health",
+      "path": "/api/payment/v1/health",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/client-token",
+      "path": "/api/payment/v1/client-token",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/payment/v1",
+      "route": "/methods",
+      "path": "/api/payment/v1/methods",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/methods",
+      "path": "/api/payment/v1/methods",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "DELETE",
+      "prefix": "/api/payment/v1",
+      "route": "/methods/{token}",
+      "path": "/api/payment/v1/methods/{token}",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/transactions/{transaction_id}",
+      "path": "/api/payment/v1/transactions/{transaction_id}",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/payment/v1",
+      "route": "/refund/{transaction_id}",
+      "path": "/api/payment/v1/refund/{transaction_id}",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/payment/v1",
+      "route": "/gateway-info",
+      "path": "/api/payment/v1/gateway-info",
+      "router_file": "services/backend_api/routers/payment.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/resume/v1",
+      "route": "/upload",
+      "path": "/api/resume/v1/upload",
+      "router_file": "services/backend_api/routers/resume.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/resume/v1",
+      "route": "/{resume_id}",
+      "path": "/api/resume/v1/{resume_id}",
+      "router_file": "services/backend_api/routers/resume.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/resume/v1",
+      "route": "/",
+      "path": "/api/resume/v1/",
+      "router_file": "services/backend_api/routers/resume.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/resume/v1",
+      "route": "/parse",
+      "path": "/api/resume/v1/parse",
+      "router_file": "services/backend_api/routers/resume.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/resume/v1",
+      "route": "/enrich",
+      "path": "/api/resume/v1/enrich",
+      "router_file": "services/backend_api/routers/resume.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/rewards/v1",
+      "route": "/rewards",
+      "path": "/api/rewards/v1/rewards",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/rewards/v1",
+      "route": "/rewards/available",
+      "path": "/api/rewards/v1/rewards/available",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/rewards/v1",
+      "route": "/suggestions",
+      "path": "/api/rewards/v1/suggestions",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/rewards/v1",
+      "route": "/suggestions",
+      "path": "/api/rewards/v1/suggestions",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/rewards/v1",
+      "route": "/rewards/redeem",
+      "path": "/api/rewards/v1/rewards/redeem",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/rewards/v1",
+      "route": "/referral",
+      "path": "/api/rewards/v1/referral",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/rewards/v1",
+      "route": "/referral/claim",
+      "path": "/api/rewards/v1/referral/claim",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/rewards/v1",
+      "route": "/leaderboard",
+      "path": "/api/rewards/v1/leaderboard",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/rewards/v1",
+      "route": "/ownership-stats",
+      "path": "/api/rewards/v1/ownership-stats",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/rewards/v1",
+      "route": "/health",
+      "path": "/api/rewards/v1/health",
+      "router_file": "services/backend_api/routers/rewards.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/sessions/v1",
+      "route": "/log",
+      "path": "/api/sessions/v1/log",
+      "router_file": "services/backend_api/routers/sessions.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/sessions/v1",
+      "route": "/summary/{user_id}",
+      "path": "/api/sessions/v1/summary/{user_id}",
+      "router_file": "services/backend_api/routers/sessions.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/sessions/v1",
+      "route": "/sync-status",
+      "path": "/api/sessions/v1/sync-status",
+      "router_file": "services/backend_api/routers/sessions.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/sessions/v1",
+      "route": "/consolidated/{user_id}",
+      "path": "/api/sessions/v1/consolidated/{user_id}",
+      "router_file": "services/backend_api/routers/sessions.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/shared/v1",
+      "route": "/health",
+      "path": "/api/shared/v1/health",
+      "router_file": "services/backend_api/routers/shared.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/shared/v1",
+      "route": "/health/deep",
+      "path": "/api/shared/v1/health/deep",
+      "router_file": "services/backend_api/routers/shared.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/support/v1",
+      "route": "/health",
+      "path": "/api/support/v1/health",
+      "router_file": "services/backend_api/routers/support.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/support/v1",
+      "route": "/status",
+      "path": "/api/support/v1/status",
+      "router_file": "services/backend_api/routers/support.py"
+    },
+    {
+      "method": "POST",
+      "prefix": "/api/support/v1",
+      "route": "/token",
+      "path": "/api/support/v1/token",
+      "router_file": "services/backend_api/routers/support.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/support/v1",
+      "route": "/widget-config",
+      "path": "/api/support/v1/widget-config",
+      "router_file": "services/backend_api/routers/support.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/support/v1",
+      "route": "/wiring-test",
+      "path": "/api/support/v1/wiring-test",
+      "router_file": "services/backend_api/routers/support.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/industries",
+      "path": "/api/taxonomy/v1/industries",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/industries/{high_level}/subindustries",
+      "path": "/api/taxonomy/v1/industries/{high_level}/subindustries",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/job-titles/search",
+      "path": "/api/taxonomy/v1/job-titles/search",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/job-titles/metadata",
+      "path": "/api/taxonomy/v1/job-titles/metadata",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/job-titles/infer-industries",
+      "path": "/api/taxonomy/v1/job-titles/infer-industries",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/naics/search",
+      "path": "/api/taxonomy/v1/naics/search",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/naics/title",
+      "path": "/api/taxonomy/v1/naics/title",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/summary",
+      "path": "/api/taxonomy/v1/summary",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/taxonomy/v1",
+      "route": "/job-titles/naics-mapping",
+      "path": "/api/taxonomy/v1/job-titles/naics-mapping",
+      "router_file": "services/backend_api/routers/taxonomy.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/telemetry/v1",
+      "route": "/status",
+      "path": "/api/telemetry/v1/status",
+      "router_file": "services/backend_api/routers/telemetry.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/touchpoints/v1",
+      "route": "/evidence",
+      "path": "/api/touchpoints/v1/evidence",
+      "router_file": "services/backend_api/routers/touchpoints.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/touchpoints/v1",
+      "route": "/touchnots",
+      "path": "/api/touchpoints/v1/touchnots",
+      "router_file": "services/backend_api/routers/touchpoints.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/user/v1",
+      "route": "/me",
+      "path": "/api/user/v1/me",
+      "router_file": "services/backend_api/routers/user.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/user/v1",
+      "route": "/profile",
+      "path": "/api/user/v1/profile",
+      "router_file": "services/backend_api/routers/user.py"
+    },
+    {
+      "method": "PUT",
+      "prefix": "/api/user/v1",
+      "route": "/profile",
+      "path": "/api/user/v1/profile",
+      "router_file": "services/backend_api/routers/user.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/user/v1",
+      "route": "/stats",
+      "path": "/api/user/v1/stats",
+      "router_file": "services/backend_api/routers/user.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/user/v1",
+      "route": "/activity",
+      "path": "/api/user/v1/activity",
+      "router_file": "services/backend_api/routers/user.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/user/v1",
+      "route": "/sessions/summary",
+      "path": "/api/user/v1/sessions/summary",
+      "router_file": "services/backend_api/routers/user.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/user/v1",
+      "route": "/resume/latest",
+      "path": "/api/user/v1/resume/latest",
+      "router_file": "services/backend_api/routers/user.py"
+    },
+    {
+      "method": "GET",
+      "prefix": "/api/user/v1",
+      "route": "/matches/summary",
+      "path": "/api/user/v1/matches/summary",
+      "router_file": "services/backend_api/routers/user.py"
+    }
+  ],
+  "portal_routes": {
+    "admin": [
+      "/*",
+      "/admin",
+      "/admin/ai-content",
+      "/admin/ai-enrich",
+      "/admin/analytics",
+      "/admin/api-integration",
+      "/admin/batch",
+      "/admin/blocker-test",
+      "/admin/career-patterns",
+      "/admin/coaching-insights",
+      "/admin/competitive",
+      "/admin/compliance",
+      "/admin/connectivity",
+      "/admin/contact",
+      "/admin/email",
+      "/admin/exa-web",
+      "/admin/intel-hub",
+      "/admin/job-cloud",
+      "/admin/job-title-ai",
+      "/admin/login",
+      "/admin/logs",
+      "/admin/market-intel",
+      "/admin/mentor-review",
+      "/admin/mentors",
+      "/admin/model-training",
+      "/admin/ops/about",
+      "/admin/ops/admin-audit",
+      "/admin/ops/api-explorer",
+      "/admin/ops/backup",
+      "/admin/ops/config",
+      "/admin/ops/diagnostics",
+      "/admin/ops/exports",
+      "/admin/ops/logs",
+      "/admin/ops/notifications",
+      "/admin/ops/route-map",
+      "/admin/parser",
+      "/admin/pipeline-ops",
+      "/admin/portal-entry",
+      "/admin/requirements",
+      "/admin/settings",
+      "/admin/status",
+      "/admin/support-ops",
+      "/admin/tokens",
+      "/admin/tokens-alt",
+      "/admin/tools/about",
+      "/admin/tools/admin-audit",
+      "/admin/tools/api-explorer",
+      "/admin/tools/backup",
+      "/admin/tools/blob",
+      "/admin/tools/config",
+      "/admin/tools/data-health",
+      "/admin/tools/datasets",
+      "/admin/tools/diagnostics",
+      "/admin/tools/email-analytics",
+      "/admin/tools/email-capture",
+      "/admin/tools/enrichment",
+      "/admin/tools/evaluation",
+      "/admin/tools/exports",
+      "/admin/tools/fairness",
+      "/admin/tools/job-index",
+      "/admin/tools/keywords",
+      "/admin/tools/logs-viewer",
+      "/admin/tools/models",
+      "/admin/tools/notifications",
+      "/admin/tools/parser-runs",
+      "/admin/tools/phrases",
+      "/admin/tools/prompts",
+      "/admin/tools/queue",
+      "/admin/tools/resume-viewer",
+      "/admin/tools/route-map",
+      "/admin/tools/scoring",
+      "/admin/tools/taxonomy",
+      "/admin/tools/user-audit",
+      "/admin/unified-analytics",
+      "/admin/users",
+      "/admin/web-intel"
+    ],
+    "user": [
+      "/",
+      "/coaching",
+      "/consolidation",
+      "/dashboard",
+      "/dual-career",
+      "/glossary",
+      "/jobs/swipe",
+      "/login",
+      "/mentor/apply",
+      "/mentorship",
+      "/mobile/cv",
+      "/payment",
+      "/profile",
+      "/quick",
+      "/register",
+      "/resume",
+      "/rewards",
+      "/umarketu",
+      "/verify",
+      "/visuals"
+    ],
+    "mentor": [
+      "/*",
+      "/mentor",
+      "/mentor/agreements",
+      "/mentor/ai-assistant",
+      "/mentor/calendar",
+      "/mentor/communication",
+      "/mentor/dashboard",
+      "/mentor/financials",
+      "/mentor/guardian-feedback",
+      "/mentor/login",
+      "/mentor/mentee-progress",
+      "/mentor/my-agreements",
+      "/mentor/packages",
+      "/mentor/services"
+    ]
+  },
+  "frontend_calls": {
+    "admin": [
+      {
+        "path": "/api/admin/v1/ai/enrichment/jobs",
+        "source": "apps/admin/src/pages/AIEnrichment.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/ai/enrichment/jobs",
+        "source": "apps/admin/src/pages/AIEnrichment.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/ai/enrichment/run",
+        "source": "apps/admin/src/pages/AIEnrichment.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/ai/enrichment/run",
+        "source": "apps/admin/src/pages/AIEnrichment.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/ai/enrichment/status",
+        "source": "apps/admin/src/pages/AIEnrichment.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/ai/enrichment/status",
+        "source": "apps/admin/src/pages/AIEnrichment.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/dashboard/snapshot",
+        "source": "apps/admin/src/pages/AdminHome.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/dashboard/snapshot",
+        "source": "apps/admin/src/pages/AdminHome.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/parsing/parse",
+        "source": "apps/admin/src/pages/DataParser.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/parsing/parse",
+        "source": "apps/admin/src/pages/DataParser.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/system/activity",
+        "source": "apps/admin/src/pages/ServiceStatus.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/system/activity",
+        "source": "apps/admin/src/pages/ServiceStatus.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/system/health",
+        "source": "apps/admin/src/pages/ServiceStatus.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/system/health",
+        "source": "apps/admin/src/pages/ServiceStatus.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/tokens/config",
+        "source": "apps/admin/src/pages/TokenManagement.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/tokens/config",
+        "source": "apps/admin/src/pages/TokenManagement.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/tokens/usage",
+        "source": "apps/admin/src/pages/TokenManagement.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/tokens/usage",
+        "source": "apps/admin/src/pages/TokenManagement.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/admin/v1/users",
+        "source": "apps/admin/src/pages/UserManagement.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/admin/v1/users",
+        "source": "apps/admin/src/pages/UserManagement.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/ai-data/v1/emails/providers/",
+        "source": "apps/admin/src/pages/EmailIntegration.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/ai-data/v1/emails/summary",
+        "source": "apps/admin/src/pages/EmailIntegration.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/ai-data/v1/emails/summary",
+        "source": "apps/admin/src/pages/EmailIntegration.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/ai-data/v1/emails/tracking",
+        "source": "apps/admin/src/pages/EmailIntegration.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/ai-data/v1/emails/tracking",
+        "source": "apps/admin/src/pages/EmailIntegration.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/ai-data/v1/emails/tracking/summary",
+        "source": "apps/admin/src/pages/EmailIntegration.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/ai-data/v1/emails/tracking/summary",
+        "source": "apps/admin/src/pages/EmailIntegration.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/analytics/v1/dashboard",
+        "source": "apps/admin/src/pages/Analytics.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/auth/v1/login",
+        "source": "apps/admin/src/pages/AdminLogin.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/auth/v1/login",
+        "source": "apps/admin/src/pages/AdminLogin.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/coaching/v1/learning/profile",
+        "source": "apps/admin/src/pages/AdminCoachingInsights.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/coaching/v1/plan/90day",
+        "source": "apps/admin/src/pages/AdminCoachingInsights.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/coaching/v1/role/detect",
+        "source": "apps/admin/src/pages/AdminCoachingInsights.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/intelligence/v1/company/extract",
+        "source": "apps/admin/src/pages/WebCompanyIntel.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/intelligence/v1/company/registry",
+        "source": "apps/admin/src/pages/WebCompanyIntel.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/intelligence/v1/market",
+        "source": "apps/admin/src/pages/MarketIntelligence.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/intelligence/v1/market",
+        "source": "apps/admin/src/pages/MarketIntelligence.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/intelligence/v1/pipeline/ops-summary",
+        "source": "apps/admin/src/pages/AdminPipelineOps.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/intelligence/v1/pipeline/ops-summary",
+        "source": "apps/admin/src/pages/AdminPipelineOps.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/intelligence/v1/support/status",
+        "source": "apps/admin/src/pages/AdminSupportOps.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/intelligence/v1/support/status",
+        "source": "apps/admin/src/pages/AdminSupportOps.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/jobs/v1/index",
+        "source": "apps/admin/src/pages/tools/JobIndex.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentorship/v1/applications/",
+        "source": "apps/admin/src/pages/MentorManagement.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentorship/v1/applications/pending",
+        "source": "apps/admin/src/pages/MentorManagement.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/mentorship/v1/applications/pending",
+        "source": "apps/admin/src/pages/MentorManagement.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/taxonomy/v1/summary",
+        "source": "apps/admin/src/pages/tools/RoleTaxonomy.tsx",
+        "kind": "path_ref"
+      }
+    ],
+    "user": [
+      {
+        "path": "/api/coaching/v1/history",
+        "source": "apps/user/src/pages/ConsolidationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/insights/v1/visuals",
+        "source": "apps/user/src/pages/VisualisationsHub.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/jobs/v1/index",
+        "source": "apps/user/src/pages/UMarketU.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentorship/v1/summary",
+        "source": "apps/user/src/pages/ConsolidationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/ontology/v1/phrases",
+        "source": "apps/user/src/components/GlossaryCollocations.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/payment/v1",
+        "source": "apps/user/src/components/payment/BraintreeDropIn.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/payment/v1",
+        "source": "apps/user/src/components/payment/SavedPaymentMethods.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/payment/v1",
+        "source": "apps/user/src/pages/PaymentPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/payment/v1/subscription",
+        "source": "apps/user/src/pages/VerificationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/resume/v1/upload",
+        "source": "apps/user/src/pages/ResumeUpload.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/rewards/v1/rewards",
+        "source": "apps/user/src/pages/RewardsPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/rewards/v1/rewards/available",
+        "source": "apps/user/src/pages/RewardsPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/taxonomy/v1/industries",
+        "source": "apps/user/src/pages/UMarketU.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/user/v1/matches/summary",
+        "source": "apps/user/src/pages/ConsolidationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/user/v1/me",
+        "source": "apps/user/src/pages/VerificationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/user/v1/profile",
+        "source": "apps/user/src/pages/ConsolidationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/user/v1/profile",
+        "source": "apps/user/src/pages/ProfilePage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/user/v1/resume/latest",
+        "source": "apps/user/src/pages/ConsolidationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/user/v1/sessions/summary",
+        "source": "apps/user/src/pages/ConsolidationPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/apply",
+        "source": "apps/user/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/apply",
+        "source": "apps/user/src/pages/Dashboard.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/list",
+        "source": "apps/user/src/pages/MentorshipMarketplace.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/user/static",
+        "source": "apps/user/src/pages/LoginPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/user/static/logo.png",
+        "source": "apps/user/src/pages/LoginPage.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/user/v1/activity",
+        "source": "apps/user/src/components/mobile/MobileQuickDash.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/user/v1/stats",
+        "source": "apps/user/src/components/mobile/MobileQuickDash.tsx",
+        "kind": "path_ref"
+      }
+    ],
+    "mentor": [
+      {
+        "path": "/api/auth/v1/login",
+        "source": "apps/mentor/src/pages/MentorLogin.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/auth/v1/login",
+        "source": "apps/mentor/src/pages/MentorLogin.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentor/v1/",
+        "source": "apps/mentor/src/pages/MentorDashboard.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentor/v1/",
+        "source": "apps/mentor/src/pages/ServicePackages.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentor/v1/profile-by-user/",
+        "source": "apps/mentor/src/pages/FinancialDashboard.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentor/v1/profile-by-user/",
+        "source": "apps/mentor/src/pages/MentorDashboard.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentor/v1/profile-by-user/",
+        "source": "apps/mentor/src/pages/ServicePackages.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentorship/v1/invoices",
+        "source": "apps/mentor/src/pages/Financial Dashboard/Financial Dashboard/src/app/App.tsx",
+        "kind": "fetch_literal"
+      },
+      {
+        "path": "/api/mentorship/v1/invoices",
+        "source": "apps/mentor/src/pages/Financial Dashboard/Financial Dashboard/src/app/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/api/mentorship/v1/invoices/mentor/",
+        "source": "apps/mentor/src/pages/FinancialDashboard.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/agreements",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/agreements",
+        "source": "apps/mentor/src/components/MentorLayout.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/ai-assistant",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/calendar",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/calendar",
+        "source": "apps/mentor/src/components/MentorLayout.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/communication",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/communication",
+        "source": "apps/mentor/src/components/MentorLayout.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/dashboard",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/dashboard",
+        "source": "apps/mentor/src/pages/Dashboard.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/financials",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/financials",
+        "source": "apps/mentor/src/components/MentorLayout.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/guardian-feedback",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/login",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/login",
+        "source": "apps/mentor/src/components/MentorLayout.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/login",
+        "source": "apps/mentor/src/context/MentorAuthContext.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/mentee-progress",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/my-agreements",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/packages",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/mentor/services",
+        "source": "apps/mentor/src/App.tsx",
+        "kind": "path_ref"
+      },
+      {
+        "path": "/user/mentor-application",
+        "source": "apps/mentor/src/pages/MentorLogin.tsx",
+        "kind": "path_ref"
+      }
+    ]
+  },
+  "coverage": {
+    "backend_unique_path_count": 206,
+    "backend_paths": [
+      "/api/admin/v1/abuse/queue",
+      "/api/admin/v1/ai/content/jobs",
+      "/api/admin/v1/ai/content/run",
+      "/api/admin/v1/ai/content/status",
+      "/api/admin/v1/ai/enrichment/jobs",
+      "/api/admin/v1/ai/enrichment/run",
+      "/api/admin/v1/ai/enrichment/status",
+      "/api/admin/v1/anti-gaming/check",
+      "/api/admin/v1/batch/jobs",
+      "/api/admin/v1/batch/run",
+      "/api/admin/v1/batch/status",
+      "/api/admin/v1/compliance/audit/events",
+      "/api/admin/v1/compliance/summary",
+      "/api/admin/v1/dashboard/snapshot",
+      "/api/admin/v1/email/jobs",
+      "/api/admin/v1/email/status",
+      "/api/admin/v1/email/sync",
+      "/api/admin/v1/logs/tail",
+      "/api/admin/v1/parsers/jobs",
+      "/api/admin/v1/parsers/run",
+      "/api/admin/v1/parsers/status",
+      "/api/admin/v1/parsing/parse",
+      "/api/admin/v1/parsing/parse/{parse_id}",
+      "/api/admin/v1/system/activity",
+      "/api/admin/v1/system/health",
+      "/api/admin/v1/tokens/config",
+      "/api/admin/v1/tokens/usage",
+      "/api/admin/v1/tokens/users/{user_id}/ledger",
+      "/api/admin/v1/user_subscriptions",
+      "/api/admin/v1/users",
+      "/api/admin/v1/users/metrics",
+      "/api/admin/v1/users/security",
+      "/api/admin/v1/users/{user_id}",
+      "/api/admin/v1/users/{user_id}/disable",
+      "/api/admin/v1/users/{user_id}/plan",
+      "/api/ai-data/v1/automated/candidates",
+      "/api/ai-data/v1/companies",
+      "/api/ai-data/v1/email_extracted",
+      "/api/ai-data/v1/emails",
+      "/api/ai-data/v1/emails/diagnostics",
+      "/api/ai-data/v1/emails/providers/{provider}",
+      "/api/ai-data/v1/emails/summary",
+      "/api/ai-data/v1/emails/tracking",
+      "/api/ai-data/v1/emails/tracking/summary",
+      "/api/ai-data/v1/job_descriptions",
+      "/api/ai-data/v1/job_titles",
+      "/api/ai-data/v1/locations",
+      "/api/ai-data/v1/metadata",
+      "/api/ai-data/v1/normalized",
+      "/api/ai-data/v1/parsed_resumes",
+      "/api/ai-data/v1/parsed_resumes/{doc_id}",
+      "/api/ai-data/v1/parser/ingestion-status",
+      "/api/ai-data/v1/status",
+      "/api/ai-data/v1/user_data/files",
+      "/api/analytics/v1/dashboard",
+      "/api/analytics/v1/recent_jobs",
+      "/api/analytics/v1/recent_resumes",
+      "/api/analytics/v1/statistics",
+      "/api/analytics/v1/system_health",
+      "/api/auth/v1/2fa/generate",
+      "/api/auth/v1/2fa/verify",
+      "/api/auth/v1/login",
+      "/api/auth/v1/register",
+      "/api/blockers/v1/detect",
+      "/api/blockers/v1/improvement-plans/generate",
+      "/api/blockers/v1/user/{user_id}",
+      "/api/coaching/v1/answers/review",
+      "/api/coaching/v1/bundle",
+      "/api/coaching/v1/health",
+      "/api/coaching/v1/history",
+      "/api/coaching/v1/learning/feedback",
+      "/api/coaching/v1/learning/profile",
+      "/api/coaching/v1/plan/90day",
+      "/api/coaching/v1/questions/generate",
+      "/api/coaching/v1/role/detect",
+      "/api/coaching/v1/stories/generate",
+      "/api/credits/v1/actions",
+      "/api/credits/v1/balance",
+      "/api/credits/v1/can-perform/{action_id}",
+      "/api/credits/v1/consume",
+      "/api/credits/v1/health",
+      "/api/credits/v1/plans",
+      "/api/credits/v1/teaser",
+      "/api/credits/v1/upgrade/{plan_tier}",
+      "/api/credits/v1/usage",
+      "/api/gdpr/v1/audit-log",
+      "/api/gdpr/v1/consent",
+      "/api/gdpr/v1/delete-account",
+      "/api/gdpr/v1/export",
+      "/api/insights/v1/cohort/resolve",
+      "/api/insights/v1/graph",
+      "/api/insights/v1/quadrant",
+      "/api/insights/v1/skills/radar",
+      "/api/insights/v1/terms/cloud",
+      "/api/insights/v1/terms/cooccurrence",
+      "/api/insights/v1/visuals",
+      "/api/intelligence/v1/company/briefing",
+      "/api/intelligence/v1/company/extract",
+      "/api/intelligence/v1/company/registry",
+      "/api/intelligence/v1/enrich",
+      "/api/intelligence/v1/market",
+      "/api/intelligence/v1/pipeline/ops-summary",
+      "/api/intelligence/v1/stats/descriptive",
+      "/api/intelligence/v1/stats/regression",
+      "/api/intelligence/v1/support/status",
+      "/api/jobs/v1/index",
+      "/api/jobs/v1/search",
+      "/api/mapping/v1/endpoints",
+      "/api/mapping/v1/graph",
+      "/api/mapping/v1/registry",
+      "/api/mentor/v1/health",
+      "/api/mentor/v1/list",
+      "/api/mentor/v1/profile-by-user/{user_id}",
+      "/api/mentor/v1/{mentor_profile_id}/availability",
+      "/api/mentor/v1/{mentor_profile_id}/dashboard-stats",
+      "/api/mentor/v1/{mentor_profile_id}/packages",
+      "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "/api/mentor/v1/{mentor_profile_id}/profile",
+      "/api/mentorship/v1/applications",
+      "/api/mentorship/v1/applications/pending",
+      "/api/mentorship/v1/applications/{application_id}/approve",
+      "/api/mentorship/v1/applications/{application_id}/reject",
+      "/api/mentorship/v1/documents",
+      "/api/mentorship/v1/documents/{doc_id}",
+      "/api/mentorship/v1/documents/{doc_id}/reject",
+      "/api/mentorship/v1/documents/{doc_id}/sign",
+      "/api/mentorship/v1/health",
+      "/api/mentorship/v1/invoices",
+      "/api/mentorship/v1/invoices/mentor/{mentor_id}",
+      "/api/mentorship/v1/invoices/{invoice_id}/confirm-completion",
+      "/api/mentorship/v1/invoices/{invoice_id}/dispute",
+      "/api/mentorship/v1/invoices/{invoice_id}/mark-paid",
+      "/api/mentorship/v1/invoices/{invoice_id}/service-delivered",
+      "/api/mentorship/v1/links",
+      "/api/mentorship/v1/links/mentor/{mentor_id}",
+      "/api/mentorship/v1/links/user/{user_id}",
+      "/api/mentorship/v1/links/{link_id}/status",
+      "/api/mentorship/v1/notes",
+      "/api/mentorship/v1/notes/{link_id}",
+      "/api/mentorship/v1/notes/{note_id}",
+      "/api/mentorship/v1/summary",
+      "/api/ontology/v1/phrases",
+      "/api/ontology/v1/phrases/summary",
+      "/api/ops/v1/anti-gaming/check",
+      "/api/ops/v1/logs/lock",
+      "/api/ops/v1/processing/start",
+      "/api/ops/v1/processing/status",
+      "/api/ops/v1/stats/public",
+      "/api/ops/v1/tokens/config",
+      "/api/payment/v1/cancel",
+      "/api/payment/v1/client-token",
+      "/api/payment/v1/gateway-info",
+      "/api/payment/v1/health",
+      "/api/payment/v1/history",
+      "/api/payment/v1/methods",
+      "/api/payment/v1/methods/{token}",
+      "/api/payment/v1/plans",
+      "/api/payment/v1/plans/{plan_id}",
+      "/api/payment/v1/process",
+      "/api/payment/v1/refund/{transaction_id}",
+      "/api/payment/v1/subscription",
+      "/api/payment/v1/transactions/{transaction_id}",
+      "/api/resume/v1/",
+      "/api/resume/v1/enrich",
+      "/api/resume/v1/parse",
+      "/api/resume/v1/upload",
+      "/api/resume/v1/{resume_id}",
+      "/api/rewards/v1/health",
+      "/api/rewards/v1/leaderboard",
+      "/api/rewards/v1/ownership-stats",
+      "/api/rewards/v1/referral",
+      "/api/rewards/v1/referral/claim",
+      "/api/rewards/v1/rewards",
+      "/api/rewards/v1/rewards/available",
+      "/api/rewards/v1/rewards/redeem",
+      "/api/rewards/v1/suggestions",
+      "/api/sessions/v1/consolidated/{user_id}",
+      "/api/sessions/v1/log",
+      "/api/sessions/v1/summary/{user_id}",
+      "/api/sessions/v1/sync-status",
+      "/api/shared/v1/health",
+      "/api/shared/v1/health/deep",
+      "/api/support/v1/health",
+      "/api/support/v1/status",
+      "/api/support/v1/token",
+      "/api/support/v1/widget-config",
+      "/api/support/v1/wiring-test",
+      "/api/taxonomy/v1/industries",
+      "/api/taxonomy/v1/industries/{high_level}/subindustries",
+      "/api/taxonomy/v1/job-titles/infer-industries",
+      "/api/taxonomy/v1/job-titles/metadata",
+      "/api/taxonomy/v1/job-titles/naics-mapping",
+      "/api/taxonomy/v1/job-titles/search",
+      "/api/taxonomy/v1/naics/search",
+      "/api/taxonomy/v1/naics/title",
+      "/api/taxonomy/v1/summary",
+      "/api/telemetry/v1/status",
+      "/api/touchpoints/v1/evidence",
+      "/api/touchpoints/v1/touchnots",
+      "/api/user/v1/activity",
+      "/api/user/v1/matches/summary",
+      "/api/user/v1/me",
+      "/api/user/v1/profile",
+      "/api/user/v1/resume/latest",
+      "/api/user/v1/sessions/summary",
+      "/api/user/v1/stats"
+    ],
+    "portal_coverage": {
+      "admin": {
+        "api_call_paths": [
+          "/api/admin/v1/ai/enrichment/jobs",
+          "/api/admin/v1/ai/enrichment/run",
+          "/api/admin/v1/ai/enrichment/status",
+          "/api/admin/v1/dashboard/snapshot",
+          "/api/admin/v1/parsing/parse",
+          "/api/admin/v1/system/activity",
+          "/api/admin/v1/system/health",
+          "/api/admin/v1/tokens/config",
+          "/api/admin/v1/tokens/usage",
+          "/api/admin/v1/users",
+          "/api/ai-data/v1/emails/providers/",
+          "/api/ai-data/v1/emails/summary",
+          "/api/ai-data/v1/emails/tracking",
+          "/api/ai-data/v1/emails/tracking/summary",
+          "/api/analytics/v1/dashboard",
+          "/api/auth/v1/login",
+          "/api/coaching/v1/learning/profile",
+          "/api/coaching/v1/plan/90day",
+          "/api/coaching/v1/role/detect",
+          "/api/intelligence/v1/company/extract",
+          "/api/intelligence/v1/company/registry",
+          "/api/intelligence/v1/market",
+          "/api/intelligence/v1/pipeline/ops-summary",
+          "/api/intelligence/v1/support/status",
+          "/api/jobs/v1/index",
+          "/api/mentorship/v1/applications/",
+          "/api/mentorship/v1/applications/pending",
+          "/api/taxonomy/v1/summary"
+        ],
+        "matched_count": 28,
+        "unmatched_count": 0,
+        "unmatched_paths": []
+      },
+      "user": {
+        "api_call_paths": [
+          "/api/coaching/v1/history",
+          "/api/insights/v1/visuals",
+          "/api/jobs/v1/index",
+          "/api/mentorship/v1/summary",
+          "/api/ontology/v1/phrases",
+          "/api/payment/v1",
+          "/api/payment/v1/subscription",
+          "/api/resume/v1/upload",
+          "/api/rewards/v1/rewards",
+          "/api/rewards/v1/rewards/available",
+          "/api/taxonomy/v1/industries",
+          "/api/user/v1/matches/summary",
+          "/api/user/v1/me",
+          "/api/user/v1/profile",
+          "/api/user/v1/resume/latest",
+          "/api/user/v1/sessions/summary"
+        ],
+        "matched_count": 16,
+        "unmatched_count": 0,
+        "unmatched_paths": []
+      },
+      "mentor": {
+        "api_call_paths": [
+          "/api/auth/v1/login",
+          "/api/mentor/v1/",
+          "/api/mentor/v1/profile-by-user/",
+          "/api/mentorship/v1/invoices",
+          "/api/mentorship/v1/invoices/mentor/"
+        ],
+        "matched_count": 5,
+        "unmatched_count": 0,
+        "unmatched_paths": []
+      }
+    }
+  }
+}

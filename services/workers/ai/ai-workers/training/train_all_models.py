@@ -26,6 +26,8 @@ from typing import Dict, List, Tuple
 import warnings
 warnings.filterwarnings('ignore')
 
+from services.shared.training_data_loader import TrainingDataLoader
+
 # Scikit-learn
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
@@ -58,6 +60,7 @@ class IntelliCVModelTrainer:
         self.data_dir = Path(data_dir)
         self.models_dir = Path("admin_portal/models")
         self.models_dir.mkdir(parents=True, exist_ok=True)
+        self.loader = TrainingDataLoader(limit_per_source=20000)
 
         self.training_report = {
             'timestamp': datetime.now().isoformat(),
@@ -88,13 +91,37 @@ class IntelliCVModelTrainer:
         profile_files = list(self.data_dir.glob("doc_profile_*.json"))
 
         if not normalized_dir.exists() and not profile_files:
-            print(f"âŒ Directory not found: {normalized_dir}")
+            print(f"❌ Directory not found: {normalized_dir}")
             print("   Checking alternative locations...")
 
-            # Check core databases
             if core_db_dir.exists():
-                print(f"âœ… Found core databases at: {core_db_dir}")
+                print(f"✅ Found core databases at: {core_db_dir}")
                 return self._load_from_core_databases(core_db_dir)
+
+            # Shared loader fallback (profiles + cv files)
+            records = self.loader.load_records()
+            if records:
+                print(f"✅ Using shared loader fallback: {len(records)} records")
+                df = pd.DataFrame([
+                    {
+                        'text': rec.full_text(),
+                        'job_title': rec.job_title,
+                        'skills': rec.skills,
+                        'experience_years': rec.years_experience or len(rec.work_experience),
+                        'education': rec.education,
+                        'industry': rec.industry or 'Unknown',
+                        'salary': None,
+                    }
+                    for rec in records
+                    if len(rec.full_text()) > 50
+                ])
+                if not df.empty:
+                    self.training_report['data_stats'] = {
+                        'total_records': len(df),
+                        'avg_text_length': float(df['text'].str.len().mean()),
+                        'unique_industries': df['industry'].nunique(),
+                    }
+                    return df
 
             raise FileNotFoundError(f"No CV data found in {self.data_dir}")
 

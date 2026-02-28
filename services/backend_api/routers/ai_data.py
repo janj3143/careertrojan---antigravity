@@ -5,19 +5,32 @@ Provides RESTful endpoints for accessing parsed resumes, job descriptions,
 companies, job titles, locations, and metadata stored in ai_data_final/
 """
 
-from fastapi import APIRouter, HTTPException
-from pathlib import Path
+from fastapi import APIRouter, Body, HTTPException, Query
 import json
-from typing import List, Dict, Any
+from typing import Dict, Any
+import logging
 
-import os
+from services.shared.paths import paths as runtime_paths
+from services.backend_api.services.email_data_service import (
+    build_provider_payload,
+    get_email_diagnostics,
+    get_email_records,
+    get_email_reroute_targets,
+    get_email_summary,
+    get_email_tracking_records,
+    get_email_tracking_summary,
+    load_legacy_email_records,
+    save_email_tracking_record,
+    build_guarded_provider_payload,
+)
+
 router = APIRouter(prefix="/api/ai-data/v1", tags=["ai-data"])
+logger = logging.getLogger("careertrojan.api.ai_data")
 
-# Base path to AI data
-_DATA_ROOT = os.environ.get("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
-AI_DATA_PATH = Path(_DATA_ROOT) / "ai_data_final"
-AUTOMATED_PARSER_PATH = Path(_DATA_ROOT) / "automated_parser"
-USER_DATA_PATH = Path(_DATA_ROOT) / "USER DATA"
+# Canonical paths (handles env values that point to either data root or ai_data_final)
+AI_DATA_PATH = runtime_paths.ai_data_final
+AUTOMATED_PARSER_PATH = runtime_paths.parser_root
+USER_DATA_PATH = runtime_paths.user_data
 
 @router.get("/parsed_resumes")
 async def get_parsed_resumes() -> Dict[str, Any]:
@@ -45,7 +58,7 @@ async def get_parsed_resumes() -> Dict[str, Any]:
                 data = json.load(f)
                 resumes.append(data)
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -113,7 +126,7 @@ async def get_job_descriptions() -> Dict[str, Any]:
                 data = json.load(f)
                 jobs.append(data)
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -149,7 +162,7 @@ async def get_companies() -> Dict[str, Any]:
                 data = json.load(f)
                 companies.append(data)
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -185,7 +198,7 @@ async def get_job_titles() -> Dict[str, Any]:
                 data = json.load(f)
                 titles.append(data)
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -221,7 +234,7 @@ async def get_locations() -> Dict[str, Any]:
                 data = json.load(f)
                 locations.append(data)
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -257,7 +270,7 @@ async def get_metadata() -> Dict[str, Any]:
                 data = json.load(f)
                 metadata.append(data)
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -293,7 +306,7 @@ async def get_normalized_data() -> Dict[str, Any]:
                 data = json.load(f)
                 normalized.append(data)
         except Exception as e:
-            print(f"Error loading {json_file}: {e}")
+            logger.warning("Error loading %s: %s", json_file, e)
             continue
 
     return {
@@ -315,28 +328,138 @@ async def get_email_extracted() -> Dict[str, Any]:
             "data": List[dict]
         }
     """
-    email_path = AI_DATA_PATH / "email_extracted"
-    if not email_path.exists():
-        raise HTTPException(
-            status_code=404,
-            detail=f"Email extracted directory not found: {email_path}"
-        )
-
-    emails = []
-    for json_file in email_path.glob("*.json"):
-        try:
-            with open(json_file, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                emails.append(data)
-        except Exception as e:
-            print(f"Error loading {json_file}: {e}")
-            continue
+    emails = load_legacy_email_records(AI_DATA_PATH)
 
     return {
         "ok": True,
         "count": len(emails),
         "data": emails
     }
+
+
+@router.get("/emails")
+async def get_emails(
+    limit: int = Query(default=500, ge=1, le=5000),
+    offset: int = Query(default=0, ge=0),
+    domain: str | None = Query(default=None),
+    query: str | None = Query(default=None),
+    email_type: str | None = Query(default=None),
+    trust_tier: str | None = Query(default=None, pattern="^(?i)(a|b|c)$"),
+) -> Dict[str, Any]:
+    payload = get_email_records(
+        AI_DATA_PATH,
+        limit=limit,
+        offset=offset,
+        domain=domain,
+        query=query,
+        email_type=email_type,
+        trust_tier=trust_tier,
+    )
+    return {"ok": True, **payload}
+
+
+@router.get("/emails/summary")
+async def get_emails_summary() -> Dict[str, Any]:
+    payload = get_email_summary(AI_DATA_PATH)
+    return {"ok": True, "data": payload}
+
+
+@router.get("/emails/diagnostics")
+async def get_emails_diagnostics() -> Dict[str, Any]:
+    payload = get_email_diagnostics(AI_DATA_PATH)
+    return {"ok": True, "data": payload}
+
+
+@router.get("/emails/providers/{provider}")
+async def get_emails_provider_payload(
+    provider: str,
+    limit: int = Query(default=500, ge=1, le=5000),
+    domain: str | None = Query(default=None),
+    email_type: str | None = Query(default="verified"),
+    trust_tier: str | None = Query(default="A", pattern="^(?i)(a|b|c)$"),
+) -> Dict[str, Any]:
+    try:
+        payload = build_provider_payload(
+            AI_DATA_PATH,
+            provider=provider,
+            limit=limit,
+            domain=domain,
+            email_type=email_type,
+            trust_tier=trust_tier,
+        )
+        return {"ok": True, "data": payload}
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+@router.get("/emails/providers/{provider}/guarded-payload")
+async def get_guarded_email_provider_payload(
+    provider: str,
+    limit: int = Query(default=500, ge=1, le=5000),
+    domain: str | None = Query(default=None),
+    email_type: str | None = Query(default="verified"),
+    trust_tier: str | None = Query(default="A"),
+    allow_non_tier_a: bool = Query(default=False),
+    override_reason: str | None = Query(default=None),
+) -> dict:
+    try:
+        guarded = build_guarded_provider_payload(
+            ai_data_path=AI_DATA_PATH,
+            provider=provider,
+            limit=limit,
+            domain=domain,
+            email_type=email_type,
+            trust_tier=trust_tier,
+            allow_non_tier_a=allow_non_tier_a,
+            override_reason=override_reason,
+        )
+        policy = guarded.get("policy") or {}
+        if not bool(policy.get("pass", False)):
+            raise HTTPException(status_code=400, detail=guarded)
+        return guarded
+    except HTTPException:
+        raise
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@router.get("/emails/tracking")
+async def get_emails_tracking(
+    limit: int = Query(default=200, ge=1, le=2000),
+    offset: int = Query(default=0, ge=0),
+    result: str | None = Query(default=None),
+) -> Dict[str, Any]:
+    payload = get_email_tracking_records(
+        AI_DATA_PATH,
+        limit=limit,
+        offset=offset,
+        result=result,
+    )
+    return {"ok": True, **payload}
+
+
+@router.get("/emails/tracking/summary")
+async def get_emails_tracking_summary() -> Dict[str, Any]:
+    payload = get_email_tracking_summary(AI_DATA_PATH)
+    return {"ok": True, "data": payload}
+
+
+@router.get("/emails/tracking/reroute-targets")
+async def get_emails_tracking_reroute_targets() -> Dict[str, Any]:
+    payload = get_email_reroute_targets(AI_DATA_PATH)
+    return {"ok": True, "data": payload}
+
+
+@router.post("/emails/tracking")
+async def create_emails_tracking_record(payload: Dict[str, Any] = Body(default={})) -> Dict[str, Any]:
+    try:
+        row = save_email_tracking_record(AI_DATA_PATH, payload)
+        return {"ok": True, "data": row}
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Failed to save email tracking event: {exc}")
 
 
 @router.get("/status")
@@ -355,7 +478,8 @@ async def get_ai_data_status() -> Dict[str, Any]:
         "locations",
         "metadata",
         "normalized",
-        "email_extracted"
+        "email_extracted",
+        "emails",
     ]
 
     status = {}
@@ -384,6 +508,32 @@ async def get_ai_data_status() -> Dict[str, Any]:
         "ok": True,
         "base_path": str(AI_DATA_PATH.absolute()),
         "directories": status
+    }
+
+
+@router.get("/parser/ingestion-status")
+async def get_parser_ingestion_status() -> Dict[str, Any]:
+    manifest = AI_DATA_PATH / "parsed_from_automated" / "parser_ingestion_status.json"
+    summary = AI_DATA_PATH / "parsed_from_automated" / "parser_ingestion_status_summary.json"
+
+    if summary.exists():
+        try:
+            payload = json.loads(summary.read_text(encoding="utf-8"))
+            return {"ok": True, "data": payload}
+        except Exception:
+            pass
+
+    if manifest.exists():
+        try:
+            payload = json.loads(manifest.read_text(encoding="utf-8"))
+            return {"ok": True, "data": payload}
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=f"Invalid ingestion status manifest: {exc}")
+
+    return {
+        "ok": False,
+        "detail": "Parser ingestion status manifest not found",
+        "expected": [str(summary), str(manifest)],
     }
 
 # --- Automated Parser Endpoints ---

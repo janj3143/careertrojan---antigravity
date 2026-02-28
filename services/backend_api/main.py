@@ -15,14 +15,14 @@ except ImportError:
         APP_NAME = "CareerTrojan"
         VERSION = "1.0.0"
         DEBUG = True
-        CAREERTROJAN_DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
+        CAREERTROJAN_DATA_ROOT = os.getenv("CAREERTROJAN_DATA_ROOT", "./data")
     settings = Settings()
 
 # Import Routers
-from services.backend_api.routers import admin, user, mentor, shared, auth, mentorship, intelligence, coaching, ops, resume, blockers, payment, rewards, credits, ai_data, jobs, taxonomy, sessions
-from services.backend_api.routers import insights, touchpoints, mapping, analytics
+from services.backend_api.routers import admin, user, mentor, shared, auth, mentorship, intelligence, coaching, ops, resume, blockers, payment, rewards, credits, ai_data, jobs, taxonomy, sessions, ontology, support
+from services.backend_api.routers import insights, touchpoints, mapping, analytics, lenses
 from services.backend_api.routers import admin_abuse, admin_parsing, admin_tokens, anti_gaming, logs, telemetry
-from services.backend_api.routers import gdpr
+from services.backend_api.routers import gdpr, data_index
 
 # Setup Structured Logging (structlog → JSON lines)
 configure_logging()
@@ -42,6 +42,9 @@ origins = [
     "http://localhost:8502",  # User Portal
     "http://localhost:8503",  # Mentor Portal
     "http://localhost:8600",  # Access via Docker
+    "http://localhost:8601",  # Admin Portal (Docker)
+    "http://localhost:8602",  # User Portal (Docker)
+    "http://localhost:8603",  # Mentor Portal (Docker)
     "http://localhost:8000",
     "http://localhost:3000",  # React Dev (user)
     "http://localhost:3001",  # React Dev (admin)
@@ -56,6 +59,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/health")
+async def health_check():
+    return {"status": "ok", "service": "backend-api", "version": settings.VERSION}
 
 # ── Request Correlation — assigns unique request_id + structured logs ──
 app.add_middleware(RequestCorrelationMiddleware)
@@ -82,6 +90,9 @@ app.include_router(ai_data.router)
 app.include_router(jobs.router)
 app.include_router(taxonomy.router)
 app.include_router(sessions.router)       # Session history, sync status, consolidated user view
+app.include_router(ontology.router)
+app.include_router(support.router)
+app.include_router(data_index.router)     # AI data & parser indexing system
 
 # ── Optional/Placeholder Routers ─────────────────────────────
 try: app.include_router(payment.router)
@@ -96,6 +107,7 @@ app.include_router(insights.router)       # Quadrant, word-cloud, graph, cohort
 app.include_router(touchpoints.router)    # Evidence & touch-not lookups
 app.include_router(mapping.router)        # Live endpoint map, visual registry
 app.include_router(analytics.router)      # System statistics & dashboard data
+app.include_router(lenses.router)         # Spider/Covey composite analytics lenses
 
 # ── GDPR / Data Rights ──────────────────────────────────────
 app.include_router(gdpr.router)           # Consent, data export, account deletion, audit log

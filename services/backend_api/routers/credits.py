@@ -14,6 +14,11 @@ from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone
 import logging
+from sqlalchemy.orm import Session
+
+from services.backend_api.utils import security
+from services.backend_api.db.connection import get_db
+from services.backend_api.db import models
 
 # Import credit system
 try:
@@ -111,10 +116,19 @@ class TeaserResponse(BaseModel):
 # HELPER FUNCTIONS
 # ============================================================================
 
-def _get_user_id() -> str:
-    """Get current user ID from auth - placeholder"""
-    # TODO: Implement proper auth dependency
-    return "user_demo"
+def get_current_user(token: str = Depends(security.oauth2_scheme), db: Session = Depends(get_db)):
+    try:
+        payload = security.decode_access_token(token)
+        email: str = payload.get("sub")
+        if email is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    except security.TokenValidationError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    return user
 
 
 def _ensure_credit_system():
@@ -153,12 +167,12 @@ def _get_plan_features(plan_config) -> List[str]:
 # ============================================================================
 
 @router.get("/plans", response_model=PlansResponse)
-async def get_plans():
+async def get_plans(current_user: models.User = Depends(get_current_user)):
     """Get all available plans with credit allocations"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = str(current_user.id)
     user_credits = manager.get_user_credits(user_id)
     
     plans_list = []
@@ -200,12 +214,12 @@ async def get_action_costs():
 
 
 @router.get("/balance", response_model=BalanceResponse)
-async def get_balance():
+async def get_balance(current_user: models.User = Depends(get_current_user)):
     """Get user's current credit balance and usage"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = str(current_user.id)
     summary = manager.get_usage_summary(user_id)
     
     return BalanceResponse(
@@ -220,12 +234,16 @@ async def get_balance():
 
 
 @router.get("/can-perform/{action_id}", response_model=CanPerformResponse)
-async def can_perform_action(action_id: str, is_preview: bool = False):
+async def can_perform_action(
+    action_id: str,
+    is_preview: bool = False,
+    current_user: models.User = Depends(get_current_user),
+):
     """Check if user can perform an action"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = str(current_user.id)
     
     can_perform, message, upgrade_info = manager.can_perform_action(
         user_id, action_id, is_preview
@@ -251,12 +269,15 @@ async def can_perform_action(action_id: str, is_preview: bool = False):
 
 
 @router.post("/consume", response_model=ConsumeResponse)
-async def consume_credits(request: ConsumeRequest):
+async def consume_credits(
+    request: ConsumeRequest,
+    current_user: models.User = Depends(get_current_user),
+):
     """Consume credits for an action"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = str(current_user.id)
     
     result = manager.consume_credits(
         user_id=user_id,
@@ -275,12 +296,12 @@ async def consume_credits(request: ConsumeRequest):
 
 
 @router.get("/usage")
-async def get_usage_details():
+async def get_usage_details(current_user: models.User = Depends(get_current_user)):
     """Get detailed usage breakdown"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = str(current_user.id)
     
     return manager.get_usage_summary(user_id)
 
@@ -308,7 +329,7 @@ async def get_teaser(request: TeaserRequest):
 
 
 @router.post("/upgrade/{plan_tier}")
-async def upgrade_plan(plan_tier: str):
+async def upgrade_plan(plan_tier: str, current_user: models.User = Depends(get_current_user)):
     """Upgrade user to a new plan (simplified - would integrate with payment)"""
     _ensure_credit_system()
     

@@ -75,6 +75,7 @@ class UniversalDataIngestor:
             "companies": self.dest_dir / "companies",
             "users": self.dest_dir / "users",
             "profiles": self.dest_dir / "profiles",
+            "contacts": self.dest_dir / "contacts",
             "email_extracted": self.dest_dir / "email_extracted",
             "job_descriptions": self.dest_dir / "job_descriptions",
             "taxonomies": self.dest_dir / "taxonomies",
@@ -373,10 +374,82 @@ class UniversalDataIngestor:
         return rows_processed
 
     def _ingest_contacts(self, df: pd.DataFrame) -> int:
-        """Ingest contacts"""
-        # Similar logic to candidates
-        # TODO: Implement contact ingestion logic
-        return 0
+        """Ingest contact data into contacts directory.
+        
+        Contacts are typically recruiters, HR reps, hiring managers, or networking
+        connections. They're stored separately from candidate profiles.
+        """
+        rows_processed = 0
+        for _, row in df.iterrows():
+            raw_contact = row.to_dict()
+            # Clean keys and remove NaNs
+            contact = {k: v for k, v in raw_contact.items() if pd.notna(v)}
+
+            # --- NORMALIZE KEYS ---
+            # Map common variations to standard keys
+            key_mappings = {
+                # Name fields
+                "Full Name": "name", "FullName": "name", "Contact Name": "name",
+                "ContactName": "name", "Name": "name",
+                "First Name": "first_name", "FirstName": "first_name",
+                "Last Name": "last_name", "LastName": "last_name",
+                # Email
+                "Email": "email", "E-mail": "email", "EmailAddress": "email",
+                "Email Address": "email",
+                # Phone
+                "Phone": "phone", "Phone Number": "phone", "PhoneNumber": "phone",
+                "Mobile": "mobile", "Mobile Phone": "mobile",
+                # Company/org
+                "Company": "company", "CompanyName": "company", "Company Name": "company",
+                "Organization": "company", "Employer": "company",
+                # Title/role
+                "Title": "title", "Job Title": "title", "JobTitle": "title",
+                "Role": "role", "Position": "title",
+                # Location
+                "Location": "location", "City": "city", "Country": "country",
+                # Contact type
+                "Contact Type": "contact_type", "ContactType": "contact_type",
+                "Type": "contact_type",
+                # Source
+                "Source": "source", "Lead Source": "source",
+                # Notes
+                "Notes": "notes", "Comments": "notes",
+            }
+            for old_key, new_key in key_mappings.items():
+                if old_key in contact and new_key not in contact:
+                    contact[new_key] = contact[old_key]
+
+            # Build full name if not present but first/last are
+            if "name" not in contact:
+                first = contact.get("first_name", "")
+                last = contact.get("last_name", "")
+                if first or last:
+                    contact["name"] = f"{first} {last}".strip()
+
+            # Generate ID: prefer ContactID, Email, or Name-based
+            contact_id = str(contact.get("ContactID", contact.get("ID", "")))
+            if not contact_id or contact_id == "nan":
+                # Fallback to email or name
+                email = contact.get("email", "")
+                name = contact.get("name", "unknown")
+                contact_id = email.split("@")[0] if email else name
+
+            if contact_id in ("unknown", "", "nan"):
+                continue  # Skip if no usable ID
+
+            # Sanitize ID for filename
+            safe_id = "".join([c for c in contact_id if c.isalnum() or c in ('-', '_')]).strip()[:80]
+            if not safe_id:
+                continue
+
+            # Save to contacts directory
+            output_file = self.dirs["contacts"] / f"contact_{safe_id}.json"
+            with open(output_file, "w", encoding="utf-8") as f:
+                json.dump(contact, f, indent=2, default=str)
+
+            rows_processed += 1
+
+        return rows_processed
 
     def process_msg_files(self):
         """Process .msg files"""
@@ -694,6 +767,8 @@ class UniversalDataIngestor:
 
 if __name__ == "__main__":
     # Run from command line
-    base_path = r"C:\IntelliCV\SANDBOX\Full system"
+    base_path = os.getenv("CAREERTROJAN_DATA_ROOT")
+    if not base_path:
+        base_path = str(Path(__file__).resolve().parents[3])
     ingestor = UniversalDataIngestor(base_path)
     ingestor.ingest_all()

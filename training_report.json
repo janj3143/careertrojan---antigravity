@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-02-22T14:26:21.333490",
+  "data_stats": {},
+  "model_performance": {
+    "bayesian_classifier": {
+      "accuracy": 0.8037686809616634,
+      "training_samples": 12312,
+      "test_samples": 3078,
+      "categories": [
+        "Other",
+        "Management",
+        "Sales & Marketing",
+        "Technology",
+        "Human Resources",
+        "Finance"
+      ],
+      "model_file": "J:\\Codec - runtime version\\Antigravity\\careertrojan\\services\\ai_engine\\trained_models\\bayesian_classifier.pkl",
+      "vectorizer_file": "J:\\Codec - runtime version\\Antigravity\\careertrojan\\services\\ai_engine\\trained_models\\tfidf_vectorizer.pkl"
+    },
+    "spacy_ner": {
+      "model_name": "en_core_web_sm",
+      "installed": false,
+      "download_command": "python -m spacy download en_core_web_sm"
+    },
+    "salary_predictor": {
+      "r2_score": 0.9878355824657631,
+      "training_samples": 12331,
+      "test_samples": 3083,
+      "model_file": "J:\\Codec - runtime version\\Antigravity\\careertrojan\\services\\ai_engine\\trained_models\\salary_predictor.pkl"
+    }
+  },
+  "files_created": [
+    "J:\\Codec - runtime version\\Antigravity\\careertrojan\\services\\ai_engine\\trained_models\\bayesian_classifier.pkl",
+    "J:\\Codec - runtime version\\Antigravity\\careertrojan\\services\\ai_engine\\trained_models\\tfidf_vectorizer.pkl",
+    "J:\\Codec - runtime version\\Antigravity\\careertrojan\\services\\ai_engine\\trained_models\\salary_predictor.pkl"
+  ]
+}

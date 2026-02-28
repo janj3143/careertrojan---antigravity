@@ -1,1 +1,0 @@
-# This file marks the user_portal_final directory as a Python package.

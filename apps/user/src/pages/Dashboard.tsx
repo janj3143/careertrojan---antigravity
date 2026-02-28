@@ -71,6 +71,12 @@ export default function Dashboard() {
                     <p className="text-sm text-yellow-600 mt-2">View your achievements.</p>
                 </Link>
 
+                {/* 16 Glossary Insights */}
+                <Link to="/glossary" className="block p-6 bg-emerald-50 border border-emerald-100 rounded-lg shadow-sm hover:shadow-md transition">
+                    <h3 className="text-xl font-semibold text-emerald-700">16. Glossary Insights</h3>
+                    <p className="text-sm text-emerald-600 mt-2">Collocation-aware phrases and patterns.</p>
+                </Link>
+
             </div>
         </div>
     );

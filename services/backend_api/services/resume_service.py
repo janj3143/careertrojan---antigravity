@@ -12,7 +12,9 @@ class ResumeService:
     Stores uploads in ./data/user_uploads/{user_id}/
     """
     def __init__(self):
-        self.base_path = Path("C:/careertrojan/data/user_uploads")
+        from services.shared.paths import CareerTrojanPaths
+        paths = CareerTrojanPaths()
+        self.base_path = paths.user_data / "user_uploads"
         self.base_path.mkdir(parents=True, exist_ok=True)
 
     def save_upload(self, user_id: int, file_obj, filename: str) -> Dict[str, Any]:
@@ -34,10 +36,4 @@ class ResumeService:
         }
 
     def parse_resume(self, resume_id: str) -> Dict[str, Any]:
-        # Mock parser for now
-        return {
-            "parsed": True,
-            "skills": ["Python", "FastAPI", "Leadership"],
-            "experience": [{"title": "Software Eng", "company": "Tech Corp"}],
-            "raw_text": "Sample resume text..."
-        }
+        raise RuntimeError("Resume parsing requires the real parser pipeline")

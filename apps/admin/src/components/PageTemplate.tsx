@@ -21,7 +21,8 @@ export default function PageTemplate({ title, subtitle, endpoint, children }: Pa
 
         try {
             const token = localStorage.getItem('admin_token');
-            const response = await fetch(`http://localhost:8500${endpoint}`, {
+            const route = endpoint.startsWith('/api/') ? endpoint : `/api${endpoint}`;
+            const response = await fetch(route, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

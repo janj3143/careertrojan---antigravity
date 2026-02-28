@@ -16,7 +16,10 @@ from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 import logging
-import uuid
+from sqlalchemy.orm import Session
+
+from services.backend_api.db.connection import get_db
+from services.backend_api.db import models
 
 logger = logging.getLogger(__name__)
 
@@ -80,93 +83,86 @@ class AvailabilityUpdate(BaseModel):
     available_hours: Optional[Dict[str, Any]] = None
 
 # ============================================================================
-# IN-MEMORY STORAGE (Replace with database in production)
+# DATABASE ACCESS
 # ============================================================================
 
-# Temporary storage - replace with PostgreSQL queries
-_mentor_profiles: Dict[str, Dict[str, Any]] = {}
-_service_packages: Dict[str, Dict[str, Any]] = {}
-
-def _get_mentor_by_user_id(user_id: str) -> Optional[Dict[str, Any]]:
-    """Get mentor profile by user ID"""
-    for profile_id, profile in _mentor_profiles.items():
-        if profile.get("user_id") == user_id:
-            return profile
-    return None
-
-def _ensure_demo_mentor(user_id: str) -> Dict[str, Any]:
-    """Ensure a demo mentor profile exists for testing"""
-    existing = _get_mentor_by_user_id(user_id)
-    if existing:
-        return existing
-    
-    profile_id = f"mentor_{uuid.uuid4().hex[:8]}"
-    profile = {
-        "mentor_profile_id": profile_id,
-        "user_id": user_id,
-        "display_name": f"Mentor {user_id[:8]}",
-        "bio": "Experienced career mentor helping professionals achieve their goals.",
-        "expertise_areas": ["Career Coaching", "Leadership", "Interview Prep"],
-        "years_experience": 10,
-        "hourly_rate": 150.0,
-        "availability_status": "available",
-        "rating": 4.8,
-        "total_sessions": 0,
-        "created_at": datetime.utcnow()
-    }
-    _mentor_profiles[profile_id] = profile
-    return profile
+def _mentor_to_profile(mentor: models.Mentor, user: Optional[models.User]) -> MentorProfileOut:
+    return MentorProfileOut(
+        mentor_profile_id=str(mentor.id),
+        user_id=str(mentor.user_id),
+        display_name=(user.full_name if user and user.full_name else f"Mentor {mentor.user_id}"),
+        bio=None,
+        expertise_areas=[mentor.specialty] if mentor.specialty else [],
+        years_experience=0,
+        hourly_rate=mentor.hourly_rate,
+        availability_status=mentor.availability or "available",
+        rating=0.0,
+        total_sessions=len(mentor.sessions) if mentor.sessions else 0,
+        created_at=mentor.sessions[0].created_at if mentor.sessions else datetime.utcnow(),
+    )
 
 # ============================================================================
 # MENTOR PROFILE ENDPOINTS
 # ============================================================================
 
 @router.get("/profile-by-user/{user_id}", response_model=MentorProfileOut)
-async def get_mentor_profile_by_user(user_id: str):
+async def get_mentor_profile_by_user(user_id: str, db: Session = Depends(get_db)):
     """
     Get mentor profile by user ID
     
     Used by mentor portal to resolve mentor_profile_id from authenticated user
     """
-    profile = _get_mentor_by_user_id(user_id)
-    if not profile:
-        # Auto-create for demo purposes
-        profile = _ensure_demo_mentor(user_id)
-    
-    return MentorProfileOut(**profile)
+    mentor = db.query(models.Mentor).filter(models.Mentor.user_id == user_id).first()
+    if not mentor:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Mentor profile not found",
+        )
+
+    user = db.query(models.User).filter(models.User.id == mentor.user_id).first()
+    return _mentor_to_profile(mentor, user)
 
 @router.get("/{mentor_profile_id}/profile", response_model=MentorProfileOut)
-async def get_mentor_profile(mentor_profile_id: str):
+async def get_mentor_profile(mentor_profile_id: str, db: Session = Depends(get_db)):
     """Get mentor profile by mentor profile ID"""
-    if mentor_profile_id not in _mentor_profiles:
+    mentor = db.query(models.Mentor).filter(models.Mentor.id == mentor_profile_id).first()
+    if not mentor:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Mentor profile {mentor_profile_id} not found"
         )
-    return MentorProfileOut(**_mentor_profiles[mentor_profile_id])
+    user = db.query(models.User).filter(models.User.id == mentor.user_id).first()
+    return _mentor_to_profile(mentor, user)
 
 @router.put("/{mentor_profile_id}/availability")
-async def update_availability(mentor_profile_id: str, update: AvailabilityUpdate):
+async def update_availability(
+    mentor_profile_id: str,
+    update: AvailabilityUpdate,
+    db: Session = Depends(get_db),
+):
     """Update mentor availability status"""
-    if mentor_profile_id not in _mentor_profiles:
+    mentor = db.query(models.Mentor).filter(models.Mentor.id == mentor_profile_id).first()
+    if not mentor:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Mentor profile {mentor_profile_id} not found"
         )
-    
-    _mentor_profiles[mentor_profile_id]["availability_status"] = update.availability_status
-    if update.available_hours:
-        _mentor_profiles[mentor_profile_id]["available_hours"] = update.available_hours
-    
+
+    mentor.availability = update.availability_status
+    db.commit()
     return {"status": "updated", "availability_status": update.availability_status}
 
 @router.get("/list", response_model=List[MentorProfileOut])
-async def list_mentors(skip: int = 0, limit: int = 20):
+async def list_mentors(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):
     """
     List all active mentors.
     """
-    mentors = list(_mentor_profiles.values())
-    return mentors[skip : skip + limit]
+    mentors = db.query(models.Mentor).offset(skip).limit(limit).all()
+    results: List[MentorProfileOut] = []
+    for mentor in mentors:
+        user = db.query(models.User).filter(models.User.id == mentor.user_id).first()
+        results.append(_mentor_to_profile(mentor, user))
+    return results
 
 # ============================================================================
 # SERVICE PACKAGES ENDPOINTS
@@ -179,11 +175,7 @@ async def get_mentor_packages(mentor_profile_id: str):
     
     Returns list of packages the mentor has created
     """
-    packages = [
-        pkg for pkg in _service_packages.values()
-        if pkg.get("mentor_profile_id") == mentor_profile_id
-    ]
-    return {"packages": packages, "count": len(packages)}
+    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
 
 @router.post("/{mentor_profile_id}/packages", status_code=status.HTTP_201_CREATED)
 async def create_package(mentor_profile_id: str, package: ServicePackageCreate):
@@ -192,107 +184,22 @@ async def create_package(mentor_profile_id: str, package: ServicePackageCreate):
     
     Mentors use this to define their monetized session offerings
     """
-    if mentor_profile_id not in _mentor_profiles:
-        # Auto-create profile for demo
-        _mentor_profiles[mentor_profile_id] = {
-            "mentor_profile_id": mentor_profile_id,
-            "user_id": mentor_profile_id,
-            "display_name": "New Mentor",
-            "created_at": datetime.utcnow()
-        }
-    
-    package_id = f"pkg_{uuid.uuid4().hex[:8]}"
-    total_price = package.session_count * package.price_per_session
-    
-    new_package = {
-        "package_id": package_id,
-        "mentor_profile_id": mentor_profile_id,
-        "package_name": package.package_name,
-        "description": package.description,
-        "session_count": package.session_count,
-        "session_duration": package.session_duration,
-        "price_per_session": package.price_per_session,
-        "total_price": total_price,
-        "deliverables": package.deliverables,
-        "expected_outcomes": package.expected_outcomes,
-        "is_active": package.is_active,
-        "created_at": datetime.utcnow(),
-        "updated_at": None
-    }
-    
-    _service_packages[package_id] = new_package
-    logger.info(f"Created package {package_id} for mentor {mentor_profile_id}")
-    
-    return ServicePackageOut(**new_package)
+    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
 
 @router.get("/{mentor_profile_id}/packages/{package_id}", response_model=ServicePackageOut)
 async def get_package(mentor_profile_id: str, package_id: str):
     """Get a specific service package"""
-    if package_id not in _service_packages:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Package {package_id} not found"
-        )
-    
-    package = _service_packages[package_id]
-    if package.get("mentor_profile_id") != mentor_profile_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Package does not belong to this mentor"
-        )
-    
-    return ServicePackageOut(**package)
+    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
 
 @router.put("/{mentor_profile_id}/packages/{package_id}", response_model=ServicePackageOut)
 async def update_package(mentor_profile_id: str, package_id: str, update: ServicePackageUpdate):
     """Update a service package"""
-    if package_id not in _service_packages:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Package {package_id} not found"
-        )
-    
-    package = _service_packages[package_id]
-    if package.get("mentor_profile_id") != mentor_profile_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Package does not belong to this mentor"
-        )
-    
-    # Update fields
-    update_data = update.dict(exclude_unset=True)
-    for field, value in update_data.items():
-        package[field] = value
-    
-    # Recalculate total price if needed
-    if "session_count" in update_data or "price_per_session" in update_data:
-        package["total_price"] = package["session_count"] * package["price_per_session"]
-    
-    package["updated_at"] = datetime.utcnow()
-    _service_packages[package_id] = package
-    
-    return ServicePackageOut(**package)
+    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
 
 @router.delete("/{mentor_profile_id}/packages/{package_id}")
 async def delete_package(mentor_profile_id: str, package_id: str):
     """Delete a service package"""
-    if package_id not in _service_packages:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Package {package_id} not found"
-        )
-    
-    package = _service_packages[package_id]
-    if package.get("mentor_profile_id") != mentor_profile_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Package does not belong to this mentor"
-        )
-    
-    del _service_packages[package_id]
-    logger.info(f"Deleted package {package_id} for mentor {mentor_profile_id}")
-    
-    return {"status": "deleted", "package_id": package_id}
+    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
 
 # ============================================================================
 # MENTOR DASHBOARD STATS ENDPOINT
@@ -305,26 +212,7 @@ async def get_dashboard_stats(mentor_profile_id: str):
     
     Returns metrics like total earnings, session count, ratings, etc.
     """
-    packages = [
-        pkg for pkg in _service_packages.values()
-        if pkg.get("mentor_profile_id") == mentor_profile_id
-    ]
-    
-    profile = _mentor_profiles.get(mentor_profile_id, {})
-    
-    return {
-        "mentor_profile_id": mentor_profile_id,
-        "display_name": profile.get("display_name", "Mentor"),
-        "total_packages": len(packages),
-        "active_packages": sum(1 for p in packages if p.get("is_active", True)),
-        "total_sessions": profile.get("total_sessions", 0),
-        "rating": profile.get("rating", 0.0),
-        "availability_status": profile.get("availability_status", "available"),
-        "earnings_this_month": 0.0,  # TODO: Calculate from invoices
-        "earnings_total": 0.0,  # TODO: Calculate from invoices
-        "pending_sessions": 0,  # TODO: Calculate from links
-        "active_mentees": 0  # TODO: Calculate from links
-    }
+    raise HTTPException(status_code=501, detail="Mentor dashboard stats are not configured")
 
 @router.get("/health")
 async def health_check():
@@ -332,6 +220,6 @@ async def health_check():
     return {
         "status": "healthy",
         "service": "mentor-api",
-        "profiles_loaded": len(_mentor_profiles),
-        "packages_loaded": len(_service_packages)
+        "profiles_loaded": 0,
+        "packages_loaded": 0
     }

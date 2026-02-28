@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
     # Paths (portable: override via .env or env var)
-    CAREERTROJAN_DATA_ROOT: str = "./data/ai_data_final"
+    CAREERTROJAN_DATA_ROOT: str = "./data"
     AI_DATA_PATH: Optional[str] = None
     PARSER_OUTPUT_PATH: Optional[str] = None
     

@@ -1,134 +1,518 @@
 {
-  "generated": "2026-02-09",
-  "count": 16,
+  "generated": "2026-02-20",
+  "root": "apps",
+  "count": 73,
   "calls": [
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\AdminHome.tsx",
+      "file": "apps\\admin\\src\\components\\PageTemplate.tsx",
+      "line": 24,
+      "method": "GET",
+      "url": "http://localhost:8500${endpoint}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\admin\\src\\pages\\AdminHome.tsx",
       "line": 26,
       "method": "GET",
-      "url": "/api/admin/dashboard-stats",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/dashboard/snapshot",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\AdminLogin.tsx",
+      "file": "apps\\admin\\src\\pages\\AdminLogin.tsx",
       "line": 20,
-      "method": "GET",
-      "url": "/api/auth/admin/login",
-      "kind": "fetch",
-      "portal": "admin"
+      "method": "POST",
+      "url": "/api/auth/v1/login",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\AIEnrichment.tsx",
+      "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
       "line": 36,
       "method": "GET",
-      "url": "/api/admin/enrichment/jobs",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/ai/enrichment/jobs",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\AIEnrichment.tsx",
+      "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
       "line": 37,
       "method": "GET",
-      "url": "/api/admin/enrichment/stats",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/ai/enrichment/status",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\AIEnrichment.tsx",
+      "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
       "line": 58,
-      "method": "GET",
-      "url": "/api/admin/enrichment/trigger",
-      "kind": "fetch",
-      "portal": "admin"
+      "method": "POST",
+      "url": "/api/admin/v1/ai/enrichment/run",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\DataParser.tsx",
-      "line": 28,
-      "method": "GET",
-      "url": "/api/admin/data-parser/parse",
-      "kind": "fetch",
-      "portal": "admin"
-    },
-    {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\MarketIntelligence.tsx",
+      "file": "apps\\admin\\src\\pages\\Analytics.tsx",
       "line": 23,
       "method": "GET",
-      "url": "/api/admin/market-intelligence",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/analytics?range=${timeRange}",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\MentorManagement.tsx",
+      "file": "apps\\admin\\src\\pages\\DataParser.tsx",
+      "line": 28,
+      "method": "POST",
+      "url": "/api/admin/v1/parsing/parse",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\admin\\src\\pages\\MarketIntelligence.tsx",
+      "line": 23,
+      "method": "GET",
+      "url": "/api/intelligence/v1/market",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\admin\\src\\pages\\MentorManagement.tsx",
       "line": 27,
       "method": "GET",
-      "url": "/api/admin/mentor-applications",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/mentorship/v1/applications/pending",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\ServiceStatus.tsx",
+      "file": "apps\\admin\\src\\pages\\MentorManagement.tsx",
+      "line": 41,
+      "method": "POST",
+      "url": "/api/admin/mentor-applications/${applicationId}/approve",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\admin\\src\\pages\\MentorManagement.tsx",
+      "line": 52,
+      "method": "POST",
+      "url": "/api/admin/mentor-applications/${applicationId}/reject",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\admin\\src\\pages\\ServiceStatus.tsx",
       "line": 35,
       "method": "GET",
-      "url": "/api/admin/service-health",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/system/health",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\ServiceStatus.tsx",
+      "file": "apps\\admin\\src\\pages\\ServiceStatus.tsx",
       "line": 36,
       "method": "GET",
-      "url": "/api/admin/system-metrics",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/system/activity",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\TokenManagement.tsx",
+      "file": "apps\\admin\\src\\pages\\TokenManagement.tsx",
       "line": 34,
       "method": "GET",
-      "url": "/api/admin/token-plans",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/tokens/config",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\TokenManagement.tsx",
+      "file": "apps\\admin\\src\\pages\\TokenManagement.tsx",
       "line": 35,
       "method": "GET",
-      "url": "/api/admin/token-usage",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/tokens/usage",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\admin\\src\\pages\\UserManagement.tsx",
+      "file": "apps\\admin\\src\\pages\\UserManagement.tsx",
       "line": 27,
       "method": "GET",
-      "url": "/api/admin/users",
-      "kind": "fetch",
-      "portal": "admin"
+      "url": "/api/admin/v1/users",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\mentor\\src\\pages\\MentorLogin.tsx",
+      "file": "apps\\mentor\\src\\pages\\FinancialDashboard.tsx",
+      "line": 33,
+      "method": "GET",
+      "url": "/api/mentor/profile-by-user/${user?.id}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\FinancialDashboard.tsx",
+      "line": 38,
+      "method": "GET",
+      "url": "/api/v1/mentorship/invoices/mentor/${profile.mentor_profile_id}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\MentorDashboard.tsx",
+      "line": 35,
+      "method": "GET",
+      "url": "/api/mentor/profile-by-user/${user?.id}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\MentorDashboard.tsx",
+      "line": 40,
+      "method": "GET",
+      "url": "/api/mentor/${profile.mentor_profile_id}/dashboard-stats",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\MentorLogin.tsx",
       "line": 20,
-      "method": "GET",
-      "url": "/api/auth/login",
-      "kind": "fetch",
-      "portal": "mentor"
+      "method": "POST",
+      "url": "/api/auth/v1/login",
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\mentor\\src\\pages\\Create Agreement\\Create Agreement\\src\\services\\chatService.ts",
+      "file": "apps\\mentor\\src\\pages\\ServicePackages.tsx",
+      "line": 40,
+      "method": "GET",
+      "url": "/api/mentor/profile-by-user/${user?.id}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\ServicePackages.tsx",
+      "line": 43,
+      "method": "GET",
+      "url": "/api/mentor/${profile.mentor_profile_id}/packages",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\ServicePackages.tsx",
+      "line": 56,
+      "method": "POST",
+      "url": "/api/mentor/profile-by-user/${user?.id}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\ServicePackages.tsx",
+      "line": 59,
+      "method": "POST",
+      "url": "/api/mentor/${profile.mentor_profile_id}/packages",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Create Agreement\\Create Agreement\\src\\services\\chatService.ts",
       "line": 105,
-      "method": "GET",
+      "method": "POST",
       "url": "https://api.openai.com/v1/chat/completions",
-      "kind": "fetch",
-      "portal": "mentor"
+      "kind": "fetch"
     },
     {
-      "file": "C:\\careertrojan\\apps\\mentor\\src\\pages\\Financial Dashboard\\Financial Dashboard\\src\\app\\App.tsx",
+      "file": "apps\\mentor\\src\\pages\\Financial Dashboard\\Financial Dashboard\\src\\app\\App.tsx",
       "line": 45,
       "method": "GET",
-      "url": "/api/mentor/invoices",
-      "kind": "fetch",
-      "portal": "mentor"
+      "url": "/api/mentorship/v1/invoices",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Mentor Portal\\Mentor Portal Dashboard\\src\\services\\mentorship-service.ts",
+      "line": 53,
+      "method": "GET",
+      "url": "${this.baseUrl}/mentors/${mentorId}/invoices",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Mentor Portal\\Mentor Portal Dashboard\\src\\services\\mentorship-service.ts",
+      "line": 91,
+      "method": "GET",
+      "url": "${this.baseUrl}/mentors/${mentorId}/sessions/completed/count",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Mentor Portal\\Mentor Portal Dashboard\\src\\services\\mentorship-service.ts",
+      "line": 108,
+      "method": "GET",
+      "url": "${this.baseUrl}/mentors/${mentorId}/reviews/average",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Mentor Portal\\Mentor Portal Dashboard\\src\\services\\mentorship-service.ts",
+      "line": 125,
+      "method": "GET",
+      "url": "${this.baseUrl}/mentors/${mentorId}/sessions/upcoming",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Mentor Portal\\Mentor Portal Dashboard\\src\\services\\mentorship-service.ts",
+      "line": 141,
+      "method": "GET",
+      "url": "${this.baseUrl}/mentors/${mentorId}/reviews?limit=${limit}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\AuthPage.tsx",
+      "line": 51,
+      "method": "POST",
+      "url": "${API_BASE}/signup",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\AuthPage.tsx",
+      "line": 104,
+      "method": "POST",
+      "url": "${API_BASE}/verify-2fa-setup",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\AuthPage.tsx",
+      "line": 148,
+      "method": "GET",
+      "url": "${API_BASE}/check-role",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\AuthPage.tsx",
+      "line": 187,
+      "method": "POST",
+      "url": "${API_BASE}/verify-2fa",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\SessionCalendar.tsx",
+      "line": 67,
+      "method": "GET",
+      "url": "${API_BASE}/sessions",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\SessionCalendar.tsx",
+      "line": 88,
+      "method": "GET",
+      "url": "${API_BASE}/activities",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\SessionCalendar.tsx",
+      "line": 109,
+      "method": "PATCH",
+      "url": "${API_BASE}/sessions/${sessionId}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\SessionCalendar.tsx",
+      "line": 136,
+      "method": "DELETE",
+      "url": "${API_BASE}/sessions/${sessionId}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\src\\app\\components\\SessionCalendar.tsx",
+      "line": 158,
+      "method": "POST",
+      "url": "${API_BASE}/sessions",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\GlossaryCollocations.tsx",
+      "line": 21,
+      "method": "GET",
+      "url": "${API_BASE}/api/ontology/v1/phrases?limit=2000",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\mobile\\JobSwipe.tsx",
+      "line": 47,
+      "method": "GET",
+      "url": "${API_BASE}/jobs/v1/index",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\mobile\\MobileCVUpload.tsx",
+      "line": 48,
+      "method": "POST",
+      "url": "${API_BASE}/resume/v1/upload",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\mobile\\MobileQuickDash.tsx",
+      "line": 49,
+      "method": "GET",
+      "url": "${API_BASE}/user/v1/stats",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\mobile\\MobileQuickDash.tsx",
+      "line": 50,
+      "method": "GET",
+      "url": "${API_BASE}/user/v1/activity",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\payment\\BraintreeDropIn.tsx",
+      "line": 90,
+      "method": "GET",
+      "url": "${API_BASE}/client-token",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\payment\\SavedPaymentMethods.tsx",
+      "line": 41,
+      "method": "GET",
+      "url": "${API_BASE}/methods",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\components\\payment\\SavedPaymentMethods.tsx",
+      "line": 62,
+      "method": "DELETE",
+      "url": "${API_BASE}/methods/${token}",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\CoachingHub.tsx",
+      "line": 44,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/resume",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ConsolidationPage.tsx",
+      "line": 66,
+      "method": "GET",
+      "url": "${API_BASE}/api/user/v1/profile",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ConsolidationPage.tsx",
+      "line": 67,
+      "method": "GET",
+      "url": "${API_BASE}/api/user/v1/sessions/summary",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ConsolidationPage.tsx",
+      "line": 68,
+      "method": "GET",
+      "url": "${API_BASE}/api/user/v1/resume/latest",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ConsolidationPage.tsx",
+      "line": 69,
+      "method": "GET",
+      "url": "${API_BASE}/api/user/v1/matches/summary",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ConsolidationPage.tsx",
+      "line": 70,
+      "method": "GET",
+      "url": "${API_BASE}/api/coaching/v1/history",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ConsolidationPage.tsx",
+      "line": 71,
+      "method": "GET",
+      "url": "${API_BASE}/api/mentorship/v1/summary",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\LoginPage.tsx",
+      "line": 20,
+      "method": "POST",
+      "url": "${API.baseUrl}/auth/login",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\MentorApplication.tsx",
+      "line": 28,
+      "method": "POST",
+      "url": "${API_CONFIG.baseUrl}/mentorship/applications",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\MentorshipMarketplace.tsx",
+      "line": 17,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/mentor/list",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\PaymentPage.tsx",
+      "line": 41,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/plans",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\PaymentPage.tsx",
+      "line": 58,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/gateway-info",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\PaymentPage.tsx",
+      "line": 95,
+      "method": "POST",
+      "url": "${API_CONFIG.baseUrl}/process",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ProfilePage.tsx",
+      "line": 18,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/api/user/v1/profile",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\RegisterPage.tsx",
+      "line": 19,
+      "method": "POST",
+      "url": "${API.baseUrl}/auth/register",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\ResumeUpload.tsx",
+      "line": 35,
+      "method": "POST",
+      "url": "${API_CONFIG.baseUrl}/api/resume/v1/upload",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\RewardsPage.tsx",
+      "line": 22,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/api/rewards/v1/rewards",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\RewardsPage.tsx",
+      "line": 23,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/api/rewards/v1/rewards/available",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\UMarketU.tsx",
+      "line": 24,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/api/jobs/v1/index",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\UMarketU.tsx",
+      "line": 25,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/api/taxonomy/v1/industries",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\VerificationPage.tsx",
+      "line": 26,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/api/user/v1/me",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\VerificationPage.tsx",
+      "line": 32,
+      "method": "GET",
+      "url": "${API_CONFIG.baseUrl}/api/payment/v1/subscription",
+      "kind": "fetch"
+    },
+    {
+      "file": "apps\\user\\src\\pages\\VisualisationsHub.tsx",
+      "line": 20,
+      "method": "GET",
+      "url": "${API_BASE}/api/insights/v1/visuals",
+      "kind": "fetch"
     }
   ]
 }

@@ -49,10 +49,11 @@ def lock_audit_logs(token: str = Depends(security.oauth2_scheme)):
     """
     # 1. Verify Admin
     try:
-        payload = security.jwt.decode(token, security.SECRET_KEY, algorithms=[security.ALGORITHM])
+        payload = security.decode_access_token(token)
         if payload.get("role") != "admin":
-             raise HTTPException(status_code=403, detail="Admin required")
-    except:
+            if not security.token_has_scopes(payload, ["admin:access"]):
+                raise HTTPException(status_code=403, detail="Admin required")
+    except security.TokenValidationError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
     # 2. Perform Lock Action (Simulation)

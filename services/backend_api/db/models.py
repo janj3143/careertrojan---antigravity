@@ -74,6 +74,26 @@ class Interaction(Base):
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
 
 
+class SupportTicket(Base):
+    __tablename__ = "support_tickets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    zendesk_ticket_id = Column(String, index=True, nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    subject = Column(String, nullable=False)
+    status = Column(String, default="new", index=True)
+    priority = Column(String, nullable=True)
+    category = Column(String, nullable=True, index=True)
+    request_id = Column(String, nullable=True, index=True)
+    portal = Column(String, nullable=True)
+    last_comment_at = Column(DateTime, nullable=True)
+    metadata_json = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, index=True)
+
+    user = relationship("User", backref="support_tickets")
+
+
 # ── Core Application Models ──────────────────────────────────
 
 class User(Base):
@@ -262,3 +282,93 @@ class BlockerImprovementPlan(Base):
     
     blocker = relationship("ApplicationBlocker", back_populates="improvement_plans")
 
+
+# ── Rewards & Referral System Models ──────────────────────────────────
+
+class UserReward(Base):
+    """Tracks individual reward tokens earned by users."""
+    __tablename__ = "user_rewards"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    reward_type = Column(String, nullable=False, index=True)  # referral, activity, milestone, bonus, suggestion
+    tokens = Column(Integer, nullable=False)
+    description = Column(String)
+    status = Column(String, default="active", index=True)  # pending, active, redeemed, expired
+    action_key = Column(String, index=True)  # e.g., "profile_complete", "resume_upload"
+    source_id = Column(String, nullable=True)  # referral_id, suggestion_id, etc.
+    earned_at = Column(DateTime, default=datetime.utcnow)
+    redeemed_at = Column(DateTime, nullable=True)
+    expires_at = Column(DateTime, nullable=True)
+
+    user = relationship("User", backref="rewards")
+
+
+class UserReferral(Base):
+    """Tracks user referral codes and their usage."""
+    __tablename__ = "user_referrals"
+
+    id = Column(Integer, primary_key=True, index=True)
+    referrer_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    referee_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)  # null until user signs up
+    referral_code = Column(String, unique=True, nullable=False, index=True)
+    status = Column(String, default="pending", index=True)  # pending, signed_up, subscribed, expired
+    tokens_awarded = Column(Integer, default=0)
+    signup_at = Column(DateTime, nullable=True)
+    subscription_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    referrer = relationship("User", foreign_keys=[referrer_id], backref="referrals_sent")
+    referee = relationship("User", foreign_keys=[referee_id], backref="referred_by")
+
+
+class UserSuggestion(Base):
+    """Tracks user feature suggestions and feedback."""
+    __tablename__ = "user_suggestions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    category = Column(String, nullable=False)  # feature, improvement, bug, other
+    title = Column(String, nullable=False)
+    description = Column(Text)
+    priority = Column(String, default="medium")  # low, medium, high
+    status = Column(String, default="submitted", index=True)  # submitted, reviewed, accepted, implemented, rejected
+    tokens_awarded = Column(Integer, default=0)
+    admin_notes = Column(Text, nullable=True)
+    reviewed_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    reviewed_at = Column(DateTime, nullable=True)
+    submitted_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User", foreign_keys=[user_id], backref="suggestions")
+
+
+class UserCompletedAction(Base):
+    """Tracks which reward actions a user has completed (for one-time rewards)."""
+    __tablename__ = "user_completed_actions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    action_key = Column(String, nullable=False, index=True)  # profile_complete, resume_upload, etc.
+    completed_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User", backref="completed_actions")
+
+    __table_args__ = (
+        # Prevent duplicate action completions per user
+        {"sqlite_autoincrement": True},
+    )
+
+
+class RewardRedemption(Base):
+    """Tracks reward redemption history."""
+    __tablename__ = "reward_redemptions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    redemption_type = Column(String, nullable=False)  # premium_day, ai_boost, mentor_session
+    tokens_spent = Column(Integer, nullable=False)
+    description = Column(String)
+    redeemed_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime, nullable=True)  # when the granted benefit expires
+
+    user = relationship("User", backref="redemptions")

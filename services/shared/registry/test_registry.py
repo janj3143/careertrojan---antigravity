@@ -1,8 +1,9 @@
 import sys
-import os
+from pathlib import Path
 
 # Add local services to path
-sys.path.append(r"C:\careertrojan\services")
+SERVICES_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(SERVICES_ROOT))
 
 from shared.registry.registry import registry
 

@@ -6,6 +6,7 @@ import MobileNav from './components/mobile/MobileNav';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
 import PWAInstallBanner from './components/mobile/PWAInstallBanner';
 import NetworkBanner from './components/mobile/NetworkBanner';
+import PageHelpIcon from './components/PageHelpIcon';
 
 // ── Eager: public pages (first paint) ────────────────────
 import Home from './pages/Home';
@@ -63,6 +64,7 @@ export default function App() {
             <BrowserRouter>
                 <NetworkBanner />
                 <MobileNav />
+                <PageHelpIcon />
                 <main className="mobile-safe-content">
                     <Suspense fallback={<PageLoader />}>
                         <Routes>

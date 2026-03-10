@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 
@@ -81,6 +82,7 @@ def test_get_support_ticket(client: TestClient):
     assert body["ticket"]["id"] == ticket_id
 
 
+@patch.dict("os.environ", {"ZENDESK_WEBHOOK_SECRET": "", "ZENDESK_SHARED_SECRET": ""})
 def test_zendesk_webhook_updates_ticket(client: TestClient):
     create_response = client.post(
         "/api/support/v1/tickets",

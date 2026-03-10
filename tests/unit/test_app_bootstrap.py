@@ -80,6 +80,7 @@ class TestRouteInventory:
         "/api/user/v1/profile",
         "/api/shared/v1/health",
         "/api/payment/v1/plans",
+        "/api/admin/v1/payments/disputes",
     ])
     def test_core_endpoint_exists(self, path):
         assert path in self.route_paths, f"Missing route: {path}"
@@ -102,10 +103,14 @@ class TestRouteInventory:
         assert len(dupes) == 0, f"Duplicate route+method combos: {dupes}"
 
     def test_all_prefixes_use_v1(self):
-        """Every /api/... route should contain /v1/."""
+        """Every /api/... route should contain /v1/ (legacy compat routes excluded)."""
         from services.backend_api.main import app
+        # Legacy backward-compat routes are intentionally unversioned
+        LEGACY_PREFIXES = ("/api/admin/integrations/", "/api/admin/email/")
         bad = []
         for r in app.routes:
             if hasattr(r, "path") and r.path.startswith("/api/") and "/v1/" not in r.path and "/v1" not in r.path:
+                if any(r.path.startswith(lp) for lp in LEGACY_PREFIXES):
+                    continue
                 bad.append(r.path)
         assert len(bad) == 0, f"Routes missing /v1: {bad}"

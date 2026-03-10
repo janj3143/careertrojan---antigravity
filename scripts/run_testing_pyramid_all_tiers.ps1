@@ -19,7 +19,12 @@ param(
     [string]$PythonBin = "J:\Python311\python.exe",
     [string]$BaseUrl = "http://127.0.0.1:8600",
     [double]$MinPassRate = 80.0,
-    [switch]$Require100
+    [switch]$Require100,
+    [switch]$SkipRouteGovernance,
+    [int]$MaxAddedRoutes = 50,
+    [int]$MaxRemovedRoutes = 5,
+    [int]$MaxHighChurnBuckets = 10,
+    [int]$MaxDuplicateSemanticRoutes = 10
 )
 
 $ErrorActionPreference = "Stop"
@@ -47,11 +52,25 @@ if (-not (Test-Path $fullHarness)) { throw "Missing script: $fullHarness" }
 if (-not (Test-Path $uptimeScript)) { throw "Missing script: $uptimeScript" }
 
 Write-Host "Running full testing pyramid (tiers 1-4)..." -ForegroundColor Cyan
-if ($Require100) {
-    & $fullHarness -ProjectRoot $project -Require100
-} else {
-    & $fullHarness -ProjectRoot $project -MinPassRate $MinPassRate
+$harnessArgs = @{
+    ProjectRoot = $project
+    MaxAddedRoutes = $MaxAddedRoutes
+    MaxRemovedRoutes = $MaxRemovedRoutes
+    MaxHighChurnBuckets = $MaxHighChurnBuckets
+    MaxDuplicateSemanticRoutes = $MaxDuplicateSemanticRoutes
 }
+
+if ($SkipRouteGovernance) {
+    $harnessArgs.SkipRouteGovernance = $true
+}
+
+if ($Require100) {
+    $harnessArgs.Require100 = $true
+} else {
+    $harnessArgs.MinPassRate = $MinPassRate
+}
+
+& $fullHarness @harnessArgs
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Tiered harness failed. Skipping physical checks." -ForegroundColor Red

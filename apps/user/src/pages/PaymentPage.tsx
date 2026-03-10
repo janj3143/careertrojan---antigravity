@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BraintreeDropIn from '../components/payment/BraintreeDropIn';
 import SavedPaymentMethods from '../components/payment/SavedPaymentMethods';
+import { PaymentConfirmModal, PaymentResultModal, CancelSubscriptionModal } from '../components/payment';
 
 const API_CONFIG = {
     baseUrl: "/api/payment/v1",
@@ -27,6 +28,22 @@ export default function PaymentPage() {
     const [savedMethodToken, setSavedMethodToken] = useState<string | null>(null);
     const [promoCode, setPromoCode] = useState('');
     const [gatewayEnv, setGatewayEnv] = useState<string | null>(null);
+
+    // Modal state
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [showResult, setShowResult] = useState(false);
+    const [showCancel, setShowCancel] = useState(false);
+    const [resultData, setResultData] = useState<{
+        success: boolean;
+        planName: string;
+        amount: number;
+        message: string;
+        nextBillingDate?: string;
+    } | null>(null);
+    const [pendingPayment, setPendingPayment] = useState<{
+        payment_method_nonce?: string;
+        payment_method_token?: string;
+    } | null>(null);
 
     useEffect(() => {
         fetchPlans();
@@ -66,13 +83,22 @@ export default function PaymentPage() {
     /** Process payment with a Braintree nonce (new card / PayPal) */
     const handleBraintreeNonce = async (nonce: string, _type: string) => {
         if (!selectedPlan) return;
-        await submitPayment({ payment_method_nonce: nonce });
+        setPendingPayment({ payment_method_nonce: nonce });
+        setShowConfirm(true);
     };
 
     /** Process payment with a saved/vaulted payment method */
     const handleSavedMethodPay = async () => {
         if (!selectedPlan || !savedMethodToken) return;
-        await submitPayment({ payment_method_token: savedMethodToken });
+        setPendingPayment({ payment_method_token: savedMethodToken });
+        setShowConfirm(true);
+    };
+
+    /** Called when user confirms payment in the modal */
+    const handleConfirmPayment = async () => {
+        if (!pendingPayment) return;
+        setShowConfirm(false);
+        await submitPayment(pendingPayment);
     };
 
     const submitPayment = async (
@@ -111,12 +137,22 @@ export default function PaymentPage() {
             }
 
             const result = await res.json();
-            setSuccess(result.message || 'Payment successful!');
-
-            // Navigate to verification after short delay
-            setTimeout(() => navigate('/verify'), 2000);
+            setResultData({
+                success: true,
+                planName: selectedPlanData?.name || selectedPlan,
+                amount: result.amount_charged ?? selectedPlanData?.price ?? 0,
+                message: result.message || 'Payment successful!',
+                nextBillingDate: result.next_billing_date,
+            });
+            setShowResult(true);
         } catch (err: any) {
-            setError(err.message);
+            setResultData({
+                success: false,
+                planName: selectedPlanData?.name || selectedPlan || '',
+                amount: selectedPlanData?.price ?? 0,
+                message: err.message || 'Payment failed',
+            });
+            setShowResult(true);
         } finally {
             setProcessing(false);
         }
@@ -249,6 +285,36 @@ export default function PaymentPage() {
                         </div>
                     )}
                 </div>
+            )}
+
+            {/* ── Modals ── */}
+            <PaymentConfirmModal
+                open={showConfirm}
+                plan={selectedPlanData ? { name: selectedPlanData.name, price: selectedPlanData.price, interval: selectedPlanData.interval } : undefined}
+                discount={0}
+                promoCode={promoCode || undefined}
+                onConfirm={handleConfirmPayment}
+                onCancel={() => { setShowConfirm(false); setPendingPayment(null); }}
+                processing={processing}
+            />
+
+            {resultData && (
+                <PaymentResultModal
+                    open={showResult}
+                    success={resultData.success}
+                    planName={resultData.planName}
+                    amount={resultData.amount}
+                    message={resultData.message}
+                    nextBillingDate={resultData.nextBillingDate}
+                    onClose={() => {
+                        setShowResult(false);
+                        if (resultData.success) navigate('/dashboard');
+                    }}
+                    onRetry={() => {
+                        setShowResult(false);
+                        setResultData(null);
+                    }}
+                />
             )}
         </div>
     );

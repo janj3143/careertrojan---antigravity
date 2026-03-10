@@ -37,6 +37,16 @@ ZENDESK_REQUIRED = [
 ]
 
 
+def _is_personal_email(value: str) -> bool:
+    value_l = value.strip().lower()
+    return value_l.endswith("@gmail.com") or value_l.endswith("@googlemail.com")
+
+
+def _is_google_managed_service_agent(value: str) -> bool:
+    value_l = value.strip().lower()
+    return bool(re.match(r"^service-\d+@gs-project-accounts\.iam\.gserviceaccount\.com$", value_l))
+
+
 def _missing(env_map: dict[str, str], keys: list[str]) -> list[str]:
     missing = []
     for key in keys:
@@ -94,6 +104,26 @@ def main() -> int:
             for key in offenders:
                 print(f"  - {key}")
             return 4
+
+        unsafe_identity_keys: list[tuple[str, str]] = []
+        identity_fields = [
+            "GOOGLE_SERVICE_ACCOUNT_EMAIL",
+            "GCP_SERVICE_ACCOUNT",
+        ]
+        for key in identity_fields:
+            value = (env_map.get(key) or "").strip()
+            if not value:
+                continue
+            if _is_personal_email(value):
+                unsafe_identity_keys.append((key, "personal-email"))
+            elif _is_google_managed_service_agent(value):
+                unsafe_identity_keys.append((key, "google-managed-service-agent"))
+
+        if unsafe_identity_keys:
+            print("[FAIL] Unsafe cloud identity values found in strict mode:")
+            for key, reason in unsafe_identity_keys:
+                print(f"  - {key} ({reason})")
+            return 5
 
     print(f"[OK] Runtime environment valid: {env_path}")
     print(f"[INFO] Helpdesk provider: {provider}")

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
-import { LogOut, Home, Settings, Users, Database, BarChart3, Wrench } from 'lucide-react';
+import { LogOut, Home, Settings, Users, Database, BarChart3, Wrench, Headphones } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const { user, logout } = useAdminAuth();
@@ -39,6 +39,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             <Link to="/admin/tools/api-explorer" className="flex items-center gap-2 hover:text-blue-400 transition">
                                 <Wrench size={18} />
                                 <span>Tools</span>
+                            </Link>
+                            <Link to="/admin/support-ops" className="flex items-center gap-2 hover:text-blue-400 transition">
+                                <Headphones size={18} />
+                                <span>Support</span>
                             </Link>
                         </div>
                     </div>

@@ -1,0 +1,23 @@
+{
+  "job_id": "zendesk_20260306T172427_84b00ac1c20f",
+  "kind": "draft_reply",
+  "source": "zendesk",
+  "status": "pending",
+  "created_at": "2026-03-06T17:24:27.749648+00:00",
+  "payload": {
+    "ticket": {
+      "id": "31",
+      "subject": "Webhook test",
+      "description": "Testing webhook updates",
+      "status": "new",
+      "priority": "normal",
+      "category": "Bugs",
+      "requester": {
+        "name": null,
+        "email": "webhook@example.com"
+      }
+    }
+  },
+  "result": null,
+  "error": null
+}

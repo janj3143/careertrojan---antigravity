@@ -22,16 +22,11 @@ from fastapi.testclient import TestClient
 
 @pytest.fixture
 def client():
-    """Fresh TestClient with rate limiter + in-memory state reset for each test."""
+    """Fresh TestClient with rate limiter reset for each test."""
     from services.backend_api.main import app
-    from services.backend_api.routers import payment
 
     # Reset rate limiter counters
     _clear_rate_limiter(app)
-
-    # Reset in-memory payment state so tests are isolated
-    payment._user_subscriptions.clear()
-    payment._payment_history.clear()
 
     return TestClient(app, raise_server_exceptions=False)
 

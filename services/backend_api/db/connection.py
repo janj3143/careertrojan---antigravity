@@ -12,14 +12,18 @@ from services.shared.paths import CareerTrojanPaths
 _paths = CareerTrojanPaths()
 db_root = Path(os.getenv("CAREERTROJAN_DB_DIR", str(_paths.working_root / "db")))
 db_root.mkdir(parents=True, exist_ok=True)
-DB_PATH = f"sqlite:///{db_root / 'ai_learning_table.db'}"
-
-if os.getenv("CAREERTROJAN_DB_URL"):
-    DB_PATH = os.getenv("CAREERTROJAN_DB_URL")
-
-engine = create_engine(
-    DB_PATH, connect_args={"check_same_thread": False}
+DEFAULT_SQLITE_URL = f"sqlite:///{db_root / 'ai_learning_table.db'}"
+DB_PATH = (
+    os.getenv("CAREERTROJAN_DB_URL")
+    or os.getenv("DATABASE_URL")
+    or DEFAULT_SQLITE_URL
 )
+
+engine_kwargs = {}
+if DB_PATH.startswith("sqlite"):
+    engine_kwargs["connect_args"] = {"check_same_thread": False}
+
+engine = create_engine(DB_PATH, **engine_kwargs)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():

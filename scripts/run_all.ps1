@@ -29,7 +29,12 @@ param(
     [switch]$WithDocker,
     [switch]$StartRuntimeWindow,
     [switch]$Require100,
-    [double]$MinPassRate = 80.0
+    [double]$MinPassRate = 80.0,
+    [switch]$SkipRouteGovernance,
+    [int]$MaxAddedRoutes = 50,
+    [int]$MaxRemovedRoutes = 5,
+    [int]$MaxHighChurnBuckets = 10,
+    [int]$MaxDuplicateSemanticRoutes = 10
 )
 
 $ErrorActionPreference = "Stop"
@@ -152,12 +157,25 @@ try {
 
     Invoke-Step -Name "Full harness" -Action {
         $harnessScript = Join-Path $ProjectRoot "scripts\full_harness.ps1"
+        $harnessArgs = @{
+            MaxAddedRoutes = $MaxAddedRoutes
+            MaxRemovedRoutes = $MaxRemovedRoutes
+            MaxHighChurnBuckets = $MaxHighChurnBuckets
+            MaxDuplicateSemanticRoutes = $MaxDuplicateSemanticRoutes
+        }
+
+        if ($SkipRouteGovernance) {
+            $harnessArgs.SkipRouteGovernance = $true
+        }
+
         if ($Require100) {
-            & $harnessScript -Require100
+            $harnessArgs.Require100 = $true
         }
         else {
-            & $harnessScript -MinPassRate $MinPassRate
+            $harnessArgs.MinPassRate = $MinPassRate
         }
+
+        & $harnessScript @harnessArgs
         if (-not $?) {
             throw "full_harness.ps1 reported failure."
         }

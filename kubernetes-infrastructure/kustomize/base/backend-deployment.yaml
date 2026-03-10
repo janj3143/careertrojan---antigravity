@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-api
+  labels:
+    app: backend-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-api
+  template:
+    metadata:
+      labels:
+        app: backend-api
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8600"
+        prometheus.io/path: "/metrics"
+    spec:
+      terminationGracePeriodSeconds: 45
+      containers:
+        - name: backend-api
+          image: ghcr.io/your-org/careertrojan-backend:latest
+          ports:
+            - containerPort: 8600
+          env:
+            - name: APP_ENV
+              value: production
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: REDIS_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: SECRET_KEY
+            - name: CT_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: CT_JWT_SECRET
+            - name: BRAINTREE_ENVIRONMENT
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: BRAINTREE_ENVIRONMENT
+            - name: BRAINTREE_MERCHANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: BRAINTREE_MERCHANT_ID
+            - name: BRAINTREE_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: BRAINTREE_PUBLIC_KEY
+            - name: BRAINTREE_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: BRAINTREE_PRIVATE_KEY
+            - name: ZENDESK_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: ZENDESK_WEBHOOK_SECRET
+            - name: MINIO_ENDPOINT
+              value: minio:9000
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8600
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8600
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /health/live
+              port: 8600
+            failureThreshold: 30
+            periodSeconds: 5
+

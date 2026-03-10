@@ -1,0 +1,4834 @@
+{
+  "generated_at": "2026-03-05T17:03:28.323887+00:00",
+  "total_routes": 298,
+  "baseline": "FULL_ENDPOINT_INVENTORY_2026-02-27.json",
+  "added_count": 23,
+  "removed_count": 0,
+  "added": [
+    {
+      "method": "GET",
+      "path": "/api/admin/integrations/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/v1/google/callback"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/v1/google/login"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/ai/jobs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/ai/jobs/{job_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/ai/queue-stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets/{ticket_id}/ai-draft"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets/{ticket_id}/comments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/webhooks/v1/health"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_bulk"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_test"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/klaviyo/configure"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/sendgrid/configure"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/reminders/non-live"
+    },
+    {
+      "method": "POST",
+      "path": "/api/lenses/v1/composite"
+    },
+    {
+      "method": "POST",
+      "path": "/api/lenses/v1/covey"
+    },
+    {
+      "method": "POST",
+      "path": "/api/lenses/v1/spider"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/tickets/{ticket_id}/approve-ai-draft"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/tickets/{ticket_id}/reply"
+    },
+    {
+      "method": "POST",
+      "path": "/api/webhooks/v1/braintree"
+    },
+    {
+      "method": "POST",
+      "path": "/api/webhooks/v1/stripe"
+    },
+    {
+      "method": "POST",
+      "path": "/api/webhooks/v1/zendesk"
+    }
+  ],
+  "removed": [],
+  "prefix_churn": [
+    {
+      "prefix_bucket": "/admin/subscriptions",
+      "current_count": 1,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/admin/tokens",
+      "current_count": 14,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/admin",
+      "current_count": 52,
+      "added": 6,
+      "removed": 0,
+      "churn": 6,
+      "churn_pct_vs_current": 11.54,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/ai-data",
+      "current_count": 22,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/analytics",
+      "current_count": 5,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/auth",
+      "current_count": 6,
+      "added": 2,
+      "removed": 0,
+      "churn": 2,
+      "churn_pct_vs_current": 33.33,
+      "high_churn": true
+    },
+    {
+      "prefix_bucket": "/api/blockers",
+      "current_count": 3,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/coaching",
+      "current_count": 10,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/credits",
+      "current_count": 9,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/data-index",
+      "current_count": 24,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/gdpr",
+      "current_count": 5,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/insights",
+      "current_count": 7,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/intelligence",
+      "current_count": 11,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/jobs",
+      "current_count": 2,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/lenses",
+      "current_count": 3,
+      "added": 3,
+      "removed": 0,
+      "churn": 3,
+      "churn_pct_vs_current": 100.0,
+      "high_churn": true
+    },
+    {
+      "prefix_bucket": "/api/mapping",
+      "current_count": 3,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/mentor",
+      "current_count": 11,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/mentorship",
+      "current_count": 23,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/ontology",
+      "current_count": 2,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/ops",
+      "current_count": 6,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/payment",
+      "current_count": 14,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/resume",
+      "current_count": 5,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/rewards",
+      "current_count": 11,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/sessions",
+      "current_count": 4,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/shared",
+      "current_count": 2,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/support",
+      "current_count": 18,
+      "added": 8,
+      "removed": 0,
+      "churn": 8,
+      "churn_pct_vs_current": 44.44,
+      "high_churn": true
+    },
+    {
+      "prefix_bucket": "/api/taxonomy",
+      "current_count": 9,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/telemetry",
+      "current_count": 1,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/touchpoints",
+      "current_count": 2,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/user",
+      "current_count": 8,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    },
+    {
+      "prefix_bucket": "/api/webhooks",
+      "current_count": 4,
+      "added": 4,
+      "removed": 0,
+      "churn": 4,
+      "churn_pct_vs_current": 100.0,
+      "high_churn": true
+    },
+    {
+      "prefix_bucket": "/health",
+      "current_count": 1,
+      "added": 0,
+      "removed": 0,
+      "churn": 0,
+      "churn_pct_vs_current": 0.0,
+      "high_churn": false
+    }
+  ],
+  "header_coverage": {
+    "has_required_headers": 106,
+    "authorization_required": 103,
+    "no_explicit_required_headers": 192,
+    "signature_header_required": 3
+  },
+  "duplicate_semantic_routes": [
+    {
+      "method": "GET",
+      "semantic_path": "/admin/integrations/status",
+      "paths": [
+        "/api/admin/integrations/status",
+        "/api/admin/v1/integrations/status"
+      ],
+      "route_count": 2
+    },
+    {
+      "method": "GET",
+      "semantic_path": "/admin/tokens/config",
+      "paths": [
+        "/admin/tokens/config",
+        "/api/admin/v1/tokens/config"
+      ],
+      "route_count": 2
+    },
+    {
+      "method": "GET",
+      "semantic_path": "/admin/tokens/usage",
+      "paths": [
+        "/admin/tokens/usage",
+        "/api/admin/v1/tokens/usage"
+      ],
+      "route_count": 2
+    },
+    {
+      "method": "POST",
+      "semantic_path": "/admin/email/send_bulk",
+      "paths": [
+        "/api/admin/email/send_bulk",
+        "/api/admin/v1/email/send_bulk"
+      ],
+      "route_count": 2
+    },
+    {
+      "method": "POST",
+      "semantic_path": "/admin/email/send_test",
+      "paths": [
+        "/api/admin/email/send_test",
+        "/api/admin/v1/email/send_test"
+      ],
+      "route_count": 2
+    },
+    {
+      "method": "POST",
+      "semantic_path": "/admin/integrations/klaviyo/configure",
+      "paths": [
+        "/api/admin/integrations/klaviyo/configure",
+        "/api/admin/v1/integrations/klaviyo/configure"
+      ],
+      "route_count": 2
+    },
+    {
+      "method": "POST",
+      "semantic_path": "/admin/integrations/sendgrid/configure",
+      "paths": [
+        "/api/admin/integrations/sendgrid/configure",
+        "/api/admin/v1/integrations/sendgrid/configure"
+      ],
+      "route_count": 2
+    }
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/admin/subscriptions",
+      "name": "get_subscriptions",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/subscriptions",
+      "semantic_path": "/admin/subscriptions",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_subscriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/analytics",
+      "name": "get_usage_analytics",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/analytics",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_usage_analytics"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/config",
+      "name": "get_token_config",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/config",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_token_config"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/costs",
+      "name": "get_token_costs",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/costs",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_token_costs"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/costs/update",
+      "name": "update_token_cost",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/costs/update",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.update_token_cost"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/costs/{feature}",
+      "name": "update_token_cost",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/costs/{feature}",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.update_token_cost"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/ledger/emit",
+      "name": "emit_ledger_event",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/ledger/emit",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.emit_ledger_event"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/ledger/{user_id}",
+      "name": "get_user_token_ledger",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/ledger/{user_id}",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_user_token_ledger"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/logs",
+      "name": "get_usage_logs",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/logs",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_usage_logs"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/plans",
+      "name": "get_token_config",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/plans",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_token_config"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/tokens/plans",
+      "name": "put_token_config",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/plans",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.put_token_config"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/tokens/plans",
+      "name": "put_token_config",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/plans",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.put_token_config"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/subscriptions",
+      "name": "get_subscriptions",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/subscriptions",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_subscriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/unit-economics",
+      "name": "get_token_unit_economics",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/unit-economics",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_token_unit_economics"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tokens/usage",
+      "name": "get_token_usage",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/admin/tokens",
+      "semantic_path": "/admin/tokens/usage",
+      "auth_signals": [
+        "admin_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_token_usage"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_bulk",
+      "name": "send_bulk_email_legacy",
+      "tags": [
+        "admin-legacy"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/send_bulk",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_legacy.send_bulk_email_legacy"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/email/send_test",
+      "name": "send_test_email_legacy",
+      "tags": [
+        "admin-legacy"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/send_test",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_legacy.send_test_email_legacy"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/klaviyo/configure",
+      "name": "configure_klaviyo_legacy",
+      "tags": [
+        "admin-legacy"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/klaviyo/configure",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_legacy.configure_klaviyo_legacy"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/integrations/sendgrid/configure",
+      "name": "configure_sendgrid_legacy",
+      "tags": [
+        "admin-legacy"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/sendgrid/configure",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_legacy.configure_sendgrid_legacy"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/integrations/status",
+      "name": "integrations_status_legacy",
+      "tags": [
+        "admin-legacy"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/status",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_legacy.integrations_status_legacy"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/abuse/queue",
+      "name": "queue",
+      "tags": [
+        "admin-abuse"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/abuse/queue",
+      "auth_signals": [
+        "admin_path"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.admin_abuse.queue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/jobs",
+      "name": "content_jobs",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/ai/content/jobs",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.content_jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/content/run",
+      "name": "content_run",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/ai/content/run",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.content_run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/content/status",
+      "name": "content_status",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/ai/content/status",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.content_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/jobs",
+      "name": "enrichment_jobs",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/ai/enrichment/jobs",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.enrichment_jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/ai/enrichment/run",
+      "name": "enrichment_run",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/ai/enrichment/run",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.enrichment_run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/ai/enrichment/status",
+      "name": "enrichment_status",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/ai/enrichment/status",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.enrichment_status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/anti-gaming/check",
+      "name": "check",
+      "tags": [
+        "anti-gaming"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/anti-gaming/check",
+      "auth_signals": [
+        "admin_path"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.anti_gaming.check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/jobs",
+      "name": "batch_jobs",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/batch/jobs",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.batch_jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/batch/run",
+      "name": "batch_run",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/batch/run",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.batch_run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/batch/status",
+      "name": "batch_status",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/batch/status",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.batch_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/audit/events",
+      "name": "audit_events",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/compliance/audit/events",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.audit_events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/compliance/summary",
+      "name": "compliance_summary",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/compliance/summary",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.compliance_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/dashboard/snapshot",
+      "name": "dashboard_snapshot",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/dashboard/snapshot",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.dashboard_snapshot"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/analytics",
+      "name": "email_analytics",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/analytics",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.email_analytics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/jobs",
+      "name": "email_jobs",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/jobs",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.email_jobs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/logs",
+      "name": "email_logs",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/logs",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.email_logs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_bulk",
+      "name": "send_bulk_email",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/send_bulk",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.send_bulk_email"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/send_test",
+      "name": "send_test_email",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/send_test",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.send_test_email"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/email/status",
+      "name": "email_status",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/status",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.email_status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/email/sync",
+      "name": "email_sync",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/email/sync",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.email_sync"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/gmail/configure",
+      "name": "configure_gmail",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/gmail/configure",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.configure_gmail"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/klaviyo/configure",
+      "name": "configure_klaviyo",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/klaviyo/configure",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.configure_klaviyo"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/reminders/non-live",
+      "name": "send_non_live_api_reminder",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/reminders/non-live",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.send_non_live_api_reminder"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/sendgrid/configure",
+      "name": "configure_sendgrid",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/sendgrid/configure",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.configure_sendgrid"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/integrations/status",
+      "name": "integrations_status",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/status",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.integrations_status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/integrations/{provider}/disconnect",
+      "name": "disconnect_integration",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/integrations/{provider}/disconnect",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.disconnect_integration"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/logs/tail",
+      "name": "tail_log",
+      "tags": [
+        "admin-logs"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/logs/tail",
+      "auth_signals": [
+        "admin_path"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.logs.tail_log"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/jobs",
+      "name": "parsers_jobs",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/parsers/jobs",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.parsers_jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsers/run",
+      "name": "parsers_run",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/parsers/run",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.parsers_run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsers/status",
+      "name": "parsers_status",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/parsers/status",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.parsers_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "list_admin_parses",
+      "tags": [
+        "admin-parsing"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/parsing/parse",
+      "auth_signals": [
+        "admin_path"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.admin_parsing.list_admin_parses"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/v1/parsing/parse",
+      "name": "admin_parse_file",
+      "tags": [
+        "admin-parsing"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/parsing/parse",
+      "auth_signals": [
+        "admin_path"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.admin_parsing.admin_parse_file"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/parsing/parse/{parse_id}",
+      "name": "get_admin_parse",
+      "tags": [
+        "admin-parsing"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/parsing/parse/{parse_id}",
+      "auth_signals": [
+        "admin_path"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.admin_parsing.get_admin_parse"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/activity",
+      "name": "system_activity",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/system/activity",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.system_activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/system/health",
+      "name": "system_health",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/system/health",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.system_health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "get_token_config",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/tokens/config",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_token_config"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/tokens/config",
+      "name": "put_token_config",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/tokens/config",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.put_token_config"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/usage",
+      "name": "get_token_usage",
+      "tags": [
+        "admin-tokens"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/tokens/usage",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin_tokens.get_token_usage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/tokens/users/{user_id}/ledger",
+      "name": "user_token_ledger",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/tokens/users/{user_id}/ledger",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.user_token_ledger"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/user_subscriptions",
+      "name": "user_subscriptions",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/user_subscriptions",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.user_subscriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users",
+      "name": "list_users",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/users",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.list_users"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/metrics",
+      "name": "user_metrics",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/users/metrics",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.user_metrics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/security",
+      "name": "user_security",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/users/security",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.user_security"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/v1/users/{user_id}",
+      "name": "get_user",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/users/{user_id}",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.get_user"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/disable",
+      "name": "disable_user",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/users/{user_id}/disable",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.disable_user"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/v1/users/{user_id}/plan",
+      "name": "set_user_plan",
+      "tags": [
+        "admin"
+      ],
+      "prefix_bucket": "/api/admin",
+      "semantic_path": "/admin/users/{user_id}/plan",
+      "auth_signals": [
+        "admin_dependency",
+        "admin_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.admin.set_user_plan"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/automated/candidates",
+      "name": "get_automated_candidates",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/automated/candidates",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_automated_candidates"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/companies",
+      "name": "get_companies",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/companies",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_companies"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/email_extracted",
+      "name": "get_email_extracted",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/email_extracted",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_email_extracted"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails",
+      "name": "get_emails",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_emails"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/diagnostics",
+      "name": "get_emails_diagnostics",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/diagnostics",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_emails_diagnostics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}",
+      "name": "get_emails_provider_payload",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/providers/{provider}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_emails_provider_payload"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/providers/{provider}/guarded-payload",
+      "name": "get_guarded_email_provider_payload",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/providers/{provider}/guarded-payload",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_guarded_email_provider_payload"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/summary",
+      "name": "get_emails_summary",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_emails_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking",
+      "name": "get_emails_tracking",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/tracking",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_emails_tracking"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai-data/v1/emails/tracking",
+      "name": "create_emails_tracking_record",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/tracking",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.create_emails_tracking_record"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking/reroute-targets",
+      "name": "get_emails_tracking_reroute_targets",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/tracking/reroute-targets",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_emails_tracking_reroute_targets"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/emails/tracking/summary",
+      "name": "get_emails_tracking_summary",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/emails/tracking/summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_emails_tracking_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_descriptions",
+      "name": "get_job_descriptions",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/job_descriptions",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_job_descriptions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/job_titles",
+      "name": "get_job_titles",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/job_titles",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_job_titles"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/locations",
+      "name": "get_locations",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/locations",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_locations"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/metadata",
+      "name": "get_metadata",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/metadata",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_metadata"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/normalized",
+      "name": "get_normalized_data",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/normalized",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_normalized_data"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes",
+      "name": "get_parsed_resumes",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/parsed_resumes",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_parsed_resumes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parsed_resumes/{doc_id}",
+      "name": "get_parsed_resume",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/parsed_resumes/{doc_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_parsed_resume"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/parser/ingestion-status",
+      "name": "get_parser_ingestion_status",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/parser/ingestion-status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_parser_ingestion_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/status",
+      "name": "get_ai_data_status",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.get_ai_data_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai-data/v1/user_data/files",
+      "name": "list_user_data_files",
+      "tags": [
+        "ai-data"
+      ],
+      "prefix_bucket": "/api/ai-data",
+      "semantic_path": "/ai-data/user_data/files",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ai_data.list_user_data_files"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/dashboard",
+      "name": "get_dashboard_data",
+      "tags": [
+        "analytics"
+      ],
+      "prefix_bucket": "/api/analytics",
+      "semantic_path": "/analytics/dashboard",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.analytics.get_dashboard_data"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_jobs",
+      "name": "get_recent_jobs",
+      "tags": [
+        "analytics"
+      ],
+      "prefix_bucket": "/api/analytics",
+      "semantic_path": "/analytics/recent_jobs",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.analytics.get_recent_jobs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/recent_resumes",
+      "name": "get_recent_resumes",
+      "tags": [
+        "analytics"
+      ],
+      "prefix_bucket": "/api/analytics",
+      "semantic_path": "/analytics/recent_resumes",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.analytics.get_recent_resumes"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/statistics",
+      "name": "get_statistics",
+      "tags": [
+        "analytics"
+      ],
+      "prefix_bucket": "/api/analytics",
+      "semantic_path": "/analytics/statistics",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.analytics.get_statistics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics/v1/system_health",
+      "name": "get_system_health",
+      "tags": [
+        "analytics"
+      ],
+      "prefix_bucket": "/api/analytics",
+      "semantic_path": "/analytics/system_health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.analytics.get_system_health"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/generate",
+      "name": "generate_2fa",
+      "tags": [
+        "auth"
+      ],
+      "prefix_bucket": "/api/auth",
+      "semantic_path": "/auth/2fa/generate",
+      "auth_signals": [
+        "auth_router",
+        "token_dependency"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.auth.generate_2fa"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/2fa/verify",
+      "name": "verify_2fa",
+      "tags": [
+        "auth"
+      ],
+      "prefix_bucket": "/api/auth",
+      "semantic_path": "/auth/2fa/verify",
+      "auth_signals": [
+        "auth_router",
+        "token_dependency"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.auth.verify_2fa"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/v1/google/callback",
+      "name": "google_callback",
+      "tags": [
+        "auth"
+      ],
+      "prefix_bucket": "/api/auth",
+      "semantic_path": "/auth/google/callback",
+      "auth_signals": [
+        "auth_router"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.auth.google_callback"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/v1/google/login",
+      "name": "google_login",
+      "tags": [
+        "auth"
+      ],
+      "prefix_bucket": "/api/auth",
+      "semantic_path": "/auth/google/login",
+      "auth_signals": [
+        "auth_router"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.auth.google_login"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/login",
+      "name": "login",
+      "tags": [
+        "auth"
+      ],
+      "prefix_bucket": "/api/auth",
+      "semantic_path": "/auth/login",
+      "auth_signals": [
+        "auth_router",
+        "token_dependency"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.auth.login"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/v1/register",
+      "name": "register",
+      "tags": [
+        "auth"
+      ],
+      "prefix_bucket": "/api/auth",
+      "semantic_path": "/auth/register",
+      "auth_signals": [
+        "auth_router"
+      ],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.auth.register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/detect",
+      "name": "detect_blockers",
+      "tags": [
+        "blockers"
+      ],
+      "prefix_bucket": "/api/blockers",
+      "semantic_path": "/blockers/detect",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.blockers.detect_blockers"
+    },
+    {
+      "method": "POST",
+      "path": "/api/blockers/v1/improvement-plans/generate",
+      "name": "generate_plans",
+      "tags": [
+        "blockers"
+      ],
+      "prefix_bucket": "/api/blockers",
+      "semantic_path": "/blockers/improvement-plans/generate",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.blockers.generate_plans"
+    },
+    {
+      "method": "GET",
+      "path": "/api/blockers/v1/user/{user_id}",
+      "name": "get_user_blockers",
+      "tags": [
+        "blockers"
+      ],
+      "prefix_bucket": "/api/blockers",
+      "semantic_path": "/blockers/user/{user_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.blockers.get_user_blockers"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/answers/review",
+      "name": "review_answer",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/answers/review",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.coaching.review_answer"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/bundle",
+      "name": "get_coaching_bundle",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/bundle",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.coaching.get_coaching_bundle"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/health",
+      "name": "coaching_health",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.coaching.coaching_health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/history",
+      "name": "get_coaching_history",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/history",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.coaching.get_coaching_history"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/learning/feedback",
+      "name": "submit_interview_learning_feedback",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/learning/feedback",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.coaching.submit_interview_learning_feedback"
+    },
+    {
+      "method": "GET",
+      "path": "/api/coaching/v1/learning/profile",
+      "name": "fetch_interview_learning_profile",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/learning/profile",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.coaching.fetch_interview_learning_profile"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/plan/90day",
+      "name": "generate_90day_plan",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/plan/90day",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.coaching.generate_90day_plan"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/questions/generate",
+      "name": "generate_questions",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/questions/generate",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.coaching.generate_questions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/role/detect",
+      "name": "detect_role",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/role/detect",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.coaching.detect_role"
+    },
+    {
+      "method": "POST",
+      "path": "/api/coaching/v1/stories/generate",
+      "name": "generate_stories",
+      "tags": [
+        "coaching"
+      ],
+      "prefix_bucket": "/api/coaching",
+      "semantic_path": "/coaching/stories/generate",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.coaching.generate_stories"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/actions",
+      "name": "get_action_costs",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/actions",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.credits.get_action_costs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/balance",
+      "name": "get_balance",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/balance",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.credits.get_balance"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/can-perform/{action_id}",
+      "name": "can_perform_action",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/can-perform/{action_id}",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.credits.can_perform_action"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/consume",
+      "name": "consume_credits",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/consume",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.credits.consume_credits"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/health",
+      "name": "health_check",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.credits.health_check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/plans",
+      "name": "get_plans",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/plans",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.credits.get_plans"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/teaser",
+      "name": "get_teaser",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/teaser",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.credits.get_teaser"
+    },
+    {
+      "method": "POST",
+      "path": "/api/credits/v1/upgrade/{plan_tier}",
+      "name": "upgrade_plan",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/upgrade/{plan_tier}",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.credits.upgrade_plan"
+    },
+    {
+      "method": "GET",
+      "path": "/api/credits/v1/usage",
+      "name": "get_usage_details",
+      "tags": [
+        "credits"
+      ],
+      "prefix_bucket": "/api/credits",
+      "semantic_path": "/credits/usage",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.credits.get_usage_details"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/categories",
+      "name": "get_ai_data_categories",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/categories",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_ai_data_categories"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/industries",
+      "name": "get_top_industries",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/industries",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_top_industries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/industries/search",
+      "name": "search_industries",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/industries/search",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.search_industries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/locations",
+      "name": "get_top_locations",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/locations",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_top_locations"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/locations/search",
+      "name": "search_locations",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/locations/search",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.search_locations"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/skills",
+      "name": "get_top_skills",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/skills",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_top_skills"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/skills/search",
+      "name": "search_skills",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/skills/search",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.search_skills"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/ai-data/summary",
+      "name": "get_ai_data_summary",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/ai-data/summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_ai_data_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/dependencies",
+      "name": "get_optional_dependencies",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/dependencies",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_optional_dependencies"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/by-category/{category}",
+      "name": "get_files_by_category",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/files/by-category/{category}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_files_by_category"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/manifest-stats",
+      "name": "get_file_manifest_stats",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/files/manifest-stats",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_file_manifest_stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/new-data-summary",
+      "name": "get_new_data_summary",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/files/new-data-summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_new_data_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/files/since",
+      "name": "get_files_since_timestamp",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/files/since",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_files_since_timestamp"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/health",
+      "name": "get_index_health",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_index_health"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/ai-data",
+      "name": "trigger_ai_data_index",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/index/ai-data",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.trigger_ai_data_index"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/full",
+      "name": "trigger_full_index",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/index/full",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.trigger_full_index"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/incremental",
+      "name": "trigger_incremental_index",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/index/incremental",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.trigger_incremental_index"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/index/parser",
+      "name": "trigger_parser_index",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/index/parser",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.trigger_parser_index"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/file-types",
+      "name": "get_parser_file_types",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/parser/file-types",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_parser_file_types"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/runs",
+      "name": "get_parser_runs",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/parser/runs",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_parser_runs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/data-index/v1/parser/runs",
+      "name": "record_parser_run",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/parser/runs",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.record_parser_run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/status",
+      "name": "get_parser_status",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/parser/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_parser_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/parser/summary",
+      "name": "get_parser_summary",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/parser/summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_parser_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/data-index/v1/status",
+      "name": "get_index_status",
+      "tags": [
+        "data-index"
+      ],
+      "prefix_bucket": "/api/data-index",
+      "semantic_path": "/data-index/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.data_index.get_index_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/audit-log",
+      "name": "my_audit_log",
+      "tags": [
+        "gdpr"
+      ],
+      "prefix_bucket": "/api/gdpr",
+      "semantic_path": "/gdpr/audit-log",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.gdpr.my_audit_log"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/consent",
+      "name": "get_consent",
+      "tags": [
+        "gdpr"
+      ],
+      "prefix_bucket": "/api/gdpr",
+      "semantic_path": "/gdpr/consent",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.gdpr.get_consent"
+    },
+    {
+      "method": "POST",
+      "path": "/api/gdpr/v1/consent",
+      "name": "grant_consent",
+      "tags": [
+        "gdpr"
+      ],
+      "prefix_bucket": "/api/gdpr",
+      "semantic_path": "/gdpr/consent",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.gdpr.grant_consent"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/gdpr/v1/delete-account",
+      "name": "delete_my_account",
+      "tags": [
+        "gdpr"
+      ],
+      "prefix_bucket": "/api/gdpr",
+      "semantic_path": "/gdpr/delete-account",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.gdpr.delete_my_account"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gdpr/v1/export",
+      "name": "export_my_data",
+      "tags": [
+        "gdpr"
+      ],
+      "prefix_bucket": "/api/gdpr",
+      "semantic_path": "/gdpr/export",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.gdpr.export_my_data"
+    },
+    {
+      "method": "POST",
+      "path": "/api/insights/v1/cohort/resolve",
+      "name": "resolve_cohort",
+      "tags": [
+        "insights"
+      ],
+      "prefix_bucket": "/api/insights",
+      "semantic_path": "/insights/cohort/resolve",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.insights.resolve_cohort"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/graph",
+      "name": "get_graph_data",
+      "tags": [
+        "insights"
+      ],
+      "prefix_bucket": "/api/insights",
+      "semantic_path": "/insights/graph",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.insights.get_graph_data"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/quadrant",
+      "name": "get_quadrant_data",
+      "tags": [
+        "insights"
+      ],
+      "prefix_bucket": "/api/insights",
+      "semantic_path": "/insights/quadrant",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.insights.get_quadrant_data"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/skills/radar",
+      "name": "get_skills_radar",
+      "tags": [
+        "insights"
+      ],
+      "prefix_bucket": "/api/insights",
+      "semantic_path": "/insights/skills/radar",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.insights.get_skills_radar"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cloud",
+      "name": "get_term_cloud",
+      "tags": [
+        "insights"
+      ],
+      "prefix_bucket": "/api/insights",
+      "semantic_path": "/insights/terms/cloud",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.insights.get_term_cloud"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/terms/cooccurrence",
+      "name": "get_cooccurrence",
+      "tags": [
+        "insights"
+      ],
+      "prefix_bucket": "/api/insights",
+      "semantic_path": "/insights/terms/cooccurrence",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.insights.get_cooccurrence"
+    },
+    {
+      "method": "GET",
+      "path": "/api/insights/v1/visuals",
+      "name": "get_visual_catalogue",
+      "tags": [
+        "insights"
+      ],
+      "prefix_bucket": "/api/insights",
+      "semantic_path": "/insights/visuals",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.insights.get_visual_catalogue"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/company/briefing",
+      "name": "company_briefing",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/company/briefing",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.company_briefing"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/company/extract",
+      "name": "company_extract",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/company/extract",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.company_extract"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry",
+      "name": "company_registry",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/company/registry",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.company_registry"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry/analytics",
+      "name": "company_registry_analytics",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/company/registry/analytics",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.company_registry_analytics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/company/registry/events",
+      "name": "company_registry_events",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/company/registry/events",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.company_registry_events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/enrich",
+      "name": "enrich_resume",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/enrich",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.enrich_resume"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/market",
+      "name": "market_intel",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/market",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.market_intel"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/pipeline/ops-summary",
+      "name": "pipeline_ops_summary",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/pipeline/ops-summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.pipeline_ops_summary"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/descriptive",
+      "name": "get_stats",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/stats/descriptive",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.get_stats"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/v1/stats/regression",
+      "name": "regression",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/stats/regression",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.regression"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/v1/support/status",
+      "name": "support_status",
+      "tags": [
+        "intelligence"
+      ],
+      "prefix_bucket": "/api/intelligence",
+      "semantic_path": "/intelligence/support/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.intelligence.support_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/index",
+      "name": "get_job_index",
+      "tags": [
+        "jobs"
+      ],
+      "prefix_bucket": "/api/jobs",
+      "semantic_path": "/jobs/index",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.jobs.get_job_index"
+    },
+    {
+      "method": "GET",
+      "path": "/api/jobs/v1/search",
+      "name": "search_jobs",
+      "tags": [
+        "jobs"
+      ],
+      "prefix_bucket": "/api/jobs",
+      "semantic_path": "/jobs/search",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.jobs.search_jobs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/lenses/v1/composite",
+      "name": "build_composite",
+      "tags": [
+        "lenses"
+      ],
+      "prefix_bucket": "/api/lenses",
+      "semantic_path": "/lenses/composite",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.lenses.build_composite"
+    },
+    {
+      "method": "POST",
+      "path": "/api/lenses/v1/covey",
+      "name": "build_covey",
+      "tags": [
+        "lenses"
+      ],
+      "prefix_bucket": "/api/lenses",
+      "semantic_path": "/lenses/covey",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.lenses.build_covey"
+    },
+    {
+      "method": "POST",
+      "path": "/api/lenses/v1/spider",
+      "name": "build_spider",
+      "tags": [
+        "lenses"
+      ],
+      "prefix_bucket": "/api/lenses",
+      "semantic_path": "/lenses/spider",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.lenses.build_spider"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/endpoints",
+      "name": "endpoints",
+      "tags": [
+        "mapping"
+      ],
+      "prefix_bucket": "/api/mapping",
+      "semantic_path": "/mapping/endpoints",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.mapping.endpoints"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/graph",
+      "name": "graph",
+      "tags": [
+        "mapping"
+      ],
+      "prefix_bucket": "/api/mapping",
+      "semantic_path": "/mapping/graph",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.mapping.graph"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mapping/v1/registry",
+      "name": "registry",
+      "tags": [
+        "mapping"
+      ],
+      "prefix_bucket": "/api/mapping",
+      "semantic_path": "/mapping/registry",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.mapping.registry"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/health",
+      "name": "health_check",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.health_check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/list",
+      "name": "list_mentors",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/list",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.list_mentors"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/profile-by-user/{user_id}",
+      "name": "get_mentor_profile_by_user",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/profile-by-user/{user_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.get_mentor_profile_by_user"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/availability",
+      "name": "update_availability",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/availability",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.update_availability"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/dashboard-stats",
+      "name": "get_dashboard_stats",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/dashboard-stats",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.get_dashboard_stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "name": "get_mentor_packages",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/packages",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.get_mentor_packages"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages",
+      "name": "create_package",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/packages",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.create_package"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "delete_package",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/packages/{package_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.delete_package"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "get_package",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/packages/{package_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.get_package"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/mentor/v1/{mentor_profile_id}/packages/{package_id}",
+      "name": "update_package",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/packages/{package_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.update_package"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentor/v1/{mentor_profile_id}/profile",
+      "name": "get_mentor_profile",
+      "tags": [
+        "mentor"
+      ],
+      "prefix_bucket": "/api/mentor",
+      "semantic_path": "/mentor/{mentor_profile_id}/profile",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentor.get_mentor_profile"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications",
+      "name": "submit_mentor_application",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/applications",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.submit_mentor_application"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/applications/pending",
+      "name": "get_pending_applications",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/applications/pending",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.get_pending_applications"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications/{application_id}/approve",
+      "name": "approve_mentor_application",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/applications/{application_id}/approve",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.approve_mentor_application"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/applications/{application_id}/reject",
+      "name": "reject_mentor_application",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/applications/{application_id}/reject",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.reject_mentor_application"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents",
+      "name": "create_requirement_document",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/documents",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.create_requirement_document"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/documents/{doc_id}",
+      "name": "get_requirement_document",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/documents/{doc_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.get_requirement_document"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/reject",
+      "name": "reject_document",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/documents/{doc_id}/reject",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.reject_document"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/documents/{doc_id}/sign",
+      "name": "sign_document",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/documents/{doc_id}/sign",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.sign_document"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/health",
+      "name": "health_check",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.health_check"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices",
+      "name": "create_invoice",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/invoices",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.create_invoice"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/invoices/mentor/{mentor_id}",
+      "name": "get_mentor_invoices",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/invoices/mentor/{mentor_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.get_mentor_invoices"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/confirm-completion",
+      "name": "confirm_service_completion",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/invoices/{invoice_id}/confirm-completion",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.confirm_service_completion"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/dispute",
+      "name": "raise_dispute",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/invoices/{invoice_id}/dispute",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.raise_dispute"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/mark-paid",
+      "name": "mark_invoice_paid",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/invoices/{invoice_id}/mark-paid",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.mark_invoice_paid"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/invoices/{invoice_id}/service-delivered",
+      "name": "mark_service_delivered",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/invoices/{invoice_id}/service-delivered",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.mark_service_delivered"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/links",
+      "name": "create_mentorship_link",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/links",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.create_mentorship_link"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/mentor/{mentor_id}",
+      "name": "get_mentor_connections",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/links/mentor/{mentor_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.get_mentor_connections"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/links/user/{user_id}",
+      "name": "get_user_connections",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/links/user/{user_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.get_user_connections"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/links/{link_id}/status",
+      "name": "update_link_status",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/links/{link_id}/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.update_link_status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/mentorship/v1/notes",
+      "name": "create_note",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/notes",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.create_note"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/notes/{link_id}",
+      "name": "get_notes_for_link",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/notes/{link_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.get_notes_for_link"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/mentorship/v1/notes/{note_id}",
+      "name": "update_note",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/notes/{note_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.mentorship.update_note"
+    },
+    {
+      "method": "GET",
+      "path": "/api/mentorship/v1/summary",
+      "name": "get_mentorship_summary",
+      "tags": [
+        "mentorship"
+      ],
+      "prefix_bucket": "/api/mentorship",
+      "semantic_path": "/mentorship/summary",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.mentorship.get_mentorship_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases",
+      "name": "list_phrases",
+      "tags": [
+        "ontology"
+      ],
+      "prefix_bucket": "/api/ontology",
+      "semantic_path": "/ontology/phrases",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ontology.list_phrases"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ontology/v1/phrases/summary",
+      "name": "phrases_summary",
+      "tags": [
+        "ontology"
+      ],
+      "prefix_bucket": "/api/ontology",
+      "semantic_path": "/ontology/phrases/summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ontology.phrases_summary"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/anti-gaming/check",
+      "name": "check_abuse",
+      "tags": [
+        "ops"
+      ],
+      "prefix_bucket": "/api/ops",
+      "semantic_path": "/ops/anti-gaming/check",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ops.check_abuse"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/logs/lock",
+      "name": "lock_audit_logs",
+      "tags": [
+        "ops"
+      ],
+      "prefix_bucket": "/api/ops",
+      "semantic_path": "/ops/logs/lock",
+      "auth_signals": [
+        "token_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.ops.lock_audit_logs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ops/v1/processing/start",
+      "name": "start_processing",
+      "tags": [
+        "ops"
+      ],
+      "prefix_bucket": "/api/ops",
+      "semantic_path": "/ops/processing/start",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ops.start_processing"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/processing/status",
+      "name": "processing_status",
+      "tags": [
+        "ops"
+      ],
+      "prefix_bucket": "/api/ops",
+      "semantic_path": "/ops/processing/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ops.processing_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/stats/public",
+      "name": "get_public_stats",
+      "tags": [
+        "ops"
+      ],
+      "prefix_bucket": "/api/ops",
+      "semantic_path": "/ops/stats/public",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ops.get_public_stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ops/v1/tokens/config",
+      "name": "get_token_config",
+      "tags": [
+        "ops"
+      ],
+      "prefix_bucket": "/api/ops",
+      "semantic_path": "/ops/tokens/config",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.ops.get_token_config"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/cancel",
+      "name": "cancel_subscription",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/cancel",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.cancel_subscription"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/client-token",
+      "name": "get_client_token",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/client-token",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.get_client_token"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/gateway-info",
+      "name": "gateway_info",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/gateway-info",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.payment.gateway_info"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/health",
+      "name": "health_check",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.payment.health_check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/history",
+      "name": "get_payment_history",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/history",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.get_payment_history"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/methods",
+      "name": "list_payment_methods",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/methods",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.list_payment_methods"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/methods",
+      "name": "add_payment_method",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/methods",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.add_payment_method"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/payment/v1/methods/{token}",
+      "name": "remove_payment_method",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/methods/{token}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.payment.remove_payment_method"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans",
+      "name": "get_plans",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/plans",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.get_plans"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/plans/{plan_id}",
+      "name": "get_plan",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/plans/{plan_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.payment.get_plan"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/process",
+      "name": "process_payment",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/process",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.process_payment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/payment/v1/refund/{transaction_id}",
+      "name": "refund_transaction",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/refund/{transaction_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.payment.refund_transaction"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/subscription",
+      "name": "get_current_subscription",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/subscription",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.payment.get_current_subscription"
+    },
+    {
+      "method": "GET",
+      "path": "/api/payment/v1/transactions/{transaction_id}",
+      "name": "get_transaction",
+      "tags": [
+        "payment"
+      ],
+      "prefix_bucket": "/api/payment",
+      "semantic_path": "/payment/transactions/{transaction_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.payment.get_transaction"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1",
+      "name": "list_resumes",
+      "tags": [
+        "resume"
+      ],
+      "prefix_bucket": "/api/resume",
+      "semantic_path": "/resume",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.resume.list_resumes"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/enrich",
+      "name": "enrich",
+      "tags": [
+        "resume"
+      ],
+      "prefix_bucket": "/api/resume",
+      "semantic_path": "/resume/enrich",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.resume.enrich"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/parse",
+      "name": "parse",
+      "tags": [
+        "resume"
+      ],
+      "prefix_bucket": "/api/resume",
+      "semantic_path": "/resume/parse",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.resume.parse"
+    },
+    {
+      "method": "POST",
+      "path": "/api/resume/v1/upload",
+      "name": "upload_resume",
+      "tags": [
+        "resume"
+      ],
+      "prefix_bucket": "/api/resume",
+      "semantic_path": "/resume/upload",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.resume.upload_resume"
+    },
+    {
+      "method": "GET",
+      "path": "/api/resume/v1/{resume_id}",
+      "name": "get_resume",
+      "tags": [
+        "resume"
+      ],
+      "prefix_bucket": "/api/resume",
+      "semantic_path": "/resume/{resume_id}",
+      "auth_signals": [
+        "user_dependency"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.resume.get_resume"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/health",
+      "name": "health_check",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.health_check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/leaderboard",
+      "name": "get_leaderboard",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/leaderboard",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.get_leaderboard"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/ownership-stats",
+      "name": "get_ownership_stats",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/ownership-stats",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.get_ownership_stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/referral",
+      "name": "get_referral_code",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/referral",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.get_referral_code"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/referral/claim",
+      "name": "claim_referral",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/referral/claim",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.claim_referral"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards",
+      "name": "get_rewards",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/rewards",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.get_rewards"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/rewards/available",
+      "name": "get_available_rewards",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/rewards/available",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.get_available_rewards"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/award/{action_key}",
+      "name": "award_action",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/rewards/award/{action_key}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.award_action"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/rewards/redeem",
+      "name": "redeem_rewards",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/rewards/redeem",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.redeem_rewards"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "get_my_suggestions",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/suggestions",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.get_my_suggestions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rewards/v1/suggestions",
+      "name": "submit_suggestion",
+      "tags": [
+        "rewards"
+      ],
+      "prefix_bucket": "/api/rewards",
+      "semantic_path": "/rewards/suggestions",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.rewards.submit_suggestion"
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/consolidated/{user_id}",
+      "name": "get_consolidated_user_data",
+      "tags": [
+        "sessions"
+      ],
+      "prefix_bucket": "/api/sessions",
+      "semantic_path": "/sessions/consolidated/{user_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.sessions.get_consolidated_user_data"
+    },
+    {
+      "method": "POST",
+      "path": "/api/sessions/v1/log",
+      "name": "log_session_event",
+      "tags": [
+        "sessions"
+      ],
+      "prefix_bucket": "/api/sessions",
+      "semantic_path": "/sessions/log",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.sessions.log_session_event"
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/summary/{user_id}",
+      "name": "get_session_summary",
+      "tags": [
+        "sessions"
+      ],
+      "prefix_bucket": "/api/sessions",
+      "semantic_path": "/sessions/summary/{user_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.sessions.get_session_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/sessions/v1/sync-status",
+      "name": "get_sync_status",
+      "tags": [
+        "sessions"
+      ],
+      "prefix_bucket": "/api/sessions",
+      "semantic_path": "/sessions/sync-status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.sessions.get_sync_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/shared/v1/health",
+      "name": "health_check",
+      "tags": [
+        "shared"
+      ],
+      "prefix_bucket": "/api/shared",
+      "semantic_path": "/shared/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.shared.health_check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/shared/v1/health/deep",
+      "name": "deep_health_check",
+      "tags": [
+        "shared"
+      ],
+      "prefix_bucket": "/api/shared",
+      "semantic_path": "/shared/health/deep",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.shared.deep_health_check"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/ai/jobs",
+      "name": "list_ai_jobs",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/ai/jobs",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.list_ai_jobs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/ai/jobs/{job_id}",
+      "name": "get_ai_job",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/ai/jobs/{job_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.get_ai_job"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/ai/queue-stats",
+      "name": "get_ai_queue_stats",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/ai/queue-stats",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.get_ai_queue_stats"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/health",
+      "name": "support_health",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.support_health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/providers",
+      "name": "support_providers",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/providers",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.support_providers"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/readiness",
+      "name": "support_readiness",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/readiness",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.support_readiness"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/status",
+      "name": "support_status",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.support_status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets",
+      "name": "list_support_tickets",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/tickets",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.list_support_tickets"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/tickets",
+      "name": "create_support_ticket",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/tickets",
+      "auth_signals": [],
+      "required_headers": [
+        "authorization"
+      ],
+      "source_function": "services.backend_api.routers.support.create_support_ticket"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets/{ticket_id}",
+      "name": "get_support_ticket",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/tickets/{ticket_id}",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.get_support_ticket"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets/{ticket_id}/ai-draft",
+      "name": "get_ai_draft_for_ticket",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/tickets/{ticket_id}/ai-draft",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.get_ai_draft_for_ticket"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/tickets/{ticket_id}/approve-ai-draft",
+      "name": "approve_ai_draft",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/tickets/{ticket_id}/approve-ai-draft",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.approve_ai_draft"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/tickets/{ticket_id}/comments",
+      "name": "get_ticket_comments",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/tickets/{ticket_id}/comments",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.get_ticket_comments"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/tickets/{ticket_id}/reply",
+      "name": "reply_to_ticket",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/tickets/{ticket_id}/reply",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.reply_to_ticket"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/token",
+      "name": "issue_support_token",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/token",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.issue_support_token"
+    },
+    {
+      "method": "POST",
+      "path": "/api/support/v1/webhooks/zendesk",
+      "name": "zendesk_webhook",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/webhooks/zendesk",
+      "auth_signals": [],
+      "required_headers": [
+        "x-zendesk-webhook-signature"
+      ],
+      "source_function": "services.backend_api.routers.support.zendesk_webhook"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/widget-config",
+      "name": "support_widget_config",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/widget-config",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.support_widget_config"
+    },
+    {
+      "method": "GET",
+      "path": "/api/support/v1/wiring-test",
+      "name": "support_wiring_test",
+      "tags": [
+        "support"
+      ],
+      "prefix_bucket": "/api/support",
+      "semantic_path": "/support/wiring-test",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.support.support_wiring_test"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries",
+      "name": "list_industries",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/industries",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.list_industries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/industries/{high_level}/subindustries",
+      "name": "list_subindustries",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/industries/{high_level}/subindustries",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.list_subindustries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/infer-industries",
+      "name": "infer_industries",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/job-titles/infer-industries",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.infer_industries"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/metadata",
+      "name": "job_title_metadata",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/job-titles/metadata",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.job_title_metadata"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/naics-mapping",
+      "name": "job_title_to_naics",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/job-titles/naics-mapping",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.job_title_to_naics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/job-titles/search",
+      "name": "search_job_titles",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/job-titles/search",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.search_job_titles"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/search",
+      "name": "search_naics",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/naics/search",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.search_naics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/naics/title",
+      "name": "naics_title",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/naics/title",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.naics_title"
+    },
+    {
+      "method": "GET",
+      "path": "/api/taxonomy/v1/summary",
+      "name": "taxonomy_summary",
+      "tags": [
+        "taxonomy"
+      ],
+      "prefix_bucket": "/api/taxonomy",
+      "semantic_path": "/taxonomy/summary",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.taxonomy.taxonomy_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/v1/status",
+      "name": "status",
+      "tags": [
+        "telemetry"
+      ],
+      "prefix_bucket": "/api/telemetry",
+      "semantic_path": "/telemetry/status",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.telemetry.status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/evidence",
+      "name": "get_evidence",
+      "tags": [
+        "touchpoints"
+      ],
+      "prefix_bucket": "/api/touchpoints",
+      "semantic_path": "/touchpoints/evidence",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.touchpoints.get_evidence"
+    },
+    {
+      "method": "GET",
+      "path": "/api/touchpoints/v1/touchnots",
+      "name": "get_touchnots",
+      "tags": [
+        "touchpoints"
+      ],
+      "prefix_bucket": "/api/touchpoints",
+      "semantic_path": "/touchpoints/touchnots",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.touchpoints.get_touchnots"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/activity",
+      "name": "get_user_activity",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/activity",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.get_user_activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/matches/summary",
+      "name": "get_match_summary",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/matches/summary",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.get_match_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/me",
+      "name": "read_users_me",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/me",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.read_users_me"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/profile",
+      "name": "get_profile",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/profile",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.get_profile"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/user/v1/profile",
+      "name": "update_profile",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/profile",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.update_profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/resume/latest",
+      "name": "get_latest_resume",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/resume/latest",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.get_latest_resume"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/sessions/summary",
+      "name": "get_user_session_summary",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/sessions/summary",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.get_user_session_summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/v1/stats",
+      "name": "get_user_stats",
+      "tags": [
+        "user"
+      ],
+      "prefix_bucket": "/api/user",
+      "semantic_path": "/user/stats",
+      "auth_signals": [
+        "user_dependency",
+        "user_path"
+      ],
+      "required_headers": [
+        "Authorization"
+      ],
+      "source_function": "services.backend_api.routers.user.get_user_stats"
+    },
+    {
+      "method": "POST",
+      "path": "/api/webhooks/v1/braintree",
+      "name": "braintree_webhook",
+      "tags": [
+        "webhooks"
+      ],
+      "prefix_bucket": "/api/webhooks",
+      "semantic_path": "/webhooks/braintree",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.webhooks.braintree_webhook"
+    },
+    {
+      "method": "GET",
+      "path": "/api/webhooks/v1/health",
+      "name": "webhook_health",
+      "tags": [
+        "webhooks"
+      ],
+      "prefix_bucket": "/api/webhooks",
+      "semantic_path": "/webhooks/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.routers.webhooks.webhook_health"
+    },
+    {
+      "method": "POST",
+      "path": "/api/webhooks/v1/stripe",
+      "name": "stripe_webhook",
+      "tags": [
+        "webhooks"
+      ],
+      "prefix_bucket": "/api/webhooks",
+      "semantic_path": "/webhooks/stripe",
+      "auth_signals": [],
+      "required_headers": [
+        "stripe-signature"
+      ],
+      "source_function": "services.backend_api.routers.webhooks.stripe_webhook"
+    },
+    {
+      "method": "POST",
+      "path": "/api/webhooks/v1/zendesk",
+      "name": "zendesk_webhook",
+      "tags": [
+        "webhooks"
+      ],
+      "prefix_bucket": "/api/webhooks",
+      "semantic_path": "/webhooks/zendesk",
+      "auth_signals": [],
+      "required_headers": [
+        "x-zendesk-webhook-signature"
+      ],
+      "source_function": "services.backend_api.routers.webhooks.zendesk_webhook"
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "name": "health",
+      "tags": [],
+      "prefix_bucket": "/health",
+      "semantic_path": "/health",
+      "auth_signals": [],
+      "required_headers": [],
+      "source_function": "services.backend_api.main.health"
+    }
+  ]
+}

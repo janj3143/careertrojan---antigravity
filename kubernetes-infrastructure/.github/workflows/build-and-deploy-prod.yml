@@ -1,0 +1,55 @@
+name: build-and-deploy-prod
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write          # Required for Workload Identity Federation
+
+env:
+  GCP_PROJECT_ID: careertrojan
+  GCP_WORKLOAD_IDENTITY_PROVIDER: projects/168815775910/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+  GCP_SERVICE_ACCOUNT: careertrojansupport@careertrojan.iam.gserviceaccount.com
+  IMAGE_REGISTRY: europe-west2-docker.pkg.dev/careertrojan/images
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production         # Requires approval in GitHub settings
+    steps:
+      - uses: actions/checkout@v4
+
+      # ── Authenticate via Workload Identity Federation (no JSON keys) ──
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      # ── Build release images ──
+      - run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          gcloud auth configure-docker europe-west2-docker.pkg.dev --quiet
+          docker build -f docker/backend/Dockerfile.k8s -t $IMAGE_REGISTRY/backend:$VERSION -t $IMAGE_REGISTRY/backend:latest .
+          docker push $IMAGE_REGISTRY/backend:$VERSION
+          docker push $IMAGE_REGISTRY/backend:latest
+
+      # ── Deploy to production ──
+      - run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          gcloud container clusters get-credentials careertrojan-prod --region europe-west2
+          cd kustomize/overlays/prod
+          kustomize edit set image backend=$IMAGE_REGISTRY/backend:$VERSION
+          kubectl apply -k .
+          kubectl rollout status deploy/backend-api -n careertrojan --timeout=300s
+
+      # ── Smoke test ──
+      - run: bash scripts/smoke_test.sh
+
+      # ── Route snapshot ──
+      - run: python scripts/route_snapshot.py

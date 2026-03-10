@@ -1,0 +1,58 @@
+name: ci-oidc-gcp
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main", "master", "develop"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  test-and-auth:
+    runs-on: ubuntu-latest
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Validate runtime env template
+        run: python scripts/validate_runtime_env.py --env-file .env.example --strict
+
+      - name: Enforce runtime banned-token gate
+        run: |
+          python scripts/validate_runtime_banned_tokens.py \
+            --base-ref "${{ github.event.before }}" \
+            --head-ref "${{ github.sha }}"
+
+      - name: Authenticate to Google Cloud via OIDC
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Verify active identity
+        run: gcloud auth list --filter=status:ACTIVE --format='value(account)'
+
+      - name: Run focused backend unit tests
+        run: pytest tests/unit/test_app_bootstrap.py tests/unit/test_webhooks.py -q --tb=short --no-header

@@ -34,7 +34,42 @@ class MentorshipService:
             db_connection: Database connection object (psycopg2 or similar)
         """
         self.db = db_connection
+        self._is_sqlite = self._detect_sqlite_connection(db_connection)
         logger.info("MentorshipService initialized")
+
+    def _detect_sqlite_connection(self, db_connection) -> bool:
+        candidates = [db_connection]
+
+        for attr in ("connection", "driver_connection", "dbapi_connection"):
+            conn = getattr(db_connection, attr, None)
+            if conn is not None:
+                candidates.append(conn)
+
+        for candidate in candidates:
+            module_name = type(candidate).__module__.lower()
+            if "sqlite" in module_name:
+                return True
+
+        return False
+
+    def _normalize_query(self, query: str) -> str:
+        normalized = query
+        if self._is_sqlite:
+            normalized = normalized.replace("%s", "?")
+            normalized = normalized.replace("NOW()", "CURRENT_TIMESTAMP")
+            normalized = normalized.replace("= TRUE", "= 1")
+            normalized = normalized.replace("= FALSE", "= 0")
+        return normalized
+
+    def _execute(self, cursor, query: str, params: Optional[List[Any]] = None):
+        normalized = self._normalize_query(query)
+        if params is None:
+            return cursor.execute(normalized)
+        return cursor.execute(normalized, params)
+
+    def _is_missing_table_error(self, error: Exception, table_name: str) -> bool:
+        message = str(error).lower()
+        return "no such table" in message and table_name.lower() in message
 
     # ========================================================================
     # MENTOR-USER LINKING (ANONYMOUS)
@@ -131,7 +166,7 @@ class MentorshipService:
             query += " ORDER BY created_date DESC"
 
             cursor = self.db.cursor()
-            cursor.execute(query, params)
+            self._execute(cursor, query, params)
             results = cursor.fetchall()
 
             connections = []
@@ -148,6 +183,9 @@ class MentorshipService:
             return connections
 
         except Exception as e:
+            if self._is_missing_table_error(e, "mentorship_links"):
+                logger.warning("mentorship_links table missing; returning empty mentor connections list")
+                return []
             logger.error(f"Error getting mentor connections: {e}")
             raise
 
@@ -189,7 +227,7 @@ class MentorshipService:
             query += " ORDER BY created_date DESC"
 
             cursor = self.db.cursor()
-            cursor.execute(query, params)
+            self._execute(cursor, query, params)
             results = cursor.fetchall()
 
             connections = []
@@ -206,6 +244,9 @@ class MentorshipService:
             return connections
 
         except Exception as e:
+            if self._is_missing_table_error(e, "mentorship_links"):
+                logger.warning("mentorship_links table missing; returning empty user connections list")
+                return []
             logger.error(f"Error getting user connections: {e}")
             raise
 
@@ -341,7 +382,7 @@ class MentorshipService:
             query += " ORDER BY created_date DESC"
 
             cursor = self.db.cursor()
-            cursor.execute(query, (link_id,))
+            self._execute(cursor, query, [link_id])
             results = cursor.fetchall()
 
             notes = []
@@ -360,6 +401,9 @@ class MentorshipService:
             return notes
 
         except Exception as e:
+            if self._is_missing_table_error(e, "mentor_notes"):
+                logger.warning("mentor_notes table missing; returning empty notes list")
+                return []
             logger.error(f"Error getting notes: {e}")
             raise
 
@@ -757,7 +801,7 @@ class MentorshipService:
             query += " ORDER BY created_date DESC"
 
             cursor = self.db.cursor()
-            cursor.execute(query, params)
+            self._execute(cursor, query, params)
             results = cursor.fetchall()
 
             invoices = []
@@ -779,6 +823,9 @@ class MentorshipService:
             return invoices
 
         except Exception as e:
+            if self._is_missing_table_error(e, "invoices"):
+                logger.warning("invoices table missing; returning empty mentor invoices list")
+                return []
             logger.error(f"Error getting mentor invoices: {e}")
             raise
 
@@ -1134,7 +1181,7 @@ class MentorshipService:
             """
 
             cursor = self.db.cursor()
-            cursor.execute(query)
+            self._execute(cursor, query)
             results = cursor.fetchall()
 
             applications: List[Dict[str, Any]] = []
@@ -1202,6 +1249,9 @@ class MentorshipService:
             return applications
 
         except Exception as e:
+            if self._is_missing_table_error(e, "mentor_applications"):
+                logger.warning("mentor_applications table missing; returning empty pending applications list")
+                return []
             logger.error(f"Error getting pending applications: {e}")
             raise
 

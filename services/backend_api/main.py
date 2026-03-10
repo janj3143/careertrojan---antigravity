@@ -1,6 +1,6 @@
 import os
 import logging
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from services.backend_api.middleware.interaction_logger import InteractionLoggerMiddleware
 from services.backend_api.middleware.rate_limiter import RateLimitMiddleware
@@ -20,9 +20,16 @@ except ImportError:
 
 # Import Routers
 from services.backend_api.routers import admin, user, mentor, shared, auth, mentorship, intelligence, coaching, ops, resume, blockers, payment, rewards, credits, ai_data, jobs, taxonomy, sessions, ontology, support
+from services.backend_api.routers import career_compass
+from services.backend_api.routers import profile_coach_v1, profile_v1, user_vector_v1
 from services.backend_api.routers import insights, touchpoints, mapping, analytics, lenses
 from services.backend_api.routers import admin_abuse, admin_parsing, admin_tokens, anti_gaming, logs, telemetry
 from services.backend_api.routers import gdpr, data_index
+from services.backend_api.routers import admin_legacy
+try:
+    from services.backend_api.routers import webhooks
+except ImportError:
+    webhooks = None  # type: ignore
 
 # Setup Structured Logging (structlog → JSON lines)
 configure_logging()
@@ -50,6 +57,15 @@ origins = [
     "http://localhost:3001",  # React Dev (admin)
     "http://localhost:3002",  # React Dev (mentor)
     "http://localhost:5173",  # Vite Dev
+    "http://89.167.75.132",
+    "http://89.167.75.132:3000",
+    "http://89.167.75.132:3001",
+    "http://89.167.75.132:3002",
+    "http://89.167.75.132:8500",
+    "http://89.167.75.132:8600",
+    "http://89.167.75.132:8601",
+    "http://89.167.75.132:8602",
+    "http://89.167.75.132:8603",
 ]
 
 app.add_middleware(
@@ -62,8 +78,20 @@ app.add_middleware(
 
 
 @app.get("/health")
-async def health_check():
-    return {"status": "ok", "service": "backend-api", "version": settings.VERSION}
+def health():
+    return {"status": "ok"}
+
+@app.get("/health/live")
+def health_live():
+    """Liveness probe: verifies process is running"""
+    return {"status": "alive"}
+
+@app.get("/health/ready")
+def health_ready():
+    """Readiness probe: verifies dependencies are accessible"""
+    # TODO: Add specific ping logic for Postgres / Redis here if needed
+    return {"status": "ready"}
+
 
 # ── Request Correlation — assigns unique request_id + structured logs ──
 app.add_middleware(RequestCorrelationMiddleware)
@@ -74,10 +102,19 @@ app.add_middleware(InteractionLoggerMiddleware)
 # ── Rate Limiting — prevent API abuse (100 req / 60s per IP) ──
 app.add_middleware(RateLimitMiddleware)
 
+
+def _include_optional_router(router_obj, router_name: str) -> None:
+    """Mount optional routers with explicit error logging (no silent failures)."""
+    try:
+        app.include_router(router_obj)
+    except Exception as exc:
+        logger.exception("Failed to mount optional router '%s': %s", router_name, exc)
+
 # ── Core Routers ──────────────────────────────────────────────
 app.include_router(auth.router)
 app.include_router(user.router)
 app.include_router(admin.router)
+app.include_router(admin_legacy.router)
 app.include_router(shared.router)         # Was imported but never mounted — FIXED 2026-02-08
 app.include_router(mentorship.router)
 app.include_router(intelligence.router)
@@ -92,15 +129,20 @@ app.include_router(taxonomy.router)
 app.include_router(sessions.router)       # Session history, sync status, consolidated user view
 app.include_router(ontology.router)
 app.include_router(support.router)
+app.include_router(career_compass.router)
+app.include_router(career_compass.router, prefix="/api/v1")
+app.include_router(profile_coach_v1.router)
+app.include_router(profile_v1.router)
+app.include_router(user_vector_v1.router)
 app.include_router(data_index.router)     # AI data & parser indexing system
 
 # ── Optional/Placeholder Routers ─────────────────────────────
-try: app.include_router(payment.router)
-except: pass
-try: app.include_router(rewards.router)
-except: pass
-try: app.include_router(mentor.router)
-except: pass
+_include_optional_router(payment.router, "payment")
+_include_optional_router(rewards.router, "rewards")
+_include_optional_router(mentor.router, "mentor")
+# ── Webhooks (Braintree / Stripe / Zendesk) ──────────────────
+if webhooks:
+    _include_optional_router(webhooks.router, "webhooks")
 
 # ── Visual / Mapping / Analytics Routers ─────────────────────
 app.include_router(insights.router)       # Quadrant, word-cloud, graph, cohort
@@ -113,18 +155,12 @@ app.include_router(lenses.router)         # Spider/Covey composite analytics len
 app.include_router(gdpr.router)           # Consent, data export, account deletion, audit log
 
 # ── Admin Extension Routers ──────────────────────────────────
-try: app.include_router(admin_abuse.router)
-except Exception: pass
-try: app.include_router(admin_parsing.router)
-except Exception: pass
-try: app.include_router(admin_tokens.router)
-except Exception: pass
-try: app.include_router(anti_gaming.router)
-except Exception: pass
-try: app.include_router(logs.router)
-except Exception: pass
-try: app.include_router(telemetry.router)
-except Exception: pass
+_include_optional_router(admin_abuse.router, "admin_abuse")
+_include_optional_router(admin_parsing.router, "admin_parsing")
+_include_optional_router(admin_tokens.router, "admin_tokens")
+_include_optional_router(anti_gaming.router, "anti_gaming")
+_include_optional_router(logs.router, "logs")
+_include_optional_router(telemetry.router, "telemetry")
 
 if __name__ == "__main__":
     import uvicorn

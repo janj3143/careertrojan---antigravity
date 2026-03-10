@@ -12,19 +12,17 @@ export default defineConfig({
         },
     },
     build: {
+        chunkSizeWarningLimit: 1200,
         rollupOptions: {
             output: {
-                manualChunks: {
-                    // Core React + router always loaded
-                    'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-                    // Visualisation libs (heavy) — only loaded on /visuals
-                    'vendor-viz': ['d3', 'reactflow'],
-                    // Mobile components — lazy-loaded chunk
-                    'mobile': [
-                        './src/components/mobile/MobileQuickDash.tsx',
-                        './src/components/mobile/JobSwipe.tsx',
-                        './src/components/mobile/MobileCVUpload.tsx',
-                    ],
+                manualChunks(id) {
+                    if (id.includes('/src/components/visuals/')) {
+                        return 'visuals'
+                    }
+
+                    if (id.includes('/src/components/mobile/')) {
+                        return 'mobile'
+                    }
                 },
             },
         },

@@ -1,0 +1,19 @@
+{
+  "job_id": "zendesk_20260304T163326_170d31f26176",
+  "kind": "draft_reply",
+  "source": "zendesk",
+  "status": "pending",
+  "created_at": "2026-03-04T16:33:26.404752+00:00",
+  "payload": {
+    "ticket": {
+      "id": "18",
+      "subject": "Login issue",
+      "description": "Unable to login after password reset",
+      "status": "new",
+      "priority": "normal",
+      "category": "Login"
+    }
+  },
+  "result": null,
+  "error": null
+}

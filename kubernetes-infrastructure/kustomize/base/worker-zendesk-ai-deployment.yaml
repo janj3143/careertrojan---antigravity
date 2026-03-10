@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-zendesk-ai
+  labels:
+    app: worker-zendesk-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker-zendesk-ai
+  template:
+    metadata:
+      labels:
+        app: worker-zendesk-ai
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: worker-zendesk-ai
+          image: ghcr.io/your-org/careertrojan-backend:latest
+          command: ["python", "-m", "backend.app.services.zendesk_ai.worker"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: REDIS_URL
+            - name: ZENDESK_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: ZENDESK_WEBHOOK_SECRET
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1500m"
+              memory: "2Gi"

@@ -23,7 +23,12 @@
 param(
     [string]$ProjectRoot = $(if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } else { (Get-Location).Path }),
     [double]$MinPassRate = 80.0,
-    [switch]$Require100
+    [switch]$Require100,
+    [switch]$SkipRouteGovernance,
+    [int]$MaxAddedRoutes = 50,
+    [int]$MaxRemovedRoutes = 5,
+    [int]$MaxHighChurnBuckets = 10,
+    [int]$MaxDuplicateSemanticRoutes = 10
 )
 
 $ErrorActionPreference = "Stop"
@@ -106,6 +111,35 @@ function Get-LatestRuntimeScore {
     }
 }
 
+function Resolve-Python {
+    param(
+        [Parameter(Mandatory = $true)][string]$ProjectRootPath
+    )
+
+    $candidates = @(
+        (Join-Path $ProjectRootPath "..\.venv\Scripts\python.exe"),
+        (Join-Path $ProjectRootPath ".venv\Scripts\python.exe")
+    )
+
+    foreach ($candidate in $candidates) {
+        try {
+            $resolved = (Resolve-Path $candidate -ErrorAction SilentlyContinue)
+            if ($resolved) {
+                return $resolved.Path
+            }
+        }
+        catch {
+        }
+    }
+
+    $cmd = Get-Command python -ErrorAction SilentlyContinue
+    if ($cmd) {
+        return $cmd.Source
+    }
+
+    throw "Python executable not found for route governance scripts."
+}
+
 if (-not (Test-Path $ProjectRoot)) {
     throw "Project root does not exist: $ProjectRoot"
 }
@@ -126,6 +160,16 @@ if (-not (Test-Path $resultsDir)) {
 }
 
 $threshold = if ($Require100) { 100.0 } else { $MinPassRate }
+$pythonExe = Resolve-Python -ProjectRootPath $normalizedRoot
+$routeGovScript = Join-Path $normalizedRoot "scripts\route_governance_report.py"
+$routeGovGateScript = Join-Path $normalizedRoot "scripts\validate_route_governance.py"
+
+if (-not (Test-Path $routeGovScript)) {
+    throw "Missing harness dependency: $routeGovScript"
+}
+if (-not (Test-Path $routeGovGateScript)) {
+    throw "Missing harness dependency: $routeGovGateScript"
+}
 
 Write-Host "Running full harness on J-drive..." -ForegroundColor Cyan
 Write-Host "Project root: $normalizedRoot" -ForegroundColor Yellow
@@ -157,6 +201,70 @@ if ($runtime -eq $null) {
     $failures += "Runtime review $($runtime.Percent)% < $threshold%"
 }
 
+$routeGovernance = [pscustomobject]@{
+    executed = (-not $SkipRouteGovernance)
+    report_json = ""
+    report_md = ""
+    gate_passed = $false
+    thresholds = [pscustomobject]@{
+        max_added_routes = $MaxAddedRoutes
+        max_removed_routes = $MaxRemovedRoutes
+        max_high_churn_buckets = $MaxHighChurnBuckets
+        max_duplicate_semantic_routes = $MaxDuplicateSemanticRoutes
+    }
+    summary = $null
+}
+
+if (-not $SkipRouteGovernance) {
+    Write-Host "Generating route governance report..." -ForegroundColor Cyan
+    & $pythonExe $routeGovScript
+    if ($LASTEXITCODE -ne 0) {
+        $failures += "Route governance report generation failed (exit $LASTEXITCODE)."
+    }
+    else {
+        $latestGovJson = Get-ChildItem -Path (Join-Path $normalizedRoot "reports") -Filter "ROUTE_GOVERNANCE_REPORT_*.json" -File -ErrorAction SilentlyContinue |
+            Sort-Object LastWriteTime -Descending |
+            Select-Object -First 1
+        $latestGovMd = Get-ChildItem -Path (Join-Path $normalizedRoot "reports") -Filter "ROUTE_GOVERNANCE_REPORT_*.md" -File -ErrorAction SilentlyContinue |
+            Sort-Object LastWriteTime -Descending |
+            Select-Object -First 1
+
+        if ($latestGovJson) { $routeGovernance.report_json = $latestGovJson.FullName }
+        if ($latestGovMd) { $routeGovernance.report_md = $latestGovMd.FullName }
+
+        if ($latestGovJson) {
+            try {
+                $gov = Get-Content -Path $latestGovJson.FullName -Raw | ConvertFrom-Json
+                $routeGovernance.summary = [pscustomobject]@{
+                    total_routes = [int]$gov.total_routes
+                    added_count = [int]$gov.added_count
+                    removed_count = [int]$gov.removed_count
+                    high_churn_buckets = @($gov.prefix_churn | Where-Object { $_.high_churn -eq $true }).Count
+                    duplicate_semantic_routes = @($gov.duplicate_semantic_routes).Count
+                }
+            }
+            catch {
+                $failures += "Unable to parse route governance report JSON: $($_.Exception.Message)"
+            }
+        }
+
+        Write-Host "Validating route governance gates..." -ForegroundColor Cyan
+        & $pythonExe $routeGovGateScript `
+            --report "$($routeGovernance.report_json)" `
+            --max-added-routes $MaxAddedRoutes `
+            --max-removed-routes $MaxRemovedRoutes `
+            --max-high-churn-buckets $MaxHighChurnBuckets `
+            --max-duplicate-semantic-routes $MaxDuplicateSemanticRoutes
+
+        if ($LASTEXITCODE -ne 0) {
+            $failures += "Route governance gate failed."
+        }
+        else {
+            $routeGovernance.gate_passed = $true
+        }
+    }
+}
+
 $summary = [pscustomobject]@{
     timestamp = $timestamp
     project_root = $normalizedRoot
@@ -170,6 +278,7 @@ $summary = [pscustomobject]@{
     unit = $unit
     integration = $integration
     e2e = $e2e
+    route_governance = $routeGovernance
     passed = ($failures.Count -eq 0)
     failures = $failures
 }
@@ -199,9 +308,27 @@ $mdLines = @(
     "- Integration: tests=$($integration.Tests), failures=$($integration.Failures), errors=$($integration.Errors), pass=$($integration.PassRate)%"
     "- E2E: tests=$($e2e.Tests), failures=$($e2e.Failures), errors=$($e2e.Errors), pass=$($e2e.PassRate)%"
     ""
+    "## Route Governance"
+    "- Executed: $($routeGovernance.executed)"
+    "- Gate passed: $($routeGovernance.gate_passed)"
+    "- Max Added: $MaxAddedRoutes"
+    "- Max Removed: $MaxRemovedRoutes"
+    "- Max High-Churn Buckets: $MaxHighChurnBuckets"
+    "- Max Duplicate Semantic Routes: $MaxDuplicateSemanticRoutes"
+    "- Report JSON: $($routeGovernance.report_json)"
+    "- Report MD: $($routeGovernance.report_md)"
+    ""
     "## Status"
     "- Passed: $($summary.passed)"
 )
+
+if ($routeGovernance.summary -ne $null) {
+    $mdLines += "- Total Routes: $($routeGovernance.summary.total_routes)"
+    $mdLines += "- Added: $($routeGovernance.summary.added_count)"
+    $mdLines += "- Removed: $($routeGovernance.summary.removed_count)"
+    $mdLines += "- High-Churn Buckets: $($routeGovernance.summary.high_churn_buckets)"
+    $mdLines += "- Duplicate Semantic Routes: $($routeGovernance.summary.duplicate_semantic_routes)"
+}
 
 if ($failures.Count -gt 0) {
     $mdLines += ""

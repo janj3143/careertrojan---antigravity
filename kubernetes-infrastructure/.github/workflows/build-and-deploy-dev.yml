@@ -1,0 +1,49 @@
+name: build-and-deploy-dev
+on:
+  workflow_dispatch:
+  push:
+    branches: ["develop"]
+
+permissions:
+  contents: read
+  id-token: write          # Required for Workload Identity Federation
+
+env:
+  GCP_PROJECT_ID: careertrojan
+  GCP_WORKLOAD_IDENTITY_PROVIDER: projects/168815775910/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+  GCP_SERVICE_ACCOUNT: careertrojansupport@careertrojan.iam.gserviceaccount.com
+  GCS_BUCKET_NAME: careertrojan-uploads
+  IMAGE_REGISTRY: europe-west2-docker.pkg.dev/careertrojan/images
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # ── Authenticate via Workload Identity Federation (no JSON keys) ──
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      # ── Build + push images ──
+      - run: |
+          gcloud auth configure-docker europe-west2-docker.pkg.dev --quiet
+          docker build -f docker/backend/Dockerfile.k8s -t $IMAGE_REGISTRY/backend:dev-${{ github.sha }} .
+          docker push $IMAGE_REGISTRY/backend:dev-${{ github.sha }}
+
+      # ── Deploy to dev namespace ──
+      - run: |
+          gcloud container clusters get-credentials careertrojan-dev --region europe-west2
+          cd kustomize/overlays/dev
+          kustomize edit set image backend=$IMAGE_REGISTRY/backend:dev-${{ github.sha }}
+          kubectl apply -k .
+          kubectl rollout status deploy/backend-api -n careertrojan-dev --timeout=180s
+
+      # ── Smoke test ──
+      - run: bash scripts/smoke_test.sh

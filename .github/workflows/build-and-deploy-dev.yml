@@ -1,0 +1,88 @@
+name: build-and-deploy-dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["develop"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
+      GCP_IMAGE_REGISTRY: ${{ vars.GCP_IMAGE_REGISTRY }}
+      GKE_CLUSTER: ${{ vars.GKE_CLUSTER_DEV }}
+      GKE_REGION: ${{ vars.GKE_REGION_DEV }}
+      K8S_NAMESPACE: ${{ vars.K8S_NAMESPACE_DEV }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via OIDC
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker auth
+        run: |
+          REG_HOST=$(echo "${{ env.GCP_IMAGE_REGISTRY }}" | cut -d/ -f1)
+          gcloud auth configure-docker "${REG_HOST}" --quiet
+
+      - name: Build and push backend image
+        run: |
+          IMAGE_TAG=dev-${{ github.sha }}
+          IMAGE_URI=${{ env.GCP_IMAGE_REGISTRY }}/backend-api:${IMAGE_TAG}
+          echo "IMAGE_URI=${IMAGE_URI}" >> $GITHUB_ENV
+          docker build -f services/backend_api/Dockerfile -t ${IMAGE_URI} .
+          docker push ${IMAGE_URI}
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials "${{ env.GKE_CLUSTER }}" --region "${{ env.GKE_REGION }}" --project "${{ env.GCP_PROJECT_ID }}"
+
+      - name: Apply base manifests
+        run: kubectl apply -f infra/k8s/careertrojan-full.yaml
+
+      - name: Roll out backend image
+        run: |
+          NAMESPACE=${{ env.K8S_NAMESPACE }}
+          if [ -z "${NAMESPACE}" ]; then NAMESPACE=careertrojan; fi
+          kubectl -n ${NAMESPACE} set image deployment/backend-api backend-api=${IMAGE_URI}
+          kubectl -n ${NAMESPACE} rollout status deployment/backend-api --timeout=300s
+
+      - name: Smoke test backend /health
+        run: |
+          set -euo pipefail
+          NAMESPACE=${{ env.K8S_NAMESPACE }}
+          if [ -z "${NAMESPACE}" ]; then NAMESPACE=careertrojan; fi
+
+          kubectl -n ${NAMESPACE} get deploy backend-api
+          kubectl -n ${NAMESPACE} get svc backend-api
+
+          kubectl -n ${NAMESPACE} port-forward svc/backend-api 18080:8000 >/tmp/pf.log 2>&1 &
+          PF_PID=$!
+          trap 'kill ${PF_PID} 2>/dev/null || true' EXIT
+
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:18080/health; then
+              echo "Smoke test passed."
+              exit 0
+            fi
+            sleep 3
+          done
+
+          echo "Smoke test failed after retries."
+          echo "--- port-forward log ---"
+          cat /tmp/pf.log || true
+          exit 1

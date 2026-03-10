@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AdminAuthProvider, useAdminAuth } from './context/AdminAuthContext';
 import AdminLogin from './pages/AdminLogin';
 import { initHelpdeskStub } from './lib/helpdeskStub';
+import PageHelpIcon from './components/PageHelpIcon';
 
 // Main Pages
 import AdminHome from './pages/AdminHome';
@@ -100,6 +101,7 @@ export default function App() {
     return (
         <AdminAuthProvider>
             <BrowserRouter>
+                <PageHelpIcon />
                 <Routes>
                     {/* Public Route */}
                     <Route path="/admin/login" element={<AdminLogin />} />

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MentorAuthProvider, useMentorAuth } from './context/MentorAuthContext';
 import MentorLogin from './pages/MentorLogin';
 import { initHelpdeskStub } from './lib/helpdeskStub';
+import PageHelpIcon from './components/PageHelpIcon';
 
 // Mentor Pages
 import Dashboard from './pages/Dashboard';
@@ -34,6 +35,7 @@ export default function App() {
     return (
         <MentorAuthProvider>
             <BrowserRouter>
+                <PageHelpIcon />
                 <Routes>
                     {/* Public Route */}
                     <Route path="/mentor/login" element={<MentorLogin />} />

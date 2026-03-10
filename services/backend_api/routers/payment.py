@@ -186,11 +186,32 @@ class CancelSubscriptionOut(BaseModel):
 
 
 # ============================================================================
-# IN-MEMORY STORAGE (Replace with database in production)
+# PROMO CODE HELPER
 # ============================================================================
 
-_user_subscriptions: Dict[str, Dict[str, Any]] = {}
-_payment_history: Dict[str, List[Dict[str, Any]]] = {}
+def _resolve_promo(db: Session, code: Optional[str], plan_price: float) -> tuple[float, Optional[str]]:
+    """Return (discount_amount, normalised_code) or (0, None)."""
+    if not code:
+        return 0.0, None
+    promo = db.query(models.PromoCode).filter(
+        models.PromoCode.code == code.upper(),
+        models.PromoCode.is_active == True,
+    ).first()
+    if not promo:
+        return 0.0, None
+    if promo.max_uses and promo.times_used >= promo.max_uses:
+        return 0.0, None
+    if promo.expires_at and promo.expires_at < datetime.utcnow():
+        return 0.0, None
+    if promo.valid_plans:
+        # valid_plans is comma-separated list of plan IDs
+        pass  # checked by caller if needed
+    if promo.discount_type == "percent":
+        discount = round(plan_price * promo.discount_value / 100, 2)
+    else:
+        discount = min(promo.discount_value, plan_price)
+    promo.times_used += 1
+    return discount, promo.code
 
 
 # ============================================================================
@@ -255,10 +276,7 @@ async def get_plans(current_user: models.User = Depends(get_current_user)):
     Returns pricing, features, and token limits for each tier
     """
     plans_list = [PlanOut(**plan) for plan in PLANS.values()]
-    
-    user_id = str(current_user.id)
-    current_plan = _user_subscriptions.get(user_id, {}).get("plan_id", "free")
-    
+    current_plan = current_user.subscription_tier or "free"
     return PlansListOut(plans=plans_list, current_plan=current_plan)
 
 
@@ -274,7 +292,11 @@ async def get_plan(plan_id: str):
 
 
 @router.post("/process", response_model=PaymentProcessOut)
-async def process_payment(payload: PaymentProcessIn, current_user: models.User = Depends(get_current_user)):
+async def process_payment(
+    payload: PaymentProcessIn,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     """
     Process a subscription payment via Braintree.
     
@@ -292,12 +314,9 @@ async def process_payment(payload: PaymentProcessIn, current_user: models.User =
     
     # Free tier - no payment needed
     if payload.plan_id == "free":
-        _user_subscriptions[user_id] = {
-            "plan_id": "free",
-            "subscription_id": None,
-            "started_at": datetime.now(timezone.utc).isoformat(),
-            "next_billing": None
-        }
+        current_user.subscription_tier = "free"
+        current_user.subscription_id = None
+        db.commit()
         return PaymentProcessOut(
             success=True,
             subscription_id=None,
@@ -313,15 +332,8 @@ async def process_payment(payload: PaymentProcessIn, current_user: models.User =
             detail="Payment method required for paid plans. Provide payment_method_nonce (from Drop-in UI) or payment_method_token (vaulted)."
         )
     
-    # Apply promo code discount
-    discount = 0.0
-    if payload.promo_code:
-        # TODO: Validate promo code from database
-        if payload.promo_code.upper() == "LAUNCH20":
-            discount = plan["price"] * 0.20
-        elif payload.promo_code.upper() == "CAREER10":
-            discount = plan["price"] * 0.10
-    
+    # Apply promo code discount (DB-backed)
+    discount, promo_used = _resolve_promo(db, payload.promo_code, plan["price"])
     final_amount = round(plan["price"] - discount, 2)
     
     # Process payment via Braintree
@@ -339,117 +351,170 @@ async def process_payment(payload: PaymentProcessIn, current_user: models.User =
             detail="Payment failed"
         )
     
-    # Create subscription
-    subscription_id = f"sub_{uuid.uuid4().hex[:16]}"
+    # Create Subscription record
+    from datetime import timedelta
     now = datetime.now(timezone.utc)
-    
-    # Calculate next billing date
     if plan["interval"] == "month":
-        from datetime import timedelta
         next_billing = now + timedelta(days=30)
     elif plan["interval"] == "year":
-        from datetime import timedelta
         next_billing = now + timedelta(days=365)
     else:
         next_billing = None
-    
-    # Store subscription
-    _user_subscriptions[user_id] = {
-        "plan_id": payload.plan_id,
-        "subscription_id": subscription_id,
-        "started_at": now.isoformat(),
-        "next_billing": next_billing.isoformat() if next_billing else None,
-        "braintree_transaction_id": payment_result.get("transaction_id")
-    }
-    
-    # Store payment history
-    if user_id not in _payment_history:
-        _payment_history[user_id] = []
-    
-    _payment_history[user_id].append({
-        "transaction_id": payment_result.get("transaction_id", f"tx_{uuid.uuid4().hex[:16]}"),
-        "plan_id": payload.plan_id,
-        "amount": final_amount,
-        "currency": plan["currency"],
-        "status": "completed",
-        "created_at": now.isoformat(),
-        "description": f"Subscription to {plan['name']}"
-    })
-    
-    logger.info(f"User {user_id} subscribed to {payload.plan_id}")
-    
+
+    subscription = models.Subscription(
+        user_id=current_user.id,
+        plan_id=payload.plan_id,
+        gateway="braintree",
+        gateway_customer_id=user_id,
+        gateway_subscription_id=payment_result.get("subscription_id"),
+        status="active",
+        price=final_amount,
+        currency=plan["currency"],
+        interval=plan["interval"],
+        promo_code=promo_used,
+        discount_amount=discount,
+        started_at=now,
+        current_period_start=now,
+        current_period_end=next_billing,
+    )
+    db.add(subscription)
+    db.flush()  # get subscription.id
+
+    # Create PaymentTransaction record
+    transaction = models.PaymentTransaction(
+        user_id=current_user.id,
+        subscription_id=subscription.id,
+        gateway="braintree",
+        gateway_transaction_id=payment_result.get("transaction_id"),
+        transaction_type="charge",
+        status="completed",
+        amount=final_amount,
+        currency=plan["currency"],
+        plan_id=payload.plan_id,
+        description=f"Subscription to {plan['name']}",
+        gateway_response=payment_result,
+    )
+    db.add(transaction)
+
+    # Update user record
+    current_user.subscription_tier = payload.plan_id
+    current_user.subscription_id = subscription.id
+    current_user.braintree_customer_id = user_id
+    db.commit()
+
+    logger.info("User %s subscribed to %s (sub=%s)", user_id, payload.plan_id, subscription.id)
+
     return PaymentProcessOut(
         success=True,
-        subscription_id=subscription_id,
+        subscription_id=subscription.id,
         plan_id=payload.plan_id,
         message=f"Successfully subscribed to {plan['name']}",
         next_billing_date=next_billing.isoformat() if next_billing else None,
-        amount_charged=final_amount
+        amount_charged=final_amount,
     )
 
 
 @router.get("/history", response_model=PaymentHistoryOut)
-async def get_payment_history(current_user: models.User = Depends(get_current_user)):
+async def get_payment_history(
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     """Get user's payment history"""
-    user_id = str(current_user.id)
-    transactions = _payment_history.get(user_id, [])
-    
-    total_spent = sum(t["amount"] for t in transactions if t["status"] == "completed")
-    
-    return PaymentHistoryOut(
-        transactions=[PaymentHistoryItem(**t) for t in transactions],
-        total_spent=total_spent
+    rows = (
+        db.query(models.PaymentTransaction)
+        .filter(models.PaymentTransaction.user_id == current_user.id)
+        .order_by(models.PaymentTransaction.created_at.desc())
+        .all()
     )
+    transactions = [
+        PaymentHistoryItem(
+            transaction_id=r.gateway_transaction_id or r.id,
+            plan_id=r.plan_id or "unknown",
+            amount=r.amount,
+            currency=r.currency,
+            status=r.status,
+            created_at=r.created_at.isoformat() if r.created_at else "",
+            description=r.description or "",
+        )
+        for r in rows
+    ]
+    total_spent = sum(t.amount for t in transactions if t.status == "completed")
+    return PaymentHistoryOut(transactions=transactions, total_spent=total_spent)
 
 
 @router.get("/subscription")
-async def get_current_subscription(current_user: models.User = Depends(get_current_user)):
+async def get_current_subscription(
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     """Get user's current subscription details"""
-    user_id = str(current_user.id)
-    subscription = _user_subscriptions.get(user_id)
-    
-    if not subscription:
+    sub = (
+        db.query(models.Subscription)
+        .filter(
+            models.Subscription.user_id == current_user.id,
+            models.Subscription.status.in_(["active", "trialing", "past_due"]),
+        )
+        .order_by(models.Subscription.created_at.desc())
+        .first()
+    )
+    if not sub:
         return {
             "plan_id": "free",
             "plan_name": "Free Trial",
             "active": True,
-            "next_billing": None
+            "next_billing": None,
         }
-    
-    plan = PLANS.get(subscription["plan_id"], PLANS["free"])
-    
+    plan = PLANS.get(sub.plan_id, PLANS["free"])
     return {
-        "plan_id": subscription["plan_id"],
+        "plan_id": sub.plan_id,
         "plan_name": plan["name"],
-        "subscription_id": subscription.get("subscription_id"),
-        "active": True,
-        "started_at": subscription["started_at"],
-        "next_billing": subscription.get("next_billing"),
+        "subscription_id": sub.id,
+        "active": sub.status in ("active", "trialing"),
+        "started_at": sub.started_at.isoformat() if sub.started_at else None,
+        "next_billing": sub.current_period_end.isoformat() if sub.current_period_end else None,
         "features": plan["features"],
-        "token_limit": plan["token_limit"]
+        "token_limit": plan["token_limit"],
     }
 
 
 @router.post("/cancel", response_model=CancelSubscriptionOut)
-async def cancel_subscription(current_user: models.User = Depends(get_current_user)):
+async def cancel_subscription(
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     """Cancel current subscription (effective at end of billing period)"""
-    user_id = str(current_user.id)
-    subscription = _user_subscriptions.get(user_id)
-    
-    if not subscription or subscription["plan_id"] == "free":
+    sub = (
+        db.query(models.Subscription)
+        .filter(
+            models.Subscription.user_id == current_user.id,
+            models.Subscription.status.in_(["active", "trialing", "past_due"]),
+        )
+        .order_by(models.Subscription.created_at.desc())
+        .first()
+    )
+    if not sub or sub.plan_id == "free":
         return CancelSubscriptionOut(
             success=False,
-            message="No active paid subscription to cancel"
+            message="No active paid subscription to cancel",
         )
-    
-    # Mark for cancellation (stays active until next_billing)
-    subscription["cancelled"] = True
-    subscription["cancelled_at"] = datetime.now(timezone.utc).isoformat()
-    
+
+    # Cancel in Braintree if we have a gateway subscription
+    if sub.gateway == "braintree" and sub.gateway_subscription_id:
+        try:
+            if BRAINTREE_AVAILABLE and braintree_service.is_configured():
+                braintree_service.cancel_subscription(sub.gateway_subscription_id)
+        except Exception as e:
+            logger.warning("Braintree cancel failed (continuing): %s", e)
+
+    sub.status = "cancelled"
+    sub.cancelled_at = datetime.now(timezone.utc)
+    db.commit()
+
+    effective = sub.current_period_end.isoformat() if sub.current_period_end else None
     return CancelSubscriptionOut(
         success=True,
         message="Subscription cancelled. Access continues until end of billing period.",
-        effective_date=subscription.get("next_billing")
+        effective_date=effective,
     )
 
 

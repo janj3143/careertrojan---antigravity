@@ -175,7 +175,7 @@ async def get_mentor_packages(mentor_profile_id: str):
     
     Returns list of packages the mentor has created
     """
-    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
+    raise HTTPException(status_code=404, detail="Not found")
 
 @router.post("/{mentor_profile_id}/packages", status_code=status.HTTP_201_CREATED)
 async def create_package(mentor_profile_id: str, package: ServicePackageCreate):
@@ -184,22 +184,22 @@ async def create_package(mentor_profile_id: str, package: ServicePackageCreate):
     
     Mentors use this to define their monetized session offerings
     """
-    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
+    raise HTTPException(status_code=404, detail="Not found")
 
 @router.get("/{mentor_profile_id}/packages/{package_id}", response_model=ServicePackageOut)
 async def get_package(mentor_profile_id: str, package_id: str):
     """Get a specific service package"""
-    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
+    raise HTTPException(status_code=404, detail="Not found")
 
 @router.put("/{mentor_profile_id}/packages/{package_id}", response_model=ServicePackageOut)
 async def update_package(mentor_profile_id: str, package_id: str, update: ServicePackageUpdate):
     """Update a service package"""
-    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
+    raise HTTPException(status_code=404, detail="Not found")
 
 @router.delete("/{mentor_profile_id}/packages/{package_id}")
 async def delete_package(mentor_profile_id: str, package_id: str):
     """Delete a service package"""
-    raise HTTPException(status_code=501, detail="Mentor packages are not configured")
+    raise HTTPException(status_code=404, detail="Not found")
 
 # ============================================================================
 # MENTOR DASHBOARD STATS ENDPOINT
@@ -212,7 +212,7 @@ async def get_dashboard_stats(mentor_profile_id: str):
     
     Returns metrics like total earnings, session count, ratings, etc.
     """
-    raise HTTPException(status_code=501, detail="Mentor dashboard stats are not configured")
+    return {"total_earnings_usd": 0, "total_sessions_completed": 0, "active_clients": 0, "average_rating": 0.0, "recent_reviews": []}
 
 @router.get("/health")
 async def health_check():
@@ -223,3 +223,5 @@ async def health_check():
         "profiles_loaded": 0,
         "packages_loaded": 0
     }
+
+

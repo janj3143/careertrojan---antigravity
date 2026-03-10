@@ -107,10 +107,18 @@ class User(Base):
     role = Column(String, default="user")  # 'admin', 'user', 'mentor'
     otp_secret = Column(String, nullable=True) # 2FA Secret
     created_at = Column(DateTime, default=datetime.utcnow)
-    
+
+    # ── Payment / Braintree linkage ──
+    braintree_customer_id = Column(String, nullable=True, index=True)
+    subscription_tier = Column(String, default="free")  # free, monthly, annual, elitepro
+    subscription_id = Column(String, nullable=True)      # active Subscription.id FK (loose ref)
+    stripe_customer_id = Column(String, nullable=True, index=True)
+
     profile = relationship("UserProfile", back_populates="user", uselist=False)
     resumes = relationship("Resume", back_populates="user")
     mentorship_requests = relationship("Mentorship", back_populates="mentee", foreign_keys="Mentorship.mentee_id")
+    subscriptions = relationship("Subscription", back_populates="user", order_by="Subscription.created_at.desc()")
+    payment_transactions = relationship("PaymentTransaction", back_populates="user", order_by="PaymentTransaction.created_at.desc()")
 
 class UserProfile(Base):
     __tablename__ = "user_profiles"
@@ -372,3 +380,98 @@ class RewardRedemption(Base):
     expires_at = Column(DateTime, nullable=True)  # when the granted benefit expires
 
     user = relationship("User", backref="redemptions")
+
+# ── Payment & Subscription Models ─────────────────────────────────────
+
+class Subscription(Base):
+    """Tracks user subscriptions (Braintree recurring or manual)."""
+    __tablename__ = "subscriptions"
+
+    id = Column(String, primary_key=True, default=lambda: f"sub_{uuid.uuid4().hex[:16]}")
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    plan_id = Column(String, nullable=False, index=True)        # free, monthly, annual, elitepro
+    gateway = Column(String, default="braintree")                # braintree | stripe | manual
+    gateway_subscription_id = Column(String, nullable=True)      # Braintree/Stripe subscription ID
+    gateway_customer_id = Column(String, nullable=True)          # Braintree/Stripe customer ID
+
+    status = Column(String, default="active", index=True)        # active, cancelled, past_due, expired, trialing
+    price = Column(Float, nullable=False)
+    currency = Column(String, default="USD")
+    interval = Column(String, nullable=True)                     # month, year, null (one-time / free)
+    promo_code = Column(String, nullable=True)
+    discount_amount = Column(Float, default=0.0)
+
+    started_at = Column(DateTime, default=datetime.utcnow)
+    current_period_start = Column(DateTime, nullable=True)
+    current_period_end = Column(DateTime, nullable=True)         # next_billing_date
+    cancelled_at = Column(DateTime, nullable=True)
+    expires_at = Column(DateTime, nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = relationship("User", back_populates="subscriptions")
+    transactions = relationship("PaymentTransaction", back_populates="subscription")
+
+
+class PaymentTransaction(Base):
+    """Records every payment charge, refund, or void."""
+    __tablename__ = "payment_transactions"
+
+    id = Column(String, primary_key=True, default=lambda: f"tx_{uuid.uuid4().hex[:16]}")
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    subscription_id = Column(String, ForeignKey("subscriptions.id"), nullable=True, index=True)
+
+    gateway = Column(String, default="braintree")                # braintree | stripe
+    gateway_transaction_id = Column(String, nullable=True, index=True)  # Braintree/Stripe tx ID
+    transaction_type = Column(String, default="charge")          # charge, refund, void
+    status = Column(String, default="pending", index=True)       # pending, completed, failed, refunded, voided
+
+    amount = Column(Float, nullable=False)
+    currency = Column(String, default="USD")
+    plan_id = Column(String, nullable=True)
+    description = Column(String, nullable=True)
+
+    payment_method_type = Column(String, nullable=True)          # card, paypal, apple_pay
+    payment_method_last4 = Column(String, nullable=True)
+    payment_method_brand = Column(String, nullable=True)         # visa, mastercard, amex
+
+    gateway_response = Column(JSON, nullable=True)               # full gateway response (for debugging)
+    error_message = Column(String, nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = relationship("User", back_populates="payment_transactions")
+    subscription = relationship("Subscription", back_populates="transactions")
+
+
+class PromoCode(Base):
+    """Discount promo codes for subscriptions."""
+    __tablename__ = "promo_codes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    code = Column(String, unique=True, nullable=False, index=True)
+    discount_type = Column(String, default="percent")            # percent | fixed
+    discount_value = Column(Float, nullable=False)               # 20 = 20% or $20
+    max_uses = Column(Integer, nullable=True)                    # null = unlimited
+    times_used = Column(Integer, default=0)
+    valid_plans = Column(String, nullable=True)                  # comma-separated plan IDs, null = all
+    is_active = Column(Boolean, default=True)
+    expires_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class WebhookEvent(Base):
+    """Logs incoming webhook payloads for auditing and deduplication."""
+    __tablename__ = "webhook_events"
+
+    id = Column(Integer, primary_key=True, index=True)
+    event_id = Column(String, unique=True, nullable=False, index=True)  # gateway event ID (idempotency)
+    source = Column(String, nullable=False, index=True)          # braintree | stripe | zendesk
+    event_type = Column(String, nullable=False, index=True)      # e.g. subscription_charged_successfully
+    payload = Column(JSON, nullable=True)
+    status = Column(String, default="received", index=True)      # received, processed, failed, ignored
+    error_message = Column(String, nullable=True)
+    processed_at = Column(DateTime, nullable=True)
+    received_at = Column(DateTime, default=datetime.utcnow)

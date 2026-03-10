@@ -176,3 +176,42 @@ export async function generateImprovementPlans(cfg: ApiConfig, payload: { blocke
     });
 }
 
+
+
+
+
+// --- Lenses & Mathematical Intelligence ---
+export async function buildSpiderPlot(cfg: ApiConfig, payload: { user_id: string; resume_id: string; job_family: string; cohort?: any }) {
+    return http<any>(`${cfg.baseUrl}/api/lenses/v1/spider`, {
+        method: "POST", headers: JSON_HEADERS, body: JSON.stringify(payload)
+    });
+}
+
+// --- Operations & Processing (AI Worker Triggers) ---
+export async function startProcessing(cfg: ApiConfig, payload: { pdfs: boolean; full_scan: boolean; trigger_enrichment: boolean }) {
+    return http<any>(`${cfg.baseUrl}/api/ops/v1/processing/start`, {
+        method: "POST", headers: JSON_HEADERS, body: JSON.stringify(payload)
+    });
+}
+
+// --- Market Stats ---
+export async function getMarketIntelligence(cfg: ApiConfig, query?: string) {
+    const url = query ? `${cfg.baseUrl}/api/intelligence/v1/market?query=${encodeURIComponent(query)}` : `${cfg.baseUrl}/api/intelligence/v1/market`;
+    return http<any>(url);
+}
+
+// --- Mentor UI ---
+export async function getMentorDashboardStats(cfg: ApiConfig, mentorProfileId: string) {
+    return http<any>(`${cfg.baseUrl}/api/mentor/v1/${mentorProfileId}/dashboard-stats`);
+}
+
+// --- Braintree / Billing ---
+export async function getPaymentClientToken(cfg: ApiConfig) {
+    return http<any>(`${cfg.baseUrl}/api/payment/v1/token`); 
+}
+
+export async function vaultPaymentMethod(cfg: ApiConfig, payload: { payment_method_nonce: string }) {
+    return http<any>(`${cfg.baseUrl}/api/payment/v1/vault`, {
+        method: "POST", headers: JSON_HEADERS, body: JSON.stringify(payload)
+    });
+}

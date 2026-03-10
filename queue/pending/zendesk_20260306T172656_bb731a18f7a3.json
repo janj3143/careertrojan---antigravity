@@ -1,0 +1,23 @@
+{
+  "job_id": "zendesk_20260306T172656_bb731a18f7a3",
+  "kind": "draft_reply",
+  "source": "zendesk",
+  "status": "pending",
+  "created_at": "2026-03-06T17:26:56.673033+00:00",
+  "payload": {
+    "ticket": {
+      "id": "123456",
+      "subject": "Billing discrepancy",
+      "description": "Charged twice",
+      "status": "new",
+      "priority": "normal",
+      "category": "Billing",
+      "requester": {
+        "name": null,
+        "email": "billing@example.com"
+      }
+    }
+  },
+  "result": null,
+  "error": null
+}

@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from typing import List
+from typing import List, Optional
 import os, glob, json, logging
 from datetime import datetime, timedelta
 from uuid import uuid4
@@ -48,6 +48,43 @@ _integration_state = {
 }
 
 _email_dispatch_log = []
+
+
+def _detect_payment_runtime_modes() -> dict:
+    stripe_secret = (os.getenv("STRIPE_SECRET_KEY") or "").strip()
+    braintree_env = (os.getenv("BRAINTREE_ENVIRONMENT") or "").strip().lower()
+
+    if stripe_secret.startswith("sk_live_"):
+        stripe_mode = "live"
+    elif stripe_secret.startswith("sk_test_"):
+        stripe_mode = "sandbox"
+    elif stripe_secret:
+        stripe_mode = "unknown"
+    else:
+        stripe_mode = "missing"
+
+    if braintree_env == "production":
+        braintree_mode = "live"
+    elif braintree_env:
+        braintree_mode = "sandbox"
+    else:
+        braintree_mode = "missing"
+
+    return {
+        "stripe": {
+            "configured": bool(stripe_secret),
+            "mode": stripe_mode,
+            "api_key_masked": _mask_api_key(stripe_secret),
+            "is_live": stripe_mode == "live",
+        },
+        "braintree": {
+            "configured": bool(braintree_env),
+            "mode": braintree_mode,
+            "environment": braintree_env or None,
+            "merchant_id_masked": _mask_api_key(os.getenv("BRAINTREE_MERCHANT_ID")),
+            "is_live": braintree_mode == "live",
+        },
+    }
 
 # Dependency for Admin Auth
 def require_admin(token: str = Depends(security.oauth2_scheme), db: Session = Depends(get_db)):
@@ -128,7 +165,120 @@ def integrations_status(_: bool = Depends(require_admin)):
     }
     return {
         "providers": providers,
+        "payment_gateways": _detect_payment_runtime_modes(),
         "timestamp": datetime.utcnow().isoformat(),
+    }
+
+
+@router.get("/payments/disputes")
+def payment_disputes(
+    days: int = Query(default=90, ge=1, le=365),
+    limit: int = Query(default=100, ge=1, le=1000),
+    dispute_type: Optional[str] = Query(default=None, pattern="^(dispute_opened|dispute_lost|dispute_won)$"),
+    _: bool = Depends(require_admin),
+    db: Session = Depends(get_db),
+):
+    """Admin finance view for Braintree dispute events captured in payment transactions."""
+    cutoff = datetime.utcnow() - timedelta(days=days)
+    dispute_types = ["dispute_opened", "dispute_lost", "dispute_won"]
+
+    query = (
+        db.query(models.PaymentTransaction)
+        .filter(
+            models.PaymentTransaction.gateway == "braintree",
+            models.PaymentTransaction.created_at >= cutoff,
+            models.PaymentTransaction.transaction_type.in_(dispute_types),
+        )
+    )
+
+    if dispute_type:
+        query = query.filter(models.PaymentTransaction.transaction_type == dispute_type)
+
+    rows = query.order_by(models.PaymentTransaction.created_at.desc()).limit(limit).all()
+
+    counts = {key: 0 for key in dispute_types}
+    amount_by_type = {key: 0.0 for key in dispute_types}
+
+    records = []
+    for row in rows:
+        dtype = row.transaction_type or "unknown"
+        if dtype in counts:
+            counts[dtype] += 1
+            amount_by_type[dtype] += float(row.amount or 0.0)
+
+        records.append(
+            {
+                "id": row.id,
+                "user_id": row.user_id,
+                "subscription_id": row.subscription_id,
+                "gateway_transaction_id": row.gateway_transaction_id,
+                "transaction_type": dtype,
+                "status": row.status,
+                "amount": row.amount,
+                "currency": row.currency,
+                "plan_id": row.plan_id,
+                "description": row.description,
+                "created_at": row.created_at.isoformat() if row.created_at else None,
+                "gateway_response": row.gateway_response,
+            }
+        )
+
+    return {
+        "days": days,
+        "limit": limit,
+        "filter": dispute_type,
+        "counts": counts,
+        "amount_by_type": {k: round(v, 2) for k, v in amount_by_type.items()},
+        "records": records,
+    }
+
+
+@router.post("/integrations/reminders/non-live")
+def send_non_live_api_reminder(payload: dict, _: bool = Depends(require_admin)):
+    provider = str(payload.get("provider") or "").strip().lower()
+    if provider not in {"stripe", "braintree"}:
+        raise HTTPException(status_code=400, detail="provider must be one of: stripe, braintree")
+
+    modes = _detect_payment_runtime_modes()
+    provider_status = modes.get(provider, {})
+    mode = provider_status.get("mode", "unknown")
+    if mode == "live":
+        return {
+            "status": "skipped",
+            "provider": provider,
+            "reason": "already_live",
+        }
+
+    admin_email = (
+        str(payload.get("email") or "").strip()
+        or os.getenv("ADMIN_ALERT_EMAIL")
+        or os.getenv("ZENDESK_EMAIL")
+        or ""
+    )
+    if not admin_email:
+        raise HTTPException(status_code=400, detail="No target admin email configured. Provide payload.email or ADMIN_ALERT_EMAIL")
+
+    reminder = {
+        "id": f"rem_{uuid4().hex[:12]}",
+        "provider": provider,
+        "mode": "admin_reminder",
+        "to": [admin_email],
+        "subject": f"[Action Required] {provider.title()} is running in {mode} mode",
+        "body": (
+            f"Admin reminder: {provider.title()} is currently running in '{mode}' mode. "
+            "Please replace sandbox/test credentials with live production credentials."
+        ),
+        "status": "queued",
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    _email_dispatch_log.append(reminder)
+
+    return {
+        "status": "queued",
+        "provider": provider,
+        "target": admin_email,
+        "current_mode": mode,
+        "message": reminder,
     }
 
 

@@ -1,0 +1,23 @@
+{
+  "job_id": "zendesk_20260306T172426_2d7750bc10e1",
+  "kind": "draft_reply",
+  "source": "zendesk",
+  "status": "pending",
+  "created_at": "2026-03-06T17:24:26.229528+00:00",
+  "payload": {
+    "ticket": {
+      "id": "30",
+      "subject": "Feature request",
+      "description": "Need bulk upload",
+      "status": "new",
+      "priority": "normal",
+      "category": "Feature Request",
+      "requester": {
+        "name": null,
+        "email": "feature@example.com"
+      }
+    }
+  },
+  "result": null,
+  "error": null
+}

@@ -19,7 +19,17 @@ from services.backend_api.services.helpdesk_stub_service import (
 from services.backend_api.services.zendesk_bridge_service import (
     create_ticket as zendesk_create_ticket,
     get_ticket as zendesk_get_ticket,
+    get_comments as zendesk_get_comments,
+    add_comment as zendesk_add_comment,
     verify_webhook_signature,
+)
+
+# AI agent queue — enqueue jobs for LLM processing
+from services.backend_api.services.ai_queue_service import enqueue as ai_enqueue
+from services.backend_api.services.ai_queue_service import (
+    queue_stats as ai_queue_stats,
+    list_jobs as ai_list_jobs,
+    read_job as ai_read_job,
 )
 
 router = APIRouter(prefix="/api/support/v1", tags=["support"])
@@ -45,6 +55,11 @@ class SupportTicketCreateRequest(BaseModel):
     tokens_remaining: Optional[int] = None
     request_id: Optional[str] = None
     resume_version_id: Optional[str] = None
+
+
+class TicketReplyRequest(BaseModel):
+    body: str
+    public: bool = True
 
 
 def _resolve_user_from_token(db: Session, token: Optional[str]) -> Optional[models.User]:
@@ -252,6 +267,32 @@ def create_support_ticket(
     db.commit()
     db.refresh(ticket)
 
+    # ── Enqueue AI agent job for triage + draft reply ─────────
+    import os as _os
+    ai_job_id = None
+    if ai_enqueue and _os.getenv("ZENDESK_AI_AGENT_ENABLED", "true").lower() in ("1", "true", "yes"):
+        try:
+            ai_job_id = ai_enqueue(
+                {
+                    "ticket": {
+                        "id": ticket.zendesk_ticket_id,
+                        "subject": ticket.subject,
+                        "description": payload.description,
+                        "status": ticket.status,
+                        "priority": ticket.priority,
+                        "category": ticket.category,
+                        "requester": {
+                            "name": payload.requester_name,
+                            "email": payload.requester_email,
+                        },
+                    }
+                },
+                kind="draft_reply",
+                source="zendesk",
+            )
+        except Exception:
+            pass  # non-critical — don't fail ticket creation
+
     return {
         "status": "ok",
         "provider": cfg.get("provider"),
@@ -266,6 +307,7 @@ def create_support_ticket(
             "request_id": ticket.request_id,
             "portal": ticket.portal,
             "zendesk_url": zendesk_url,
+            "ai_job_id": ai_job_id,
             "created_at": ticket.created_at.isoformat() if ticket.created_at else None,
             "updated_at": ticket.updated_at.isoformat() if ticket.updated_at else None,
         },
@@ -313,6 +355,152 @@ def get_support_ticket(
             "updated_at": ticket.updated_at.isoformat() if ticket.updated_at else None,
             "provider_status": provider_status,
         },
+    }
+
+
+# ── Ticket List (admin) ─────────────────────────────────────────
+
+
+def _ticket_to_dict(ticket: models.SupportTicket) -> Dict[str, Any]:
+    return {
+        "id": ticket.id,
+        "zendesk_ticket_id": ticket.zendesk_ticket_id,
+        "user_id": ticket.user_id,
+        "subject": ticket.subject,
+        "status": ticket.status,
+        "priority": ticket.priority,
+        "category": ticket.category,
+        "portal": ticket.portal,
+        "request_id": ticket.request_id,
+        "last_comment_at": ticket.last_comment_at.isoformat() if ticket.last_comment_at else None,
+        "created_at": ticket.created_at.isoformat() if ticket.created_at else None,
+        "updated_at": ticket.updated_at.isoformat() if ticket.updated_at else None,
+    }
+
+
+@router.get("/tickets")
+def list_support_tickets(
+    status: Optional[str] = Query(None, description="Filter by status (new, open, pending, solved, closed)"),
+    category: Optional[str] = Query(None),
+    portal: Optional[str] = Query(None),
+    limit: int = Query(50, ge=1, le=200),
+    offset: int = Query(0, ge=0),
+    db: Session = Depends(get_db),
+) -> Dict[str, Any]:
+    _ensure_support_table(db)
+
+    q = db.query(models.SupportTicket)
+    if status:
+        q = q.filter(models.SupportTicket.status == status)
+    if category:
+        q = q.filter(models.SupportTicket.category == category)
+    if portal:
+        q = q.filter(models.SupportTicket.portal == portal)
+
+    total = q.count()
+    tickets = q.order_by(models.SupportTicket.updated_at.desc()).offset(offset).limit(limit).all()
+
+    return {
+        "status": "ok",
+        "total": total,
+        "limit": limit,
+        "offset": offset,
+        "tickets": [_ticket_to_dict(t) for t in tickets],
+    }
+
+
+# ── Ticket Comments / Thread ────────────────────────────────────
+
+
+@router.get("/tickets/{ticket_id}/comments")
+def get_ticket_comments(
+    ticket_id: int,
+    db: Session = Depends(get_db),
+) -> Dict[str, Any]:
+    _ensure_support_table(db)
+
+    ticket = db.query(models.SupportTicket).filter(models.SupportTicket.id == ticket_id).first()
+    if not ticket:
+        raise HTTPException(status_code=404, detail="Support ticket not found")
+
+    if not ticket.zendesk_ticket_id:
+        return {
+            "status": "ok",
+            "ticket_id": ticket.id,
+            "provider": "local_fallback",
+            "comments": [
+                {
+                    "id": 0,
+                    "body": ticket.subject,
+                    "public": True,
+                    "created_at": ticket.created_at.isoformat() if ticket.created_at else None,
+                    "author_name": "System",
+                }
+            ],
+        }
+
+    cfg = get_helpdesk_config()
+    if cfg.get("provider") != "zendesk":
+        raise HTTPException(status_code=400, detail="Comments only available when provider is zendesk")
+
+    try:
+        comments = zendesk_get_comments(int(ticket.zendesk_ticket_id))
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Zendesk comments error: {exc}")
+
+    return {
+        "status": "ok",
+        "ticket_id": ticket.id,
+        "zendesk_ticket_id": ticket.zendesk_ticket_id,
+        "comments": comments,
+    }
+
+
+# ── Reply to Ticket ─────────────────────────────────────────────
+
+
+@router.post("/tickets/{ticket_id}/reply")
+def reply_to_ticket(
+    ticket_id: int,
+    payload: TicketReplyRequest,
+    db: Session = Depends(get_db),
+) -> Dict[str, Any]:
+    _ensure_support_table(db)
+
+    ticket = db.query(models.SupportTicket).filter(models.SupportTicket.id == ticket_id).first()
+    if not ticket:
+        raise HTTPException(status_code=404, detail="Support ticket not found")
+
+    if not payload.body.strip():
+        raise HTTPException(status_code=400, detail="Reply body cannot be empty")
+
+    if not ticket.zendesk_ticket_id:
+        raise HTTPException(status_code=400, detail="Cannot reply — ticket has no Zendesk counterpart")
+
+    cfg = get_helpdesk_config()
+    if cfg.get("provider") != "zendesk":
+        raise HTTPException(status_code=400, detail="Replies only available when provider is zendesk")
+
+    try:
+        result = zendesk_add_comment(
+            int(ticket.zendesk_ticket_id),
+            payload.body.strip(),
+            public=payload.public,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Zendesk reply error: {exc}")
+
+    ticket.status = result.get("status") or ticket.status
+    ticket.last_comment_at = datetime.utcnow()
+    db.commit()
+    db.refresh(ticket)
+
+    return {
+        "status": "ok",
+        "ticket_id": ticket.id,
+        "zendesk_ticket_id": ticket.zendesk_ticket_id,
+        "updated_status": ticket.status,
+        "reply_sent": True,
     }
 
 
@@ -373,3 +561,124 @@ async def zendesk_webhook(
         "zendesk_ticket_id": ticket.zendesk_ticket_id,
         "updated_status": ticket.status,
     }
+
+
+# ============================================================================
+# AI AGENT — Queue Stats, Draft Retrieval, Draft Approval
+# ============================================================================
+
+@router.get("/ai/queue-stats")
+def get_ai_queue_stats() -> Dict[str, Any]:
+    """Return pending / processing / processed / failed counts."""
+    return {"status": "ok", **ai_queue_stats()}
+
+
+@router.get("/ai/jobs")
+def list_ai_jobs(
+    bucket: str = Query(default="processed", description="pending|processing|processed|failed"),
+    limit: int = Query(default=30, ge=1, le=200),
+) -> Dict[str, Any]:
+    """List AI agent jobs in a given bucket."""
+    return {"status": "ok", "bucket": bucket, "jobs": ai_list_jobs(bucket=bucket, limit=limit)}
+
+
+@router.get("/ai/jobs/{job_id}")
+def get_ai_job(job_id: str) -> Dict[str, Any]:
+    """Fetch a single AI job by ID (full envelope with result)."""
+    job = ai_read_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return {"status": "ok", "job": job}
+
+
+@router.get("/tickets/{ticket_id}/ai-draft")
+def get_ai_draft_for_ticket(
+    ticket_id: int,
+    db: Session = Depends(get_db),
+) -> Dict[str, Any]:
+    """
+    Find the most recent AI draft-reply job for a given local ticket.
+    Returns the LLM-generated draft + metadata so admin can review/approve.
+    """
+    _ensure_support_table(db)
+    ticket = db.query(models.SupportTicket).filter(models.SupportTicket.id == ticket_id).first()
+    if not ticket:
+        raise HTTPException(status_code=404, detail="Ticket not found")
+
+    # Scan processed jobs for one matching this ticket's zendesk ID
+    for job in ai_list_jobs(bucket="processed", limit=100):
+        full = ai_read_job(job["job_id"])
+        if not full:
+            continue
+        job_ticket = (full.get("payload") or {}).get("ticket") or {}
+        if str(job_ticket.get("id")) == str(ticket.zendesk_ticket_id):
+            return {
+                "status": "ok",
+                "job_id": full["job_id"],
+                "kind": full.get("kind"),
+                "result": full.get("result"),
+                "created_at": full.get("created_at"),
+                "completed_at": full.get("completed_at"),
+            }
+
+    return {"status": "ok", "draft": None, "message": "No AI draft found for this ticket"}
+
+
+class AIDraftApprovalRequest(BaseModel):
+    job_id: str
+    edited_body: Optional[str] = None
+    public: bool = True
+
+
+@router.post("/tickets/{ticket_id}/approve-ai-draft")
+def approve_ai_draft(
+    ticket_id: int,
+    payload: AIDraftApprovalRequest,
+    db: Session = Depends(get_db),
+) -> Dict[str, Any]:
+    """
+    Admin approves (optionally edits) an AI-drafted reply and sends it
+    to Zendesk.  This is the human-in-the-loop gate.
+    """
+    _ensure_support_table(db)
+    ticket = db.query(models.SupportTicket).filter(models.SupportTicket.id == ticket_id).first()
+    if not ticket:
+        raise HTTPException(status_code=404, detail="Ticket not found")
+
+    # Read the AI draft
+    job = ai_read_job(payload.job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="AI job not found")
+
+    result = job.get("result") or {}
+    body = payload.edited_body or result.get("draft_reply", "")
+    if not body.strip():
+        raise HTTPException(status_code=400, detail="No reply body to send")
+
+    # Send to Zendesk
+    try:
+        zendesk_add_comment(
+            ticket_id=int(ticket.zendesk_ticket_id),
+            body=body,
+            public=payload.public,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Zendesk error: {exc}")
+
+    # Update local ticket
+    ticket.status = "open"
+    ticket.last_comment_at = datetime.utcnow()
+    meta = ticket.metadata_json or {}
+    meta["last_ai_draft_approved"] = payload.job_id
+    ticket.metadata_json = meta
+    db.commit()
+    db.refresh(ticket)
+
+    return {
+        "status": "ok",
+        "ticket_id": ticket.id,
+        "zendesk_ticket_id": ticket.zendesk_ticket_id,
+        "reply_sent": True,
+        "ai_job_id": payload.job_id,
+    }
+

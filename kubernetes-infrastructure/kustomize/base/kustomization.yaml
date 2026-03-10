@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: careertrojan
+resources:
+  - namespace.yaml
+  - backend-deployment.yaml
+  - backend-service.yaml
+  - web-deployment.yaml
+  - web-service.yaml
+  - worker-zendesk-ai-deployment.yaml
+  - redis-deployment.yaml
+  - redis-service.yaml
+  - postgres-statefulset.yaml
+  - postgres-service.yaml
+  - minio-statefulset.yaml
+  - minio-service.yaml
+  - ingress.yaml
+  - backend-pdb.yaml
+  - web-pdb.yaml
+  - hpa-backend.yaml
+  - networkpolicy.yaml

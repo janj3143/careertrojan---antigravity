@@ -497,7 +497,23 @@ def extract_frontend_calls(file_path: Path, repo_root: Path) -> list[FrontendCal
     dedup: dict[tuple[str, int, str, str, str], FrontendCall] = {}
     for c in calls:
         dedup[(c.file, c.line_no, c.method, c.path, c.source)] = c
-    return sorted(dedup.values(), key=lambda x: (x.file, x.line_no, x.path))
+
+    # If a fetch callsite/path has both inferred GET and explicit non-GET methods,
+    # keep only explicit methods to avoid method-inference false positives.
+    grouped_methods: dict[tuple[str, int, str, str], set[str]] = {}
+    for c in dedup.values():
+        key = (c.file, c.line_no, c.path, c.source)
+        grouped_methods.setdefault(key, set()).add(c.method)
+
+    filtered: list[FrontendCall] = []
+    for c in dedup.values():
+        key = (c.file, c.line_no, c.path, c.source)
+        methods = grouped_methods.get(key, set())
+        if c.method == "GET" and any(m != "GET" for m in methods):
+            continue
+        filtered.append(c)
+
+    return sorted(filtered, key=lambda x: (x.file, x.line_no, x.path, x.method))
 
 
 def discover_frontend(repo_root: Path) -> list[FrontendCall]:

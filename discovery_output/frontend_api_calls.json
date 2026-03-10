@@ -26,17 +26,7 @@
   },
   {
     "file": "apps\\admin\\src\\pages\\AdminLogin.tsx",
-    "line_no": 20,
-    "method": "GET",
-    "path": "/api/auth/v1/login",
-    "source": "fetch",
-    "inferred_component": "AdminLogin",
-    "portal": "admin",
-    "matched_backend_routes": []
-  },
-  {
-    "file": "apps\\admin\\src\\pages\\AdminLogin.tsx",
-    "line_no": 20,
+    "line_no": 24,
     "method": "POST",
     "path": "/api/auth/v1/login",
     "source": "fetch",
@@ -85,16 +75,6 @@
   {
     "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
     "line_no": 58,
-    "method": "GET",
-    "path": "/api/admin/v1/ai/enrichment/run",
-    "source": "fetch",
-    "inferred_component": "AIEnrichment",
-    "portal": "admin",
-    "matched_backend_routes": []
-  },
-  {
-    "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
-    "line_no": 58,
     "method": "POST",
     "path": "/api/admin/v1/ai/enrichment/run",
     "source": "fetch",
@@ -119,16 +99,6 @@
   {
     "file": "apps\\admin\\src\\pages\\APIIntegration.tsx",
     "line_no": 76,
-    "method": "GET",
-    "path": "/api/admin/v1/integrations/reminders/non-live",
-    "source": "fetch",
-    "inferred_component": "",
-    "portal": "admin",
-    "matched_backend_routes": []
-  },
-  {
-    "file": "apps\\admin\\src\\pages\\APIIntegration.tsx",
-    "line_no": 76,
     "method": "POST",
     "path": "/api/admin/v1/integrations/reminders/non-live",
     "source": "fetch",
@@ -136,18 +106,6 @@
     "portal": "admin",
     "matched_backend_routes": [
       "/api/admin/v1/integrations/reminders/non-live"
-    ]
-  },
-  {
-    "file": "apps\\admin\\src\\pages\\DataParser.tsx",
-    "line_no": 28,
-    "method": "GET",
-    "path": "/api/admin/v1/parsing/parse",
-    "source": "fetch",
-    "inferred_component": "DataParser",
-    "portal": "admin",
-    "matched_backend_routes": [
-      "/api/admin/v1/parsing/parse"
     ]
   },
   {
@@ -184,18 +142,6 @@
     "portal": "admin",
     "matched_backend_routes": [
       "/api/ai-data/v1/emails/tracking/summary"
-    ]
-  },
-  {
-    "file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
-    "line_no": 91,
-    "method": "GET",
-    "path": "/api/ai-data/v1/emails/tracking",
-    "source": "fetch",
-    "inferred_component": "",
-    "portal": "admin",
-    "matched_backend_routes": [
-      "/api/ai-data/v1/emails/tracking"
     ]
   },
   {
@@ -295,16 +241,6 @@
     "matched_backend_routes": [
       "/api/admin/v1/users"
     ]
-  },
-  {
-    "file": "apps\\mentor\\src\\pages\\MentorLogin.tsx",
-    "line_no": 20,
-    "method": "GET",
-    "path": "/api/auth/v1/login",
-    "source": "fetch",
-    "inferred_component": "MentorLogin",
-    "portal": "mentor",
-    "matched_backend_routes": []
   },
   {
     "file": "apps\\mentor\\src\\pages\\MentorLogin.tsx",

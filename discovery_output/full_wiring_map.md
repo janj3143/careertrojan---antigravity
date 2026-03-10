@@ -4,10 +4,10 @@ Repository root: `J:\Codec - runtime version\Antigravity\careertrojan`
 
 ## Discovery summary
 
-- Frontend API calls discovered: **40**
+- Frontend API calls discovered: **34**
 - Backend FastAPI routes discovered: **333**
-- Frontend calls matched to backend routes: **25**
-- Matched flows with backend AI signals: **8**
+- Frontend calls matched to backend routes: **23**
+- Matched flows with backend AI signals: **7**
 
 ## 1. Frontend -> backend matched flows
 
@@ -20,13 +20,11 @@ Repository root: `J:\Codec - runtime version\Antigravity\careertrojan`
 | admin | `apps\admin\src\pages\APIIntegration.tsx` | 34 | GET | `/api/admin/v1/integrations/status` | `/api/admin/v1/integrations/status` | - | router.get |
 | admin | `apps\admin\src\pages\APIIntegration.tsx` | 76 | POST | `/api/admin/v1/integrations/reminders/non-live` | `/api/admin/v1/integrations/reminders/non-live` | ai | router.post |
 | admin | `apps\admin\src\pages\AdminHome.tsx` | 26 | GET | `/api/admin/v1/dashboard/snapshot` | `/api/admin/v1/dashboard/snapshot` | ai, model | router.get |
-| admin | `apps\admin\src\pages\AdminLogin.tsx` | 20 | POST | `/api/auth/v1/login` | `/api/auth/v1/login` | - | router.post |
+| admin | `apps\admin\src\pages\AdminLogin.tsx` | 24 | POST | `/api/auth/v1/login` | `/api/auth/v1/login` | - | router.post |
 | admin | `apps\admin\src\pages\AdminPipelineOps.tsx` | 25 | GET | `/api/intelligence/v1/pipeline/ops-summary` | `/api/intelligence/v1/pipeline/ops-summary` | - | router.get |
-| admin | `apps\admin\src\pages\DataParser.tsx` | 28 | GET | `/api/admin/v1/parsing/parse` | `/api/admin/v1/parsing/parse` | - | router.get |
 | admin | `apps\admin\src\pages\DataParser.tsx` | 28 | POST | `/api/admin/v1/parsing/parse` | `/api/admin/v1/parsing/parse` | - | client.post, httpx.AsyncClient, router.post |
 | admin | `apps\admin\src\pages\EmailIntegration.tsx` | 30 | GET | `/api/ai-data/v1/emails/summary` | `/api/ai-data/v1/emails/summary` | ai | router.get |
 | admin | `apps\admin\src\pages\EmailIntegration.tsx` | 63 | GET | `/api/ai-data/v1/emails/tracking/summary` | `/api/ai-data/v1/emails/tracking/summary` | ai | router.get |
-| admin | `apps\admin\src\pages\EmailIntegration.tsx` | 91 | GET | `/api/ai-data/v1/emails/tracking` | `/api/ai-data/v1/emails/tracking` | ai | router.get |
 | admin | `apps\admin\src\pages\EmailIntegration.tsx` | 91 | POST | `/api/ai-data/v1/emails/tracking` | `/api/ai-data/v1/emails/tracking` | ai | router.post |
 | admin | `apps\admin\src\pages\MarketIntelligence.tsx` | 23 | GET | `/api/intelligence/v1/market` | `/api/intelligence/v1/market` | - | router.get |
 | admin | `apps\admin\src\pages\MentorManagement.tsx` | 27 | GET | `/api/mentorship/v1/applications/pending` | `/api/mentorship/v1/applications/pending` | - | router.get, service.get_pending_applications |
@@ -43,12 +41,8 @@ Repository root: `J:\Codec - runtime version\Antigravity\careertrojan`
 
 | Portal | File | Line | Method | Path | Source | Component |
 |---|---|---:|---|---|---|---|
-| admin | `apps\admin\src\pages\AIEnrichment.tsx` | 58 | GET | `/api/admin/v1/ai/enrichment/run` | fetch | AIEnrichment |
-| admin | `apps\admin\src\pages\APIIntegration.tsx` | 76 | GET | `/api/admin/v1/integrations/reminders/non-live` | fetch | - |
-| admin | `apps\admin\src\pages\AdminLogin.tsx` | 20 | GET | `/api/auth/v1/login` | fetch | AdminLogin |
 | mentor | `apps\mentor\src\pages\Create Agreement\Create Agreement\src\services\chatService.ts` | 105 | POST | `/https:/api.openai.com/v1/chat/completions` | fetch | - |
 | mentor | `apps\mentor\src\pages\Financial Dashboard\Financial Dashboard\src\app\App.tsx` | 45 | GET | `/api/mentorship/v1/invoices` | fetch | - |
-| mentor | `apps\mentor\src\pages\MentorLogin.tsx` | 20 | GET | `/api/auth/v1/login` | fetch | MentorLogin |
 | mentor | `apps\mentor\src\pages\Set up Sessions\Setup Sessions\supabase\functions\server\index.tsx` | 39 | POST | `/make-server-f4611869/auth/signup` | app | - |
 | mentor | `apps\mentor\src\pages\Set up Sessions\Setup Sessions\supabase\functions\server\index.tsx` | 109 | POST | `/make-server-f4611869/auth/verify-2fa` | app | - |
 | mentor | `apps\mentor\src\pages\Set up Sessions\Setup Sessions\supabase\functions\server\index.tsx` | 151 | POST | `/make-server-f4611869/auth/check-2fa` | app | - |

@@ -17,14 +17,14 @@ export default function AdminLogin() {
         setLoading(true);
 
         try {
+            const formData = new URLSearchParams({
+                username: email,
+                password,
+            });
             const response = await fetch('/api/auth/v1/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email,
-                    password,
-                    two_factor_code: showTwoFactor ? twoFactorCode : undefined
-                })
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
             });
 
             const data = await response.json();

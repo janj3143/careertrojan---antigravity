@@ -45,7 +45,7 @@
   },
   {
     "frontend_file": "apps\\admin\\src\\pages\\AdminLogin.tsx",
-    "line_no": 20,
+    "line_no": 24,
     "portal": "admin",
     "method": "POST",
     "frontend_path": "/api/auth/v1/login",
@@ -191,26 +191,6 @@
     "frontend_file": "apps\\admin\\src\\pages\\DataParser.tsx",
     "line_no": 28,
     "portal": "admin",
-    "method": "GET",
-    "frontend_path": "/api/admin/v1/parsing/parse",
-    "backend_matches": [
-      "/api/admin/v1/parsing/parse"
-    ],
-    "backend_files": [
-      "services\\backend_api\\routers\\admin_parsing.py"
-    ],
-    "backend_functions": [
-      "list_admin_parses"
-    ],
-    "backend_ai_signals": [],
-    "likely_services": [
-      "router.get"
-    ]
-  },
-  {
-    "frontend_file": "apps\\admin\\src\\pages\\DataParser.tsx",
-    "line_no": 28,
-    "portal": "admin",
     "method": "POST",
     "frontend_path": "/api/admin/v1/parsing/parse",
     "backend_matches": [
@@ -265,28 +245,6 @@
     ],
     "backend_functions": [
       "get_emails_tracking_summary"
-    ],
-    "backend_ai_signals": [
-      "ai"
-    ],
-    "likely_services": [
-      "router.get"
-    ]
-  },
-  {
-    "frontend_file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
-    "line_no": 91,
-    "portal": "admin",
-    "method": "GET",
-    "frontend_path": "/api/ai-data/v1/emails/tracking",
-    "backend_matches": [
-      "/api/ai-data/v1/emails/tracking"
-    ],
-    "backend_files": [
-      "services\\backend_api\\routers\\ai_data.py"
-    ],
-    "backend_functions": [
-      "get_emails_tracking"
     ],
     "backend_ai_signals": [
       "ai"

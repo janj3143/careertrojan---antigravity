@@ -1,0 +1,74 @@
+name: careertrojan-codec
+
+services:
+  backend-api:
+    build:
+      context: .
+      dockerfile: ./services/backend_api/Dockerfile
+    container_name: careertrojan-codec-backend
+    ports:
+      - "8600:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-careertrojan}
+      - REDIS_URL=redis://redis:6379/0
+      - CAREERTROJAN_DATA_ROOT=/app/data
+      - CAREERTROJAN_ROOT=/app
+      - SECRET_KEY=${SECRET_KEY:-changeme}
+      - BRAINTREE_ENVIRONMENT=${BRAINTREE_ENVIRONMENT:-sandbox}
+      - BRAINTREE_MERCHANT_ID=${BRAINTREE_MERCHANT_ID:-replace-me}
+      - BRAINTREE_PUBLIC_KEY=${BRAINTREE_PUBLIC_KEY:-replace-me}
+      - BRAINTREE_PRIVATE_KEY=${BRAINTREE_PRIVATE_KEY:-replace-me}
+    volumes:
+      - ./:/app
+      - ${CAREERTROJAN_HOST_DATA_ROOT:-./data-mounts/ai-data}:/app/data
+    command: ["uvicorn", "services.backend_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: careertrojan-codec-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-careertrojan}
+    ports:
+      - "8605:5432"
+    volumes:
+      - postgres-codec-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: careertrojan-codec-redis
+    ports:
+      - "8604:6379"
+    volumes:
+      - redis-codec-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+volumes:
+  postgres-codec-data:
+  redis-codec-data:

@@ -1,0 +1,27 @@
+{
+  "base_url": "http://localhost:8600",
+  "passed": 4,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Request Correlation Header",
+      "ok": true,
+      "detail": "x-request-id=5a1a78c2-161"
+    },
+    {
+      "name": "OpenAPI Rewired Paths",
+      "ok": true,
+      "detail": "missing=[]"
+    },
+    {
+      "name": "No Maths-Theatre Leakage",
+      "ok": true,
+      "detail": "hits=[]"
+    },
+    {
+      "name": "Billing Route Contract",
+      "ok": true,
+      "detail": "correct=200 wrong_path=404"
+    }
+  ]
+}

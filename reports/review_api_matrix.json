@@ -1,0 +1,131 @@
+{
+  "base_url": "http://localhost:8600",
+  "passed": 11,
+  "failed": 0,
+  "total": 11,
+  "results": [
+    {
+      "name": "Liveness",
+      "method": "GET",
+      "path": "/health/live",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"status\":\"alive\"}"
+    },
+    {
+      "name": "Readiness",
+      "method": "GET",
+      "path": "/health/ready",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"status\":\"ready\"}"
+    },
+    {
+      "name": "OpenAPI",
+      "method": "GET",
+      "path": "/openapi.json",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"CareerTrojan\",\"version\":\"1.0.0\"},\"paths\":{\"/health\":{\"get\":{\"summary\":\"Health\",\"operationId\":\"health_health_get\",\"responses\":{\"200\":{\"description\":\"Successful Response\",\"content\":{\"application/json\":{\"sch"
+    },
+    {
+      "name": "Ops Public Stats",
+      "method": "GET",
+      "path": "/api/ops/v1/stats/public",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"active_users\":1250,\"resumes_optimized\":5400,\"success_rate\":89}"
+    },
+    {
+      "name": "Intelligence Market",
+      "method": "GET",
+      "path": "/api/intelligence/v1/market",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"trends\":[\"AI Operations\",\"Kubernetes Native\",\"Hybrid Work\"],\"salary_benchmark\":{\"average\":125000,\"currency\":\"USD\"},\"demand_index\":85,\"note\":\"Market intelligence generated from aggregated sector signals.\"}"
+    },
+    {
+      "name": "Ops Processing Start",
+      "method": "POST",
+      "path": "/api/ops/v1/processing/start",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"job_id\":\"ae4dae15-4c3b-4e05-9acc-2b08455ac642\",\"status\":\"started\",\"engine\":\"automatic_data_ingestion_service\"}"
+    },
+    {
+      "name": "Lenses Spider",
+      "method": "POST",
+      "path": "/api/lenses/v1/spider",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"profile_id\":\"prof_review_user\",\"job_family\":\"Software Engineering\",\"cohort_id\":\"CH_REVIEW\",\"axes\":[{\"key\":\"technical_skills\",\"label\":\"Technical Skills\",\"score\":77,\"confidence\":0.8,\"peer_percentile\":69.3,\"top_contributors\":[\"Extracted Keyw"
+    },
+    {
+      "name": "Mentor Dashboard",
+      "method": "GET",
+      "path": "/api/mentor/v1/mentor_e2e_99/dashboard-stats",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"total_earnings_usd\":0,\"total_sessions_completed\":0,\"active_clients\":0,\"average_rating\":0.0,\"recent_reviews\":[]}"
+    },
+    {
+      "name": "Payment Health",
+      "method": "GET",
+      "path": "/api/payment/v1/health",
+      "status": 200,
+      "expected": [
+        200
+      ],
+      "ok": true,
+      "preview": "{\"status\":\"healthy\",\"service\":\"payment-api\",\"plans_available\":4,\"gateway\":\"braintree\",\"braintree_configured\":true,\"environment\":\"sandbox\"}"
+    },
+    {
+      "name": "Payment Client Token",
+      "method": "GET",
+      "path": "/api/payment/v1/client-token",
+      "status": 401,
+      "expected": [
+        200,
+        401,
+        403
+      ],
+      "ok": true,
+      "preview": "{\"detail\":\"Not authenticated\"}"
+    },
+    {
+      "name": "Mentor Package Lookup",
+      "method": "GET",
+      "path": "/api/mentor/v1/ment_99/packages/pkg_mock",
+      "status": 404,
+      "expected": [
+        404
+      ],
+      "ok": true,
+      "preview": "{\"detail\":\"Not found\"}"
+    }
+  ]
+}

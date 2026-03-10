@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { VISUAL_COMPONENTS } from "../components/visuals/registry";
 
-const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8500";
+const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8600";
 
 interface VisualEntry {
     id: string;

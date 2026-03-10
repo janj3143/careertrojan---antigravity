@@ -207,11 +207,12 @@ export async function getMentorDashboardStats(cfg: ApiConfig, mentorProfileId: s
 
 // --- Braintree / Billing ---
 export async function getPaymentClientToken(cfg: ApiConfig) {
-    return http<any>(`${cfg.baseUrl}/api/payment/v1/token`); 
+    return http<any>(`${cfg.baseUrl}/api/payment/v1/client-token`);
 }
 
 export async function vaultPaymentMethod(cfg: ApiConfig, payload: { payment_method_nonce: string }) {
-    return http<any>(`${cfg.baseUrl}/api/payment/v1/vault`, {
-        method: "POST", headers: JSON_HEADERS, body: JSON.stringify(payload)
+    const nonce = encodeURIComponent(payload.payment_method_nonce);
+    return http<any>(`${cfg.baseUrl}/api/payment/v1/methods?nonce=${nonce}`, {
+        method: "POST", headers: JSON_HEADERS
     });
 }

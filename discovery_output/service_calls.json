@@ -1,0 +1,8263 @@
+[
+  {
+    "file": "conftest.py",
+    "function_name": "test_client",
+    "called_names": [
+      "TestClient"
+    ],
+    "attribute_calls": [
+      "pytest.fixture"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "conftest.py",
+    "function_name": "db_session",
+    "called_names": [
+      "Session",
+      "create_engine",
+      "sessionmaker"
+    ],
+    "attribute_calls": [
+      "Base.metadata.create_all",
+      "engine.dispose",
+      "pytest.fixture",
+      "session.close"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "scripts\\aggregate_training_corpus.py",
+    "function_name": "normalize_profile",
+    "called_names": [
+      "extract_email",
+      "extract_phone",
+      "join"
+    ],
+    "attribute_calls": [
+      "education.append",
+      "profile.get",
+      "work_experience.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\aggregate_training_corpus.py",
+    "function_name": "normalize_parsed_resume",
+    "called_names": [
+      "extract_email",
+      "extract_phone"
+    ],
+    "attribute_calls": [
+      "resume.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\build_collocation_glossary.py",
+    "function_name": "main",
+    "called_names": [
+      "CareerTrojanPaths",
+      "Counter",
+      "Path",
+      "compute_pmi",
+      "iter_json_files",
+      "len",
+      "list",
+      "load_gazetteer_phrases",
+      "load_glossary_terms",
+      "print",
+      "round",
+      "scan_json_file",
+      "scan_text_file",
+      "str",
+      "sum",
+      "update_ngram_counts"
+    ],
+    "attribute_calls": [
+      "argparse.ArgumentParser",
+      "bigram.items",
+      "bigram_entries.append",
+      "bigram_entries.sort",
+      "bigram_index.values",
+      "collocation_txt.exists",
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "glossary_path.exists",
+      "json.dump",
+      "near_pairs.most_common",
+      "negated_terms.most_common",
+      "output_path.open",
+      "output_path.parent.mkdir",
+      "p.exists",
+      "parser.add_argument",
+      "parser.parse_args",
+      "phrase.split",
+      "trigram.items",
+      "trigram_entries.append",
+      "trigram_entries.sort",
+      "trigram_index.values",
+      "unigram.values",
+      "x.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "load_tld_hints",
+    "called_names": [
+      "set"
+    ],
+    "attribute_calls": [
+      "domain_file.exists",
+      "domain_file.read_text",
+      "raw.lower",
+      "re.findall",
+      "tlds.add"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "is_valid_email",
+    "called_names": [
+      "len",
+      "lower"
+    ],
+    "attribute_calls": [
+      "domain.endswith",
+      "domain.rsplit",
+      "domain.startswith",
+      "value.rsplit"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "extract_domain_from_value",
+    "called_names": [
+      "clean_email",
+      "is_valid_email",
+      "len",
+      "lower",
+      "strip",
+      "urlparse"
+    ],
+    "attribute_calls": [
+      "candidate.split",
+      "host.rsplit",
+      "host.split",
+      "host.startswith",
+      "lower.strip",
+      "raw.count",
+      "re.match",
+      "strip.strip"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "build_company_domain_hints_from_company_store",
+    "called_names": [
+      "Counter",
+      "clean_name",
+      "extract_domain_from_value",
+      "find_field",
+      "isinstance",
+      "normalize_company",
+      "parse_csv_rows",
+      "str"
+    ],
+    "attribute_calls": [
+      "counter.most_common",
+      "directory.exists",
+      "directory.rglob",
+      "domain_candidates.append",
+      "hints.items",
+      "hints.setdefault",
+      "item.get",
+      "json.loads",
+      "json_file.read_text",
+      "row.values"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "collect_contact_rows",
+    "called_names": [
+      "any",
+      "clean_email",
+      "find_field",
+      "parse_csv_rows",
+      "str"
+    ],
+    "attribute_calls": [
+      "rows.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "build_company_domain_hints",
+    "called_names": [
+      "Counter",
+      "clean_email",
+      "is_valid_email",
+      "normalize_company"
+    ],
+    "attribute_calls": [
+      "company_domains.items",
+      "company_domains.setdefault",
+      "counter.most_common",
+      "row.get",
+      "work_email.split"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "infer_email_candidates",
+    "called_names": [
+      "append",
+      "clean_email",
+      "clean_name",
+      "company_slug",
+      "is_valid_email",
+      "len",
+      "lower",
+      "normalize_company",
+      "sanitize_local_part",
+      "sorted",
+      "split_first_last"
+    ],
+    "attribute_calls": [
+      "company_domains.get",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "inferred.values",
+      "row.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "extract_from_text",
+    "called_names": [
+      "clean_email",
+      "is_valid_email",
+      "set"
+    ],
+    "attribute_calls": [
+      "EMAIL_PATTERN.findall",
+      "emails.add"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "function_name": "scan_sources",
+    "called_names": [
+      "Counter",
+      "build_company_domain_hints",
+      "build_company_domain_hints_from_company_store",
+      "collect_contact_rows",
+      "dict",
+      "extract_from_text",
+      "infer_email_candidates",
+      "iter_zip_texts",
+      "len",
+      "merge_legacy_records",
+      "read_msg_file",
+      "read_text_file",
+      "set",
+      "sorted",
+      "str",
+      "write_text"
+    ],
+    "attribute_calls": [
+      "alert_flags.append",
+      "company_domains.setdefault",
+      "company_store_hints.items",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "domain_counts.most_common",
+      "email.split",
+      "email_sources.items",
+      "email_sources.setdefault",
+      "email_sources.setdefault.add",
+      "file_path.is_file",
+      "file_path.suffix.lower",
+      "json.dumps",
+      "output_dir.mkdir",
+      "r.get",
+      "root.exists",
+      "root.rglob",
+      "source_root_status.get",
+      "type_counts.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\ingestion_smoke_test.py",
+    "function_name": "check_paths",
+    "called_names": [
+      "print",
+      "print_fail",
+      "print_pass",
+      "print_warn"
+    ],
+    "attribute_calls": [
+      "paths.ai_data_final.exists",
+      "paths.data_root.exists",
+      "paths.interactions.exists"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\ingestion_smoke_test.py",
+    "function_name": "check_ai_structure",
+    "called_names": [
+      "is_dir",
+      "join",
+      "print",
+      "print_fail",
+      "print_pass",
+      "print_warn"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\ingestion_smoke_test.py",
+    "function_name": "main",
+    "called_names": [
+      "CareerTrojanPaths",
+      "check_ai_structure",
+      "check_ingestion_outputs",
+      "check_paths",
+      "print"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\run_full_pipeline.py",
+    "function_name": "run_smoke_test",
+    "called_names": [
+      "append",
+      "banner"
+    ],
+    "attribute_calls": [
+      "log.error",
+      "log.info",
+      "log.warning",
+      "merged.exists",
+      "merged.stat",
+      "p.exists",
+      "p.mkdir",
+      "paths.ai_data_final.rglob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\run_full_pipeline.py",
+    "function_name": "run_parser",
+    "called_names": [
+      "AutomatedParserEngine",
+      "banner",
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "engine.run",
+      "log.info",
+      "log.warning",
+      "output_root.mkdir",
+      "sys.path.insert"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "scripts\\run_full_pipeline.py",
+    "function_name": "run_collocations",
+    "called_names": [
+      "Counter",
+      "banner",
+      "enumerate",
+      "len",
+      "min",
+      "open",
+      "range",
+      "round",
+      "scan_json_file",
+      "scan_text_file",
+      "sorted",
+      "str"
+    ],
+    "attribute_calls": [
+      "all_tokens.extend",
+      "bigram.split",
+      "bigram_counts.most_common",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "gaz_dir.exists",
+      "gaz_dir.rglob",
+      "json.dump",
+      "log.info",
+      "log.warning",
+      "math.log2",
+      "near_pairs.most_common",
+      "negated_terms.most_common",
+      "pmi_scores.items",
+      "scan_dir.exists",
+      "scan_dir.rglob",
+      "unigram_counts.most_common"
+    ],
+    "ai_signals": [
+      "ai",
+      "score"
+    ]
+  },
+  {
+    "file": "scripts\\run_full_pipeline.py",
+    "function_name": "run_training",
+    "called_names": [
+      "IntelliCVModelTrainer",
+      "Path",
+      "append",
+      "banner",
+      "get",
+      "len",
+      "open",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "json.dump",
+      "log.error",
+      "log.info",
+      "log.warning",
+      "paths.trained_models.mkdir",
+      "sys.path.insert",
+      "traceback.print_exc",
+      "trainer.load_cv_data",
+      "trainer.models_dir.mkdir",
+      "trainer.setup_sentence_embeddings",
+      "trainer.setup_spacy_model",
+      "trainer.train_bayesian_classifier",
+      "trainer.train_statistical_models"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "model",
+      "trained"
+    ]
+  },
+  {
+    "file": "scripts\\run_full_pipeline.py",
+    "function_name": "main",
+    "called_names": [
+      "CareerTrojanPaths",
+      "banner",
+      "int",
+      "isinstance",
+      "len",
+      "open",
+      "run_collocations",
+      "run_parser",
+      "run_smoke_test",
+      "run_training",
+      "str"
+    ],
+    "attribute_calls": [
+      "argparse.ArgumentParser",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "json.dump",
+      "log.error",
+      "log.info",
+      "log.warning",
+      "parser.add_argument",
+      "parser.parse_args",
+      "pipeline_results.items",
+      "result.get",
+      "sys.exit",
+      "time.time",
+      "traceback.print_exc"
+    ],
+    "ai_signals": [
+      "ai",
+      "training"
+    ]
+  },
+  {
+    "file": "scripts\\run_orchestrator_discovery.py",
+    "function_name": "count_router_decorators",
+    "called_names": [
+      "py_files"
+    ],
+    "attribute_calls": [
+      "p.read_text",
+      "txt.count"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "scripts\\run_parser_until_complete.py",
+    "function_name": "main",
+    "called_names": [
+      "AutomatedParserEngine",
+      "CareerTrojanPaths",
+      "append_progress",
+      "int",
+      "len",
+      "print",
+      "round",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "engine.run",
+      "results.get",
+      "time.sleep",
+      "time.time"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "scripts\\run_super_experience_harness.py",
+    "function_name": "_ensure_mentor_profile",
+    "called_names": [
+      "SessionLocal"
+    ],
+    "attribute_calls": [
+      "db.add",
+      "db.close",
+      "db.commit",
+      "db.query",
+      "db.query.filter",
+      "db.query.filter.first",
+      "db.refresh",
+      "models.Mentor"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "scripts\\run_super_experience_harness.py",
+    "function_name": "run",
+    "called_names": [
+      "HarnessReport",
+      "RuntimeError",
+      "asdict",
+      "set",
+      "sorted"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "json.dumps",
+      "self._ensure_mentor_profile",
+      "self._register_and_login",
+      "self._upsert_role",
+      "self.admin_journey",
+      "self.ai_learning_signals",
+      "self.mentor_journey",
+      "self.output_path.parent.mkdir",
+      "self.output_path.write_text",
+      "self.resume_probe",
+      "self.run_tiered_tests",
+      "self.user_journey"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\smoke_test.py",
+    "function_name": "check_environment_paths",
+    "called_names": [
+      "print",
+      "print_fail",
+      "print_pass",
+      "print_warn"
+    ],
+    "attribute_calls": [
+      "os.path.exists"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\smoke_test.py",
+    "function_name": "verify_test_user_seeding",
+    "called_names": [
+      "CareerTrojanPaths",
+      "isinstance",
+      "open",
+      "print",
+      "print_fail",
+      "print_pass",
+      "print_warn",
+      "str"
+    ],
+    "attribute_calls": [
+      "json.load",
+      "os.path.exists",
+      "os.path.join",
+      "user.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\smoke_test.py",
+    "function_name": "simulate_docker_services",
+    "called_names": [
+      "print",
+      "print_pass",
+      "print_warn"
+    ],
+    "attribute_calls": [
+      "os.path.exists",
+      "os.path.join"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "scripts\\smoke_test.py",
+    "function_name": "check_frontend_components",
+    "called_names": [
+      "print",
+      "print_fail",
+      "print_pass"
+    ],
+    "attribute_calls": [
+      "os.path.basename",
+      "os.path.exists",
+      "os.path.join"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\upsert_zendesk_webhook_triggers.py",
+    "function_name": "get",
+    "called_names": [],
+    "attribute_calls": [
+      "requests.get",
+      "response.json",
+      "response.raise_for_status"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\upsert_zendesk_webhook_triggers.py",
+    "function_name": "post",
+    "called_names": [],
+    "attribute_calls": [
+      "requests.post",
+      "response.json",
+      "response.raise_for_status"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\upsert_zendesk_webhook_triggers.py",
+    "function_name": "put",
+    "called_names": [],
+    "attribute_calls": [
+      "requests.put",
+      "response.json",
+      "response.raise_for_status"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\upsert_zendesk_webhook_triggers.py",
+    "function_name": "_find_webhook_id",
+    "called_names": [
+      "RuntimeError",
+      "get",
+      "isinstance",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [
+      "available.append",
+      "chosen.get",
+      "client.get",
+      "client.get.get",
+      "preferred_url.strip",
+      "preferred_url.strip.rstrip",
+      "str.rstrip",
+      "webhook.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "scripts\\validate_runtime_env.py",
+    "function_name": "_is_google_managed_service_agent",
+    "called_names": [
+      "bool"
+    ],
+    "attribute_calls": [
+      "re.match",
+      "value.strip",
+      "value.strip.lower"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "scripts\\validate_runtime_env.py",
+    "function_name": "main",
+    "called_names": [
+      "Path",
+      "_is_google_managed_service_agent",
+      "_is_personal_email",
+      "_missing",
+      "_warn_placeholder",
+      "parse_env_file",
+      "print",
+      "set",
+      "sorted",
+      "strip"
+    ],
+    "attribute_calls": [
+      "Path.resolve",
+      "argparse.ArgumentParser",
+      "env_map.get",
+      "env_path.exists",
+      "missing.extend",
+      "offenders.append",
+      "parser.add_argument",
+      "parser.parse_args",
+      "strip.lower",
+      "unsafe_identity_keys.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "logger.info",
+      "self.models_path.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "train_embeddings",
+    "called_names": [
+      "SentenceTransformer",
+      "len"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "np.array",
+      "np.save",
+      "self.sentence_model.encode"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "train_tfidf",
+    "called_names": [
+      "TfidfVectorizer",
+      "len",
+      "list",
+      "open"
+    ],
+    "attribute_calls": [
+      "json.dump",
+      "logger.error",
+      "logger.info",
+      "np.array",
+      "pickle.dump",
+      "self.tfidf_vectorizer.fit_transform",
+      "self.tfidf_vectorizer.get_feature_names_out",
+      "tfidf_matrix.toarray"
+    ],
+    "ai_signals": [
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "train_clustering",
+    "called_names": [
+      "Counter",
+      "DBSCAN",
+      "KMeans",
+      "dict",
+      "float",
+      "int",
+      "len",
+      "list",
+      "open",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "Counter.items",
+      "dbscan_labels.tolist",
+      "json.dump",
+      "kmeans_labels.tolist",
+      "list.count",
+      "logger.error",
+      "logger.info",
+      "pickle.dump",
+      "self.dbscan_model.fit_predict",
+      "self.kmeans_model.fit_predict"
+    ],
+    "ai_signals": [
+      "model",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "calculate_similarity_matrix",
+    "called_names": [
+      "cosine_similarity",
+      "len"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "np.array",
+      "np.save",
+      "similarity_matrix.max",
+      "similarity_matrix.mean"
+    ],
+    "ai_signals": [
+      "similarity"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "train_job_classifier",
+    "called_names": [
+      "Counter",
+      "RandomForestClassifier",
+      "TfidfVectorizer",
+      "accuracy_score",
+      "any",
+      "dict",
+      "len",
+      "open",
+      "set",
+      "train_test_split"
+    ],
+    "attribute_calls": [
+      "categories.append",
+      "logger.error",
+      "logger.info",
+      "pickle.dump",
+      "self.job_classifier.fit",
+      "self.job_classifier.predict",
+      "title.lower",
+      "vectorizer.fit_transform"
+    ],
+    "ai_signals": [
+      "ai",
+      "classifier",
+      "predict",
+      "score",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "run_full_training_pipeline",
+    "called_names": [
+      "len",
+      "min",
+      "open",
+      "total_seconds"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "json.dump",
+      "logger.error",
+      "logger.info",
+      "self.calculate_similarity_matrix",
+      "self.load_data",
+      "self.prepare_text_data",
+      "self.train_clustering",
+      "self.train_embeddings",
+      "self.train_job_classifier",
+      "self.train_tfidf"
+    ],
+    "ai_signals": [
+      "ai",
+      "classifier",
+      "clustering",
+      "embedding",
+      "similarity"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "function_name": "main",
+    "called_names": [
+      "AITrainingOrchestrator",
+      "Path",
+      "str"
+    ],
+    "attribute_calls": [
+      "orchestrator.run_full_training_pipeline"
+    ],
+    "ai_signals": [
+      "ai",
+      "orchestrator",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\collocation_engine.py",
+    "function_name": "find_near_pairs",
+    "called_names": [
+      "Counter",
+      "enumerate",
+      "int",
+      "len",
+      "max",
+      "min",
+      "range",
+      "sorted",
+      "tuple"
+    ],
+    "attribute_calls": [
+      "hit_details.append",
+      "pair_hits.items",
+      "ranked.sort",
+      "self._all_tokens"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\data_loader.py",
+    "function_name": "load_sample_profiles",
+    "called_names": [
+      "_derive_match_score",
+      "len",
+      "list",
+      "open"
+    ],
+    "attribute_calls": [
+      "PROFILES_DIR.exists",
+      "PROFILES_DIR.glob",
+      "data.get",
+      "json.load",
+      "loaded.append",
+      "logger.debug",
+      "logger.info",
+      "logger.warning",
+      "random.shuffle"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\expert_system.py",
+    "function_name": "get_expert_system",
+    "called_names": [
+      "ExpertSystemEngine"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\llm_service.py",
+    "function_name": "__init__",
+    "called_names": [
+      "OpenAI",
+      "print"
+    ],
+    "attribute_calls": [
+      "os.getenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\llm_service.py",
+    "function_name": "generate",
+    "called_names": [
+      "LLMResponse",
+      "str"
+    ],
+    "attribute_calls": [
+      "kwargs.get",
+      "response.usage.model_dump",
+      "self.client.chat.completions.create"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\llm_service.py",
+    "function_name": "generate",
+    "called_names": [
+      "LLMResponse",
+      "str"
+    ],
+    "attribute_calls": [
+      "kwargs.get",
+      "response.usage.model_dump",
+      "self.client.messages.create"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\llm_service.py",
+    "function_name": "generate",
+    "called_names": [
+      "LLMResponse",
+      "str"
+    ],
+    "attribute_calls": [
+      "data.get",
+      "kwargs.get",
+      "requests.post",
+      "response.json",
+      "response.raise_for_status"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\llm_service.py",
+    "function_name": "get_service",
+    "called_names": [],
+    "attribute_calls": [
+      "cls.initialize"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\ai_engine\\llm_service.py",
+    "function_name": "initialize",
+    "called_names": [
+      "AnthropicService",
+      "LLMBackendType",
+      "OpenAIService",
+      "VLLMService"
+    ],
+    "attribute_calls": [
+      "backend.lower"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\model_registry.py",
+    "function_name": "__init__",
+    "called_names": [
+      "CareerTrojanPaths",
+      "Path"
+    ],
+    "attribute_calls": [
+      "self._load_registry",
+      "self._resolve_registry_file",
+      "self.models_dir.mkdir",
+      "self.registry_dir.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\model_registry.py",
+    "function_name": "get_model",
+    "called_names": [
+      "Path",
+      "open",
+      "print"
+    ],
+    "attribute_calls": [
+      "model_file.exists",
+      "pickle.load"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\model_registry.py",
+    "function_name": "get_vectorizer",
+    "called_names": [],
+    "attribute_calls": [
+      "self.get_model"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\model_registry.py",
+    "function_name": "verify_integrity",
+    "called_names": [],
+    "attribute_calls": [
+      "self._calculate_file_hash",
+      "self.get_model_info"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\model_registry.py",
+    "function_name": "rollback_deployment",
+    "called_names": [
+      "keys",
+      "len",
+      "list",
+      "print",
+      "reversed"
+    ],
+    "attribute_calls": [
+      "self.deploy_model"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "__init__",
+    "called_names": [
+      "IntelliCVModelTrainer",
+      "ModelRegistry",
+      "TrainingCheckpoint",
+      "print"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai",
+      "model",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "check_prerequisites",
+    "called_names": [
+      "Path",
+      "print"
+    ],
+    "attribute_calls": [
+      "core_db_dir.exists",
+      "data_path.exists",
+      "merged_db.exists",
+      "models_path.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "train_all_models",
+    "called_names": [
+      "append",
+      "len",
+      "print",
+      "total_seconds",
+      "train_func"
+    ],
+    "attribute_calls": [
+      "datetime.fromisoformat",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self.checkpoint.clear_checkpoint",
+      "self.checkpoint.load_checkpoint",
+      "self.checkpoint.save_checkpoint",
+      "self.trainer.load_cv_data",
+      "traceback.print_exc"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "_train_bayesian_model",
+    "called_names": [
+      "get",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [
+      "self.registry.deploy_model",
+      "self.registry.register_model",
+      "self.registry.register_vectorizer",
+      "self.trainer.train_bayesian_classifier"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "model",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "_train_sentence_embeddings",
+    "called_names": [
+      "get",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [
+      "self.registry.deploy_model",
+      "self.registry.register_model",
+      "self.trainer.setup_sentence_embeddings"
+    ],
+    "ai_signals": [
+      "ai",
+      "embedding",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "_train_spacy_model",
+    "called_names": [
+      "get",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [
+      "self.registry.deploy_model",
+      "self.registry.register_model",
+      "self.trainer.setup_spacy_model"
+    ],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "_train_statistical_models",
+    "called_names": [
+      "get",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [
+      "self.registry.deploy_model",
+      "self.registry.register_model",
+      "self.trainer.train_statistical_models"
+    ],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "generate_report",
+    "called_names": [
+      "Path",
+      "len",
+      "open",
+      "print"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "json.dump",
+      "self.registry.list_models"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "run_full_training",
+    "called_names": [
+      "print"
+    ],
+    "attribute_calls": [
+      "self.check_prerequisites",
+      "self.generate_report",
+      "self.print_summary",
+      "self.train_all_models",
+      "traceback.print_exc"
+    ],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "function_name": "main",
+    "called_names": [
+      "TrainingOrchestrator"
+    ],
+    "attribute_calls": [
+      "orchestrator.run_full_training"
+    ],
+    "ai_signals": [
+      "ai",
+      "orchestrator",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_all_models.py",
+    "function_name": "__init__",
+    "called_names": [
+      "CareerTrojanPaths",
+      "Path",
+      "print"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self.models_dir.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_all_models.py",
+    "function_name": "train_bayesian_classifier",
+    "called_names": [
+      "MultinomialNB",
+      "TfidfVectorizer",
+      "accuracy_score",
+      "extend",
+      "float",
+      "int",
+      "isin",
+      "len",
+      "list",
+      "open",
+      "print",
+      "str",
+      "train_test_split",
+      "value_counts"
+    ],
+    "attribute_calls": [
+      "df.apply",
+      "model.fit",
+      "model.predict",
+      "pickle.dump",
+      "self._infer_job_category",
+      "vectorizer.fit_transform"
+    ],
+    "ai_signals": [
+      "ai",
+      "model",
+      "predict",
+      "score",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_all_models.py",
+    "function_name": "setup_sentence_embeddings",
+    "called_names": [
+      "SentenceTransformer",
+      "append",
+      "int",
+      "len",
+      "open",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [
+      "json.dump",
+      "model.encode"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_all_models.py",
+    "function_name": "train_statistical_models",
+    "called_names": [
+      "RandomForestRegressor",
+      "append",
+      "apply",
+      "copy",
+      "float",
+      "int",
+      "isinstance",
+      "isna",
+      "len",
+      "map",
+      "notna",
+      "open",
+      "print",
+      "r2_score",
+      "str",
+      "train_test_split"
+    ],
+    "attribute_calls": [
+      "education_map.get",
+      "isna.sum",
+      "missing_exp_mask.any",
+      "model.fit",
+      "model.predict",
+      "pickle.dump",
+      "str.len"
+    ],
+    "ai_signals": [
+      "ai",
+      "model",
+      "predict",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_all_models.py",
+    "function_name": "run_full_training",
+    "called_names": [
+      "print"
+    ],
+    "attribute_calls": [
+      "self.generate_report",
+      "self.load_cv_data",
+      "self.setup_sentence_embeddings",
+      "self.setup_spacy_model",
+      "self.train_bayesian_classifier",
+      "self.train_statistical_models",
+      "traceback.print_exc"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_all_models.py",
+    "function_name": "main",
+    "called_names": [
+      "IntelliCVModelTrainer"
+    ],
+    "attribute_calls": [
+      "trainer.run_full_training"
+    ],
+    "ai_signals": [
+      "ai",
+      "model",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_bayesian_models.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "logger.info",
+      "self.models_path.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_bayesian_models.py",
+    "function_name": "train_naive_bayes",
+    "called_names": [
+      "BernoulliNB",
+      "GaussianNB",
+      "MultinomialNB",
+      "accuracy_score",
+      "train_test_split"
+    ],
+    "attribute_calls": [
+      "bnb.fit",
+      "bnb.predict",
+      "gnb.fit",
+      "gnb.predict",
+      "joblib.dump",
+      "logger.error",
+      "logger.info",
+      "mnb.fit",
+      "mnb.predict",
+      "np.abs"
+    ],
+    "ai_signals": [
+      "ai",
+      "predict",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_bayesian_models.py",
+    "function_name": "train_bayesian_network",
+    "called_names": [
+      "GaussianNB",
+      "len",
+      "open"
+    ],
+    "attribute_calls": [
+      "joblib.dump",
+      "json.dump",
+      "logger.error",
+      "logger.info",
+      "model.fit",
+      "network.add_edges_from",
+      "np.unique",
+      "nx.DiGraph",
+      "nx.node_link_data"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_bayesian_models.py",
+    "function_name": "train_hierarchical_bayesian",
+    "called_names": [
+      "GaussianNB",
+      "cross_val_score"
+    ],
+    "attribute_calls": [
+      "joblib.dump",
+      "logger.error",
+      "logger.info",
+      "model.fit",
+      "scores.mean",
+      "scores.std"
+    ],
+    "ai_signals": [
+      "model",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_bayesian_models.py",
+    "function_name": "train_all_bayesian",
+    "called_names": [],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "name.upper",
+      "results.items",
+      "self.load_training_data",
+      "self.prepare_features",
+      "self.train_bayesian_network",
+      "self.train_hierarchical_bayesian",
+      "self.train_mcmc_sampler",
+      "self.train_naive_bayes"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_fuzzy_logic.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "logger.info",
+      "self.models_path.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_fuzzy_logic.py",
+    "function_name": "build_all_fuzzy_systems",
+    "called_names": [],
+    "attribute_calls": [
+      "logger.info",
+      "name.upper",
+      "results.items",
+      "self.build_fuzzy_decision_tree",
+      "self.build_mamdani_fis",
+      "self.build_membership_functions",
+      "self.build_sugeno_fis",
+      "self.train_fcm_clusterer"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_neural_networks.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "logger.info",
+      "self.models_path.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_neural_networks.py",
+    "function_name": "train_dnn_classifier",
+    "called_names": [
+      "StandardScaler",
+      "train_test_split"
+    ],
+    "attribute_calls": [
+      "joblib.dump",
+      "keras.Sequential",
+      "keras.layers.Dense",
+      "keras.layers.Dropout",
+      "logger.error",
+      "logger.info",
+      "model.compile",
+      "model.evaluate",
+      "model.fit",
+      "model.save",
+      "scaler.fit_transform",
+      "scaler.transform"
+    ],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_neural_networks.py",
+    "function_name": "train_cnn_embedder",
+    "called_names": [],
+    "attribute_calls": [
+      "X.reshape",
+      "keras.Sequential",
+      "keras.layers.Conv1D",
+      "keras.layers.Dense",
+      "keras.layers.GlobalAveragePooling1D",
+      "keras.layers.MaxPooling1D",
+      "logger.error",
+      "logger.info",
+      "model.compile",
+      "model.fit",
+      "model.save"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_neural_networks.py",
+    "function_name": "train_lstm_sequence",
+    "called_names": [],
+    "attribute_calls": [
+      "X.reshape",
+      "keras.Sequential",
+      "keras.layers.Dense",
+      "keras.layers.Dropout",
+      "keras.layers.LSTM",
+      "logger.error",
+      "logger.info",
+      "model.compile",
+      "model.fit",
+      "model.save"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_neural_networks.py",
+    "function_name": "train_transformer_encoder",
+    "called_names": [],
+    "attribute_calls": [
+      "keras.Sequential",
+      "keras.layers.Dense",
+      "keras.layers.LayerNormalization",
+      "logger.error",
+      "logger.info",
+      "model.compile",
+      "model.fit",
+      "model.save"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_neural_networks.py",
+    "function_name": "train_all_architectures",
+    "called_names": [],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "name.upper",
+      "results.items",
+      "self.load_training_data",
+      "self.prepare_features",
+      "self.train_autoencoder",
+      "self.train_cnn_embedder",
+      "self.train_dnn_classifier",
+      "self.train_lstm_sequence",
+      "self.train_transformer_encoder"
+    ],
+    "ai_signals": [
+      "ai",
+      "classifier",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "logger.info",
+      "self.models_path.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "function_name": "train_sentiment_analyzer",
+    "called_names": [
+      "MultinomialNB",
+      "TfidfVectorizer",
+      "len"
+    ],
+    "attribute_calls": [
+      "classifier.fit",
+      "joblib.dump",
+      "logger.error",
+      "logger.info",
+      "np.random.choice",
+      "vectorizer.fit_transform"
+    ],
+    "ai_signals": [
+      "classifier",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "function_name": "train_text_classifier",
+    "called_names": [
+      "CountVectorizer",
+      "MultinomialNB",
+      "len"
+    ],
+    "attribute_calls": [
+      "classifier.fit",
+      "joblib.dump",
+      "logger.error",
+      "logger.info",
+      "np.random.choice",
+      "vectorizer.fit_transform"
+    ],
+    "ai_signals": [
+      "classifier",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "function_name": "train_word2vec",
+    "called_names": [
+      "Word2Vec",
+      "len",
+      "str",
+      "word_tokenize"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "model.save",
+      "text.lower"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "function_name": "setup_bert_embeddings",
+    "called_names": [
+      "SentenceTransformer",
+      "str"
+    ],
+    "attribute_calls": [
+      "bert_dir.mkdir",
+      "logger.error",
+      "logger.info",
+      "model.save"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "function_name": "train_topic_model",
+    "called_names": [
+      "CountVectorizer",
+      "LatentDirichletAllocation"
+    ],
+    "attribute_calls": [
+      "joblib.dump",
+      "lda.fit",
+      "logger.error",
+      "logger.info",
+      "vectorizer.fit_transform"
+    ],
+    "ai_signals": [
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "function_name": "train_all_nlp_models",
+    "called_names": [],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "name.upper",
+      "results.items",
+      "self.load_text_data",
+      "self.setup_bert_embeddings",
+      "self.setup_gpt_config",
+      "self.train_ner_model",
+      "self.train_sentiment_analyzer",
+      "self.train_text_classifier",
+      "self.train_tokenizer",
+      "self.train_topic_model",
+      "self.train_word2vec"
+    ],
+    "ai_signals": [
+      "ai",
+      "classifier",
+      "embedding",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_statistical_methods.py",
+    "function_name": "run_linear_regression",
+    "called_names": [
+      "LinearRegression",
+      "append",
+      "float",
+      "len"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "model.fit",
+      "model.score"
+    ],
+    "ai_signals": [
+      "model",
+      "regression",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_statistical_methods.py",
+    "function_name": "run_logistic_regression",
+    "called_names": [
+      "LogisticRegression",
+      "append",
+      "float",
+      "len",
+      "tolist"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "model.fit",
+      "model.score"
+    ],
+    "ai_signals": [
+      "model",
+      "regression",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_statistical_methods.py",
+    "function_name": "run_pca",
+    "called_names": [
+      "PCA",
+      "StandardScaler",
+      "append",
+      "float",
+      "len"
+    ],
+    "attribute_calls": [
+      "df.select_dtypes",
+      "logger.error",
+      "logger.info",
+      "pca.explained_variance_ratio_.sum",
+      "pca.fit_transform",
+      "scaler.fit_transform"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_statistical_methods.py",
+    "function_name": "run_time_series",
+    "called_names": [
+      "LinearRegression",
+      "append",
+      "dropna",
+      "float",
+      "len",
+      "rolling"
+    ],
+    "attribute_calls": [
+      "df.sort_values",
+      "logger.error",
+      "logger.info",
+      "model.fit",
+      "rolling.mean"
+    ],
+    "ai_signals": [
+      "model",
+      "regression"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_statistical_methods.py",
+    "function_name": "run_all",
+    "called_names": [
+      "enumerate",
+      "len",
+      "open"
+    ],
+    "attribute_calls": [
+      "json.dump",
+      "logger.info",
+      "self.load_training_data",
+      "self.run_anova",
+      "self.run_bayesian_analysis",
+      "self.run_chi_square",
+      "self.run_correlation",
+      "self.run_dbscan_summary",
+      "self.run_effect_size_power",
+      "self.run_factor_analysis",
+      "self.run_hierarchical_summary",
+      "self.run_kmeans_summary",
+      "self.run_linear_regression",
+      "self.run_logistic_regression",
+      "self.run_pca",
+      "self.run_survival_analysis",
+      "self.run_t_tests",
+      "self.run_time_series"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "regression",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "to_dict",
+    "called_names": [],
+    "attribute_calls": [
+      "self.all_predictions.items",
+      "v.to_dict"
+    ],
+    "ai_signals": [
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "__init__",
+    "called_names": [
+      "CareerTrojanPaths",
+      "ModelRegistry",
+      "Path",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "load_model",
+    "called_names": [
+      "print"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self.registry.get_model"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "load_all_models",
+    "called_names": [
+      "print"
+    ],
+    "attribute_calls": [
+      "models.keys",
+      "self.load_model",
+      "self.registry.list_models"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "infer_job_category",
+    "called_names": [
+      "InferenceResult",
+      "dict",
+      "float",
+      "len",
+      "max",
+      "print",
+      "zip"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "model.predict",
+      "model.predict_proba",
+      "self._get_vectorizer",
+      "vectorizer.transform"
+    ],
+    "ai_signals": [
+      "inference",
+      "model",
+      "predict",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "infer_salary_prediction",
+    "called_names": [
+      "InferenceResult",
+      "float",
+      "min",
+      "print"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "model.predict"
+    ],
+    "ai_signals": [
+      "inference",
+      "model",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "ensemble_infer",
+    "called_names": [
+      "EnsembleResult",
+      "len",
+      "print",
+      "sum"
+    ],
+    "attribute_calls": [
+      "confidences.append",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self._generate_reasoning",
+      "self.infer_job_category",
+      "self.infer_salary_prediction"
+    ],
+    "ai_signals": [
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "_get_vectorizer",
+    "called_names": [],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self.registry.get_vectorizer"
+    ],
+    "ai_signals": [
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "print_status",
+    "called_names": [
+      "len",
+      "print"
+    ],
+    "attribute_calls": [
+      "self.loaded_models.items",
+      "self.registry.list_models",
+      "self.registry.list_models.items"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "function_name": "main",
+    "called_names": [
+      "UnifiedAIEngine",
+      "print"
+    ],
+    "attribute_calls": [
+      "engine.load_all_models",
+      "engine.print_status",
+      "engine.test_all_models"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\main.py",
+    "function_name": "_include_optional_router",
+    "called_names": [],
+    "attribute_calls": [
+      "app.include_router",
+      "logger.exception"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\middleware\\rate_limiter.py",
+    "function_name": "_client_ip",
+    "called_names": [
+      "strip"
+    ],
+    "attribute_calls": [
+      "forwarded.split",
+      "request.headers.get"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\routers\\admin_tokens.py",
+    "function_name": "_build_timeseries",
+    "called_names": [
+      "_utcnow",
+      "add",
+      "int",
+      "isinstance",
+      "len",
+      "set",
+      "sorted",
+      "str",
+      "timedelta"
+    ],
+    "attribute_calls": [
+      "_utcnow.date",
+      "d.isoformat",
+      "daily.keys",
+      "daily.setdefault",
+      "datetime.fromisoformat",
+      "datetime.fromisoformat.date",
+      "row.get",
+      "rows.append",
+      "store.get",
+      "ts.replace"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\auth.py",
+    "function_name": "_ensure_user_from_google",
+    "called_names": [],
+    "attribute_calls": [
+      "db.add",
+      "db.commit",
+      "db.query",
+      "db.query.filter",
+      "db.query.filter.first",
+      "db.refresh",
+      "models.User",
+      "secrets.token_urlsafe",
+      "security.get_password_hash"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\career_compass.py",
+    "function_name": "_vector_from_text",
+    "called_names": [
+      "_norm_score",
+      "sum"
+    ],
+    "attribute_calls": [
+      "text.lower"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\coaching.py",
+    "function_name": "build_taxonomy_context_from_resume",
+    "called_names": [
+      "isinstance",
+      "strip"
+    ],
+    "attribute_calls": [
+      "_tax.infer_industries_from_titles",
+      "_tax.map_job_title_to_naics",
+      "r.get",
+      "resume_data.get",
+      "titles.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\coaching.py",
+    "function_name": "_require_ai_service",
+    "called_names": [
+      "HTTPException"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\routers\\gdpr.py",
+    "function_name": "_audit",
+    "called_names": [],
+    "attribute_calls": [
+      "db.add",
+      "db.commit",
+      "models.AuditLog"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\insights.py",
+    "function_name": "_domain_series_from_text",
+    "called_names": [
+      "_axis_score",
+      "round"
+    ],
+    "attribute_calls": [
+      "STRUCTURAL_AXES.items"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\insights.py",
+    "function_name": "_structural_response",
+    "called_names": [
+      "_domain_series_from_text",
+      "_percentile",
+      "_profile_text_blob",
+      "_shape_label",
+      "abs",
+      "append",
+      "len",
+      "list",
+      "max",
+      "next",
+      "round",
+      "str",
+      "strip",
+      "sum"
+    ],
+    "attribute_calls": [
+      "STRUCTURAL_AXES.items",
+      "cohort_domain_scores.items",
+      "domain_series.items",
+      "options_payload.keys",
+      "p.get",
+      "profile.get",
+      "statistics.median",
+      "str.strip",
+      "str.strip.lower",
+      "strip.lower",
+      "target_domain_scores.items",
+      "user_domains.items",
+      "user_profile.get"
+    ],
+    "ai_signals": [
+      "ai",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\intelligence.py",
+    "function_name": "_pipeline_summary",
+    "called_names": [
+      "CareerTrojanPaths",
+      "_safe_read_json",
+      "_tail_jsonl",
+      "int",
+      "len",
+      "sorted",
+      "str"
+    ],
+    "attribute_calls": [
+      "file_path.is_file",
+      "file_path.relative_to",
+      "file_path.stat",
+      "model_root.exists",
+      "model_root.rglob",
+      "model_rows.append",
+      "model_rows.sort",
+      "str.replace"
+    ],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\mentorship.py",
+    "function_name": "get_mentorship_service",
+    "called_names": [
+      "Depends",
+      "MentorshipService"
+    ],
+    "attribute_calls": [
+      "db.connection"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\routers\\payment.py",
+    "function_name": "_process_braintree_payment",
+    "called_names": [
+      "HTTPException"
+    ],
+    "attribute_calls": [
+      "braintree_service.create_sale",
+      "braintree_service.find_or_create_customer",
+      "braintree_service.is_configured"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\support.py",
+    "function_name": "_ensure_support_table",
+    "called_names": [],
+    "attribute_calls": [
+      "models.SupportTicket.__table__.create"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\webhooks.py",
+    "function_name": "_log_event",
+    "called_names": [
+      "HTTPException"
+    ],
+    "attribute_calls": [
+      "db.add",
+      "db.flush",
+      "db.query",
+      "db.query.filter",
+      "db.query.filter.first",
+      "logger.info",
+      "models.WebhookEvent"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\webhooks.py",
+    "function_name": "_handle_stripe_checkout",
+    "called_names": [
+      "upper"
+    ],
+    "attribute_calls": [
+      "db.add",
+      "db.commit",
+      "db.query",
+      "db.query.filter",
+      "db.query.filter.first",
+      "models.PaymentTransaction",
+      "obj.get"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\webhooks.py",
+    "function_name": "_handle_stripe_invoice_paid",
+    "called_names": [
+      "_update_subscription_from_gateway",
+      "upper"
+    ],
+    "attribute_calls": [
+      "db.add",
+      "db.commit",
+      "db.query",
+      "db.query.filter",
+      "db.query.filter.first",
+      "models.PaymentTransaction",
+      "obj.get"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_api_client.py",
+    "function_name": "get",
+    "called_names": [],
+    "attribute_calls": [
+      "r.json",
+      "requests.get",
+      "self._headers",
+      "self._raise",
+      "self._url"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_api_client.py",
+    "function_name": "post",
+    "called_names": [],
+    "attribute_calls": [
+      "r.json",
+      "requests.post",
+      "self._headers",
+      "self._raise",
+      "self._url"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_api_client.py",
+    "function_name": "get_admin_api_client",
+    "called_names": [
+      "AdminFastAPIClient",
+      "int"
+    ],
+    "attribute_calls": [
+      "os.getenv"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "__init__",
+    "called_names": [
+      "CareerTrojanPaths",
+      "Path",
+      "get_feature_builder",
+      "get_stats_engine"
+    ],
+    "attribute_calls": [
+      "logger.info"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "analyze_candidate_pool",
+    "called_names": [
+      "dropna",
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "datetime.now.strftime",
+      "dropna.tolist",
+      "filters.items",
+      "logger.info",
+      "logger.warning",
+      "self._generate_candidate_insights",
+      "self.feature_builder.build_candidate_features",
+      "self.stats_engine.analyze_application_trends",
+      "self.stats_engine.describe_candidate_pool",
+      "self.stats_engine.fit_salary_distribution",
+      "self.stats_engine.load_candidates",
+      "self.stats_engine.save_analysis"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "analyze_job_market",
+    "called_names": [
+      "dropna",
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "datetime.now.strftime",
+      "dropna.tolist",
+      "logger.info",
+      "logger.warning",
+      "self._generate_job_insights",
+      "self.feature_builder.build_job_features",
+      "self.stats_engine.describe_candidate_pool",
+      "self.stats_engine.fit_salary_distribution",
+      "self.stats_engine.load_jobs",
+      "self.stats_engine.save_analysis"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "calculate_candidate_job_matches",
+    "called_names": [
+      "float",
+      "len",
+      "max",
+      "mean",
+      "median"
+    ],
+    "attribute_calls": [
+      "candidates_df.head",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "datetime.now.strftime",
+      "jobs_df.head",
+      "logger.info",
+      "matches_df.nlargest",
+      "matches_df.nlargest.to_dict",
+      "self._generate_matching_insights",
+      "self.feature_builder.batch_calculate_matches",
+      "self.feature_builder.build_candidate_features",
+      "self.feature_builder.build_job_features",
+      "self.stats_engine.load_candidates",
+      "self.stats_engine.load_jobs",
+      "self.stats_engine.save_analysis"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "run_ab_test",
+    "called_names": [
+      "abs",
+      "len"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "datetime.now.strftime",
+      "logger.info",
+      "self.stats_engine.compare_resume_quality",
+      "self.stats_engine.save_analysis",
+      "test_name.replace"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "predict_callback_probability",
+    "called_names": [
+      "items"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "datetime.now.strftime",
+      "insights.append",
+      "logger.info",
+      "self.stats_engine.predict_callback_rate",
+      "self.stats_engine.save_analysis"
+    ],
+    "ai_signals": [
+      "engine",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "list_recent_analyses",
+    "called_names": [],
+    "attribute_calls": [
+      "self.stats_engine.list_saved_analyses"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "load_saved_analysis",
+    "called_names": [],
+    "attribute_calls": [
+      "self.stats_engine.load_analysis"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "function_name": "get_advanced_analytics_service",
+    "called_names": [
+      "AdvancedAnalyticsService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "__init__",
+    "called_names": [
+      "CareerTrojanPaths",
+      "Counter",
+      "DataIndexState"
+    ],
+    "attribute_calls": [
+      "self._load_file_manifest",
+      "self._load_persisted_state"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "_load_persisted_state",
+    "called_names": [
+      "AIDataIndexSummary",
+      "CategoryStats",
+      "ParserIndexSummary",
+      "ParserRunRecord",
+      "get"
+    ],
+    "attribute_calls": [
+      "json.loads",
+      "line.strip",
+      "logger.warning",
+      "raw.get",
+      "self._index_file.exists",
+      "self._index_file.read_text",
+      "self._parser_runs_file.exists",
+      "self._parser_runs_file.read_text",
+      "self._parser_runs_file.read_text.strip",
+      "self._parser_runs_file.read_text.strip.split",
+      "self._state.parser_run_history.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "_persist_state",
+    "called_names": [
+      "asdict",
+      "open"
+    ],
+    "attribute_calls": [
+      "json.dump",
+      "logger.warning",
+      "self.ai_data_final.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "_persist_file_manifest",
+    "called_names": [
+      "asdict",
+      "open"
+    ],
+    "attribute_calls": [
+      "json.dump",
+      "logger.warning",
+      "self._state.file_manifest.items",
+      "self.ai_data_final.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "_append_run_record",
+    "called_names": [
+      "asdict",
+      "open"
+    ],
+    "attribute_calls": [
+      "f.write",
+      "json.dumps",
+      "logger.warning",
+      "self._state.parser_run_history.append",
+      "self.ai_data_final.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "index_ai_data",
+    "called_names": [
+      "AIDataIndexSummary",
+      "CategoryStats",
+      "FileIngestionRecord",
+      "_extract_industries",
+      "_extract_locations",
+      "_extract_skills",
+      "_file_hash",
+      "_safe_read_json",
+      "any",
+      "dict",
+      "isinstance",
+      "len",
+      "list",
+      "str"
+    ],
+    "attribute_calls": [
+      "cat_path.exists",
+      "cat_path.rglob",
+      "categories.append",
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.isoformat",
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "fp.relative_to",
+      "fp.stat",
+      "self.CATEGORY_MAP.items",
+      "self._industries.clear",
+      "self._industries.most_common",
+      "self._industries.update",
+      "self._locations.clear",
+      "self._locations.most_common",
+      "self._locations.update",
+      "self._persist_file_manifest",
+      "self._persist_state",
+      "self._skills.clear",
+      "self._skills.most_common",
+      "self._skills.update"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "index_parser_sources",
+    "called_names": [
+      "ParserIndexEntry",
+      "ParserIndexSummary",
+      "_file_hash",
+      "any",
+      "len",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "entries.append",
+      "failed_index_file.exists",
+      "failed_index_file.read_text",
+      "failed_sources.get",
+      "failure_info.get",
+      "file_path.is_file",
+      "file_path.name.startswith",
+      "file_path.relative_to",
+      "file_path.stat",
+      "file_path.suffix.lower",
+      "file_types.get",
+      "json.loads",
+      "line.strip",
+      "optional_deps.get",
+      "processed_index_file.exists",
+      "processed_index_file.read_text",
+      "processed_index_file.read_text.strip",
+      "processed_index_file.read_text.strip.split",
+      "processed_sources.add",
+      "self._detect_optional_dependencies",
+      "self._persist_state",
+      "self._write_parser_manifest",
+      "self.parser_root.exists",
+      "self.parser_root.rglob",
+      "status_counts.get",
+      "trap_flags.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "_write_parser_manifest",
+    "called_names": [
+      "asdict",
+      "open"
+    ],
+    "attribute_calls": [
+      "json.dump",
+      "logger.warning",
+      "self._detect_optional_dependencies",
+      "self.ai_data_final.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "record_parser_run",
+    "called_names": [
+      "ParserRunRecord"
+    ],
+    "attribute_calls": [
+      "self._append_run_record"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "get_parser_run_history",
+    "called_names": [],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "full_index",
+    "called_names": [],
+    "attribute_calls": [
+      "self.index_ai_data",
+      "self.index_parser_sources"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "get_parser_summary",
+    "called_names": [],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "function_name": "get_ai_data_index_service",
+    "called_names": [
+      "AIDataIndexService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\api_client.py",
+    "function_name": "_request",
+    "called_names": [],
+    "attribute_calls": [
+      "response.json",
+      "response.raise_for_status",
+      "self._client.request",
+      "self.logger.warning"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\automatic_data_ingestion_service.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "Path.resolve",
+      "category_dir.mkdir",
+      "logger.info",
+      "self.ai_data_final.mkdir",
+      "self.categories.values",
+      "self.source_dir.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\automatic_data_ingestion_service.py",
+    "function_name": "ingest_parsed_directory",
+    "called_names": [
+      "any",
+      "enumerate",
+      "isinstance",
+      "len",
+      "open",
+      "str"
+    ],
+    "attribute_calls": [
+      "candidates_path.exists",
+      "companies_path.exists",
+      "company_names.append",
+      "consolidated.get",
+      "consolidated_path.exists",
+      "contacts_path.exists",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "datetime.now.strftime",
+      "emails_path.exists",
+      "item.get",
+      "json.dump",
+      "json.load",
+      "logger.error",
+      "logger.info",
+      "logger.warning",
+      "n.strip",
+      "n.strip.lower",
+      "s.strip",
+      "s.strip.lower",
+      "self._extract_and_save_companies",
+      "self._extract_and_save_job_titles",
+      "self._extract_and_save_skills",
+      "self._latest_output_file",
+      "self.ai_data_final.mkdir",
+      "self.source_dir.mkdir",
+      "shutil.copy2",
+      "t.strip",
+      "t.strip.lower",
+      "uuid.uuid4",
+      "value.strip"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\automatic_data_ingestion_service.py",
+    "function_name": "get_ingestion_service",
+    "called_names": [
+      "AutomaticDataIngestionService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\auto_screen_system.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "self._initialize_ai_services",
+      "self._load_screening_history"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\auto_screen_system.py",
+    "function_name": "_initialize_ai_services",
+    "called_names": [
+      "get_ai_data_manager",
+      "get_azure_integration",
+      "get_feedback_loop_system",
+      "get_sqlite_manager",
+      "get_unified_ai_engine",
+      "print"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "unified_ai_engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\auto_screen_system.py",
+    "function_name": "screen_user_on_login",
+    "called_names": [
+      "append",
+      "len",
+      "print",
+      "str"
+    ],
+    "attribute_calls": [
+      "analysis_result.get",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "datetime.now.strftime",
+      "json.dumps",
+      "self._calculate_data_quality_score",
+      "self._find_user_files",
+      "self._generate_recommendations",
+      "self._process_file_with_ai",
+      "self._save_screening_history",
+      "self._save_screening_results",
+      "self.sqlite_manager.save_ai_learning_result"
+    ],
+    "ai_signals": [
+      "ai",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\auto_screen_system.py",
+    "function_name": "_find_user_files",
+    "called_names": [
+      "list",
+      "set"
+    ],
+    "attribute_calls": [
+      "directory_path.exists",
+      "directory_path.rglob",
+      "file_path.is_file",
+      "file_path.suffix.lower",
+      "self._file_contains_user_data",
+      "self.data_directories.items",
+      "user_files.append",
+      "user_files.extend",
+      "user_id.lower",
+      "user_id.upper"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\auto_screen_system.py",
+    "function_name": "_process_file_with_ai",
+    "called_names": [
+      "print",
+      "str",
+      "total_seconds"
+    ],
+    "attribute_calls": [
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.isoformat",
+      "datetime.now",
+      "file_path.read_text",
+      "file_path.stat",
+      "file_path.suffix.lower",
+      "self.ai_engine.process_document_intelligent"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\auto_screen_system.py",
+    "function_name": "_calculate_data_quality_score",
+    "called_names": [
+      "float",
+      "isinstance",
+      "len",
+      "sum"
+    ],
+    "attribute_calls": [
+      "engine_result.get",
+      "result.get",
+      "scores.append"
+    ],
+    "ai_signals": [
+      "engine",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "function_name": "_initialize_blob_service",
+    "called_names": [
+      "BlobServiceClient",
+      "print"
+    ],
+    "attribute_calls": [
+      "self.config_manager.get_credential"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "function_name": "create_containers",
+    "called_names": [
+      "len",
+      "print"
+    ],
+    "attribute_calls": [
+      "container_client.create_container",
+      "container_client.exists",
+      "containers.values",
+      "self.blob_service_client.get_container_client"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "function_name": "list_blobs",
+    "called_names": [
+      "print"
+    ],
+    "attribute_calls": [
+      "container_client.list_blobs",
+      "self.blob_service_client.get_container_client"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "function_name": "__init__",
+    "called_names": [],
+    "attribute_calls": [
+      "self._initialize_openai",
+      "self._initialize_text_analytics"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "function_name": "_initialize_openai",
+    "called_names": [
+      "OpenAIClient",
+      "print"
+    ],
+    "attribute_calls": [
+      "self.config_manager.get_credential"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "function_name": "setup_azure_account",
+    "called_names": [
+      "AzureCognitiveServicesManager",
+      "AzureStorageManager",
+      "print"
+    ],
+    "attribute_calls": [
+      "self.config_manager.get_credential",
+      "self.config_manager.set_credentials",
+      "self.storage_manager.create_containers"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "function_name": "test_azure_integration",
+    "called_names": [
+      "get_azure_integration",
+      "print"
+    ],
+    "attribute_calls": [
+      "azure.get_status",
+      "azure.process_with_azure_ai",
+      "json.dumps"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\backend_client.py",
+    "function_name": "get",
+    "called_names": [],
+    "attribute_calls": [
+      "r.json",
+      "r.raise_for_status",
+      "requests.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\blocker_connector.py",
+    "function_name": "get_service",
+    "called_names": [
+      "BlockerService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\blocker_connector.py",
+    "function_name": "get_status",
+    "called_names": [],
+    "attribute_calls": [
+      "self.is_available"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\blocker_connector.py",
+    "function_name": "get_blocker_connector",
+    "called_names": [
+      "BlockerConnector"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\braintree_service.py",
+    "function_name": "get_gateway",
+    "called_names": [
+      "RuntimeError",
+      "_get_environment",
+      "all"
+    ],
+    "attribute_calls": [
+      "braintree.BraintreeGateway",
+      "braintree.Configuration",
+      "logger.error",
+      "os.getenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\braintree_service.py",
+    "function_name": "generate_client_token",
+    "called_names": [
+      "gateway"
+    ],
+    "attribute_calls": [
+      "gw.client_token.generate",
+      "logger.info"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\braintree_service.py",
+    "function_name": "create_subscription",
+    "called_names": [
+      "ValueError",
+      "gateway",
+      "str"
+    ],
+    "attribute_calls": [
+      "BRAINTREE_PLAN_MAP.get",
+      "gw.subscription.create",
+      "logger.info"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\chrome_web_scraper.py",
+    "function_name": "robust_get",
+    "called_names": [
+      "range"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "logger.warning",
+      "random.choice",
+      "random.uniform",
+      "response.raise_for_status",
+      "self.session.get",
+      "time.sleep"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\chrome_web_scraper.py",
+    "function_name": "selenium_get",
+    "called_names": [
+      "WebDriverWait"
+    ],
+    "attribute_calls": [
+      "EC.presence_of_element_located",
+      "WebDriverWait.until",
+      "logger.error",
+      "logger.info",
+      "random.uniform",
+      "self._setup_chrome_driver",
+      "self.driver.get",
+      "time.sleep"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_auto_enrich.py",
+    "function_name": "auto_enrich_all_companies",
+    "called_names": [
+      "db",
+      "extract_companies",
+      "extract_text_from_resume",
+      "get_existing_companies",
+      "get_market_intelligence",
+      "set"
+    ],
+    "attribute_calls": [
+      "con.execute",
+      "cur.fetchall",
+      "datetime.fromisoformat",
+      "datetime.now",
+      "existing_companies.get",
+      "resume_dir.glob",
+      "seen_companies.add",
+      "threading.Thread",
+      "threading.Thread.start"
+    ],
+    "ai_signals": [
+      "intelligence"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_auto_enrich.py",
+    "function_name": "enrich_and_store",
+    "called_names": [
+      "get_market_intelligence"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "intelligence"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_parser.py",
+    "function_name": "ddg_search_official_site",
+    "called_names": [
+      "BeautifulSoup",
+      "any",
+      "urlparse"
+    ],
+    "attribute_calls": [
+      "DUCKDUCKGO_HTML.format",
+      "a.get",
+      "logger.debug",
+      "requests.utils.quote",
+      "session.get",
+      "soup.select",
+      "urlparse.netloc.lower"
+    ],
+    "ai_signals": [
+      "ml"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_parser.py",
+    "function_name": "infer_industry",
+    "called_names": [
+      "defaultdict",
+      "max"
+    ],
+    "attribute_calls": [
+      "INDUSTRY_KWS.items",
+      "scores.items",
+      "text.lower"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_parser.py",
+    "function_name": "enrich",
+    "called_names": [
+      "BeautifulSoup",
+      "CompanyRecord",
+      "canonical_domain",
+      "db",
+      "ddg_search_official_site",
+      "fetch_html",
+      "infer_industry",
+      "join",
+      "pick_logo",
+      "robust_get",
+      "strip",
+      "upsert"
+    ],
+    "attribute_calls": [
+      "con.commit",
+      "logger.info",
+      "m.get",
+      "requests.utils.quote",
+      "self._cached_by_name",
+      "self._download_logo",
+      "soup.find",
+      "soup.get_text",
+      "soup.title.get_text",
+      "time.sleep"
+    ],
+    "ai_signals": [
+      "ai",
+      "ml"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intel_service.py",
+    "function_name": "get_company_intel_service",
+    "called_names": [
+      "CompanyIntelService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\compliance_data_service.py",
+    "function_name": "_analyze_data_quality",
+    "called_names": [
+      "len",
+      "list",
+      "max",
+      "min",
+      "set"
+    ],
+    "attribute_calls": [
+      "d.is_dir",
+      "df.isnull",
+      "df.isnull.sum",
+      "df.isnull.sum.sum",
+      "pd.read_csv",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.iterdir",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.glob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\compliance_data_service.py",
+    "function_name": "_count_audit_activities",
+    "called_names": [
+      "len",
+      "list"
+    ],
+    "attribute_calls": [
+      "d.is_dir",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.iterdir",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.glob",
+      "self.logs_path.exists",
+      "self.logs_path.glob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\compliance_data_service.py",
+    "function_name": "_count_security_controls",
+    "called_names": [
+      "any",
+      "exists",
+      "len"
+    ],
+    "attribute_calls": [
+      "d.is_dir",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.iterdir",
+      "self.logs_path.exists",
+      "self.logs_path.glob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\compliance_data_service.py",
+    "function_name": "get_real_dataset_audit_results",
+    "called_names": [
+      "join",
+      "len",
+      "list",
+      "str",
+      "sum"
+    ],
+    "attribute_calls": [
+      "csv_file.stat",
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.strftime",
+      "df.isnull",
+      "df.isnull.sum",
+      "df.isnull.sum.sum",
+      "f.is_file",
+      "f.stat",
+      "issues.append",
+      "pd.read_csv",
+      "results.append",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.iterdir",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.glob",
+      "subdir.glob",
+      "subdir.is_dir",
+      "subdir.stat"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\compliance_data_service.py",
+    "function_name": "get_real_compliance_areas",
+    "called_names": [
+      "exists",
+      "len",
+      "list",
+      "max",
+      "strftime",
+      "timedelta"
+    ],
+    "attribute_calls": [
+      "compliance_areas.append",
+      "datetime.fromtimestamp",
+      "datetime.now",
+      "datetime.now.strftime",
+      "file_path.is_file",
+      "file_path.stat",
+      "old_files.append",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.rglob",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.glob",
+      "self.logs_path.exists",
+      "self.logs_path.glob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\credit_system.py",
+    "function_name": "get_credit_manager",
+    "called_names": [
+      "CreditManager"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\data_parser_service.py",
+    "function_name": "get_real_reprocessing_candidates",
+    "called_names": [
+      "join",
+      "len",
+      "list",
+      "str"
+    ],
+    "attribute_calls": [
+      "candidate_dir.exists",
+      "candidate_dir.iterdir",
+      "candidates.append",
+      "csv_file.stat",
+      "d.is_dir",
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.strftime",
+      "df.isnull",
+      "df.isnull.sum",
+      "df.isnull.sum.sum",
+      "issues.append",
+      "pd.read_csv",
+      "self._format_file_size",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.iterdir",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.glob",
+      "subdir.glob",
+      "subdir.is_dir",
+      "subdir.stat"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\data_parser_service.py",
+    "function_name": "get_real_processing_performance_metrics",
+    "called_names": [
+      "len",
+      "list",
+      "max",
+      "min"
+    ],
+    "attribute_calls": [
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.strftime",
+      "f.stat",
+      "file_path.is_file",
+      "file_path.stat",
+      "latest_log.stat",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.rglob",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.rglob",
+      "self.get_real_reprocessing_candidates",
+      "self.logs_path.exists",
+      "self.logs_path.glob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\data_parser_service.py",
+    "function_name": "get_real_data_quality_analysis",
+    "called_names": [
+      "len",
+      "list",
+      "max",
+      "set",
+      "sorted",
+      "sum",
+      "tuple"
+    ],
+    "attribute_calls": [
+      "completeness_scores.append",
+      "df.columns.tolist",
+      "df.isnull",
+      "df.isnull.sum",
+      "df.isnull.sum.sum",
+      "pd.read_csv",
+      "schemas_seen.add",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.glob"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\data_parser_service.py",
+    "function_name": "get_real_file_discovery",
+    "called_names": [
+      "list"
+    ],
+    "attribute_calls": [
+      "datetime.fromtimestamp",
+      "datetime.now",
+      "file_path.is_file",
+      "file_path.name.lower",
+      "file_path.stat",
+      "file_path.suffix.lower",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.rglob",
+      "self.automated_parser_path.exists",
+      "self.automated_parser_path.rglob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_contact_parser.py",
+    "function_name": "extract_contacts_from_text",
+    "called_names": [
+      "enumerate",
+      "len",
+      "validate_email"
+    ],
+    "attribute_calls": [
+      "COMPANY_REGEX.findall",
+      "EMAIL_REGEX.findall",
+      "JOB_TITLE_REGEX.findall",
+      "LINKEDIN_REGEX.findall",
+      "LOCATION_REGEX.findall",
+      "NAME_REGEX.findall",
+      "PHONE_REGEX.findall",
+      "contacts.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_contact_parser.py",
+    "function_name": "validate_email",
+    "called_names": [
+      "bool",
+      "len"
+    ],
+    "attribute_calls": [
+      "EMAIL_REGEX.fullmatch"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "_email_trust_tier",
+    "called_names": [
+      "_normalize_email",
+      "_parse_datetime",
+      "any",
+      "bool",
+      "join",
+      "str",
+      "sum"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "domain.lower",
+      "domain.lower.strip",
+      "email.partition",
+      "high_reasons.append",
+      "local_part.startswith",
+      "medium_reasons.append",
+      "name_payload.get",
+      "reasons.append",
+      "row.get",
+      "source_bits.append",
+      "str.lower",
+      "str.lower.strip",
+      "str.strip"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "_five_level_candidates",
+    "called_names": [
+      "_domain_variants",
+      "_name_parts",
+      "str"
+    ],
+    "attribute_calls": [
+      "level.get",
+      "local.replace",
+      "row.get",
+      "str.strip",
+      "str.strip.lower",
+      "valid_levels.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "_run_five_level_email_test",
+    "called_names": [
+      "_five_level_candidates",
+      "_normalize_email",
+      "len",
+      "set",
+      "sorted",
+      "str"
+    ],
+    "attribute_calls": [
+      "level_results.append",
+      "positive_matches.extend",
+      "row.get",
+      "str.strip",
+      "str.strip.lower"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "build_unsubscribe_url",
+    "called_names": [
+      "_normalize_email",
+      "_unsubscribe_base_url",
+      "quote_plus"
+    ],
+    "attribute_calls": [
+      "_unsubscribe_base_url.rstrip"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "load_email_database",
+    "called_names": [
+      "_email_trust_tier",
+      "_normalize_email",
+      "_read_json",
+      "_run_five_level_email_test",
+      "bool",
+      "isinstance",
+      "list",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "cleaned.append",
+      "dict.fromkeys",
+      "email.split",
+      "r.get",
+      "row.get",
+      "seen.add",
+      "str.lower",
+      "validation.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "get_email_records",
+    "called_names": [
+      "_normalize_tier",
+      "len",
+      "load_email_database",
+      "max",
+      "min",
+      "str"
+    ],
+    "attribute_calls": [
+      "domain.strip",
+      "domain.strip.lower",
+      "email_type.strip",
+      "email_type.strip.lower",
+      "query.strip",
+      "query.strip.lower",
+      "r.get",
+      "str.lower",
+      "str.strip",
+      "str.strip.lower"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "get_email_summary",
+    "called_names": [
+      "Counter",
+      "_unsubscribe_base_url",
+      "bool",
+      "exists",
+      "get",
+      "get_email_diagnostics",
+      "glob",
+      "len",
+      "list",
+      "load_email_database",
+      "str",
+      "sum"
+    ],
+    "attribute_calls": [
+      "domain_counts.most_common",
+      "r.get",
+      "str.lower",
+      "tier_counts.get",
+      "type_counts.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "get_email_diagnostics",
+    "called_names": [
+      "Path",
+      "_count_json_files",
+      "_read_json",
+      "int",
+      "isinstance",
+      "len",
+      "load_email_database",
+      "set",
+      "sorted",
+      "str"
+    ],
+    "attribute_calls": [
+      "alerts.append",
+      "db_path.exists",
+      "inferred_path.exists",
+      "report.get",
+      "report_norm.endswith",
+      "report_path.exists",
+      "runtime_norm.endswith",
+      "str.replace",
+      "str.replace.lower",
+      "str.replace.lower.rstrip",
+      "verified_path.exists"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "build_provider_payload",
+    "called_names": [
+      "ValueError",
+      "_normalize_tier",
+      "_unsubscribe_base_url",
+      "build_unsubscribe_url",
+      "get",
+      "get_email_records",
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "provider.strip",
+      "provider.strip.lower",
+      "r.get",
+      "str.lower"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "_extract_reroute_targets",
+    "called_names": [
+      "_normalize_email",
+      "any",
+      "join",
+      "len",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "EMAIL_REGEX.findall",
+      "row.get",
+      "seen.add",
+      "targets.append",
+      "text_blob.lower",
+      "text_blob.strip"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "load_email_tracking_records",
+    "called_names": [
+      "_normalize_email",
+      "_normalize_outcome",
+      "_read_json",
+      "_tracking_path",
+      "isinstance",
+      "str",
+      "suggest_bounce_retry"
+    ],
+    "attribute_calls": [
+      "r.get",
+      "row.get",
+      "rows.append",
+      "rows.sort",
+      "str.strip"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "save_email_tracking_record",
+    "called_names": [
+      "ValueError",
+      "_normalize_email",
+      "_normalize_outcome",
+      "_tracking_path",
+      "load_email_tracking_records",
+      "str",
+      "suggest_bounce_retry",
+      "uuid4"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "emails_dir.mkdir",
+      "existing.insert",
+      "json.dumps",
+      "payload.get",
+      "str.strip",
+      "tracking_path.write_text"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "get_email_tracking_records",
+    "called_names": [
+      "_normalize_outcome",
+      "len",
+      "load_email_tracking_records",
+      "max",
+      "min",
+      "str"
+    ],
+    "attribute_calls": [
+      "r.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "get_email_tracking_summary",
+    "called_names": [
+      "Counter",
+      "_extract_reroute_targets",
+      "_tracking_path",
+      "get",
+      "len",
+      "load_email_tracking_records",
+      "str",
+      "sum"
+    ],
+    "attribute_calls": [
+      "r.get",
+      "result_counts.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "function_name": "get_email_reroute_targets",
+    "called_names": [
+      "_extract_reroute_targets",
+      "load_email_tracking_records"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enhanced_job_title_engine.py",
+    "function_name": "__init__",
+    "called_names": [
+      "LinkedInIndustryClassifier",
+      "super"
+    ],
+    "attribute_calls": [
+      "self._load_job_titles_database",
+      "self._load_salary_estimates",
+      "self._load_skill_mappings",
+      "super.__init__"
+    ],
+    "ai_signals": [
+      "classifier"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enhanced_job_title_engine.py",
+    "function_name": "analyze_job_title_comprehensive",
+    "called_names": [],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "industry_analysis.get",
+      "self._assess_market_demand",
+      "self._assess_remote_work_potential",
+      "self._assess_tech_adoption",
+      "self._find_similar_titles",
+      "self._get_career_progression",
+      "self._get_salary_estimates",
+      "self._get_skills_for_title",
+      "self._normalize_title",
+      "self.linkedin_classifier.classify_job_title"
+    ],
+    "ai_signals": [
+      "classifier"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enhanced_job_title_engine.py",
+    "function_name": "_get_career_progression",
+    "called_names": [],
+    "attribute_calls": [
+      "self.linkedin_classifier._suggest_career_paths",
+      "title.lower",
+      "title.replace"
+    ],
+    "ai_signals": [
+      "classifier"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enhanced_job_title_engine.py",
+    "function_name": "_assess_tech_adoption",
+    "called_names": [],
+    "attribute_calls": [
+      "industry_info.get",
+      "self.linkedin_classifier.get_industry_insights",
+      "tech_descriptions.get"
+    ],
+    "ai_signals": [
+      "classifier"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enhanced_job_title_engine.py",
+    "function_name": "main",
+    "called_names": [
+      "EnhancedJobTitleEngine",
+      "join"
+    ],
+    "attribute_calls": [
+      "analysis.get",
+      "analysis.get.get",
+      "analysis.get.get.get",
+      "engine.analyze_job_title_comprehensive",
+      "logger.info"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path",
+      "str"
+    ],
+    "attribute_calls": [
+      "Path.expanduser",
+      "nested_ai_data.exists",
+      "os.environ.get",
+      "self._resolve_path",
+      "self.data_root.name.casefold"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "load_all_if_needed",
+    "called_names": [],
+    "attribute_calls": [
+      "self.load_esco",
+      "self.load_naics",
+      "self.load_soc2020"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "load_naics",
+    "called_names": [],
+    "attribute_calls": [
+      "df_struct.merge",
+      "pd.read_excel",
+      "self.naics_desc_path.exists",
+      "self.naics_structure_path.exists"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "infer_industry_for_job_title",
+    "called_names": [
+      "sorted"
+    ],
+    "attribute_calls": [
+      "candidates.extend",
+      "job_title.strip",
+      "self._match_esco",
+      "self._match_naics",
+      "self._match_soc",
+      "self._normalise_title",
+      "self.load_all_if_needed"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "_match_esco",
+    "called_names": [
+      "IndustryNode",
+      "JobIndustryMatch",
+      "astype",
+      "str"
+    ],
+    "attribute_calls": [
+      "astype.fillna",
+      "c.lower",
+      "cols.get",
+      "labels.items",
+      "matches.append",
+      "row.get",
+      "scores.append",
+      "scores.sort",
+      "self._normalise_title"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "_match_soc",
+    "called_names": [
+      "IndustryNode",
+      "JobIndustryMatch",
+      "astype",
+      "str"
+    ],
+    "attribute_calls": [
+      "astype.fillna",
+      "c.lower",
+      "cols.get",
+      "major_group_lookup.get",
+      "matches.append",
+      "row.get",
+      "scores.append",
+      "scores.sort",
+      "self._normalise_title",
+      "self._soc_df.iterrows",
+      "self.load_soc2020",
+      "soc_cols.get",
+      "titles.items"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "_match_naics",
+    "called_names": [
+      "IndustryNode",
+      "JobIndustryMatch",
+      "astype",
+      "str"
+    ],
+    "attribute_calls": [
+      "astype.fillna",
+      "c.lower",
+      "cols.get",
+      "matches.append",
+      "row.get",
+      "scores.append",
+      "scores.sort",
+      "self._normalise_title",
+      "titles.items"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "function_name": "get_global_industry_taxonomy_service",
+    "called_names": [
+      "IndustryTaxonomyService"
+    ],
+    "attribute_calls": [
+      "_GLOBAL_SVC.load_all_if_needed"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\intellicv_data_manager.py",
+    "function_name": "create_default_configurations",
+    "called_names": [
+      "open",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "email_accounts_file.exists",
+      "extraction_metadata_file.exists",
+      "json.dump"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intellicv_data_manager.py",
+    "function_name": "get_directory_status",
+    "called_names": [
+      "len",
+      "list",
+      "round",
+      "str",
+      "sum"
+    ],
+    "attribute_calls": [
+      "all_files.extend",
+      "f.is_file",
+      "f.stat",
+      "f.suffix.lower",
+      "path.exists",
+      "path.glob",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.rglob",
+      "self.email_extracted_path.exists",
+      "self.email_extracted_path.rglob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intellicv_data_manager.py",
+    "function_name": "get_extracted_cv_list",
+    "called_names": [
+      "list",
+      "round",
+      "str"
+    ],
+    "attribute_calls": [
+      "cv_files.append",
+      "cv_files.sort",
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.isoformat",
+      "f.is_file",
+      "f.suffix.lower",
+      "file_path.stat",
+      "file_path.suffix.lower",
+      "self.ai_data_path.exists",
+      "self.ai_data_path.rglob",
+      "self.email_extracted_path.exists",
+      "self.email_extracted_path.rglob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intellicv_data_manager.py",
+    "function_name": "check_email_accounts_config",
+    "called_names": [
+      "len",
+      "open"
+    ],
+    "attribute_calls": [
+      "config.get",
+      "email_accounts_file.exists",
+      "json.load"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intellicv_data_manager.py",
+    "function_name": "get_real_data_stats",
+    "called_names": [
+      "get",
+      "str"
+    ],
+    "attribute_calls": [
+      "ai_counts.get",
+      "email_counts.get",
+      "self.ai_data_path.exists",
+      "self.backend_data_path.exists",
+      "self.check_email_accounts_config",
+      "self.email_data_path.exists",
+      "self.get_directory_status",
+      "self.intellicv_data_path.exists"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intellicv_data_manager.py",
+    "function_name": "get_data_manager",
+    "called_names": [
+      "IntelliCVDataDirectoryManager"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "function_name": "_initialize_services",
+    "called_names": [
+      "Path",
+      "get_real_ai_connector",
+      "get_unified_ai_engine",
+      "str",
+      "sum"
+    ],
+    "attribute_calls": [
+      "logger.info",
+      "logger.warning",
+      "sys.path.insert"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "unified_ai_engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "function_name": "get_real_service_metrics",
+    "called_names": [],
+    "attribute_calls": [
+      "ai_stats.get",
+      "bridge_health.get",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "logger.error",
+      "real_stats.get",
+      "self._get_unavailable_metrics",
+      "self.portal_bridge.health_check",
+      "self.real_ai_connector.get_connection_stats",
+      "self.unified_ai_engine.get_engine_statistics"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "unified_ai_engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "function_name": "get_ai_engine_details",
+    "called_names": [
+      "str"
+    ],
+    "attribute_calls": [
+      "connector_info.get",
+      "engine_info.get",
+      "logger.error",
+      "self.get_fusion_engine_status",
+      "self.real_ai_connector.get_detailed_analytics",
+      "self.unified_ai_engine.get_detailed_status"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "unified_ai_engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "function_name": "get_fusion_engine_status",
+    "called_names": [
+      "str"
+    ],
+    "attribute_calls": [
+      "fusion_status.get",
+      "logger.error",
+      "self.unified_ai_engine.get_fusion_engine_status"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "unified_ai_engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "function_name": "get_real_analytics_data",
+    "called_names": [
+      "len"
+    ],
+    "attribute_calls": [
+      "ai_analytics.get",
+      "logger.error",
+      "real_analytics.get",
+      "self.real_ai_connector.get_comprehensive_analytics",
+      "self.unified_ai_engine.get_learning_analytics"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "unified_ai_engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "function_name": "test_all_connections",
+    "called_names": [
+      "str",
+      "sum"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "fusion_status.get",
+      "health.get",
+      "result.get",
+      "self.get_fusion_engine_status",
+      "self.portal_bridge.health_check",
+      "self.real_ai_connector.get_connection_stats",
+      "self.unified_ai_engine.quick_health_check",
+      "stats.get",
+      "test_results.values"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine",
+      "unified_ai_engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "function_name": "get_intelligence_hub_connector",
+    "called_names": [
+      "IntelligenceHubConnector"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "intelligence"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\interview_coaching_service.py",
+    "function_name": "get_interview_coaching_service",
+    "called_names": [
+      "InterviewCoachingService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\job_title_enhancement_engine.py",
+    "function_name": "main",
+    "called_names": [
+      "JobTitleEnhancementEngine",
+      "len",
+      "list",
+      "print",
+      "set",
+      "sorted"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "engine.categorize_by_industry",
+      "engine.extract_career_progressions",
+      "engine.extract_skill_mappings",
+      "engine.get_common_typos",
+      "engine.normalize_job_title",
+      "raw_titles_1.split",
+      "title.strip"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\keyword_extractor.py",
+    "function_name": "extract_ngrams",
+    "called_names": [
+      "CountVectorizer",
+      "sorted",
+      "zip"
+    ],
+    "attribute_calls": [
+      "CountVectorizer.fit",
+      "vectorizer.get_feature_names_out",
+      "vectorizer.transform",
+      "vectorizer.transform.toarray",
+      "vectorizer.transform.toarray.flatten"
+    ],
+    "ai_signals": [
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\keyword_extractor.py",
+    "function_name": "compute_keyword_similarity",
+    "called_names": [
+      "TfidfVectorizer",
+      "cosine_similarity",
+      "enumerate",
+      "float"
+    ],
+    "attribute_calls": [
+      "TfidfVectorizer.fit",
+      "vectorizer.transform"
+    ],
+    "ai_signals": [
+      "similarity",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\keyword_extractor.py",
+    "function_name": "build_thesaurus",
+    "called_names": [
+      "append",
+      "compute_keyword_similarity",
+      "defaultdict",
+      "dict"
+    ],
+    "attribute_calls": [
+      "sim_dict.items"
+    ],
+    "ai_signals": [
+      "similarity"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\linkedin_industry_classifier.py",
+    "function_name": "classify_job_title",
+    "called_names": [
+      "len",
+      "min",
+      "set",
+      "sorted"
+    ],
+    "attribute_calls": [
+      "industry.lower",
+      "industry_scores.items",
+      "job_title.lower",
+      "self.industry_keywords.items",
+      "self.linkedin_industries.get",
+      "subcategory.lower",
+      "title_lower.replace",
+      "title_lower.replace.split",
+      "title_words.intersection"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\linkedin_industry_classifier.py",
+    "function_name": "main",
+    "called_names": [
+      "LinkedInIndustryClassifier"
+    ],
+    "attribute_calls": [
+      "classifier.classify_job_title",
+      "classifier.export_enhanced_classification",
+      "logger.info"
+    ],
+    "ai_signals": [
+      "classifier"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "self._load_gmail_config",
+      "self.email_extracted_path.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "_load_gmail_config",
+    "called_names": [
+      "open"
+    ],
+    "attribute_calls": [
+      "account_data.get",
+      "accounts.items",
+      "json.load",
+      "logger.error",
+      "logger.info",
+      "self.email_config_path.exists"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "test_gmail_connection",
+    "called_names": [
+      "str",
+      "strip"
+    ],
+    "attribute_calls": [
+      "imaplib.IMAP4_SSL",
+      "mail.login",
+      "mail.logout",
+      "mail.select"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "get_real_email_stats",
+    "called_names": [
+      "len",
+      "list",
+      "max",
+      "timedelta"
+    ],
+    "attribute_calls": [
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.strftime",
+      "datetime.now",
+      "f.stat",
+      "latest_file.stat",
+      "self._get_gmail_email_stats",
+      "self.email_extracted_path.exists",
+      "self.email_extracted_path.glob",
+      "self.test_gmail_connection",
+      "stats.update"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "_get_gmail_email_stats",
+    "called_names": [
+      "join",
+      "len",
+      "split",
+      "strftime",
+      "strip",
+      "timedelta"
+    ],
+    "attribute_calls": [
+      "cv_search_terms.append",
+      "datetime.now",
+      "imaplib.IMAP4_SSL",
+      "logger.error",
+      "mail.login",
+      "mail.logout",
+      "mail.search",
+      "mail.select"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "extract_new_cvs",
+    "called_names": [
+      "enumerate",
+      "join",
+      "len",
+      "split",
+      "str",
+      "strftime",
+      "strip",
+      "timedelta"
+    ],
+    "attribute_calls": [
+      "cv_search_terms.append",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "imaplib.IMAP4_SSL",
+      "logger.error",
+      "logger.info",
+      "mail.login",
+      "mail.logout",
+      "mail.search",
+      "mail.select",
+      "self._extract_attachments_from_email",
+      "self.test_gmail_connection"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "_extract_attachments_from_email",
+    "called_names": [],
+    "attribute_calls": [
+      "email.message_from_bytes",
+      "email_message.get",
+      "email_message.is_multipart",
+      "email_message.walk",
+      "extracted_files.append",
+      "logger.error",
+      "logger.info",
+      "mail.fetch",
+      "part.get_content_disposition",
+      "part.get_filename",
+      "part.get_payload",
+      "self._is_cv_file",
+      "self._save_attachment"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "get_recent_extractions",
+    "called_names": [
+      "list",
+      "open"
+    ],
+    "attribute_calls": [
+      "datetime.fromtimestamp",
+      "datetime.fromtimestamp.strftime",
+      "email_files.sort",
+      "f.stat",
+      "file_info.update",
+      "file_path.stat",
+      "file_path.with_suffix",
+      "json.load",
+      "logger.error",
+      "metadata.get",
+      "metadata_path.exists",
+      "recent_files.append",
+      "self.email_extracted_path.exists",
+      "self.email_extracted_path.glob"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "function_name": "get_gmail_service",
+    "called_names": [
+      "LiveGmailService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\mentorship_service.py",
+    "function_name": "mark_service_delivered",
+    "called_names": [],
+    "attribute_calls": [
+      "cursor.execute",
+      "logger.error",
+      "logger.info",
+      "self.db.commit",
+      "self.db.cursor",
+      "self.db.rollback"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\mentorship_service.py",
+    "function_name": "confirm_service_completion",
+    "called_names": [],
+    "attribute_calls": [
+      "cursor.execute",
+      "cursor.fetchone",
+      "logger.error",
+      "logger.info",
+      "self._release_funds",
+      "self.db.commit",
+      "self.db.cursor",
+      "self.db.rollback"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\mentorship_service.py",
+    "function_name": "initiate_payout",
+    "called_names": [
+      "ValueError",
+      "float",
+      "isoformat"
+    ],
+    "attribute_calls": [
+      "cursor.execute",
+      "cursor.fetchone",
+      "logger.error",
+      "logger.info",
+      "self.db.commit",
+      "self.db.cursor",
+      "self.db.rollback",
+      "self.get_payout_details"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\pdf_export_service.py",
+    "function_name": "get_pdf_service",
+    "called_names": [
+      "PDFExportService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\real_ai_data_service.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "self.ai_data_final_path.exists",
+      "self.load_real_ai_data"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\real_ai_data_service.py",
+    "function_name": "load_real_ai_data",
+    "called_names": [],
+    "attribute_calls": [
+      "datetime.now",
+      "self._load_ai_profiles",
+      "self._load_companies_data",
+      "self._load_competitive_data",
+      "self._load_market_intelligence"
+    ],
+    "ai_signals": [
+      "ai",
+      "intelligence"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\real_ai_data_service.py",
+    "function_name": "_load_market_intelligence",
+    "called_names": [],
+    "attribute_calls": [
+      "self._analyze_industry_growth",
+      "self._analyze_job_market_trends",
+      "self._extract_salary_intelligence",
+      "self._extract_trending_skills"
+    ],
+    "ai_signals": [
+      "intelligence"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\real_ai_data_service.py",
+    "function_name": "_extract_our_advantages",
+    "called_names": [
+      "exists",
+      "len"
+    ],
+    "attribute_calls": [
+      "advantages.append",
+      "self.ai_data_path.exists"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\real_ai_data_service.py",
+    "function_name": "get_real_system_status",
+    "called_names": [
+      "any",
+      "exists",
+      "len"
+    ],
+    "attribute_calls": [
+      "self.ai_data_final_path.exists",
+      "self.ai_data_path.exists",
+      "self.automated_parser_path.exists",
+      "self.last_update.isoformat"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\real_ai_data_service.py",
+    "function_name": "refresh_data",
+    "called_names": [
+      "print"
+    ],
+    "attribute_calls": [
+      "self.load_real_ai_data"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "scan_all_data_sources",
+    "called_names": [
+      "append",
+      "defaultdict",
+      "len",
+      "open",
+      "str"
+    ],
+    "attribute_calls": [
+      "data_dir.rglob",
+      "datetime.now",
+      "datetime.now.strftime",
+      "file_path.is_file",
+      "file_path.stat",
+      "file_path.suffix.lower",
+      "json.dump",
+      "logger.error",
+      "logger.info",
+      "self._categorize_file",
+      "self._is_historical_data",
+      "self._looks_like_company_data",
+      "self._looks_like_contact_data",
+      "self._looks_like_cv",
+      "self._looks_like_email_data"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "process_all_data",
+    "called_names": [
+      "append",
+      "open",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.strftime",
+      "error_info.get",
+      "json.dump",
+      "logger.info",
+      "self._generate_processing_summary",
+      "self._process_company_data",
+      "self._process_contact_data",
+      "self._process_cv_documents",
+      "self._process_email_data",
+      "self._process_historical_data",
+      "self.handle_exception",
+      "self.scan_all_data_sources"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "_extract_candidate_from_document",
+    "called_names": [
+      "len",
+      "list",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self._extract_education_from_text",
+      "self._extract_experience_from_text",
+      "self._extract_skills_from_text",
+      "self._extract_text_from_file",
+      "self.email_pattern.findall",
+      "self.handle_exception",
+      "self.name_pattern.findall",
+      "self.phone_pattern.findall"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "_process_company_dataframe",
+    "called_names": [
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "actual_columns.items",
+      "col.lower",
+      "column_mapping.items",
+      "companies.append",
+      "company.setdefault",
+      "company.setdefault.extend",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "df.iterrows",
+      "pd.notna",
+      "self.email_pattern.findall",
+      "v.lower"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "_extract_contact_data_from_file",
+    "called_names": [
+      "list",
+      "open",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "contacts.append",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "f.read",
+      "file_path.suffix.lower",
+      "logger.error",
+      "pd.read_csv",
+      "pd.read_excel",
+      "self._process_contact_dataframe",
+      "self.email_pattern.findall",
+      "self.phone_pattern.findall"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "_process_contact_dataframe",
+    "called_names": [
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "col.lower",
+      "col.lower.replace",
+      "contact.setdefault",
+      "contact.setdefault.extend",
+      "contacts.append",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "df.iterrows",
+      "pd.notna",
+      "self.email_pattern.findall",
+      "self.phone_pattern.findall"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "_process_email_data",
+    "called_names": [
+      "Path",
+      "append",
+      "extend",
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "self._extract_email_data_from_file",
+      "self._is_historical_email"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "_extract_email_data_from_file",
+    "called_names": [
+      "list",
+      "open",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "col.lower",
+      "col.lower.replace",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "df.iterrows",
+      "emails.append",
+      "f.read",
+      "file_path.suffix.lower",
+      "found_emails.extend",
+      "logger.error",
+      "pd.notna",
+      "pd.read_csv",
+      "self.date_pattern.findall",
+      "self.email_pattern.findall"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "function_name": "_extract_historical_data_from_file",
+    "called_names": [
+      "int",
+      "str"
+    ],
+    "attribute_calls": [
+      "col.lower",
+      "col.lower.replace",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "df.iterrows",
+      "file_path.suffix.lower",
+      "historical_data.append",
+      "logger.error",
+      "pd.notna",
+      "pd.read_csv",
+      "pd.read_excel",
+      "re.search",
+      "self._extract_text_from_file",
+      "self.email_pattern.findall",
+      "self.phone_pattern.findall",
+      "year_match.group"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_universal_parser.py",
+    "function_name": "__init__",
+    "called_names": [
+      "ATSScorer"
+    ],
+    "attribute_calls": [
+      "re.compile"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_universal_parser.py",
+    "function_name": "extract_basic_info",
+    "called_names": [
+      "list",
+      "set"
+    ],
+    "attribute_calls": [
+      "self.email_pattern.findall",
+      "self.name_pattern.findall",
+      "self.phone_pattern.findall"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_universal_parser.py",
+    "function_name": "_enhance_profile",
+    "called_names": [
+      "len"
+    ],
+    "attribute_calls": [
+      "file_path.exists",
+      "file_path.stat",
+      "profile.copy",
+      "profile.get",
+      "raw_text.split",
+      "self._analyze_seniority",
+      "self._assess_contact_completeness",
+      "self._calculate_quality_score",
+      "self._detect_industry"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_universal_parser.py",
+    "function_name": "_detect_industry",
+    "called_names": [
+      "max",
+      "sum"
+    ],
+    "attribute_calls": [
+      "scores.values",
+      "text.lower"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\sqlite_manager.py",
+    "function_name": "get_sqlite_manager",
+    "called_names": [
+      "IntelliCVSQLiteManager"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\system_health_service.py",
+    "function_name": "run_comprehensive_system_health_check",
+    "called_names": [
+      "extend",
+      "items",
+      "values"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self._check_admin_pages_health",
+      "self._check_ai_data_health",
+      "self._check_database_health",
+      "self._check_external_dependencies",
+      "self._check_filesystem_health",
+      "self._check_services_health"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\system_health_service.py",
+    "function_name": "_check_services_health",
+    "called_names": [
+      "append",
+      "len",
+      "list",
+      "round",
+      "str"
+    ],
+    "attribute_calls": [
+      "service_file.stat",
+      "services_path.exists",
+      "services_path.glob",
+      "sys.modules.get",
+      "sys.path.insert"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\test_smart_enrichment.py",
+    "function_name": "setUp",
+    "called_names": [
+      "ATSScorer",
+      "load_config"
+    ],
+    "attribute_calls": [
+      "self.config.get"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\test_smart_enrichment.py",
+    "function_name": "test_enrich_batch",
+    "called_names": [
+      "len",
+      "range"
+    ],
+    "attribute_calls": [
+      "ATSScorer.enrich_batch",
+      "self.assertEqual",
+      "self.assertIn",
+      "self.profile.copy"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\test_smart_enrichment.py",
+    "function_name": "test_contextual_score_with_spacy",
+    "called_names": [
+      "ATSScorer",
+      "isinstance"
+    ],
+    "attribute_calls": [
+      "ats.contextual_score",
+      "self.assertTrue",
+      "self.config.get"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\test_smart_enrichment.py",
+    "function_name": "test_enrich_batch",
+    "called_names": [
+      "len",
+      "range"
+    ],
+    "attribute_calls": [
+      "ATSScorer.enrich_batch",
+      "self.assertEqual",
+      "self.assertIn",
+      "self.profile.copy"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\universal_data_ingestor.py",
+    "function_name": "__init__",
+    "called_names": [
+      "DataIngestionTracker",
+      "Path"
+    ],
+    "attribute_calls": [
+      "d.mkdir",
+      "logger.info",
+      "logger.warning",
+      "self.dirs.values",
+      "self.tracker.register_source"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\universal_data_ingestor.py",
+    "function_name": "_ingest_contacts",
+    "called_names": [
+      "join",
+      "open",
+      "str",
+      "strip"
+    ],
+    "attribute_calls": [
+      "c.isalnum",
+      "contact.get",
+      "df.iterrows",
+      "email.split",
+      "join.strip",
+      "json.dump",
+      "key_mappings.items",
+      "pd.notna",
+      "raw_contact.items",
+      "row.to_dict"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\web_intelligence_service.py",
+    "function_name": "search_company_basic",
+    "called_names": [
+      "BeautifulSoup",
+      "_two_tier_web_search",
+      "any",
+      "len",
+      "lower",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "div.find",
+      "fallback.get",
+      "item.get",
+      "link_elem.get",
+      "loc.title",
+      "normalized.append",
+      "response.raise_for_status",
+      "search_results.append",
+      "self.session.get",
+      "snippet_elem.get_text",
+      "soup.find_all",
+      "time.sleep",
+      "title_elem.get_text"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\web_intelligence_service.py",
+    "function_name": "analyze_company_website",
+    "called_names": [
+      "BeautifulSoup",
+      "any",
+      "append",
+      "list",
+      "lower",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "meta_desc.get",
+      "re.findall",
+      "response.raise_for_status",
+      "self.session.get",
+      "soup.find",
+      "soup.find_all",
+      "soup.get_text",
+      "soup.get_text.lower",
+      "soup.title.get_text",
+      "tech_keywords.items",
+      "time.sleep"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\web_intelligence_service.py",
+    "function_name": "search_company_news",
+    "called_names": [
+      "BeautifulSoup",
+      "_two_tier_web_search",
+      "str"
+    ],
+    "attribute_calls": [
+      "date_elem.get_text",
+      "div.find",
+      "fallback.get",
+      "item.get",
+      "link_elem.get",
+      "news_items.append",
+      "normalized.append",
+      "response.raise_for_status",
+      "self.session.get",
+      "soup.find_all",
+      "source_elem.get_text",
+      "time.sleep",
+      "title_elem.get_text"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\web_intelligence_service.py",
+    "function_name": "get_competitor_analysis",
+    "called_names": [
+      "BeautifulSoup",
+      "len",
+      "list",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "competitors.append",
+      "context.split",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "response.raise_for_status",
+      "search_text.find",
+      "self.session.get",
+      "soup.get_text",
+      "soup.get_text.lower",
+      "time.sleep",
+      "word.isupper"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\web_intelligence_service.py",
+    "function_name": "get_industry_intelligence",
+    "called_names": [
+      "BeautifulSoup",
+      "append",
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "div.find",
+      "response.raise_for_status",
+      "self.session.get",
+      "snippet_elem.get_text",
+      "soup.find_all",
+      "soup.get_text",
+      "soup.get_text.lower",
+      "time.sleep"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\web_intelligence_service.py",
+    "function_name": "get_service_status",
+    "called_names": [
+      "len"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\zendesk_ai_agent.py",
+    "function_name": "_get_llm_provider",
+    "called_names": [],
+    "attribute_calls": [
+      "model.lower",
+      "os.getenv"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\zendesk_ai_agent.py",
+    "function_name": "_openai_chat",
+    "called_names": [
+      "RuntimeError"
+    ],
+    "attribute_calls": [
+      "client.chat.completions.create",
+      "openai.OpenAI",
+      "os.getenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\zendesk_ai_agent.py",
+    "function_name": "_llm_chat",
+    "called_names": [
+      "_anthropic_chat",
+      "_get_llm_provider",
+      "_openai_chat"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\zendesk_ai_agent.py",
+    "function_name": "process_one",
+    "called_names": [
+      "_get_llm_provider",
+      "claim_next",
+      "complete_job",
+      "fail_job",
+      "processor",
+      "str"
+    ],
+    "attribute_calls": [
+      "_PROCESSORS.get",
+      "datetime.now",
+      "datetime.now.isoformat",
+      "envelope.get",
+      "logger.exception",
+      "logger.info",
+      "os.getenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_chat_service.py",
+    "function_name": "get_career_advice",
+    "called_names": [],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "logger.error",
+      "self._build_career_advice_prompt",
+      "self._query_gemini",
+      "self._query_perplexity",
+      "self._unavailable_response"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_chat_service.py",
+    "function_name": "get_service_status",
+    "called_names": [
+      "bool"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_chat_service.py",
+    "function_name": "get_ai_chat_service",
+    "called_names": [
+      "AIChatService"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_feedback_loop.py",
+    "function_name": "research_with_ai",
+    "called_names": [],
+    "attribute_calls": [
+      "results.append",
+      "self._research_openai",
+      "self.logger.error",
+      "self.logger.warning"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_feedback_loop.py",
+    "function_name": "_research_openai",
+    "called_names": [
+      "ResearchResult"
+    ],
+    "attribute_calls": [
+      "message.content.strip",
+      "self._build_ai_prompt",
+      "self._calculate_ai_confidence",
+      "self.logger.error",
+      "self.openai_client.ChatCompletion.create"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_feedback_loop.py",
+    "function_name": "__init__",
+    "called_names": [
+      "AIChatResearchEngine",
+      "WebResearchEngine",
+      "defaultdict"
+    ],
+    "attribute_calls": [
+      "logging.basicConfig",
+      "logging.getLogger",
+      "self.logger.info"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_feedback_loop.py",
+    "function_name": "research_term_comprehensive",
+    "called_names": [
+      "len"
+    ],
+    "attribute_calls": [
+      "all_results.extend",
+      "self._consolidate_research_results",
+      "self.ai_engine.research_with_ai",
+      "self.logger.debug",
+      "self.logger.error",
+      "self.logger.info",
+      "self.logger.warning",
+      "self.web_engine.research_term"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_feedback_loop.py",
+    "function_name": "get_system_status",
+    "called_names": [
+      "Counter",
+      "dict",
+      "len",
+      "max",
+      "min",
+      "sum"
+    ],
+    "attribute_calls": [
+      "self.completed_research.values",
+      "self.failed_research.values"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_learning_tracker.py",
+    "function_name": "get_learning_tracker",
+    "called_names": [
+      "AILearningPatternTracker"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_model_loader.py",
+    "function_name": "load_all_models",
+    "called_names": [
+      "SentenceTransformer",
+      "len",
+      "open"
+    ],
+    "attribute_calls": [
+      "bayesian_file.exists",
+      "logger.info",
+      "logger.warning",
+      "pickle.load",
+      "salary_file.exists",
+      "spacy.load",
+      "vectorizer_file.exists"
+    ],
+    "ai_signals": [
+      "bayes",
+      "bayesian",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_model_loader.py",
+    "function_name": "get_model",
+    "called_names": [],
+    "attribute_calls": [
+      "self.load_all_models",
+      "self.models.get"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_model_loader.py",
+    "function_name": "get_trained_models",
+    "called_names": [],
+    "attribute_calls": [
+      "_loader.load_all_models"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_model_loader.py",
+    "function_name": "get_model",
+    "called_names": [],
+    "attribute_calls": [
+      "_loader.get_model"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "function_name": "__init__",
+    "called_names": [],
+    "attribute_calls": [
+      "self._detect_engines"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "function_name": "_detect_engines",
+    "called_names": [
+      "RealAIConnector",
+      "get_ai_chat_service"
+    ],
+    "attribute_calls": [
+      "self.ai_chat.get_service_status",
+      "subprocess.run"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "function_name": "route_cv_analysis",
+    "called_names": [],
+    "attribute_calls": [
+      "self._analyze_with_internal",
+      "self._analyze_with_ollama",
+      "self.engines_available.get"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "function_name": "route_market_intelligence",
+    "called_names": [],
+    "attribute_calls": [
+      "self.ai_chat.get_career_advice",
+      "self.ai_chat.get_job_market_insights",
+      "self.engines_available.get"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "function_name": "route_career_advice",
+    "called_names": [],
+    "attribute_calls": [
+      "self.ai_chat.get_career_advice",
+      "self.engines_available.get",
+      "self.internal_ai.get_ai_generated_insights",
+      "user_profile.get"
+    ],
+    "ai_signals": [
+      "ai",
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "function_name": "get_engine_status",
+    "called_names": [],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "function_name": "get_ai_router",
+    "called_names": [
+      "AIRouter"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path",
+      "open"
+    ],
+    "attribute_calls": [
+      "bayesian_file.exists",
+      "logging.info",
+      "logging.warning",
+      "pickle.load",
+      "vectorizer_file.exists"
+    ],
+    "ai_signals": [
+      "bayes",
+      "bayesian",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "train_models",
+    "called_names": [
+      "RuntimeError"
+    ],
+    "attribute_calls": [
+      "logging.info",
+      "self._train_industry_matcher",
+      "self._train_job_classifier",
+      "self._train_skill_predictor"
+    ],
+    "ai_signals": [
+      "ai",
+      "classifier",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_train_job_classifier",
+    "called_names": [
+      "LabelEncoder",
+      "MultinomialNB",
+      "TfidfVectorizer"
+    ],
+    "attribute_calls": [
+      "label_encoder.fit_transform",
+      "model.fit",
+      "vectorizer.fit_transform"
+    ],
+    "ai_signals": [
+      "model",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "predict_job_category",
+    "called_names": [
+      "inverse_transform",
+      "max",
+      "predict",
+      "predict_proba",
+      "transform"
+    ],
+    "attribute_calls": [
+      "logging.error"
+    ],
+    "ai_signals": [
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "__init__",
+    "called_names": [],
+    "attribute_calls": [
+      "self._initialize_model"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "get_embedding",
+    "called_names": [],
+    "attribute_calls": [
+      "logging.error",
+      "np.zeros",
+      "self.model.encode"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "calculate_similarity",
+    "called_names": [],
+    "attribute_calls": [
+      "logging.error",
+      "np.dot",
+      "np.linalg.norm",
+      "self.model.encode"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "enhance_job_description",
+    "called_names": [
+      "RuntimeError"
+    ],
+    "attribute_calls": [
+      "self._openai_enhance_description"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_openai_enhance_description",
+    "called_names": [],
+    "attribute_calls": [
+      "logging.error",
+      "message.content.strip",
+      "self.openai_client.ChatCompletion.create"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "generate_professional_summary",
+    "called_names": [
+      "RuntimeError"
+    ],
+    "attribute_calls": [
+      "profile_data.get",
+      "self._openai_generate_summary"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_openai_generate_summary",
+    "called_names": [
+      "isinstance",
+      "join",
+      "str"
+    ],
+    "attribute_calls": [
+      "logging.error",
+      "message.content.strip",
+      "self.openai_client.ChatCompletion.create"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "generate_star_bullets",
+    "called_names": [
+      "RuntimeError"
+    ],
+    "attribute_calls": [
+      "logging.error",
+      "message.content.strip",
+      "self.openai_client.ChatCompletion.create"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "optimize_ats",
+    "called_names": [
+      "RuntimeError",
+      "join"
+    ],
+    "attribute_calls": [
+      "logging.error",
+      "message.content.strip",
+      "self.openai_client.ChatCompletion.create"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "generate_cover_letter",
+    "called_names": [
+      "RuntimeError"
+    ],
+    "attribute_calls": [
+      "candidate_data.get",
+      "job_data.get",
+      "logging.error",
+      "message.content.strip",
+      "self.openai_client.ChatCompletion.create"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "__init__",
+    "called_names": [
+      "AILearningTable",
+      "AdvancedNLPEngine",
+      "BayesianInferenceEngine",
+      "FuzzyLogicEngine",
+      "LLMIntegrationEngine",
+      "NeuralNetworkEngine"
+    ],
+    "attribute_calls": [
+      "logging.basicConfig",
+      "logging.getLogger",
+      "self.config.get",
+      "self.logger.info"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "engine",
+      "inference"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "process_document_intelligent",
+    "called_names": [
+      "len",
+      "str"
+    ],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "self._calculate_overall_scores",
+      "self._empty_result",
+      "self._load_document",
+      "self._run_bayesian_analysis",
+      "self._run_fuzzy_analysis",
+      "self._run_llm_enhancement",
+      "self._run_neural_analysis",
+      "self._update_learning_table",
+      "self._update_stats",
+      "self.logger.error",
+      "self.logger.info",
+      "self.nlp_engine.analyze_sentiment",
+      "self.nlp_engine.extract_entities",
+      "sentiment.get",
+      "time.time"
+    ],
+    "ai_signals": [
+      "bayes",
+      "bayesian",
+      "engine",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_run_bayesian_analysis",
+    "called_names": [
+      "append",
+      "list",
+      "set"
+    ],
+    "attribute_calls": [
+      "nlp_results.get",
+      "self.bayesian_engine.calculate_skill_match_probability",
+      "self.bayesian_engine.predict_job_category"
+    ],
+    "ai_signals": [
+      "bayes",
+      "bayesian",
+      "engine",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_run_neural_analysis",
+    "called_names": [
+      "append",
+      "float",
+      "len",
+      "sort"
+    ],
+    "attribute_calls": [
+      "doc_embedding.tolist",
+      "self.neural_engine.calculate_similarity",
+      "self.neural_engine.get_embedding"
+    ],
+    "ai_signals": [
+      "embedding",
+      "engine",
+      "similarity"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_run_fuzzy_analysis",
+    "called_names": [
+      "append",
+      "len",
+      "lower",
+      "max",
+      "min",
+      "set",
+      "sum"
+    ],
+    "attribute_calls": [
+      "e.get",
+      "entity.get",
+      "learned_terms.keys",
+      "nlp_results.items",
+      "nlp_results.values",
+      "self._map_nlp_to_learning_category",
+      "self.fuzzy_engine.assess_data_quality",
+      "self.fuzzy_engine.handle_ambiguous_data",
+      "self.learning_table.get_learned_terms",
+      "term.split"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_run_llm_enhancement",
+    "called_names": [
+      "append"
+    ],
+    "attribute_calls": [
+      "nlp_results.get",
+      "self.llm_engine.enhance_job_description",
+      "self.llm_engine.generate_professional_summary"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "_calculate_overall_scores",
+    "called_names": [
+      "append",
+      "get",
+      "len",
+      "min",
+      "sum"
+    ],
+    "attribute_calls": [
+      "ai_analysis.keys",
+      "bayesian_results.get",
+      "confidence_scores.append",
+      "fuzzy_results.get",
+      "fuzzy_results.get.get"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "function_name": "get_engine_status",
+    "called_names": [
+      "bool"
+    ],
+    "attribute_calls": [
+      "self.learning_table.get_stats"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\backend_api\\services\\blocker\\service.py",
+    "function_name": "get_user_blockers",
+    "called_names": [],
+    "attribute_calls": [
+      "ApplicationBlocker.criticality_score.desc",
+      "self.db.query",
+      "self.db.query.filter",
+      "self.db.query.filter.order_by",
+      "self.db.query.filter.order_by.all"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\career_coach.py",
+    "function_name": "__init__",
+    "called_names": [
+      "AIConfig",
+      "BayesianJobClassifier",
+      "EmbeddingEngine",
+      "ExpertRuleEngine",
+      "LLMClient",
+      "MatchScoreRegressor",
+      "NLPEngine",
+      "NeuralMatchModelWrapper"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "engine",
+      "model",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\career_coach.py",
+    "function_name": "build_coaching_bundle",
+    "called_names": [
+      "len"
+    ],
+    "attribute_calls": [
+      "self._extract_job_text",
+      "self._extract_resume_text",
+      "self._extract_skills",
+      "self._extract_years_experience",
+      "self._summarise_applications",
+      "self.bayes.predict_category",
+      "self.llm._synthesise_response",
+      "self.neural.score_pair",
+      "self.regressor.predict_match_score",
+      "self.rules.evaluate_resume_vs_job"
+    ],
+    "ai_signals": [
+      "ai",
+      "bayes",
+      "predict",
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\interview_coach_service.py",
+    "function_name": "record_interview_feedback",
+    "called_names": [
+      "_load_learning_store",
+      "_question_key",
+      "_save_learning_store",
+      "_score_question_with_learning",
+      "int",
+      "max",
+      "round",
+      "str"
+    ],
+    "attribute_calls": [
+      "answer_bucket.get",
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "q_feedback.get",
+      "role_perf.get",
+      "session_outcome.strip",
+      "session_outcome.strip.lower",
+      "store.setdefault",
+      "store.setdefault.setdefault"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\interview_coach_service.py",
+    "function_name": "get_learning_profile",
+    "called_names": [
+      "_load_learning_store",
+      "get"
+    ],
+    "attribute_calls": [
+      "role_perf.get",
+      "role_scores.get",
+      "store.get"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\interview_coach_service.py",
+    "function_name": "infer_role_family",
+    "called_names": [
+      "_context_text",
+      "lower",
+      "sorted",
+      "sum"
+    ],
+    "attribute_calls": [
+      "ROLE_KEYWORDS.items",
+      "scores.items"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\interview_coach_service.py",
+    "function_name": "generate_interview_questions",
+    "called_names": [
+      "_load_learning_store",
+      "_missing_keywords",
+      "_score_question_with_learning",
+      "infer_role_family",
+      "isinstance",
+      "join",
+      "max",
+      "min",
+      "set",
+      "sorted",
+      "str",
+      "strip"
+    ],
+    "attribute_calls": [
+      "ROLE_SPECIFIC_QUESTIONS.get",
+      "deduped.append",
+      "fit.get",
+      "question.strip",
+      "question.strip.lower",
+      "questions.append",
+      "questions.extend",
+      "seen.add",
+      "strip.lower"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence\\enrich.py",
+    "function_name": "safe_get",
+    "called_names": [
+      "retry",
+      "stop_after_attempt",
+      "wait_exponential"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "session.get"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence\\enrich.py",
+    "function_name": "enrich_company",
+    "called_names": [
+      "BeautifulSoup",
+      "any",
+      "create_placeholder_company",
+      "extract_from_website",
+      "generate_embeddings",
+      "get",
+      "safe_get",
+      "split"
+    ],
+    "attribute_calls": [
+      "company_name.replace",
+      "datetime.fromisoformat",
+      "datetime.now",
+      "href.lower",
+      "href.split",
+      "logger.info",
+      "logger.warning",
+      "soup.find_all"
+    ],
+    "ai_signals": [
+      "embedding"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "__init__",
+    "called_names": [
+      "len"
+    ],
+    "attribute_calls": [
+      "logger.info",
+      "self._find_models_path",
+      "self._load_bayesian_models",
+      "self._load_embeddings",
+      "self._load_ensemble_models",
+      "self._load_expert_systems",
+      "self._load_fuzzy_systems",
+      "self._load_legacy_models",
+      "self._load_neural_models",
+      "self._load_nlp_models",
+      "self._load_statistical_analysis",
+      "self._load_statistical_models"
+    ],
+    "ai_signals": [
+      "bayes",
+      "bayesian",
+      "embedding",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_find_models_path",
+    "called_names": [
+      "FileNotFoundError",
+      "Path",
+      "range"
+    ],
+    "attribute_calls": [
+      "models_path.exists"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_load_statistical_models",
+    "called_names": [
+      "open"
+    ],
+    "attribute_calls": [
+      "logger.debug",
+      "logger.info",
+      "logger.warning",
+      "model_file.replace",
+      "model_file.replace.replace",
+      "pickle.load",
+      "stat_path.exists"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_load_bayesian_models",
+    "called_names": [
+      "open"
+    ],
+    "attribute_calls": [
+      "bayes_path.exists",
+      "joblib.load",
+      "logger.debug",
+      "logger.info",
+      "logger.warning",
+      "model_file.replace"
+    ],
+    "ai_signals": [
+      "bayes",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_load_nlp_models",
+    "called_names": [
+      "open",
+      "str"
+    ],
+    "attribute_calls": [
+      "bert_path.exists",
+      "file_path.exists",
+      "gpt_config_path.exists",
+      "joblib.load",
+      "json.load",
+      "logger.info",
+      "logger.warning",
+      "model_file.endswith",
+      "nlp_path.exists"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_load_ensemble_models",
+    "called_names": [
+      "open"
+    ],
+    "attribute_calls": [
+      "ensemble_path.exists",
+      "joblib.load",
+      "logger.debug",
+      "logger.info",
+      "logger.warning",
+      "model_file.replace"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "get_dashboard_enrichment",
+    "called_names": [
+      "len",
+      "list",
+      "sum"
+    ],
+    "attribute_calls": [
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "logger.error",
+      "logger.info",
+      "self._build_analysis_corpus",
+      "self._compute_clustering_ml",
+      "self._compute_market_signals_ml",
+      "self._compute_role_fit_ml",
+      "self._enrich_job_titles_ml",
+      "self._enrich_keywords_ml",
+      "self._run_bayesian_inference",
+      "self._run_expert_systems",
+      "self._run_fuzzy_logic",
+      "self._run_neural_predictions",
+      "self._run_nlp_analysis",
+      "self.bayesian_models.keys",
+      "self.ensemble_models.keys",
+      "self.expert_systems.keys",
+      "self.fuzzy_systems.keys",
+      "self.neural_models.keys",
+      "self.nlp_models.keys",
+      "self.statistical_models.keys",
+      "user_profile.get"
+    ],
+    "ai_signals": [
+      "bayes",
+      "bayesian",
+      "clustering",
+      "inference",
+      "ml",
+      "model",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_enrich_keywords_ml",
+    "called_names": [
+      "enrich_keywords",
+      "enumerate",
+      "float",
+      "len",
+      "list",
+      "max",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "all_text.lower",
+      "all_text.lower.split",
+      "job_desc.lower",
+      "job_desc.lower.split",
+      "kw_result.get",
+      "scores.argsort",
+      "scores.max",
+      "self._load_collocation_phrases",
+      "self._load_corpus_samples",
+      "self.models.get",
+      "tfidf_model.get_feature_names_out",
+      "tfidf_model.transform",
+      "tfidf_vector.toarray"
+    ],
+    "ai_signals": [
+      "model",
+      "score",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_enrich_job_titles_ml",
+    "called_names": [
+      "enrich_job_titles_with_similarity_and_migration"
+    ],
+    "attribute_calls": [
+      "jt_result.get",
+      "keywords_result.get"
+    ],
+    "ai_signals": [
+      "similarity"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_compute_role_fit_ml",
+    "called_names": [
+      "float",
+      "hasattr",
+      "len",
+      "lower",
+      "min",
+      "set",
+      "str",
+      "transform"
+    ],
+    "attribute_calls": [
+      "candidate_vectors.append",
+      "fit_model.decision_function",
+      "fit_model.predict",
+      "fit_model.predict_proba",
+      "keywords.get",
+      "logger.debug",
+      "np.clip",
+      "np.exp",
+      "np.max",
+      "re.findall",
+      "self._build_analysis_corpus",
+      "self._extract_basic_features",
+      "self.models.get",
+      "str.lower",
+      "str.lower.strip",
+      "str.strip"
+    ],
+    "ai_signals": [
+      "model",
+      "predict",
+      "vector"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_compute_clustering_ml",
+    "called_names": [
+      "float",
+      "hasattr",
+      "int",
+      "len",
+      "max",
+      "min",
+      "round"
+    ],
+    "attribute_calls": [
+      "cluster_labels.get",
+      "keywords_result.get",
+      "kmeans_model.predict",
+      "kmeans_model.transform",
+      "logger.debug",
+      "np.sum",
+      "np.where",
+      "self._load_corpus_samples",
+      "self.models.get",
+      "tfidf_model.transform"
+    ],
+    "ai_signals": [
+      "model",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "enrich_keywords_across_entities",
+    "called_names": [
+      "join"
+    ],
+    "attribute_calls": [
+      "self._enrich_keywords_ml"
+    ],
+    "ai_signals": [
+      "ml"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_run_neural_predictions",
+    "called_names": [
+      "int"
+    ],
+    "attribute_calls": [
+      "logger.debug",
+      "model.predict",
+      "np.argmax",
+      "self._extract_neural_features",
+      "seniority_map.get",
+      "tf.keras.models.load_model"
+    ],
+    "ai_signals": [
+      "model",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "_run_bayesian_inference",
+    "called_names": [
+      "float",
+      "int"
+    ],
+    "attribute_calls": [
+      "class_map.get",
+      "logger.debug",
+      "model.predict",
+      "model.predict_proba",
+      "proba.max",
+      "self._extract_basic_features"
+    ],
+    "ai_signals": [
+      "model",
+      "predict"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "function_name": "get_model_inventory",
+    "called_names": [
+      "len",
+      "list",
+      "sum"
+    ],
+    "attribute_calls": [
+      "self.bayesian_models.keys",
+      "self.ensemble_models.keys",
+      "self.expert_systems.keys",
+      "self.fuzzy_systems.keys",
+      "self.models.keys",
+      "self.neural_models.keys",
+      "self.nlp_models.keys",
+      "self.statistical_models.keys"
+    ],
+    "ai_signals": [
+      "bayes",
+      "bayesian",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ats_scorer.py",
+    "function_name": "contextual_score",
+    "called_names": [
+      "NLP_MODEL",
+      "any",
+      "join",
+      "min",
+      "sum"
+    ],
+    "attribute_calls": [
+      "ent.text.lower",
+      "exp.get",
+      "fuzz.partial_ratio",
+      "job_target.lower",
+      "logging.error",
+      "profile.get",
+      "re.findall",
+      "s.lower",
+      "text.lower",
+      "text.split"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ats_scorer.py",
+    "function_name": "enrich",
+    "called_names": [],
+    "attribute_calls": [
+      "datetime.now",
+      "datetime.now.isoformat",
+      "profile.copy",
+      "self.contextual_score",
+      "user_profile.log_session",
+      "user_profile.update_benchmarks",
+      "user_profile.update_growth_metrics"
+    ],
+    "ai_signals": [
+      "score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\job_title_similarity.py",
+    "function_name": "enrich_job_titles_with_similarity_and_migration",
+    "called_names": [
+      "detect_industry_migrations",
+      "enumerate",
+      "job_title_similarity"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "similarity"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\keyword_enricher.py",
+    "function_name": "enrich_keywords",
+    "called_names": [
+      "build_thesaurus",
+      "detect_industry_migrations",
+      "extract_acronyms",
+      "extract_collocations",
+      "extract_keywords",
+      "extract_near_phrases",
+      "extract_ngrams",
+      "job_title_similarity",
+      "len",
+      "match_collocations"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "similarity"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\utils\\security.py",
+    "function_name": "get_token_scopes",
+    "called_names": [
+      "isinstance",
+      "set",
+      "str"
+    ],
+    "attribute_calls": [
+      "deduped.append",
+      "payload.get",
+      "scope_claim.split",
+      "scopes.extend",
+      "seen.add"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\shared\\paths.py",
+    "function_name": "_resolve_data_root",
+    "called_names": [
+      "Path",
+      "_default_data_root_candidates",
+      "_looks_like_ai_data_final",
+      "_normalize_data_root",
+      "exists"
+    ],
+    "attribute_calls": [
+      "candidate.exists",
+      "candidate.name.casefold",
+      "os.getenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\shared\\paths.py",
+    "function_name": "_resolve_ai_data_final",
+    "called_names": [
+      "_expand",
+      "_looks_like_ai_data_final"
+    ],
+    "attribute_calls": [
+      "candidate.exists",
+      "data_root.name.casefold",
+      "os.getenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\shared\\paths.py",
+    "function_name": "_resolve_parser_root",
+    "called_names": [
+      "_expand"
+    ],
+    "attribute_calls": [
+      "os.getenv"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\shared\\paths.py",
+    "function_name": "__post_init__",
+    "called_names": [
+      "_expand",
+      "_normalize_data_root",
+      "_resolve_ai_data_final",
+      "_resolve_logs_root",
+      "_resolve_models_root",
+      "_resolve_parser_root",
+      "_resolve_user_data",
+      "_resolve_user_data_mirror",
+      "_resolve_working_root"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  },
+  {
+    "file": "services\\shared\\training_data_loader.py",
+    "function_name": "_extract_email",
+    "called_names": [],
+    "attribute_calls": [
+      "EMAIL_RE.search",
+      "match.group"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\shared\\training_data_loader.py",
+    "function_name": "_normalize_profile",
+    "called_names": [
+      "TrainingRecord",
+      "_text_join",
+      "_to_list",
+      "float",
+      "str"
+    ],
+    "attribute_calls": [
+      "education.append",
+      "profile.get",
+      "self._extract_email",
+      "self._extract_phone",
+      "work_experience.append"
+    ],
+    "ai_signals": [
+      "ai",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\shared\\training_data_loader.py",
+    "function_name": "_normalize_resume_like",
+    "called_names": [
+      "TrainingRecord",
+      "_to_list",
+      "float",
+      "str"
+    ],
+    "attribute_calls": [
+      "resume.get",
+      "self._extract_email",
+      "self._extract_phone"
+    ],
+    "ai_signals": [
+      "ai",
+      "training"
+    ]
+  },
+  {
+    "file": "services\\shared\\registry\\registry.py",
+    "function_name": "_load_registry",
+    "called_names": [
+      "open"
+    ],
+    "attribute_calls": [
+      "logging.warning",
+      "os.path.dirname",
+      "os.path.exists",
+      "os.path.join",
+      "yaml.safe_load"
+    ],
+    "ai_signals": [
+      "ml"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\run_full_ingest.py",
+    "function_name": "__init__",
+    "called_names": [
+      "get_ai_data_root"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\run_full_ingest.py",
+    "function_name": "_flatten_legacy_dir",
+    "called_names": [],
+    "attribute_calls": [
+      "legacy_path.exists",
+      "legacy_path.mkdir",
+      "legacy_path.resolve",
+      "placeholder.write_text",
+      "self.ai_root.resolve",
+      "shutil.rmtree"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\run_full_ingest.py",
+    "function_name": "run_parser",
+    "called_names": [
+      "ResumeParser"
+    ],
+    "attribute_calls": [
+      "parser.process_all_data",
+      "parser.save_extracted_data",
+      "parser.scan_all_data_sources",
+      "results.get",
+      "results.get.get"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\run_full_ingest.py",
+    "function_name": "ingest_outputs",
+    "called_names": [
+      "AutomaticDataIngestionService",
+      "str"
+    ],
+    "attribute_calls": [
+      "ingestion_service.ingest_parsed_directory"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\run_full_ingest.py",
+    "function_name": "main",
+    "called_names": [
+      "AutomatedParserOrchestrator",
+      "parse_args",
+      "print"
+    ],
+    "attribute_calls": [
+      "orchestrator.consolidate_ai_data",
+      "orchestrator.ingest_outputs",
+      "orchestrator.run_parser"
+    ],
+    "ai_signals": [
+      "ai",
+      "orchestrator"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\inference\\model_registry.py",
+    "function_name": "__init__",
+    "called_names": [
+      "Path"
+    ],
+    "attribute_calls": [
+      "self._load_registry",
+      "self.models_dir.mkdir",
+      "self.registry_dir.mkdir"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\inference\\model_registry.py",
+    "function_name": "get_model",
+    "called_names": [
+      "Path",
+      "open",
+      "print"
+    ],
+    "attribute_calls": [
+      "model_file.exists",
+      "model_file.is_absolute",
+      "pickle.load"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "shared_backend\\capability_tester.py",
+    "function_name": "fetch_live_market_trends",
+    "called_names": [],
+    "attribute_calls": [
+      "client.get",
+      "data.get",
+      "httpx.AsyncClient",
+      "logger.error",
+      "logger.warning",
+      "response.json",
+      "response.raise_for_status",
+      "results.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "shared_backend\\registry_loader.py",
+    "function_name": "load_registry",
+    "called_names": [
+      "open"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "logger.warning",
+      "os.path.exists",
+      "yaml.safe_load"
+    ],
+    "ai_signals": [
+      "ml"
+    ]
+  },
+  {
+    "file": "shared_backend\\registry\\capability_registry.py",
+    "function_name": "load_registry",
+    "called_names": [
+      "open"
+    ],
+    "attribute_calls": [
+      "logger.error",
+      "logger.info",
+      "logger.warning",
+      "os.path.exists",
+      "yaml.safe_load"
+    ],
+    "ai_signals": [
+      "ml"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_admin_email_integration_endpoints.py",
+    "function_name": "_reset_state",
+    "called_names": [
+      "_clear_rate_limiter"
+    ],
+    "attribute_calls": [
+      "admin_router._email_dispatch_log.clear",
+      "pytest.fixture"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_admin_email_integration_endpoints.py",
+    "function_name": "client",
+    "called_names": [
+      "TestClient"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\integration\\test_api_endpoints.py",
+    "function_name": "test_parser_summary",
+    "called_names": [
+      "assert_status_ok"
+    ],
+    "attribute_calls": [
+      "client.get"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\integration\\test_api_endpoints.py",
+    "function_name": "test_parser_status",
+    "called_names": [
+      "assert_status_ok"
+    ],
+    "attribute_calls": [
+      "client.get"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\integration\\test_api_endpoints.py",
+    "function_name": "test_parser_runs",
+    "called_names": [
+      "assert_status_ok"
+    ],
+    "attribute_calls": [
+      "client.get"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\integration\\test_api_endpoints.py",
+    "function_name": "test_parser_ingestion_status",
+    "called_names": [
+      "assert_status_ok"
+    ],
+    "attribute_calls": [
+      "client.get"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\integration\\test_api_endpoints.py",
+    "function_name": "test_all_routers_mounted",
+    "called_names": [
+      "isinstance",
+      "len"
+    ],
+    "attribute_calls": [
+      "client.get",
+      "response.json"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "function_name": "test_claim_moves_to_processing",
+    "called_names": [
+      "claim_next",
+      "enqueue",
+      "exists"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "function_name": "test_claim_empty_queue",
+    "called_names": [
+      "claim_next"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "function_name": "test_fifo_order",
+    "called_names": [
+      "claim_next",
+      "enqueue"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "function_name": "test_complete_moves_to_processed",
+    "called_names": [
+      "claim_next",
+      "complete_job",
+      "enqueue"
+    ],
+    "attribute_calls": [
+      "dst.read_text",
+      "json.loads"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "function_name": "test_fail_moves_to_failed",
+    "called_names": [
+      "claim_next",
+      "enqueue",
+      "fail_job"
+    ],
+    "attribute_calls": [
+      "dst.read_text",
+      "json.loads"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "function_name": "test_enqueue_claim_complete",
+    "called_names": [
+      "claim_next",
+      "complete_job",
+      "enqueue",
+      "queue_stats"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "function_name": "test_enqueue_claim_fail",
+    "called_names": [
+      "claim_next",
+      "enqueue",
+      "fail_job",
+      "queue_stats",
+      "read_job"
+    ],
+    "attribute_calls": [],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_braintree.py",
+    "function_name": "client",
+    "called_names": [
+      "TestClient",
+      "_clear_rate_limiter"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_braintree.py",
+    "function_name": "test_gateway_raises_without_credentials",
+    "called_names": [],
+    "attribute_calls": [
+      "bs.get_gateway",
+      "os.environ.pop",
+      "patch.dict",
+      "pytest.raises"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_braintree.py",
+    "function_name": "test_client_token_503_when_unconfigured",
+    "called_names": [],
+    "attribute_calls": [
+      "client.get",
+      "os.environ.pop",
+      "patch.dict"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_braintree.py",
+    "function_name": "test_generate_client_token",
+    "called_names": [
+      "generate_client_token",
+      "patch"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_company_intel_service.py",
+    "function_name": "isolated_paths",
+    "called_names": [
+      "str"
+    ],
+    "attribute_calls": [
+      "ai_data.mkdir",
+      "monkeypatch.setenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "mock_paths",
+    "called_names": [
+      "MagicMock",
+      "range",
+      "write_text"
+    ],
+    "attribute_calls": [
+      "ai_data_final.mkdir",
+      "json.dumps",
+      "parser_root.mkdir",
+      "profiles_dir.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_index_ai_data",
+    "called_names": [
+      "AIDataIndexService",
+      "isinstance"
+    ],
+    "attribute_calls": [
+      "service.index_ai_data"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_index_parser_sources",
+    "called_names": [
+      "AIDataIndexService",
+      "isinstance"
+    ],
+    "attribute_calls": [
+      "service.index_parser_sources"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_full_index",
+    "called_names": [
+      "AIDataIndexService"
+    ],
+    "attribute_calls": [
+      "service.full_index"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_record_parser_run",
+    "called_names": [
+      "AIDataIndexService",
+      "isinstance"
+    ],
+    "attribute_calls": [
+      "service.record_parser_run"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_get_parser_run_history",
+    "called_names": [
+      "AIDataIndexService",
+      "len",
+      "range"
+    ],
+    "attribute_calls": [
+      "service.get_parser_run_history",
+      "service.record_parser_run"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_search_skills",
+    "called_names": [
+      "AIDataIndexService",
+      "any",
+      "len",
+      "lower"
+    ],
+    "attribute_calls": [
+      "service.index_ai_data",
+      "service.search_skills"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_search_industries",
+    "called_names": [
+      "AIDataIndexService",
+      "len"
+    ],
+    "attribute_calls": [
+      "service.index_ai_data",
+      "service.search_industries"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_search_locations",
+    "called_names": [
+      "AIDataIndexService",
+      "len"
+    ],
+    "attribute_calls": [
+      "service.index_ai_data",
+      "service.search_locations"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_state_persistence",
+    "called_names": [
+      "AIDataIndexService"
+    ],
+    "attribute_calls": [
+      "service1.full_index",
+      "service2.get_state"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_parser_run_record_creation",
+    "called_names": [
+      "ParserRunRecord"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "function_name": "test_detect_optional_dependencies",
+    "called_names": [
+      "AIDataIndexService",
+      "MagicMock",
+      "isinstance"
+    ],
+    "attribute_calls": [
+      "deps.items",
+      "mock_paths.ai_data_final.mkdir",
+      "mock_paths.parser_root.mkdir",
+      "service._detect_optional_dependencies"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_gdpr_models.py",
+    "function_name": "test_gdpr_router_exists",
+    "called_names": [],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_paths_resolution.py",
+    "function_name": "test_parent_data_root_resolves_ai_data_child",
+    "called_names": [
+      "CareerTrojanPaths",
+      "str"
+    ],
+    "attribute_calls": [
+      "ai_data_final.mkdir",
+      "monkeypatch.setenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_paths_resolution.py",
+    "function_name": "test_ai_data_root_value_is_normalized_to_parent",
+    "called_names": [
+      "CareerTrojanPaths",
+      "str"
+    ],
+    "attribute_calls": [
+      "ai_data_final.mkdir",
+      "monkeypatch.setenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_paths_resolution.py",
+    "function_name": "test_explicit_ai_data_env_override_is_honored",
+    "called_names": [
+      "CareerTrojanPaths",
+      "mkdir",
+      "str"
+    ],
+    "attribute_calls": [
+      "explicit_ai_data.mkdir",
+      "monkeypatch.setenv"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_paths_resolution.py",
+    "function_name": "test_explicit_constructor_data_root_is_normalized",
+    "called_names": [
+      "CareerTrojanPaths"
+    ],
+    "attribute_calls": [
+      "ai_data_final.mkdir"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_rewards.py",
+    "function_name": "client",
+    "called_names": [
+      "TestClient"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_security.py",
+    "function_name": "test_token_expires",
+    "called_names": [
+      "create_access_token",
+      "timedelta"
+    ],
+    "attribute_calls": [
+      "jose_jwt.decode",
+      "pytest.raises"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_security.py",
+    "function_name": "test_invalid_secret_fails",
+    "called_names": [
+      "create_access_token"
+    ],
+    "attribute_calls": [
+      "jose_jwt.decode",
+      "pytest.raises"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_security.py",
+    "function_name": "test_decode_access_token_auth0_missing_kid",
+    "called_names": [],
+    "attribute_calls": [
+      "monkeypatch.setattr",
+      "pytest.raises",
+      "security.decode_access_token"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_support_bridge.py",
+    "function_name": "client",
+    "called_names": [
+      "TestClient"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_support_stub.py",
+    "function_name": "client",
+    "called_names": [
+      "TestClient"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_webhooks.py",
+    "function_name": "client",
+    "called_names": [
+      "TestClient",
+      "_clear_rate_limiter"
+    ],
+    "attribute_calls": [],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_webhooks.py",
+    "function_name": "db_engine",
+    "called_names": [
+      "create_engine"
+    ],
+    "attribute_calls": [
+      "Base.metadata.create_all",
+      "engine.dispose"
+    ],
+    "ai_signals": [
+      "engine"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_webhooks.py",
+    "function_name": "client_with_db",
+    "called_names": [
+      "TestClient",
+      "TestSession",
+      "_clear_rate_limiter",
+      "sessionmaker"
+    ],
+    "attribute_calls": [
+      "app.dependency_overrides.pop",
+      "session.close"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tests\\unit\\test_webhooks.py",
+    "function_name": "test_duplicate_event_id_rejected",
+    "called_names": [
+      "WebhookEvent"
+    ],
+    "attribute_calls": [
+      "db_session.add",
+      "db_session.commit",
+      "db_session.rollback",
+      "pytest.raises"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tools\\discover_runtime_wiring.py",
+    "function_name": "_analyze_function",
+    "called_names": [
+      "RouteRecord",
+      "ServiceCallRecord",
+      "any",
+      "dotted_name",
+      "get_constant_str",
+      "infer_ai_signals",
+      "infer_likely_services",
+      "isinstance",
+      "set",
+      "sorted",
+      "str"
+    ],
+    "attribute_calls": [
+      "ast.walk",
+      "attribute_calls.append",
+      "called_names.append",
+      "dec.func.attr.lower",
+      "method.upper",
+      "node.name.lower",
+      "self.file_path.relative_to",
+      "self.router_prefixes.get",
+      "self.router_tags.get",
+      "self.routes.append",
+      "self.service_calls.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tools\\discover_runtime_wiring.py",
+    "function_name": "infer_likely_services",
+    "called_names": [
+      "any",
+      "set",
+      "sorted"
+    ],
+    "attribute_calls": [
+      "candidates.append",
+      "name.lower"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tools\\discover_runtime_wiring.py",
+    "function_name": "scan_ai_signals",
+    "called_names": [
+      "AISignalRecord",
+      "any",
+      "enumerate",
+      "len",
+      "sorted",
+      "str"
+    ],
+    "attribute_calls": [
+      "file_path.relative_to",
+      "line.lower",
+      "line.strip",
+      "lines.append",
+      "text.lower",
+      "text.splitlines"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tools\\discover_runtime_wiring.py",
+    "function_name": "main",
+    "called_names": [
+      "ModuleAnalyzer",
+      "Path",
+      "asdict",
+      "iter_py_files",
+      "len",
+      "print",
+      "read_text",
+      "render_markdown",
+      "safe_parse",
+      "scan_ai_signals",
+      "write_json",
+      "write_text"
+    ],
+    "attribute_calls": [
+      "Path.cwd",
+      "Path.cwd.resolve",
+      "Path.resolve",
+      "ai_records.append",
+      "analyzer.visit",
+      "out_dir.mkdir",
+      "repo_root.exists",
+      "routes.extend",
+      "service_calls.extend"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tools\\enhance_training_data.py",
+    "function_name": "main",
+    "called_names": [
+      "CareerTrojanPaths",
+      "build_enhanced_keywords",
+      "enrich_knowledge_graph",
+      "expand_case_base",
+      "generate_data_loader_patch",
+      "generate_salary_derivation_code",
+      "generate_train_all_models_patch",
+      "len",
+      "load_all_collocations",
+      "max",
+      "print",
+      "sorted",
+      "str",
+      "write_json",
+      "write_text"
+    ],
+    "attribute_calls": [
+      "argparse.ArgumentParser",
+      "collocations.keys",
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "json.dumps",
+      "parser.add_argument",
+      "parser.parse_args"
+    ],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  },
+  {
+    "file": "tools\\ingest_deep_v3.py",
+    "function_name": "_extract_terms_from_text",
+    "called_names": [
+      "any",
+      "join",
+      "len",
+      "make_entry",
+      "range"
+    ],
+    "attribute_calls": [
+      "EMAIL_RE.findall",
+      "PHONE_RE.findall",
+      "TOKEN_RE.findall",
+      "found.append",
+      "phrase.split",
+      "t.lower"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
+    "file": "tools\\ingest_deep_v3.py",
+    "function_name": "mine_ai_model_artefacts",
+    "called_names": [
+      "make_entry",
+      "normalize"
+    ],
+    "attribute_calls": [
+      "entries.append",
+      "file_path.is_file",
+      "file_path.stem.replace",
+      "models_root.exists",
+      "models_root.rglob"
+    ],
+    "ai_signals": [
+      "model"
+    ]
+  },
+  {
+    "file": "tools\\ingest_deep_v3.py",
+    "function_name": "main",
+    "called_names": [
+      "CareerTrojanPaths",
+      "dedupe_entries",
+      "len",
+      "merge_into_collocations",
+      "mine_ai_model_artefacts",
+      "mine_data_cloud_solutions",
+      "mine_enhanced_job_titles_extended",
+      "mine_filename_companies_titles",
+      "mine_parsed_from_automated",
+      "mine_text_glossaries_deep",
+      "print",
+      "round",
+      "str",
+      "update_manifest",
+      "write_log"
+    ],
+    "attribute_calls": [
+      "all_entries.extend",
+      "argparse.ArgumentParser",
+      "datetime.utcnow",
+      "datetime.utcnow.isoformat",
+      "json.dumps",
+      "parser.add_argument",
+      "parser.parse_args",
+      "time.time"
+    ],
+    "ai_signals": [
+      "ai",
+      "model"
+    ]
+  }
+]

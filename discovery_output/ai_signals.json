@@ -1,0 +1,5075 @@
+[
+  {
+    "file": "conftest.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model"
+    ],
+    "matched_lines": [
+      "L24: from services.backend_api.main import app as _app",
+      "L39: from sqlalchemy import create_engine",
+      "L41: from services.backend_api.db.models import Base",
+      "L43: engine = create_engine(\"sqlite:///:memory:\", connect_args={\"check_same_thread\": False})",
+      "L44: Base.metadata.create_all(bind=engine)",
+      "L45: Session = sessionmaker(bind=engine)",
+      "L49: engine.dispose()"
+    ]
+  },
+  {
+    "file": "_test_diag.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model"
+    ],
+    "matched_lines": [
+      "L5: from sqlalchemy import create_engine, inspect",
+      "L7: from services.backend_api.db.models import Base",
+      "L8: from services.backend_api.main import app",
+      "L12: engine = create_engine(\"sqlite:///:memory:\", connect_args={\"check_same_thread\": False})",
+      "L13: Base.metadata.create_all(bind=engine)",
+      "L16: insp = inspect(engine)",
+      "L19: TestSession = sessionmaker(bind=engine)",
+      "L36: if p == \"/api/webhooks/v1/braintree\":",
+      "L43: # ── Test: Braintree valid event ──",
+      "L45: print(\"TEST: Braintree subscription_charged_successfully\")"
+    ]
+  },
+  {
+    "file": "ENDPOINT_MAPPING_PHASES\\Phase14_Endpoint_Introspection_Export\\tools\\fastapi_introspect_routes.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L6: python tools/fastapi_introspect_routes.py --app-import \"app.main:app\" --out \"./exports\"",
+      "L21: def main():",
+      "L23: ap.add_argument(\"--app-import\", required=True, help=\"e.g. app.main:app\")",
+      "L64: if __name__ == \"__main__\":",
+      "L65: main()"
+    ]
+  },
+  {
+    "file": "ENDPOINT_MAPPING_PHASES\\Phase15_React_API_Scan_Export\\tools\\react_api_scan.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L19: def main():",
+      "L64: if __name__ == \"__main__\":",
+      "L65: main()"
+    ]
+  },
+  {
+    "file": "ENDPOINT_MAPPING_PHASES\\Phase16_Joined_Endpoint_Graph\\tools\\join_endpoint_graph.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L27: def main():",
+      "L102: if __name__ == \"__main__\":",
+      "L103: main()"
+    ]
+  },
+  {
+    "file": "kubernetes-infrastructure\\scripts\\route_snapshot.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: from services.backend_api.main import app"
+    ]
+  },
+  {
+    "file": "kubernetes-infrastructure\\snippets\\fastapi\\openapi_snapshot.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: from backend.app.main import app"
+    ]
+  },
+  {
+    "file": "kubernetes-infrastructure\\snippets\\fastapi\\request_id_middleware.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L9: response = await call_next(request)"
+    ]
+  },
+  {
+    "file": "scripts\\aggregate_training_corpus.py",
+    "matched_terms": [
+      "ai",
+      "training"
+    ],
+    "matched_lines": [
+      "L8: def extract_email(text: str) -> str:",
+      "L25: personal_details = profile.get(\"Personal Details\") or \"\"",
+      "L36: email = profile.get(\"email\") or extract_email(\" \".join([personal_details, qualifications, career_summary]))",
+      "L37: phone = profile.get(\"phone\") or extract_phone(\" \".join([personal_details, qualifications, career_summary]))",
+      "L43: \"email\": email,",
+      "L55: email = resume.get(\"email\") or extract_email(raw_text)",
+      "L62: \"email\": email,",
+      "L78: def consolidate(ai_data_final: Path, output: Path, manifest: Path, limit: int = None) -> None:",
+      "L79: profiles_dir = ai_data_final / \"profiles\"",
+      "L80: parsed_resumes_dir = ai_data_final / \"parsed_resumes\""
+    ]
+  },
+  {
+    "file": "scripts\\bootstrap_parser_index.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L5: def main() -> None:",
+      "L6: output_root = Path(r\"L:\\Codec - Antigravity Data set\\ai_data_final\\parsed_from_automated\")",
+      "L41: if __name__ == \"__main__\":",
+      "L42: main()"
+    ]
+  },
+  {
+    "file": "scripts\\build_collocation_glossary.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L169: near_pairs: Counter,",
+      "L180: near_pairs[(tok, tokens[j])] += 1",
+      "L243: def main() -> None:",
+      "L244: parser = argparse.ArgumentParser(description=\"Build collocation glossary from AI + user data.\")",
+      "L256: ai_root = paths.ai_data_final",
+      "L265: near_pairs = Counter()",
+      "L271: ai_sources = [",
+      "L272: ai_root / \"parsed_resumes\",",
+      "L273: ai_root / \"parsed_job_descriptions\",",
+      "L274: ai_root / \"profiles\","
+    ]
+  },
+  {
+    "file": "scripts\\coaching_endpoint_uptime_check.py",
+    "matched_terms": [
+      "ai",
+      "score"
+    ],
+    "matched_lines": [
+      "L28: print(f\"[FAIL] {method} {url} -> {status} (expected {sorted(expected_statuses)})\")",
+      "L35: print(f\"[FAIL] {method} {url} -> {status} (expected {sorted(expected_statuses)})\")",
+      "L38: print(f\"[FAIL] {method} {url} -> {exc}\")",
+      "L42: def main() -> int:",
+      "L60: \"fit\": {\"score\": 0.73},",
+      "L68: \"question\": \"Tell me about a campaign you improved.\",",
+      "L70: \"resume\": {\"skills\": [\"SEO\", \"campaign analytics\"]},",
+      "L98: if __name__ == \"__main__\":",
+      "L99: raise SystemExit(main())"
+    ]
+  },
+  {
+    "file": "scripts\\consolidate_ai_data_final.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L59: manifest = {**stats, 'errors_detail': errors}",
+      "L67: def main() -> None:",
+      "L68: parser = argparse.ArgumentParser(description='Consolidate ai_data_final JSON outputs into a single NDJSON file')",
+      "L69: parser.add_argument('--input-dir', default='ai_data_final', help='Directory containing parser JSON outputs')",
+      "L70: parser.add_argument('--output', default='ai_data_final/consolidated_dataset.jsonl', help='Destination NDJSON file')",
+      "L71: parser.add_argument('--manifest', default='ai_data_final/consolidated_manifest.json', help='Manifest with stats/errors')",
+      "L77: if __name__ == '__main__':",
+      "L79: main()"
+    ]
+  },
+  {
+    "file": "scripts\\e2e_braintree_test.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L3: CareerTrojan Braintree Sandbox E2E Billing Verification Loop",
+      "L5: This script validates the Braintree token and billing cycle against",
+      "L7: payment methods vaulted, and AI services correctly gated by balances.",
+      "L11: on the Braintree mock fallbacks.",
+      "L32: print(f\"{RED}[FAIL] {context} - Expected {expected_statuses}, got {response.status_code}{RESET}\")",
+      "L33: print(f\"Details: {response.text}\")",
+      "L40: print(\"💰 CareerTrojan Braintree Sandbox Validation\")",
+      "L46: # If Braintree is unconfigured, your backend intercepts gracefully with 200 health but 'configured: false'",
+      "L51: if not data.get(\"braintree_configured\", False) and not data.get(\"configured\", False):",
+      "L52: print(f\"\\n{YELLOW}[NOTICE] Braintree is not natively configured in backend (using stubs/bypass). Skipping live credit card nonce tests.{RESET}\")"
+    ]
+  },
+  {
+    "file": "scripts\\e2e_golden_path.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence",
+      "predict",
+      "regression",
+      "score"
+    ],
+    "matched_lines": [
+      "L5: This script simulates a complete user journey against the live FastAPI backend.",
+      "L7: AI routing, processing, spider plotting, and data endpoints return live results.",
+      "L11: (e.g., `uvicorn services.backend_api.main:app --reload`)",
+      "L15: 2. AI Market Intelligence (Test predictive routing)",
+      "L16: 3. Regression & Statistics (Verify math engine)",
+      "L17: 4. Data Processing/Ingestion (Trigger AI worker queue)",
+      "L46: print(f\"{RED}[FAIL] {context} - Expected {expected_status}, got {response.status_code}{RESET}\")",
+      "L47: print(f\"Details: {response.text}\")",
+      "L54: print(\"🚀 CareerTrojan Super Comp E2E AI Test Harness\")",
+      "L67: # 2. MARKET INTELLIGENCE (No more hardcoded trends)"
+    ]
+  },
+  {
+    "file": "scripts\\extract_emails_deep.py",
+    "matched_terms": [
+      "ai",
+      "inference",
+      "ml"
+    ],
+    "matched_lines": [
+      "L27: \"com\", \"net\", \"org\", \"co\", \"us\", \"ai\", \"io\", \"xyz\", \"shop\", \"pro\",",
+      "L38: EMAIL_PATTERN = re.compile(",
+      "L45: def load_tld_hints(domain_file: Path | None) -> set[str]:",
+      "L47: if not domain_file or not domain_file.exists():",
+      "L50: raw = domain_file.read_text(encoding=\"utf-8\", errors=\"ignore\")",
+      "L58: def is_valid_email(value: str, tlds: set[str]) -> bool:",
+      "L61: local, domain = value.rsplit(\"@\", 1)",
+      "L62: if not local or not domain or \".\" not in domain:",
+      "L64: if domain.startswith(\".\") or domain.endswith(\".\"):",
+      "L66: tld = domain.rsplit(\".\", 1)[1].lower()"
+    ]
+  },
+  {
+    "file": "scripts\\generate_bridge_touchpoint_report.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L17: \"real_ai_connector\",",
+      "L34: def main() -> None:",
+      "L73: md.append(\"- Validate taxonomy summary path usage against implemented taxonomy router paths.\")",
+      "L85: if __name__ == \"__main__\":",
+      "L86: main()"
+    ]
+  },
+  {
+    "file": "scripts\\generate_endpoint_inventory_only.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L7: from services.backend_api.main import app",
+      "L10: def main() -> None:",
+      "L63: if __name__ == \"__main__\":",
+      "L64: main()"
+    ]
+  },
+  {
+    "file": "scripts\\generate_endpoint_topology_report.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L176: def main() -> None:",
+      "L201: if __name__ == \"__main__\":",
+      "L202: main()"
+    ]
+  },
+  {
+    "file": "scripts\\generate_full_endpoint_audit.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L10: from services.backend_api.main import app",
+      "L15: \"/api/ai-data/v1/normalized\",",
+      "L16: \"/api/ai-data/v1/metadata\",",
+      "L30: def main() -> None:",
+      "L117: failures = [",
+      "L127: \"failures\": failures,",
+      "L147: if not failures:",
+      "L152: for row in failures:",
+      "L160: lines.append(\"- `exists_requires_auth_or_payload` means the route exists but needs proper auth and/or domain-specific payload.\")",
+      "L161: lines.append(\"- `missing_or_wrong_method` is the main breakage signal for route availability mismatches.\")"
+    ]
+  },
+  {
+    "file": "scripts\\generate_openapi_endpoint_map.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L11: from services.backend_api.main import app",
+      "L15: \"/api/ai-data/v1/normalized\",",
+      "L16: \"/api/ai-data/v1/metadata\",",
+      "L17: \"/api/ai-data/v1/email_extracted\",",
+      "L18: \"/api/ai-data/v1/parsed_resumes\",",
+      "L19: \"/api/ai-data/v1/job_descriptions\",",
+      "L20: \"/api/ai-data/v1/job_titles\",",
+      "L21: \"/api/ai-data/v1/locations\",",
+      "L26: \"/api/ai-data/v1/emails\",",
+      "L52: def main() -> None:"
+    ]
+  },
+  {
+    "file": "scripts\\ingestion_smoke_test.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "trained"
+    ],
+    "matched_lines": [
+      "L16: def print_fail(msg: str) -> None:",
+      "L17: print(f\"[FAIL] {msg}\")",
+      "L52: print(f\"ai_data_final:  {paths.ai_data_final}\")",
+      "L60: print_fail(\"Data root missing\")",
+      "L62: if paths.ai_data_final.exists():",
+      "L63: print_pass(\"AI data root exists\")",
+      "L65: print_fail(\"AI data root missing\")",
+      "L73: def check_ai_structure(paths: CareerTrojanPaths) -> None:",
+      "L74: print(\"\\n--- 2. AI Data Structure ---\")",
+      "L85: \"trained_models\","
+    ]
+  },
+  {
+    "file": "scripts\\probe_priority_endpoints.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L9: from services.backend_api.main import app",
+      "L17: (\"POST\", \"/api/admin/v1/email/send_test\", {\"to\": \"probe@example.com\", \"provider\": \"sendgrid\"}),",
+      "L18: (\"POST\", \"/api/admin/v1/email/send_bulk\", {\"recipients\": [\"a@example.com\", \"b@example.com\"], \"provider\": \"klaviyo\"}),",
+      "L19: (\"GET\", \"/api/admin/v1/email/logs\", None),",
+      "L20: (\"GET\", \"/api/admin/v1/email/analytics\", None),",
+      "L24: (\"POST\", \"/api/admin/email/send_test\", {\"to\": \"probe@example.com\"}),",
+      "L25: (\"POST\", \"/api/admin/email/send_bulk\", {\"recipients\": [\"a@example.com\"]}),",
+      "L26: (\"GET\", \"/api/ai-data/v1/emails/summary\", None),",
+      "L27: (\"GET\", \"/api/ai-data/v1/emails/providers/sendgrid\", None),",
+      "L28: (\"GET\", \"/api/ai-data/v1/emails/providers/klaviyo\", None),"
+    ]
+  },
+  {
+    "file": "scripts\\review_api_matrix.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence",
+      "regression"
+    ],
+    "matched_lines": [
+      "L3: Review Pack 1: API Regression Matrix",
+      "L4: Runs a deterministic endpoint matrix against a running CareerTrojan stack.",
+      "L36: raise ValueError(f\"Unsupported method: {method}\")",
+      "L52: tag = \"PASS\" if ok else \"FAIL\"",
+      "L56: def main() -> int:",
+      "L57: parser = argparse.ArgumentParser(description=\"Run CareerTrojan API regression matrix\")",
+      "L72: EndpointCase(\"Intelligence Market\", \"GET\", \"/api/intelligence/v1/market\", (200,)),",
+      "L88: \"job_family\": \"Software Engineering\",",
+      "L125: \"failed\": len(cases) - passed,",
+      "L139: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "scripts\\review_new_elements.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L17: def main() -> int:",
+      "L25: def add(name: str, ok: bool, detail: str) -> None:",
+      "L26: checks.append({\"name\": name, \"ok\": ok, \"detail\": detail})",
+      "L27: print(f\"[{'PASS' if ok else 'FAIL'}] {name} :: {detail}\")",
+      "L48: \"/api/intelligence/v1/market\",",
+      "L61: \"job_family\": \"Software Engineering\",",
+      "L83: \"failed\": len(checks) - passed,",
+      "L96: if __name__ == \"__main__\":",
+      "L97: sys.exit(main())"
+    ]
+  },
+  {
+    "file": "scripts\\route_governance_report.py",
+    "matched_terms": [
+      "ai",
+      "governance"
+    ],
+    "matched_lines": [
+      "L21: from services.backend_api.main import app",
+      "L261: lines.append(\"# Route Governance Report\")",
+      "L324: def main() -> None:",
+      "L360: json_path = REPORTS_DIR / f\"ROUTE_GOVERNANCE_REPORT_{stamp}.json\"",
+      "L361: md_path = REPORTS_DIR / f\"ROUTE_GOVERNANCE_REPORT_{stamp}.md\"",
+      "L380: if __name__ == \"__main__\":",
+      "L381: main()"
+    ]
+  },
+  {
+    "file": "scripts\\run_full_pipeline.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "engine",
+      "model",
+      "predict",
+      "score",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L5: Executes the complete ingestion → parsing → collocation → training pipeline.",
+      "L8: 1. Smoke Test      - Verify paths and data availability",
+      "L11: 4. Training        - Train all AI models on processed data",
+      "L33: sys.path.insert(0, str(PROJECT_ROOT / \"services\" / \"ai_engine\"))",
+      "L62: \"\"\"Verify all required paths and data availability.\"\"\"",
+      "L64: results = {\"pass\": [], \"fail\": [], \"warn\": []}",
+      "L68: (\"ai_data_final\", paths.ai_data_final),",
+      "L72: (\"trained_models\", paths.trained_models),",
+      "L80: # trained_models may be on J: drive, create if missing",
+      "L81: if name == \"trained_models\":"
+    ]
+  },
+  {
+    "file": "scripts\\run_orchestrator_discovery.py",
+    "matched_terms": [
+      "ai",
+      "embedding",
+      "engine",
+      "governance",
+      "inference",
+      "intelligence",
+      "model",
+      "orchestrator",
+      "score",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: \"\"\"Generate discovery-first orchestrator reports for CareerTrojan.\"\"\"",
+      "L46: py_mains = sorted(str(p.relative_to(ROOT)).replace(\"\\\\\", \"/\") for p in ROOT.rglob(\"main.py\") if \"node_modules\" not in str(p))",
+      "L48: for pattern in (\"apps/**/src/main.tsx\", \"apps/**/src/App.tsx\"):",
+      "L52: return {\"python_main\": sorted(py_mains), \"frontend_entries\": sorted(set(fe_entries))}",
+      "L60: from services.backend_api.main import app  # type: ignore",
+      "L84: def main() -> int:",
+      "L91: route_count, route_head, route_tail = fastapi_routes()",
+      "L93: ai_engine_files = sorted(",
+      "L95: for p in py_files(ROOT / \"services\" / \"ai_engine\")",
+      "L96: ) if (ROOT / \"services\" / \"ai_engine\").exists() else []"
+    ]
+  },
+  {
+    "file": "scripts\\run_parser_until_complete.py",
+    "matched_terms": [
+      "ai",
+      "engine"
+    ],
+    "matched_lines": [
+      "L13: PARSER_MODULE_DIR = PROJECT_ROOT / \"services\" / \"workers\" / \"ai\" / \"ai-workers\" / \"parser\"",
+      "L17: from automated_parser_engine import AutomatedParserEngine",
+      "L26: def main() -> None:",
+      "L32: output_root = paths.ai_data_final / \"parsed_from_automated\"",
+      "L42: engine = AutomatedParserEngine(",
+      "L46: results = engine.run(max_files=batch_size)",
+      "L83: if __name__ == \"__main__\":",
+      "L84: main()"
+    ]
+  },
+  {
+    "file": "scripts\\run_super_experience_harness.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L19: from services.backend_api.main import app  # noqa: E402",
+      "L21: from services.backend_api.db import models  # noqa: E402",
+      "L29: detail: str = \"\"",
+      "L45: ai_learning_signals: Dict[str, Any]",
+      "L55: self.client = TestClient(app, raise_server_exceptions=False)",
+      "L58: def _result(self, name: str, response=None, *, ok: bool = True, detail: str = \"\") -> StepResult:",
+      "L69: return StepResult(name=name, ok=ok, status_code=status_code, detail=detail, payload_preview=preview)",
+      "L84: \"stdout_tail\": \"\\n\".join(proc.stdout.splitlines()[-20:]),",
+      "L85: \"stderr_tail\": \"\\n\".join(proc.stderr.splitlines()[-20:]),",
+      "L97: def _register_and_login(self, email: str, password: str, *, full_name: str) -> str:"
+    ]
+  },
+  {
+    "file": "scripts\\smoke_test.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L15: AI_DATA_ROOT_WIN = os.environ.get(\"CAREERTROJAN_DATA_ROOT\", r\"L:\\Codec-Antigravity Data set\")",
+      "L16: AI_DATA_ROOT_LINUX = \"/mnt/careertrojan\"  # Canonical Linux mount",
+      "L21: def print_fail(msg):",
+      "L22: print(f\"[\\033[91mFAIL\\033[0m] {msg}\")",
+      "L38: print_fail(f\"Runtime Root NOT found: {RUNTIME_ROOT}\")",
+      "L41: target_data_root = AI_DATA_ROOT_WIN if is_windows else AI_DATA_ROOT_LINUX",
+      "L45: print_pass(f\"AI Data Root found: {target_data_root}\")",
+      "L47: print_warn(f\"AI Data Root not found at {target_data_root}. (Expected if running outside of dedicated runtime VM)\")",
+      "L73: print_fail(\"Test user 'janj3143' not found in users.json.\")",
+      "L76: print_fail(f\"Failed to read users.json: {e}\")"
+    ]
+  },
+  {
+    "file": "scripts\\source_of_truth_audit.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L5: Audits what is physically present under ai_data_final and automated_parser,",
+      "L137: def check_key_processed_dirs(ai_root: Path) -> Dict[str, Dict]:",
+      "L151: path = ai_root / name",
+      "L177: def main() -> None:",
+      "L178: parser = argparse.ArgumentParser(description=\"Audit ai_data_final vs automated_parser coverage\")",
+      "L189: ai_root = paths.ai_data_final",
+      "L192: ai_stats = scan_top_level(ai_root, max_files_per_folder=max(0, args.max_files_per_folder))",
+      "L195: ai_root_files = scan_root_files(ai_root)",
+      "L199: key_processed = check_key_processed_dirs(ai_root)",
+      "L201: print_table(\"AI_DATA_FINAL — TOP LEVEL SUBFOLDER BREAKDOWN\", ai_stats)"
+    ]
+  },
+  {
+    "file": "scripts\\sync_user_data.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L77: logger.error(f\"Failed to write metadata to {root}: {e}\")",
+      "L114: logger.error(f\"Failed to quarantine dir {rel}: {e}\")",
+      "L124: logger.error(f\"Failed to quarantine file {rel}: {e}\")",
+      "L137: logger.error(f\"Failed to mirror move: {e}\")",
+      "L147: logger.error(f\"Failed to mirror {rel}: {e}\")",
+      "L174: logger.error(f\"Full sync failed for {rel}: {e}\")",
+      "L190: # ── Main ─────────────────────────────────────────────────────",
+      "L191: def main():",
+      "L241: if __name__ == \"__main__\":",
+      "L242: main()"
+    ]
+  },
+  {
+    "file": "scripts\\upsert_zendesk_webhook_triggers.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L24: response.raise_for_status()",
+      "L35: response.raise_for_status()",
+      "L46: response.raise_for_status()",
+      "L53: email = str(me.get(\"email\") or \"unknown\")",
+      "L57: raise RuntimeError(",
+      "L58: \"Zendesk preflight failed: trigger management requires an admin account. \"",
+      "L59: f\"Current principal: {email} (id={user_id}, role={role or 'unknown'}).\"",
+      "L62: print(f\"[OK] Zendesk preflight: admin principal verified ({email}).\")",
+      "L79: \"email\": \"{{ticket.requester.email}}\",",
+      "L83: \"email\": \"{{ticket.assignee.email}}\","
+    ]
+  },
+  {
+    "file": "scripts\\validate_governance_artifacts.py",
+    "matched_terms": [
+      "ai",
+      "governance"
+    ],
+    "matched_lines": [
+      "L15: ROOT / \"data\" / \"governance\" / \"README.md\",",
+      "L16: ROOT / \"data\" / \"governance\" / \"outcome_labels.jsonl\",",
+      "L42: jsonl_path = ROOT / \"data\" / \"governance\" / \"outcome_labels.jsonl\"",
+      "L67: def main() -> int:",
+      "L73: print(\"GOVERNANCE_ARTIFACTS_INVALID\")",
+      "L78: print(\"GOVERNANCE_ARTIFACTS_OK\")",
+      "L82: if __name__ == \"__main__\":",
+      "L83: raise SystemExit(main())"
+    ]
+  },
+  {
+    "file": "scripts\\validate_route_governance.py",
+    "matched_terms": [
+      "ai",
+      "governance"
+    ],
+    "matched_lines": [
+      "L21: candidates = sorted(REPORTS_DIR.glob(\"ROUTE_GOVERNANCE_REPORT_*.json\"))",
+      "L61: parser = argparse.ArgumentParser(description=\"Validate route governance report against gate thresholds\")",
+      "L66: help=\"Optional path to ROUTE_GOVERNANCE_REPORT_*.json; latest report is used when omitted.\",",
+      "L75: def main() -> int:",
+      "L80: print(\"ROUTE_GOVERNANCE_GATE_FAIL\")",
+      "L81: print(\"- no governance report found\")",
+      "L88: print(\"ROUTE_GOVERNANCE_GATE_FAIL\")",
+      "L94: print(\"ROUTE_GOVERNANCE_GATE_OK\")",
+      "L106: if __name__ == \"__main__\":",
+      "L107: raise SystemExit(main())"
+    ]
+  },
+  {
+    "file": "scripts\\validate_runtime_banned_tokens.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L85: print(\"[FAIL] Unable to read git diff for banned-token validation\")",
+      "L141: description=\"Fail when banned non-live tokens are introduced in runtime code changes\"",
+      "L154: def main() -> int:",
+      "L168: print(\"RUNTIME_BANNED_TOKEN_GATE_FAIL\")",
+      "L181: if __name__ == \"__main__\":",
+      "L182: raise SystemExit(main())"
+    ]
+  },
+  {
+    "file": "scripts\\validate_runtime_env.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L35: \"ZENDESK_EMAIL\",",
+      "L40: def _is_personal_email(value: str) -> bool:",
+      "L42: return value_l.endswith(\"@gmail.com\") or value_l.endswith(\"@googlemail.com\")",
+      "L62: r\"your-subdomain\",",
+      "L70: def main() -> int:",
+      "L73: parser.add_argument(\"--strict\", action=\"store_true\", help=\"Fail on placeholder values\")",
+      "L78: print(f\"[FAIL] Env file not found: {env_path}\")",
+      "L90: print(\"[FAIL] Missing required environment keys:\")",
+      "L103: print(\"[FAIL] Placeholder-like values found in strict mode:\")",
+      "L110: \"GOOGLE_SERVICE_ACCOUNT_EMAIL\","
+    ]
+  },
+  {
+    "file": "scripts\\verify_endpoint_count_live.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L11: from services.backend_api.main import app",
+      "L38: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\worker_entry.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L6: from services.ai_workers.processor import ResumeProcessor",
+      "L14: def main():",
+      "L23: logger.error(\"Failed to connect to Redis\")",
+      "L40: if __name__ == \"__main__\":",
+      "L41: main()"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ai_training_orchestrator.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "clustering",
+      "embedding",
+      "engine",
+      "ml",
+      "model",
+      "orchestrator",
+      "predict",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: AI Training Orchestrator",
+      "L5: Comprehensive AI model training pipeline that integrates:",
+      "L6: 1. Data ingestion from ai_data_final",
+      "L7: 2. Statistical methods (embeddings, clustering, TF-IDF)",
+      "L8: 3. Model training (job matching, skill extraction, industry classification)",
+      "L10: 5. Model persistence and versioning",
+      "L13: - Sentence Transformers (embeddings)",
+      "L14: - TF-IDF vectorization",
+      "L15: - K-Means clustering",
+      "L16: - DBSCAN clustering"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\collocation_engine.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "score"
+    ],
+    "matched_lines": [
+      "L2: CareerTrojan — Collocation Engine",
+      "L23: score: float",
+      "L27: class CollocationEngine:",
+      "L79: score=round(float(pmi), 4),",
+      "L84: results.sort(key=lambda item: (item.score, item.frequency), reverse=True)",
+      "L87: def find_near_pairs(",
+      "L95: pair_hits = Counter()",
+      "L96: hit_details: List[Dict[str, int]] = []",
+      "L105: pair = tuple(sorted((left_token, right_token)))",
+      "L106: pair_hits[pair] += 1"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\config.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "trained"
+    ],
+    "matched_lines": [
+      "L23: if path.name.casefold() == \"ai_data_final\":",
+      "L47: ai_data_override = os.getenv(\"CAREERTROJAN_AI_DATA\")",
+      "L48: if ai_data_override:",
+      "L49: AI_DATA_DIR = Path(ai_data_override).expanduser()",
+      "L51: AI_DATA_DIR = data_root / \"ai_data_final\"",
+      "L59: # AI Engine Paths",
+      "L60: ai_engine_root = runtime_root / \"services\" / \"ai_engine\"",
+      "L61: models_path = ai_engine_root / \"trained_models\"",
+      "L65: models_path.mkdir(parents=True, exist_ok=True)",
+      "L69: PROFILES_DIR = AI_DATA_DIR / \"profiles\""
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\data_loader.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "score"
+    ],
+    "matched_lines": [
+      "L10: from services.ai_engine.config import PROFILES_DIR",
+      "L14: PROFILES_DIR = Path(os.getenv(\"CAREERTROJAN_DATA_ROOT\", r\"L:\\Codec-Antigravity Data set\")) / \"ai_data_final\" / \"profiles\"",
+      "L16: logger = logging.getLogger(\"AI_DataLoader\")",
+      "L19: def _derive_match_score(profile: Dict[str, Any]) -> float:",
+      "L25: score = 0.15",
+      "L26: score += min(years / 15.0, 0.45)",
+      "L27: score += min(skills_count / 30.0, 0.35)",
+      "L29: score += 0.08",
+      "L30: return round(min(max(score, 0.05), 0.99) * 100, 2)",
+      "L38: target = paths.ai_data_final / \"metadata\" / \"enhanced_keywords.json\""
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\expert_system.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "predict"
+    ],
+    "matched_lines": [
+      "L4: Rule-based consistency checks and explainability helpers for AI predictions.",
+      "L34: class ExpertSystemEngine:",
+      "L47: logger.warning(\"Failed loading expert rules from %s: %s\", self.rules_path, exc)",
+      "L60: condition={\"prediction_contains\": [\"senior\"], \"experience_lt\": 5},",
+      "L62: message=\"Prediction includes senior but candidate experience is below 5 years.\",",
+      "L70: condition={\"prediction_contains\": [\"developer\", \"engineer\"], \"skills_any\": [\"python\", \"java\", \"javascript\", \"sql\"]},",
+      "L72: message=\"Technical role predicted without expected technical skills evidence.\",",
+      "L80: condition={\"profile_contains\": [\"sales\", \"account executive\", \"business development\"], \"prediction_contains\": [\"python developer\", \"machine learning engineer\"]},",
+      "L81: action=\"reject_prediction\",",
+      "L99: def evaluate_prediction("
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\ingest_ai_data.py",
+    "matched_terms": [
+      "ai",
+      "engine"
+    ],
+    "matched_lines": [
+      "L2: Unified Data Ingestion Runner for CareerTrojan AI Engine.",
+      "L3: Bridges L: Drive Data -> AI Runtime.",
+      "L17: from config import AI_DATA_DIR, RAW_DATA_DIR, log_root",
+      "L24: logging.FileHandler(log_root / \"ai_ingestion.log\"),",
+      "L28: logger = logging.getLogger(\"AI_Ingest\")",
+      "L34: details: str",
+      "L36: class DataIngestionEngine:",
+      "L38: self.data_dir = AI_DATA_DIR",
+      "L39: logger.info(f\"Initialized Data Ingestion Engine. Root: {self.data_dir}\")",
+      "L73: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\llm_service.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L8: OPENAI = \"openai\"",
+      "L22: model_name: str",
+      "L35: class OpenAIService(BaseLLMService):",
+      "L37: self.api_key = api_key or os.getenv(\"OPENAI_API_KEY\")",
+      "L39: print(\"⚠️ OpenAIService initialized without API Key. Calls will fail.\")",
+      "L42: from openai import OpenAI",
+      "L43: self.client = OpenAI(api_key=self.api_key)",
+      "L45: print(\"❌ 'openai' package not installed. Please run: pip install openai\")",
+      "L50: return LLMResponse(text=\"Error: OpenAI client not available.\", usage={}, model_name=\"error\")",
+      "L54: model=kwargs.get(\"model\", \"gpt-4\"),"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\model_registry.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "inference",
+      "model",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: Model Registry - Unified Management of Trained AI Models",
+      "L6: - Track all trained model versions, metrics, and metadata",
+      "L7: - Load best/latest models for inference",
+      "L8: - Manage model deployment and versioning",
+      "L9: - Support A/B testing between model versions",
+      "L12: from model_registry import ModelRegistry",
+      "L13: registry = ModelRegistry()",
+      "L14: model = registry.get_model('bayesian_classifier', version='latest')",
+      "L27: class ModelRegistry:",
+      "L28: \"\"\"Central registry for all trained AI models\"\"\""
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\schema_adapter.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "score",
+      "training"
+    ],
+    "matched_lines": [
+      "L4: Normalizes heterogeneous record schemas from ai_data_final into a unified",
+      "L5: training format consumed by model trainers.",
+      "L20: \"technology\": [\"software\", \"developer\", \"engineering\", \"cloud\", \"devops\", \"data\"],",
+      "L23: \"education\": [\"education\", \"teacher\", \"lecturer\", \"training\", \"university\"],",
+      "L25: \"operations\": [\"operations\", \"logistics\", \"supply chain\", \"procurement\"],",
+      "L26: \"marketing\": [\"marketing\", \"seo\", \"campaign\", \"brand\", \"growth\"],",
+      "L77: scores: Dict[str, int] = {}",
+      "L79: scores[industry] = sum(1 for key in keys if key in haystack)",
+      "L80: top = max(scores, key=scores.get)",
+      "L81: return top if scores[top] > 0 else \"unknown\""
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\training_orchestrator.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "engine",
+      "inference",
+      "ml",
+      "model",
+      "orchestrator",
+      "predict",
+      "trained",
+      "training",
+      "unified_ai_engine",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: Training Orchestrator - Master Controller for AI Model Training",
+      "L6: - Coordinate training of all 7 AI models",
+      "L8: - Track training progress and metrics",
+      "L9: - Register models in model registry",
+      "L10: - Generate comprehensive training reports",
+      "L13: - Sequential training with checkpoints",
+      "L16: - Automatic model registration",
+      "L17: - Pre/post training validation",
+      "L20: from training_orchestrator import TrainingOrchestrator",
+      "L21: orchestrator = TrainingOrchestrator()"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_all_models.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "engine",
+      "model",
+      "predict",
+      "regression",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: AI Model Training Pipeline for IntelliCV Platform",
+      "L5: This script trains all AI models on your 328k CV records:",
+      "L6: 1. Bayesian Classifier (sklearn) - Job categorization",
+      "L7: 2. TF-IDF Vectorizer - Text feature extraction",
+      "L8: 3. Sentence-BERT Embeddings - Semantic similarity",
+      "L9: 4. Statistical Models - Salary/experience prediction",
+      "L12: python train_all_models.py",
+      "L15: - admin_portal/models/*.pkl (trained model files)",
+      "L16: - training_report.json (performance metrics)",
+      "L36: from services.ai_engine.config import AI_DATA_DIR, models_path as CONFIG_MODELS_PATH"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_bayesian_models.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "inference",
+      "model",
+      "predict",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: 🎯 Bayesian Model Training Module",
+      "L4: Trains all Bayesian inference models:",
+      "L5: - Naive Bayes Classifier (Gaussian, Multinomial, Bernoulli)",
+      "L6: - Bayesian Networks (DAG models)",
+      "L7: - Hierarchical Bayesian Models",
+      "L8: - Markov Chain Monte Carlo (MCMC)",
+      "L9: - Variational Inference",
+      "L28: class BayesianModelTrainer:",
+      "L29: \"\"\"Comprehensive Bayesian model trainer\"\"\"",
+      "L33: self.data_path = self.base_path / \"ai_data_final\""
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_fuzzy_logic.py",
+    "matched_terms": [
+      "ai",
+      "clustering",
+      "inference",
+      "model",
+      "predict",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L7: - Fuzzy inference systems (Mamdani, Sugeno)",
+      "L8: - Fuzzy clustering (FCM)",
+      "L32: self.data_path = self.base_path / \"ai_data_final\"",
+      "L33: self.models_path = self.base_path / \"trained_models\" / \"fuzzy\"",
+      "L34: self.models_path.mkdir(parents=True, exist_ok=True)",
+      "L37: logger.info(f\"Systems will be saved to: {self.models_path}\")",
+      "L90: \"match_score\": {",
+      "L133: with open(self.models_path / \"membership_functions.json\", 'w') as f:",
+      "L140: logger.error(f\"❌ Membership functions failed: {e}\")",
+      "L144: \"\"\"Build Mamdani fuzzy inference system\"\"\""
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_neural_networks.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "embedding",
+      "model",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: 🧠 Neural Network Training Module",
+      "L4: Trains all neural network architectures:",
+      "L29: class NeuralNetworkTrainer:",
+      "L30: \"\"\"Comprehensive neural network trainer\"\"\"",
+      "L34: self.data_path = self.base_path / \"ai_data_final\"",
+      "L35: self.models_path = self.base_path / \"trained_models\" / \"neural\"",
+      "L36: self.models_path.mkdir(parents=True, exist_ok=True)",
+      "L38: logger.info(f\"Neural Network Trainer initialized\")",
+      "L40: logger.info(f\"Models will be saved to: {self.models_path}\")",
+      "L42: def load_training_data(self):"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_nlp_llm_models.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "classifier",
+      "embedding",
+      "model",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: 🔤 NLP & LLM Training Module",
+      "L4: Trains all NLP and LLM models:",
+      "L10: - Embedding Models (Word2Vec, GloVe, BERT)",
+      "L11: - Transformer models (GPT, T5, BART)",
+      "L12: - Semantic Similarity",
+      "L13: - Topic Modeling (LDA, NMF)",
+      "L32: class NLPLLMTrainer:",
+      "L33: \"\"\"Comprehensive NLP & LLM trainer\"\"\"",
+      "L37: self.data_path = self.base_path / \"ai_data_final\"",
+      "L38: self.models_path = self.base_path / \"trained_models\" / \"nlp\""
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\train_statistical_methods.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "clustering",
+      "ml",
+      "model",
+      "predict",
+      "regression",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L3: Complete Statistical Methods Training Pipeline",
+      "L8: 1. T-Tests, 2. Chi-Square, 3. ANOVA, 15. Bayesian Analysis",
+      "L10: GROUP 2: Regression (4 methods)",
+      "L11: 4. Correlation, 5. Linear Regression, 6. Multiple Regression, 7. Logistic Regression",
+      "L13: GROUP 3: Dimensionality & Clustering (4 methods)",
+      "L14: 8. PCA, 9. Factor Analysis, 10. K-Means, 11. DBSCAN, 12. Hierarchical Clustering",
+      "L19: Output: ai_data_final/analytics/ + statistical reports",
+      "L49: from sklearn.linear_model import LinearRegression, LogisticRegression",
+      "L52: STATS_AVAILABLE = True",
+      "L55: STATS_AVAILABLE = False"
+    ]
+  },
+  {
+    "file": "services\\ai_engine\\unified_ai_engine.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "engine",
+      "inference",
+      "model",
+      "orchestrator",
+      "predict",
+      "score",
+      "trained",
+      "training",
+      "unified_ai_engine",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: Unified AI Engine - Coordinated Inference Across All Models",
+      "L6: - Load all trained AI models",
+      "L7: - Execute inference across multiple models",
+      "L8: - Aggregate and reconcile predictions",
+      "L10: - Provide confidence scores and explanations",
+      "L13: - Multi-model inference orchestration",
+      "L14: - Ensemble predictions (voting, averaging)",
+      "L15: - Confidence scoring and uncertainty quantification",
+      "L16: - Model-specific fallback strategies",
+      "L20: from unified_ai_engine import UnifiedAIEngine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\main.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "vector"
+    ],
+    "matched_lines": [
+      "L22: from services.backend_api.routers import admin, user, mentor, shared, auth, mentorship, intelligence, coaching, ops, resume, blockers, payment, rewards, credits, ai_data, jobs, taxonomy, sessions, ontology, support",
+      "L24: from services.backend_api.routers import profile_coach_v1, profile_v1, user_vector_v1",
+      "L47: \"http://localhost:8500\",  # Main Backend",
+      "L99: # ── AI Enrichment Loop — logs every request as interaction ────",
+      "L107: \"\"\"Mount optional routers with explicit error logging (no silent failures).\"\"\"",
+      "L111: logger.exception(\"Failed to mount optional router '%s': %s\", router_name, exc)",
+      "L120: app.include_router(intelligence.router)",
+      "L126: app.include_router(ai_data.router)",
+      "L136: app.include_router(user_vector_v1.router)",
+      "L137: app.include_router(data_index.router)     # AI data & parser indexing system"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\config\\logging_config.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L9: - Request correlation ID (when available)",
+      "L35: One-time logging setup. Call once at app startup (main.py)."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\db\\connection.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model"
+    ],
+    "matched_lines": [
+      "L2: from sqlalchemy import create_engine",
+      "L4: from .models import Base",
+      "L15: DEFAULT_SQLITE_URL = f\"sqlite:///{db_root / 'ai_learning_table.db'}\"",
+      "L22: engine_kwargs = {}",
+      "L24: engine_kwargs[\"connect_args\"] = {\"check_same_thread\": False}",
+      "L26: engine = create_engine(DB_PATH, **engine_kwargs)",
+      "L27: SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)",
+      "L37: Base.metadata.create_all(bind=engine)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\db\\models.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L9: # ── GDPR & Audit Models ──────────────────────────────────────",
+      "L29: \"\"\"Immutable audit trail for data-sensitive operations (GDPR Art. 30).\"\"\"",
+      "L38: detail = Column(Text)",
+      "L49: status = Column(String, default=\"pending\")  # \"pending\", \"processing\", \"completed\", \"failed\"",
+      "L97: # ── Core Application Models ──────────────────────────────────",
+      "L102: email = Column(String, unique=True, index=True, nullable=False)",
+      "L111: # ── Payment / Braintree linkage ──",
+      "L112: braintree_customer_id = Column(String, nullable=True, index=True)",
+      "L154: availability = Column(String)",
+      "L223: email = Column(String)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\middleware\\interaction_logger.py",
+    "matched_terms": [
+      "ai",
+      "embedding",
+      "orchestrator",
+      "ranking"
+    ],
+    "matched_lines": [
+      "L2: InteractionLoggerMiddleware — AI Data Enrichment Loop (Section 13)",
+      "L4: Captures every API request as an interaction record for the AI enrichment pipeline.",
+      "L7: The ai_orchestrator_enrichment.py watchdog picks up these files and routes them",
+      "L8: to the appropriate enrichment pipeline (embedding, ranking feedback, coaching, UX).",
+      "L13: [ai_orchestrator_enrichment.py] (watchdog)",
+      "L15: [ai_data_final/ enriched datasets]",
+      "L58: Checks: JWT claim, query param, header, or 'anonymous'.",
+      "L65: # 2. From Authorization header (decode JWT sub claim)",
+      "L71: # Decode payload without verification — we just need the sub claim",
+      "L95: if \"/ai-data\" in path_lower or \"/ai_data\" in path_lower:"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\middleware\\rate_limiter.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L63: return await call_next(request)",
+      "L76: \"detail\": \"Too many requests. Please slow down.\",",
+      "L83: return await call_next(request)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\middleware\\request_correlation.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L38: response = await call_next(request)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\models\\schemas.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L1: from pydantic import BaseModel, EmailStr",
+      "L6: class Token(BaseModel):",
+      "L10: class TokenData(BaseModel):",
+      "L11: email: Optional[str] = None",
+      "L14: class UserBase(BaseModel):",
+      "L15: email: EmailStr",
+      "L31: class UserProfileBase(BaseModel):",
+      "L50: class ResumeBase(BaseModel):",
+      "L67: class JobBase(BaseModel):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\models\\spider_covey.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L6: from pydantic import BaseModel, Field, conint, confloat",
+      "L14: class SpiderAxis(BaseModel):",
+      "L17: score: conint(ge=0, le=100)",
+      "L24: class SpiderProfile(BaseModel):",
+      "L29: overall_fit_score: Optional[conint(ge=0, le=100)] = None",
+      "L34: class ActionBecause(BaseModel):",
+      "L41: class CoveyAction(BaseModel):",
+      "L57: class CoveyAxisSpec(BaseModel):",
+      "L64: class CoveyActionLens(BaseModel):",
+      "L75: class AxisSpec(BaseModel):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\admin.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "trained"
+    ],
+    "matched_lines": [
+      "L11: from services.backend_api.db import models",
+      "L40: \"mode\": \"mass_mail\"",
+      "L42: \"gmail\": {",
+      "L50: _email_dispatch_log = []",
+      "L55: braintree_env = (os.getenv(\"BRAINTREE_ENVIRONMENT\") or \"\").strip().lower()",
+      "L66: if braintree_env == \"production\":",
+      "L67: braintree_mode = \"live\"",
+      "L68: elif braintree_env:",
+      "L69: braintree_mode = \"sandbox\"",
+      "L71: braintree_mode = \"missing\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\admin_abuse.py",
+    "matched_terms": [
+      "score"
+    ],
+    "matched_lines": [
+      "L35: \"risk_score\": abuse.get(\"risk_score\"),"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\admin_legacy.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L25: @router.post(\"/email/send_test\")",
+      "L26: def send_test_email_legacy(payload: dict, _: bool = Depends(admin_v1.require_admin)):",
+      "L27: return admin_v1.send_test_email(payload, _)",
+      "L30: @router.post(\"/email/send_bulk\")",
+      "L31: def send_bulk_email_legacy(payload: dict, _: bool = Depends(admin_v1.require_admin)):",
+      "L32: return admin_v1.send_bulk_email(payload, _)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\admin_parsing.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L52: \"ai_json\": {...},",
+      "L62: content = await file.read()",
+      "L67: response = await client.post(",
+      "L73: raise HTTPException(",
+      "L75: detail=f\"Parser service error: {response.text}\"",
+      "L98: raise HTTPException(",
+      "L100: detail=f\"Parser service unavailable: {str(e)}\"",
+      "L103: raise HTTPException(",
+      "L105: detail=f\"Parse failed: {str(e)}\"",
+      "L118: raise HTTPException(status_code=404, detail=\"Parse result not found\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\admin_tokens.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L123: raise HTTPException(status_code=500, detail=\"Token plans storage is invalid.\")",
+      "L127: raise HTTPException(status_code=500, detail=f\"Token plans missing required keys: {missing}\")",
+      "L249: daily: Dict[str, Dict[str, Any]] = {}",
+      "L261: bucket = daily.setdefault(key, {\"date\": key, \"tokens\": 0, \"revenue\": 0, \"users\": set()})",
+      "L267: for key in sorted(daily.keys()):",
+      "L268: item = daily[key]",
+      "L295: raise HTTPException(status_code=400, detail=\"Payload must include non-empty 'plans' dict.\")",
+      "L300: raise HTTPException(status_code=400, detail=f\"Plans missing required keys: {missing}\")",
+      "L302: raise HTTPException(status_code=400, detail=f\"Plans include unknown keys: {extra}\")",
+      "L307: raise HTTPException(status_code=400, detail=f\"{key}.included_tokens_per_month must be >= 0\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\ai_data.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: Backend API Routes for AI Data from ai_data_final directory",
+      "L5: companies, job titles, locations, and metadata stored in ai_data_final/",
+      "L14: from services.backend_api.services.email_data_service import (",
+      "L16: get_email_diagnostics,",
+      "L17: get_email_records,",
+      "L18: get_email_reroute_targets,",
+      "L19: get_email_summary,",
+      "L20: get_email_tracking_records,",
+      "L21: get_email_tracking_summary,",
+      "L22: load_legacy_email_records,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\analytics.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L19: AI_DATA_PATH = runtime_paths.ai_data_final",
+      "L24: Get system-wide statistics from ai_data_final directories",
+      "L37: \"email_extracted\": int",
+      "L51: \"email_extracted\"",
+      "L55: dir_path = AI_DATA_PATH / dir_name",
+      "L80: \"training_status\": dict,",
+      "L81: \"models\": dict",
+      "L86: stats_response = await get_statistics()",
+      "L91: resume_path = AI_DATA_PATH / \"parsed_resumes\"",
+      "L114: # Get training status"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\anti_gaming.py",
+    "matched_terms": [
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L8: from pydantic import BaseModel, Field",
+      "L20: class GateIn(BaseModel):",
+      "L28: class GateOut(BaseModel):",
+      "L30: risk_score: int",
+      "L37: @router.post(\"/check\", response_model=GateOut)",
+      "L63: \"risk_score\": decision.risk_score,",
+      "L73: risk_score=decision.risk_score,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\auth.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L15: from services.backend_api.db import models",
+      "L23: GOOGLE_OAUTH_DOMAIN = os.getenv(\"GOOGLE_OAUTH_DOMAIN\", \"https://www.careertrojan.com\").strip().rstrip(\"/\")",
+      "L37: \"scope\": \"openid email profile\",",
+      "L83: return f\"{GOOGLE_OAUTH_DOMAIN}/login\"",
+      "L86: def _ensure_user_from_google(db: Session, email: str, full_name: str | None = None) -> models.User:",
+      "L87: user = db.query(models.User).filter(models.User.email == email).first()",
+      "L97: user = models.User(email=email, hashed_password=hashed_password, full_name=full_name, is_active=True)",
+      "L108: detail=\"Could not validate credentials\",",
+      "L113: email: str = payload.get(\"sub\")",
+      "L114: if email is None:"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\career_compass.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "score",
+      "vector"
+    ],
+    "matched_lines": [
+      "L10: from pydantic import BaseModel",
+      "L15: from services.backend_api.db.models import Job, Mentor, Resume",
+      "L22: _VECTOR_AXES = [",
+      "L29: \"domain_expertise\",",
+      "L57: def _norm_score(matches: int, max_matches: int = 8) -> float:",
+      "L63: def _vector_from_text(text: str) -> Dict[str, float]:",
+      "L72: \"domain_expertise\": [\"industry\", \"domain\", \"specialist\", \"expert\"],",
+      "L75: for axis in _VECTOR_AXES:",
+      "L77: vec[axis] = _norm_score(hits)",
+      "L83: paths.ai_data_final / \"parsed_job_descriptions\","
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\coaching.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L7: from pydantic import BaseModel, Field",
+      "L13: from services.backend_api.db import models",
+      "L31: COACH_SERVICE_AVAILABLE = True",
+      "L34: COACH_SERVICE_AVAILABLE = False",
+      "L38: _TAXONOMY_AVAILABLE = True",
+      "L41: _TAXONOMY_AVAILABLE = False",
+      "L51: Your goal is to help the user enrich the “Profile” section of their CV by uncovering specific experiences, habits, and strengths that differentiate them from other candidates, including details they might consider trivial or obvious.",
+      "L62: Remind the user occasionally that even “trivial” details can be the gold that differentiates them from their competitors.",
+      "L82: \"intro\": \"{{user_name}}, this is where we look for the details that set you apart. Even the things that feel trivial or obvious to you might be the gold that differentiates you from other candidates. Take a moment to think deeply and add anything that shows how you work, what you care about, and where you’ve made a difference.\",",
+      "L117: class ProfileCoachTurnRequest(BaseModel):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\credits.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L6: Replaces the dual token/AI-call system with single credit currency.",
+      "L13: from pydantic import BaseModel, Field",
+      "L21: from services.backend_api.db import models",
+      "L33: CREDIT_SYSTEM_AVAILABLE = True",
+      "L35: CREDIT_SYSTEM_AVAILABLE = False",
+      "L44: # PYDANTIC MODELS",
+      "L47: class PlanInfo(BaseModel):",
+      "L58: class PlansResponse(BaseModel):",
+      "L63: class ActionCostInfo(BaseModel):",
+      "L68: preview_available: bool"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\data_index.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L5: API endpoints for the AI data indexing system.",
+      "L13: from services.backend_api.services.ai_data_index_service import (",
+      "L14: get_ai_data_index_service,",
+      "L15: AIDataIndexSummary,",
+      "L29: service = get_ai_data_index_service()",
+      "L32: ai_summary = state.ai_data_summary",
+      "L38: \"ai_data\": {",
+      "L39: \"indexed\": ai_summary is not None,",
+      "L40: \"total_files\": ai_summary.total_files if ai_summary else 0,",
+      "L41: \"total_size_bytes\": ai_summary.total_size_bytes if ai_summary else 0,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\gdpr.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L25: from services.backend_api.db import models",
+      "L37: email: str = payload.get(\"sub\")",
+      "L38: if email is None:",
+      "L39: raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Invalid credentials\")",
+      "L41: raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Could not validate credentials\")",
+      "L42: user = db.query(models.User).filter(models.User.email == email).first()",
+      "L44: raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"User not found\")",
+      "L49: resource_id: str = None, detail: str = None, ip: str = None):",
+      "L51: entry = models.AuditLog(",
+      "L57: detail=detail,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\insights.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "governance",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L11: # Try to import DataLoader — graceful fallback if not available",
+      "L13: from services.ai_engine.data_loader import DataLoader",
+      "L36: \"risk_modelling\",",
+      "L68: \"risk_modelling\": [\"risk\", \"scenario\", \"sensitivity\", \"mitigation\", \"exposure\"],",
+      "L80: \"functional_expertise\": [\"finance\", \"engineering\", \"marketing\", \"product\", \"operations\", \"sales\"],",
+      "L85: \"reporting_rigour\": [\"reporting\", \"governance\", \"status\", \"audit\", \"tracking\"],",
+      "L111: def _axis_score(text: str, axis: str) -> float:",
+      "L120: def _domain_series_from_text(text: str) -> Dict[str, List[float]]:",
+      "L122: for domain, axes in STRUCTURAL_AXES.items():",
+      "L123: result[domain] = [round(_axis_score(text, axis), 2) for axis in axes]"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\intelligence.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "engine",
+      "inference",
+      "intelligence",
+      "model",
+      "regression",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L4: from pydantic import BaseModel",
+      "L10: from services.backend_api.services.ai.statistical_analysis_engine import StatisticalAnalysisEngine",
+      "L11: from services.backend_api.services.web_intelligence_service import WebIntelligenceService",
+      "L15: router = APIRouter(prefix=\"/api/intelligence/v1\", tags=[\"intelligence\"])",
+      "L16: engine = StatisticalAnalysisEngine()",
+      "L17: web_intel = WebIntelligenceService()",
+      "L31: def _tail_jsonl(path: Path, max_lines: int = 1) -> List[Dict[str, Any]]:",
+      "L55: ingest_last = _tail_jsonl(ingest_log, max_lines=1)",
+      "L57: enhance_report_path = paths.ai_data_final / \"metadata\" / \"enhance_training_data_report.json\"",
+      "L60: model_rows: List[Dict[str, Any]] = []"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\jobs.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L5: def _data_source_unavailable():",
+      "L6: raise HTTPException(status_code=503, detail=\"Job data source not configured\")",
+      "L13: _data_source_unavailable()",
+      "L20: _data_source_unavailable()"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\lenses.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "engine",
+      "model",
+      "orchestrator",
+      "score"
+    ],
+    "matched_lines": [
+      "L7: from pydantic import BaseModel, Field",
+      "L9: from services.backend_api.models.spider_covey import SpiderProfile, CoveyActionLens",
+      "L20: class BuildSpiderRequest(BaseModel):",
+      "L27: class BuildCoveyRequest(BaseModel):",
+      "L32: class BuildCompositeRequest(BaseModel):",
+      "L37: class CompositeResponse(BaseModel):",
+      "L42: @router.post(\"/spider\", response_model=SpiderProfile)",
+      "L45: # In a fully wired mode, this would call the AI Engine/Orchestrator to get the real axes score.",
+      "L46: # We simulate the ingestion and scoring through the actual statistical engine here.",
+      "L47: from services.backend_api.services.ai.statistical_analysis_engine import StatisticalAnalysisEngine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\logs.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L6: from pydantic import BaseModel",
+      "L11: class LogTailResponse(BaseModel):",
+      "L18: @router.get(\"/tail\", response_model=LogTailResponse, dependencies=[Depends(require_admin)])",
+      "L19: def tail_log(",
+      "L29: return LogTailResponse(file=str(fp), lines=[], matched_errors=[])",
+      "L37: return LogTailResponse("
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\mapping.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L64: add_edge(\"edge:user->hub\",\"portal:user_portal\",\"page:user:/insights/visuals\",\"contains\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\mentor.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L7: - Availability settings",
+      "L15: from pydantic import BaseModel, Field",
+      "L22: from services.backend_api.db import models",
+      "L30: # PYDANTIC MODELS",
+      "L33: class MentorProfileOut(BaseModel):",
+      "L41: availability_status: str = \"available\"",
+      "L46: class ServicePackageCreate(BaseModel):",
+      "L56: class ServicePackageOut(BaseModel):",
+      "L71: class ServicePackageUpdate(BaseModel):",
+      "L81: class AvailabilityUpdate(BaseModel):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\mentorship.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L14: from pydantic import BaseModel, Field",
+      "L23: from services.backend_api.db import models",
+      "L32: # PYDANTIC MODELS (Request/Response)",
+      "L35: class CreateLinkRequest(BaseModel):",
+      "L40: class CreateNoteRequest(BaseModel):",
+      "L49: class UpdateNoteRequest(BaseModel):",
+      "L54: class CreateDocumentRequest(BaseModel):",
+      "L61: class SignDocumentRequest(BaseModel):",
+      "L65: class RejectDocumentRequest(BaseModel):",
+      "L68: class CreateInvoiceRequest(BaseModel):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\ops.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L3: from pydantic import BaseModel",
+      "L23: # --- Processing (Live AI Routine) ---",
+      "L24: class ProcessOptions(BaseModel):",
+      "L39: logger.error(f\"[JOB {job_id}] Critical failure in background ingestion: {str(e)}\")",
+      "L46: return {\"job_id\": job_id, \"status\": \"started\", \"engine\": \"automatic_data_ingestion_service\"}",
+      "L64: raise HTTPException(status_code=403, detail=\"Admin required\")",
+      "L66: raise HTTPException(status_code=401, detail=\"Invalid token\")",
+      "L87: class GateCheck(BaseModel):",
+      "L100: \"risk_score\": risk,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\payment.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L6: - Payment processing (Braintree integration — sandbox + production)",
+      "L17: Gateway: Braintree (sandbox → production switchable via BRAINTREE_ENVIRONMENT)",
+      "L21: Updated: February 9, 2026 — Braintree integration",
+      "L25: from pydantic import BaseModel, Field",
+      "L35: from services.backend_api.db import models",
+      "L37: # Braintree service (lazy — only fails at call time if not configured)",
+      "L39: from services.backend_api.services import braintree_service",
+      "L40: BRAINTREE_AVAILABLE = True",
+      "L42: braintree_service = None  # type: ignore",
+      "L43: BRAINTREE_AVAILABLE = False"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\profile_coach_v1.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L9: from pydantic import BaseModel, Field",
+      "L19: class ProfileCoachStartRequest(BaseModel):",
+      "L25: class ProfileCoachRespondRequest(BaseModel):",
+      "L31: class ProfileCoachFinishRequest(BaseModel):",
+      "L36: class _StoredSession(BaseModel):",
+      "L141: if coaching._contains_stop_phrase(answer):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\profile_v1.py",
+    "matched_terms": [
+      "model",
+      "vector"
+    ],
+    "matched_lines": [
+      "L8: from pydantic import BaseModel, Field",
+      "L10: from services.backend_api.routers.career_compass import _vector_from_text",
+      "L18: class BuildProfileRequest(BaseModel):",
+      "L24: class BuildSignalsRequest(BaseModel):",
+      "L94: signals: Dict[str, float] = _vector_from_text(source_text)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\resume.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "model"
+    ],
+    "matched_lines": [
+      "L8: from pydantic import BaseModel",
+      "L44: # Models",
+      "L46: class UploadIn(BaseModel):",
+      "L51: class ResumeView(BaseModel):",
+      "L58: ai_json: Optional[dict] = None",
+      "L83: text_content = await extract_text_from_upload(file_bytes, file.filename)",
+      "L85: raise HTTPException(status_code=422, detail=\"Unable to extract text from resume\")",
+      "L94: # Company Intelligence hook (non-blocking): mine company names from uploaded text",
+      "L133: raise HTTPException(",
+      "L135: detail=f\"Upload failed: {str(e)}\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\rewards.py",
+    "matched_terms": [
+      "ai",
+      "governance",
+      "model"
+    ],
+    "matched_lines": [
+      "L15: - Top contributors get governance rights",
+      "L22: from pydantic import BaseModel, Field",
+      "L32: from services.backend_api.db.models import (",
+      "L67: \"referral_subscribe\": {\"tokens\": 250, \"description\": \"Referred user subscribes to paid plan\"},",
+      "L78: # PYDANTIC MODELS",
+      "L81: class RewardItem(BaseModel):",
+      "L91: class RewardsOut(BaseModel):",
+      "L93: available_tokens: int",
+      "L101: class AvailableReward(BaseModel):",
+      "L108: class AvailableRewardsOut(BaseModel):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\runtime_contract.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L19: \"model_unavailable\": 503,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\sessions.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L19: from pydantic import BaseModel",
+      "L36: # ── Models ────────────────────────────────────────────────────",
+      "L37: class SessionEvent(BaseModel):",
+      "L44: class SessionSummary(BaseModel):",
+      "L55: for sub in [\"sessions\", \"interactions\", \"profiles\", \"cv_uploads\", \"ai_matches\", \"session_logs\"]:",
+      "L103: # Also append to session log (immutable audit trail)",
+      "L116: @router.get(\"/summary/{user_id}\", response_model=SessionSummary)",
+      "L225: # AI Matches",
+      "L226: matches_path = USER_DATA_ROOT / \"ai_matches\" / f\"{user_id}_matches.json\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\shared.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L33: - AI data directory",
+      "L35: Returns overall status + per-component detail.",
+      "L47: checks[\"database\"] = {\"status\": \"error\", \"detail\": str(e)[:200]}",
+      "L64: checks[\"disk\"] = {\"status\": \"error\", \"detail\": str(e)[:200]}",
+      "L69: \"ai_data_final\": paths.ai_data_final,",
+      "L88: checks[\"redis\"] = {\"status\": \"unavailable\", \"detail\": \"Redis not reachable (non-blocking)\"}"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\support.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L7: from pydantic import BaseModel",
+      "L11: from services.backend_api.db import models",
+      "L27: # AI agent queue — enqueue jobs for LLM processing",
+      "L28: from services.backend_api.services.ai_queue_service import enqueue as ai_enqueue",
+      "L29: from services.backend_api.services.ai_queue_service import (",
+      "L30: queue_stats as ai_queue_stats,",
+      "L31: list_jobs as ai_list_jobs,",
+      "L32: read_job as ai_read_job,",
+      "L38: class SupportTokenRequest(BaseModel):",
+      "L40: email: str = \"\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\taxonomy.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L10: TAXONOMY_AVAILABLE = True",
+      "L13: TAXONOMY_AVAILABLE = False",
+      "L23: if not TAXONOMY_AVAILABLE:",
+      "L24: raise HTTPException(",
+      "L26: detail=\"industry_taxonomy_service not available on PYTHONPATH.\",",
+      "L74: Fetch metadata for a specific job title (industries, skills, NAICS suggestions, etc.).",
+      "L98: @router.get(\"/naics/search\")",
+      "L99: async def search_naics(",
+      "L104: NAICS search endpoint – uses `search_naics_by_phrase`.",
+      "L107: results = tax.search_naics_by_phrase(phrase, max_results=max_results)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\touchpoints.py",
+    "matched_terms": [
+      "ai",
+      "engine"
+    ],
+    "matched_lines": [
+      "L15: from services.ai_engine.data_loader import DataLoader",
+      "L80: In production this queries the gap-analysis engine."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\user.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L10: from services.backend_api.db import models",
+      "L12: # Import pydantic models if we had them, using dicts/params for now to save time in migration",
+      "L20: email: str = payload.get(\"sub\")",
+      "L21: if email is None:",
+      "L22: raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Invalid credentials\")",
+      "L24: raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Could not validate credentials\")",
+      "L26: user = db.query(models.User).filter(models.User.email == email).first()",
+      "L28: raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"User not found\")",
+      "L32: def read_users_me(current_user: models.User = Depends(get_current_user)):",
+      "L35: \"email\": current_user.email,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\user_vector_v1.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "vector"
+    ],
+    "matched_lines": [
+      "L9: from services.backend_api.db.models import Resume",
+      "L10: from services.backend_api.routers.career_compass import _vector_from_text",
+      "L14: router = APIRouter(prefix=\"/api/v1/user-vector\", tags=[\"user-vector-v1\"])",
+      "L18: def get_current_user_vector(",
+      "L31: message=\"No live parsed resume available for this user.\",",
+      "L32: data={\"vector\": None, \"confidence\": None},",
+      "L43: message=\"The resolved resume does not contain parsed content.\",",
+      "L44: data={\"vector\": None, \"confidence\": None},",
+      "L51: vector = _vector_from_text(parsed_text)",
+      "L52: confidence = {key: 0.7 for key in vector.keys()}"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\webhooks.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L7: POST /api/webhooks/v1/braintree   — Braintree notifications",
+      "L15: 4. Marked processed / failed",
+      "L27: # AI agent queue — enqueue zendesk jobs for LLM processing",
+      "L29: from services.backend_api.services.ai_queue_service import enqueue as ai_enqueue",
+      "L31: ai_enqueue = None  # type: ignore",
+      "L43: from services.backend_api.db import models",
+      "L45: # Braintree webhook parsing",
+      "L47: import braintree",
+      "L48: from services.backend_api.services import braintree_service",
+      "L49: BRAINTREE_AVAILABLE = True"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\routers\\__init__.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: # All routers are imported individually in main.py"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\abuse_policy_service.py",
+    "matched_terms": [
+      "ai",
+      "score",
+      "similarity"
+    ],
+    "matched_lines": [
+      "L4: Evaluates new resume uploads against fingerprints of recent submissions",
+      "L19: SIMILARITY_THRESHOLD = 0.85    # 0-1; above this = duplicate flag",
+      "L31: risk_score: int             # 0-100",
+      "L48: # ── similarity ───────────────────────────────────────────────────",
+      "L56: # ── main evaluation ──────────────────────────────────────────────",
+      "L67: score = 0",
+      "L73: score += RISK_WEIGHTS[\"duplicate_text\"]",
+      "L80: codes.append(\"daily_limit_exceeded\")",
+      "L81: score += RISK_WEIGHTS[\"rapid_upload\"]",
+      "L88: score += RISK_WEIGHTS[\"rapid_upload\"]"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_api_client.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L33: def _raise(self, r: requests.Response) -> None:",
+      "L40: raise RuntimeError(f\"Admin API error {r.status_code} {r.request.method} {r.url}: {body}\")",
+      "L44: self._raise(r)",
+      "L49: self._raise(r)",
+      "L86: # Web Company Intelligence endpoints"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_api_client_ci_endpoints.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L1: \"\"\"services.admin_api_client – Competitive Intelligence endpoints (PATCH)",
+      "L14: Backend contract is strict: the page will raise if expected keys are missing."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_api_client_contact_comm_mixin.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L24: def configure_gmail(self, payload: Dict[str, Any]) -> Dict[str, Any]:",
+      "L25: return self._request(\"POST\", \"/api/admin/v1/integrations/gmail/configure\", json=payload)",
+      "L58: # Campaigns",
+      "L60: def get_campaigns(self) -> Dict[str, Any]:",
+      "L61: return self._request(\"GET\", \"/admin/campaigns\")",
+      "L63: def create_campaign(self, payload: Dict[str, Any]) -> Dict[str, Any]:",
+      "L64: return self._request(\"POST\", \"/admin/campaigns\", json=payload)",
+      "L66: def send_campaign(self, campaign_id: str) -> Dict[str, Any]:",
+      "L67: return self._request(\"POST\", f\"/admin/campaigns/{campaign_id}/send\")",
+      "L69: def get_campaign(self, campaign_id: str) -> Dict[str, Any]:"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_contracts.py",
+    "matched_terms": [
+      "intelligence",
+      "score"
+    ],
+    "matched_lines": [
+      "L12: # Web Company Intelligence contracts (admin backend must provide these keys)",
+      "L14: WEB_INTEL_COMPANY_RESULT_KEYS: Final[List[str]] = [\"company_name\", \"confidence_score\", \"timestamp\", \"data_sources\"]"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\admin_contracts_competitive.py",
+    "matched_terms": [
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L1: \"\"\"services.admin_contracts – Competitive Intelligence contracts (ADD)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_analytics_service.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence",
+      "ml",
+      "model",
+      "predict",
+      "regression",
+      "score"
+    ],
+    "matched_lines": [
+      "L3: Connects statistical engine with existing IntelliCV services",
+      "L17: from analytics.stats_engine import ZeroCostStatsEngine, get_stats_engine",
+      "L25: High-level analytics service integrating statistical engine",
+      "L30: - Job market intelligence",
+      "L32: - Predictive analytics",
+      "L42: data_dir: Path to ai_data_final directory",
+      "L46: data_dir = CareerTrojanPaths().ai_data_final",
+      "L49: self.stats_engine = get_stats_engine(data_dir=self.data_dir)",
+      "L69: df = self.stats_engine.load_candidates()",
+      "L73: 'error': 'No candidate data available',"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\advanced_web_scraper.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L14: \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",",
+      "L15: \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15\",",
+      "L16: \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",",
+      "L37: # --- Main scraping function ---",
+      "L47: # Blocked or rate-limited, try again",
+      "L61: # html = driver.page_source",
+      "L63: # return html",
+      "L69: return {\"url\": url, \"error\": \"Failed to fetch page\"}",
+      "L70: soup = BeautifulSoup(resp.text, 'html.parser')"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_data_index_service.py",
+    "matched_terms": [
+      "ai",
+      "ml",
+      "model",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: AI Data Index Service",
+      "L5: Provides full indexing capabilities for ai_data_final and automated_parser directories.",
+      "L40: INDUSTRY_FIELDS = [\"industry\", \"industries\", \"sector\", \"domain\", \"field\", \"vertical\"]",
+      "L121: source_type: str  # ai_data_final | automated_parser",
+      "L137: class AIDataIndexSummary:",
+      "L138: \"\"\"Summary of indexed ai_data_final content.\"\"\"",
+      "L161: failure_reason: str = \"\"",
+      "L197: class DataIndexState:",
+      "L199: ai_data_summary: Optional[AIDataIndexSummary] = None",
+      "L207: # Main Index Service"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai_queue_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: CareerTrojan — AI Agent Job Queue Service",
+      "L4: File-based job queue for asynchronous AI processing.",
+      "L7: The AI agent worker polls the directory, picks up jobs, runs",
+      "L9: job to processed/ or failed/.",
+      "L16: processed/      ← finished jobs (kept for audit trail)",
+      "L17: failed/         ← jobs that errored out",
+      "L34: logger = logging.getLogger(\"ai_queue\")",
+      "L44: env = os.getenv(\"CAREERTROJAN_AI_QUEUE_ROOT\") or os.getenv(\"ZENDESK_AI_QUEUE_DIR\")",
+      "L54: SUBDIRS: List[str] = [\"pending\", \"processing\", \"processed\", \"failed\"]",
+      "L77: \"draft_reply\",         # generate an AI-suggested reply"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\api_client.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L35: response.raise_for_status()",
+      "L40: self.logger.warning(\"FastAPI request failed: %s %s (%s)\", method, path, exc)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\automatic_data_ingestion_service.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L3: Automatic Data Ingestion Service - Real-Time AI Enrichment Pipeline",
+      "L6: This service automatically enriches the IntelliCV AI system whenever:",
+      "L7: - A user registers (adds profile data to AI database)",
+      "L8: - A user uploads a resume (adds CV data to AI enrichment)",
+      "L9: - A user updates their profile (updates AI intelligence)",
+      "L15: 3. THIS SERVICE automatically copies to ai_data_final →",
+      "L16: 4. AI enrichment runs automatically →",
+      "L19: This ensures the AI system continuously learns from every user interaction.",
+      "L45: class AutomaticDataIngestionService:",
+      "L47: Automatically ingests user data into the AI system for continuous enrichment."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\auto_screen_system.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "engine",
+      "intelligence",
+      "model",
+      "score",
+      "unified_ai_engine"
+    ],
+    "matched_lines": [
+      "L5: Automatic data screening and AI processing for user login events.",
+      "L11: - AI enrichment pipeline integration",
+      "L15: Author: IntelliCV AI Team",
+      "L16: Purpose: Automated user data screening with AI intelligence",
+      "L28: # Import our AI services",
+      "L30: from services.unified_ai_engine import get_unified_ai_engine",
+      "L33: from services.ai_data_manager import get_ai_data_manager",
+      "L34: from services.ai_feedback_loop import get_feedback_loop_system",
+      "L35: AI_SERVICES_AVAILABLE = True",
+      "L37: print(f\"⚠️ AI services not available: {e}\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\azure_integration.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "ml",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L17: AZURE_AVAILABLE = {}",
+      "L21: from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient",
+      "L23: AZURE_AVAILABLE['storage'] = True",
+      "L25: AZURE_AVAILABLE['storage'] = False",
+      "L26: print(\"[WARNING] Azure Storage SDK not available - install: pip install azure-storage-blob\")",
+      "L32: AZURE_AVAILABLE['identity'] = True",
+      "L34: AZURE_AVAILABLE['identity'] = False",
+      "L35: print(\"[WARNING] Azure Identity SDK not available - install: pip install azure-identity\")",
+      "L40: AZURE_AVAILABLE['keyvault'] = True",
+      "L42: AZURE_AVAILABLE['keyvault'] = False"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\backend_client.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L13: r.raise_for_status()"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\blocker_connector.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml"
+    ],
+    "matched_lines": [
+      "L9: Author: IntelliCV AI System",
+      "L20: BLOCKER_SERVICES_AVAILABLE = True",
+      "L73: 'error': 'Blocker detection service unavailable'",
+      "L224: def is_available(self) -> bool:",
+      "L225: \"\"\"Check if blocker services are available\"\"\"",
+      "L226: return BLOCKER_SERVICES_AVAILABLE and self.detector is not None",
+      "L231: 'services_available': BLOCKER_SERVICES_AVAILABLE,",
+      "L234: 'ready': self.is_available()",
+      "L278: if __name__ == \"__main__\":",
+      "L284: if connector.is_available():"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\braintree_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: Braintree Payment Gateway Service — CareerTrojan",
+      "L5: Handles all Braintree SDK interactions:",
+      "L14: BRAINTREE_ENVIRONMENT   sandbox | production",
+      "L15: BRAINTREE_MERCHANT_ID   merchant ID",
+      "L16: BRAINTREE_PUBLIC_KEY    public key",
+      "L17: BRAINTREE_PRIVATE_KEY   private key",
+      "L25: import braintree",
+      "L27: logger = logging.getLogger(\"payment.braintree\")",
+      "L34: \"\"\"Return braintree.Environment based on env var.\"\"\"",
+      "L35: env = os.getenv(\"BRAINTREE_ENVIRONMENT\", \"sandbox\").lower()"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\chrome_web_scraper.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L14: from selenium.webdriver.support.ui import WebDriverWait",
+      "L35: \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",",
+      "L36: \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",",
+      "L37: \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",",
+      "L42: 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',",
+      "L84: logger.error(f\"Failed to setup Chrome driver: {e}\")",
+      "L85: raise",
+      "L98: response.raise_for_status()",
+      "L104: logger.warning(f\"Attempt {attempt + 1} failed for {url}: {e}\")",
+      "L106: logger.error(f\"All attempts failed for {url}\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_api.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L11: ENHANCED_SIDEBAR_AVAILABLE = True",
+      "L13: ENHANCED_SIDEBAR_AVAILABLE = False",
+      "L17: if ENHANCED_SIDEBAR_AVAILABLE:",
+      "L22: FastAPI and Flask integration for CompanyIntel enrichment engine.",
+      "L31: from services.company_intelligence_parser import CompanyIntel",
+      "L33: app = FastAPI(title=\"IntelliCV Company Intelligence API\")",
+      "L82: if __name__ == \"__main__\":",
+      "L83: # To run FastAPI: uvicorn services.company_intelligence_api:app --reload",
+      "L84: # To run Flask: python services/company_intelligence_api.py"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_auto_enrich.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L2: Company Intelligence Auto-Enrichment Service",
+      "L11: from company_intelligence_parser import get_company_intelligence, db, DB_PATH",
+      "L12: from market_intelligence.extract import extract_companies",
+      "L19: # Example: Directory containing user-uploaded resumes (PDF/text)",
+      "L27: Uses pypdf for PDFs, python-docx for DOCX, plain read for TXT.",
+      "L50: logger.warning(\"No PDF library available\")",
+      "L68: # Plain text files",
+      "L112: enriched_results[c] = get_market_intelligence(c)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence_parser.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "ml",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L14: ENHANCED_SIDEBAR_AVAILABLE = True",
+      "L16: ENHANCED_SIDEBAR_AVAILABLE = False",
+      "L20: if ENHANCED_SIDEBAR_AVAILABLE:",
+      "L27: IntelliCV Company Intelligence Parser — Refactored (Robust + Safe)",
+      "L28: - Safer search via DuckDuckGo HTML (no Google SERP scraping).",
+      "L30: - Canonical domain keys + SQLite persistence, JSON export mirror.",
+      "L32: - Weighted industry heuristic (easy to upgrade to ML later).",
+      "L33: - Batch concurrency with domain locks + polite sleep.",
+      "L52: AI_DATA_DIR = (PROJECT_ROOT / \"ai_data\").resolve()",
+      "L53: COMPANY_DIR = AI_DATA_DIR / \"companies\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intel_service.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L13: from services.backend_api.services.company_intelligence.extract import extract_companies",
+      "L41: self.registry_path = self.paths.ai_data_final / \"metadata\" / \"company_intel_registry.json\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_jd_auto_updater.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L46: jd_storage_path = base_path / \"ai_data_final\" / \"job_descriptions\"",
+      "L67: company_domain TEXT,",
+      "L81: company_domain TEXT,",
+      "L86: priority_score REAL DEFAULT 0,",
+      "L133: logger.error(f\"❌ Failed to initialize database: {e}\")",
+      "L134: raise",
+      "L262: def _update_company_status(self, company_name: str, domain: Optional[str] = None):",
+      "L269: INSERT OR IGNORE INTO company_status (company_name, company_domain)",
+      "L271: \"\"\", (company_name, domain))",
+      "L273: # Calculate priority score (based on user count and dormancy)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\compliance_data_service.py",
+    "matched_terms": [
+      "ai",
+      "score"
+    ],
+    "matched_lines": [
+      "L22: self.ai_data_path = self.base_path / \"ai_data_final\" if (self.base_path / \"ai_data_final\").exists() else self.base_path / \"ai_data\"",
+      "L33: data_quality_score = self._analyze_data_quality()",
+      "L34: security_score = self._analyze_security_compliance()",
+      "L38: # Calculate overall compliance score",
+      "L39: compliance_score = (data_quality_score + security_score) / 2",
+      "L42: 'compliance_score': compliance_score,",
+      "L43: 'compliance_delta': self._calculate_trend(compliance_score),",
+      "L48: 'risk_level': 'Low' if compliance_score > 90 else 'Medium' if compliance_score > 75 else 'High',",
+      "L54: # Fallback to basic metrics if analysis fails",
+      "L56: 'compliance_score': 85.0,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\covey_builder.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L10: from services.backend_api.models.spider_covey import (",
+      "L30: \"domain_fit\": 1.10,",
+      "L96: return float(max(0, 100 - axis.score))",
+      "L149: time_score = _clip_0_100((time_minutes / 180.0) * 100.0)",
+      "L150: complexity_score = _clip_0_100(((complexity - 1.0) / 4.0) * 100.0)",
+      "L151: dependency_score = _clip_0_100(dependency * 100.0)",
+      "L154: EFFORT_TIME_WEIGHT * time_score",
+      "L155: + EFFORT_COMPLEXITY_WEIGHT * complexity_score",
+      "L156: + EFFORT_DEPENDENCY_WEIGHT * dependency_score"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\credit_system.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "score"
+    ],
+    "matched_lines": [
+      "L4: Single credit currency replacing dual token/AI-call system.",
+      "L8: - PAID: Unlock full functionality with graduated limits",
+      "L84: blocker_detection=False,         # Sees that blockers exist, not details",
+      "L183: preview_available: bool = False      # Can free users see a preview?",
+      "L205: description=\"View main dashboard\",",
+      "L227: name=\"View Job Details\",",
+      "L249: # CAREER ANALYSIS (Preview for free, full for paid)",
+      "L256: preview_available=True,",
+      "L262: description=\"Complete AI career analysis with all insights\",",
+      "L302: description=\"See fit score only (no details)\","
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\data_parser_service.py",
+    "matched_terms": [
+      "ai",
+      "ml",
+      "score"
+    ],
+    "matched_lines": [
+      "L20: self.ai_data_path = self.base_path / \"ai_data_final\" if (self.base_path / \"ai_data_final\").exists() else self.base_path / \"ai_data\"",
+      "L96: # Check AI data directories for processing issues",
+      "L97: if self.ai_data_path.exists():",
+      "L98: for subdir in self.ai_data_path.iterdir():",
+      "L103: \"File\": f\"{subdir.name}/ (AI data)\",",
+      "L193: if self.ai_data_path.exists():",
+      "L194: all_files = list(self.ai_data_path.rglob(\"*\"))",
+      "L231: # Keep default metrics if analysis fails",
+      "L256: completeness_scores = []",
+      "L271: completeness_scores.append(100 - null_percentage)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_contact_parser.py",
+    "matched_terms": [
+      "ai",
+      "clustering"
+    ],
+    "matched_lines": [
+      "L3: Email & Contact Parser Module (Expanded)",
+      "L11: EMAIL_REGEX = re.compile(r\"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\")",
+      "L22: emails = EMAIL_REGEX.findall(text)",
+      "L30: for i, email in enumerate(emails):",
+      "L36: \"Email\": email,",
+      "L40: if validate_email(email):",
+      "L44: def validate_email(email: str) -> bool:",
+      "L46: return bool(EMAIL_REGEX.fullmatch(email)) and len(email) <= 100",
+      "L52: key = (c.get(\"Email\", \"\") + c.get(\"Telephone Number\", \"\")).lower()",
+      "L78: # Enrichment hook: add logic for seniority, value scoring, clustering, etc."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_data_service.py",
+    "matched_terms": [
+      "ai",
+      "inference",
+      "intelligence",
+      "score"
+    ],
+    "matched_lines": [
+      "L22: def _normalize_email(value: str) -> str:",
+      "L26: PERSONAL_EMAIL_DOMAINS = {",
+      "L27: \"gmail.com\",",
+      "L28: \"googlemail.com\",",
+      "L30: \"hotmail.com\",",
+      "L38: \"protonmail.com\",",
+      "L67: SUSPICIOUS_DOMAIN_MARKERS = {",
+      "L69: \"mailinator\",",
+      "L71: \"10minutemail\",",
+      "L72: \"trashmail\","
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\email_parser.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L1: def extract_emails_from_file(file_path: Path) -> list:",
+      "L2: def extract_emails_from_dir(email_dir: Path) -> list:",
+      "L9: # DATASET POINTER: All output JSON/CSV files will be saved to the ai_data directory for dashboard and downstream use.",
+      "L10: AI_DATA_DIR = Path(__file__).resolve().parents[1] / \"ai_data\"",
+      "L11: AI_DATA_DIR.mkdir(parents=True, exist_ok=True)",
+      "L14: EMAIL_REGEX = re.compile(r\"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}\")",
+      "L19: EXCLUDE_DOMAIN = \"@johnston-vere.co.uk\"",
+      "L25: emails = EMAIL_REGEX.findall(text)",
+      "L31: for i, email in enumerate(emails):",
+      "L36: \"Email\": email,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enhanced_job_title_engine.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "engine",
+      "intelligence",
+      "model",
+      "score",
+      "similarity",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: Enhanced Job Title & LinkedIn Industry Integration Engine",
+      "L6: classification and business software categorization for advanced AI enrichment.",
+      "L8: Author: IntelliCV-AI Team",
+      "L29: # Import the LinkedIn classifier",
+      "L31: from services.linkedin_industry_classifier import LinkedInIndustryClassifier",
+      "L32: LINKEDIN_CLASSIFIER_AVAILABLE = True",
+      "L34: LINKEDIN_CLASSIFIER_AVAILABLE = False",
+      "L36: class EnhancedJobTitleEngine(LoggingMixin, SafeOperationsMixin):",
+      "L37: \"\"\"Enhanced job title engine with LinkedIn industry integration\"\"\"",
+      "L41: self.linkedin_classifier = LinkedInIndustryClassifier() if LINKEDIN_CLASSIFIER_AVAILABLE else None"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\fs_view.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L9: raise ValueError(\"Path traversal blocked.\")",
+      "L13: root = Path(settings.AI_DATA_ROOT)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\glossary_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L22: glossary_path = CareerTrojanPaths().ai_data_final / \"collocations_glossary.json\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\helpdesk_stub_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L43: zendesk_subdomain = os.getenv(\"ZENDESK_SUBDOMAIN\", \"\")",
+      "L45: if not zendesk_base_url and zendesk_subdomain:",
+      "L46: zendesk_base_url = f\"https://{zendesk_subdomain}.zendesk.com\"",
+      "L62: \"subdomain\": zendesk_subdomain,",
+      "L64: \"jwt_claim_email\": os.getenv(\"ZENDESK_JWT_EMAIL_CLAIM\", \"email\"),",
+      "L65: \"jwt_claim_name\": os.getenv(\"ZENDESK_JWT_NAME_CLAIM\", \"name\"),",
+      "L66: \"external_id_claim\": os.getenv(\"ZENDESK_JWT_EXTERNAL_ID_CLAIM\", \"external_id\"),",
+      "L87: if not (os.getenv(\"ZENDESK_SUBDOMAIN\") or os.getenv(\"ZENDESK_BASE_URL\")):",
+      "L88: missing.append(\"ZENDESK_SUBDOMAIN or ZENDESK_BASE_URL\")",
+      "L104: def build_stub_sso_token(subject: str, email: str = \"\", ttl_seconds: int = 3600) -> str:"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\industry_taxonomy_service.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml",
+      "score"
+    ],
+    "matched_lines": [
+      "L2: Industry Taxonomy Service for IntelliCV-AI",
+      "L10: - AI enrichment pipeline",
+      "L15: • NAICS 2022 (North American Industry Classification System)",
+      "L22: - .load_naics()",
+      "L27: - If a dataset path is missing, the loader fails *gracefully*.",
+      "L32: - 18_Job_Title_AI_Integration.py",
+      "L47: INTELLICV_NAICS_STRUCTURE         – NAICS 2022 structure Excel",
+      "L48: INTELLICV_NAICS_DESCRIPTIONS      – NAICS 2022 descriptions Excel",
+      "L74: taxonomy: str  # \"SOC2020\", \"ESCO\", \"NAICS2022\"",
+      "L94: source: str  # \"SOC2020\", \"ESCO\", \"NAICS2022\", \"JOB_DB\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intellicv_data_manager.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "training"
+    ],
+    "matched_lines": [
+      "L6: - AI training data in ai_data_final",
+      "L7: - Email integration data",
+      "L9: - Backend AI services data (neural network, expert system, etc.)",
+      "L38: # Main data root and AI training data",
+      "L40: self.ai_data_path = paths.ai_data_final",
+      "L42: # Email integration data",
+      "L43: self.email_data_path = self.data_root / \"email_integration\"",
+      "L44: self.email_extracted_path = self.data_root / \"email_extracted\"",
+      "L49: # Backend AI services data",
+      "L52: self.backend_models_path = self.backend_data_path / \"models\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\intelligence_hub_connector.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "engine",
+      "intelligence",
+      "unified_ai_engine"
+    ],
+    "matched_lines": [
+      "L2: Intelligence Hub Real Data Connector",
+      "L5: Connects Intelligence Hub to real AI services and engines instead of demo data.",
+      "L7: - UnifiedAIEngine (Bayesian, NLP, LLM, Fuzzy, Fusion)",
+      "L8: - RealAIConnector (34k+ CV database)",
+      "L9: - Portal Bridge Intelligence Services",
+      "L12: Author: IntelliCV-AI Team",
+      "L32: class IntelligenceHubConnector:",
+      "L33: \"\"\"Real data connector for Intelligence Hub - NO MORE DEMO DATA!\"\"\"",
+      "L36: self.unified_ai_engine = None",
+      "L37: self.real_ai_connector = None"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\interview_coaching_service.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L19: \"engineering\": \"OPS\",",
+      "L40: \"days_31_60\": [\"Drive cross-functional execution\", \"Unblock structural constraints\"],",
+      "L41: \"days_61_90\": [\"Deliver strategic milestone\", \"Publish operating model + next quarter plan\"],",
+      "L107: answer_score: Optional[int] = None,",
+      "L116: answer_score=answer_score,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\job_description_parser.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml"
+    ],
+    "matched_lines": [
+      "L18: {\"title\": \"Software Engineer\", \"description\": \"Develop and maintain software applications.\", \"requirements\": [\"Python\", \"SQL\"]}",
+      "L25: soup = BeautifulSoup(resp.text, 'html.parser')"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\job_description_web_scraper.py",
+    "matched_terms": [
+      "ml"
+    ],
+    "matched_lines": [
+      "L15: soup = BeautifulSoup(resp.text, 'html.parser')"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\job_title_enhancement_engine.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: IntelliCV-AI Job Title Normalization and Enhancement Engine",
+      "L6: the AI engine's capability for:",
+      "L13: Author: IntelliCV-AI Team",
+      "L23: class JobTitleEnhancementEngine:",
+      "L24: \"\"\"Advanced job title processing and enhancement engine\"\"\"",
+      "L71: 'Specilaist': 'Specialist',",
+      "L72: 'Spcilaist': 'Specialist',",
+      "L73: 'Specilait': 'Specialist',",
+      "L74: 'Specilaist': 'Specialist',",
+      "L75: 'SPecilaist': 'Specialist',"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\keyword_extractor.py",
+    "matched_terms": [
+      "ai",
+      "similarity",
+      "vector"
+    ],
+    "matched_lines": [
+      "L12: # --- AI enrichment integration hook ---",
+      "L15: Hook for User_final/AI enrichment: Extract, enrich, and attach keywords and similarities to user profile.",
+      "L29: from sklearn.feature_extraction.text import CountVectorizer",
+      "L30: vectorizer = CountVectorizer(ngram_range=(n, n), stop_words='english').fit([text])",
+      "L31: ngrams = vectorizer.get_feature_names_out()",
+      "L32: counts = vectorizer.transform([text]).toarray().flatten()",
+      "L41: - Computes keyword similarity (for thesaurus/acronym/psuedo-acronym enrichment)",
+      "L42: - Designed for AI enrichment and user profile integration",
+      "L47: from sklearn.metrics.pairwise import cosine_similarity",
+      "L48: from sklearn.feature_extraction.text import TfidfVectorizer"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\linkedin_industry_classifier.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "engine",
+      "governance",
+      "intelligence",
+      "ml",
+      "model",
+      "predict",
+      "score",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L6: official industry taxonomy with detailed subcategories and business software",
+      "L9: Author: IntelliCV-AI Team",
+      "L29: class LinkedInIndustryClassifier(LoggingMixin, SafeOperationsMixin):",
+      "L30: \"\"\"Enhanced industry classifier using LinkedIn's official taxonomy\"\"\"",
+      "L42: \"Dairy\", \"Farming\", \"Fishery\", \"Ranching\",",
+      "L51: \"Animation\", \"Broadcast Media\", \"Computer Games\", \"Entertainment\",",
+      "L56: \"Building Materials\", \"Civil Engineering\", \"Construction\",",
+      "L57: \"Building industry\", \"Civil and marine engineering contractors\",",
+      "L58: \"Civil engineering and building machinery and equipment\",",
+      "L60: \"Heating, ventilation, air conditioning (HVAC) and refrigeration equipment\","
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\live_gmail_service.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L2: Live Gmail Service for IntelliCV Admin Portal",
+      "L5: Real-time Gmail integration service that provides live data instead of mock data.",
+      "L6: This service connects to the actual Gmail account and extracts CV documents.",
+      "L8: Author: IntelliCV AI System",
+      "L15: import email",
+      "L26: class LiveGmailService:",
+      "L27: \"\"\"Live Gmail service for real-time email extraction\"\"\"",
+      "L30: \"\"\"Initialize the live Gmail service\"\"\"",
+      "L32: self.email_config_path = self.sandbox_root / \"IntelliCV-data\" / \"email_integration\" / \"email_accounts.json\"",
+      "L33: self.email_extracted_path = self.sandbox_root / \"IntelliCV-data\" / \"email_extracted\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\llm_service.py",
+    "matched_terms": [
+      "ai",
+      "score"
+    ],
+    "matched_lines": [
+      "L7: self.available = True",
+      "L13: return f\"Simulated AI Response to: {prompt[:50]}...\"",
+      "L18: \"score\": 85,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\mentorship_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L128: raise",
+      "L190: raise",
+      "L251: raise",
+      "L286: raise",
+      "L309: note_type: session, requirement, progress, observation, ai_generated",
+      "L343: raise",
+      "L408: raise",
+      "L461: raise",
+      "L476: Create requirement document (AI-generated from session notes)",
+      "L517: raise"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\pdf_export_service.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml"
+    ],
+    "matched_lines": [
+      "L5: for AI-generated content, resumes, cover letters, and job descriptions.",
+      "L171: HTML-formatted text for ReportLab",
+      "L173: # Replace markdown bold with HTML",
+      "L176: # Replace markdown italic with HTML",
+      "L199: BytesIO object containing PDF",
+      "L254: BytesIO object containing PDF",
+      "L309: BytesIO object containing PDF",
+      "L327: # Application details",
+      "L328: details = f\"{applicant_name}\"",
+      "L330: details += f\" | {job_title}\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\real_ai_data_service.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "ml"
+    ],
+    "matched_lines": [
+      "L2: Real AI Data Service for IntelliCV Admin Portal",
+      "L3: Connects to actual ai_data_final and live data sources instead of mock data",
+      "L19: class RealAIDataService:",
+      "L20: \"\"\"Service to provide real AI data from actual ai_data_final and live sources\"\"\"",
+      "L24: self.ai_data_final_path = self.base_path / \"ai_data_final\"",
+      "L25: self.ai_data_path = self.base_path / \"ai_data\" if not self.ai_data_final_path.exists() else self.ai_data_final_path",
+      "L30: self.ai_profiles_cache = []",
+      "L38: self.load_real_ai_data()",
+      "L40: def load_real_ai_data(self):",
+      "L41: \"\"\"Load real AI data from ai_data_final directories\"\"\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_parser.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence",
+      "ml",
+      "score"
+    ],
+    "matched_lines": [
+      "L3: IntelliCV Complete Data Parser - Master Historical Data Processing Engine",
+      "L8: - Email attachments and archives (going back to 2011)",
+      "L11: - Web-scraped company intelligence data",
+      "L12: - Enriched AI outputs from previous runs",
+      "L15: data for AI enrichment and provide a complete dataset for analysis.",
+      "L46: and prepares it for AI enrichment in the IntelliCV system.",
+      "L58: self.output_dir = self.base_path / \"ai_data\" / \"complete_parsing_output\"",
+      "L62: self.email_pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')",
+      "L80: \"emails_extracted\": 0,",
+      "L88: \"historical_emails_found\": 0,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L39: raise RuntimeError(\"Resume parsing requires the real parser pipeline\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\resume_universal_parser.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "score"
+    ],
+    "matched_lines": [
+      "L8: Extracts: candidate info, skills, education, experience, certifications, contact info, file metadata, and advanced intelligence features.",
+      "L22: from enrichment.ats_scorer import ATSScorer",
+      "L36: OUTPUT_DIR = PROJECT_ROOT / \"ai_data\" / \"normalized\"",
+      "L59: RESUME_PARSER_AVAILABLE = True",
+      "L60: logger.info(\"[SUCCESS] Resume parser available\")",
+      "L62: RESUME_PARSER_AVAILABLE = False",
+      "L63: logger.warning(f\"[WARNING] Resume parser not available: {e}\")",
+      "L68: \"\"\"Comprehensive universal document parser with advanced intelligence features\"\"\"",
+      "L73: self.email_pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')",
+      "L79: \"failed_parses\": 0,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\salary_parser.py",
+    "matched_terms": [
+      "ml"
+    ],
+    "matched_lines": [
+      "L20: soup = BeautifulSoup(resp.text, 'html.parser')"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\sqlite_manager.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "model",
+      "score",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: SQLite Database Manager for IntelliCV AI Learning System",
+      "L16: SQLITE_AVAILABLE = False",
+      "L22: SQLITE_AVAILABLE = True",
+      "L26: print(\"[ERROR] Built-in sqlite3 not available\")",
+      "L29: if not SQLITE_AVAILABLE:",
+      "L32: SQLITE_AVAILABLE = True",
+      "L39: if not SQLITE_AVAILABLE:",
+      "L40: print(\"[ERROR] SQLite not available\")",
+      "L44: Comprehensive SQLite manager for AI learning system",
+      "L49: self.db_path = db_path or \"ai_data_system/ai_learning/intellicv_ai_learning.db\""
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\system_health_service.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L50: # Check AI data sources",
+      "L51: ai_status = self._check_ai_data_health()",
+      "L52: health_status['components']['ai_data'] = ai_status",
+      "L80: for component, details in health_status['components'].items():",
+      "L81: if 'errors' in details:",
+      "L82: health_status['errors'].extend(details['errors'])",
+      "L83: if 'warnings' in details:",
+      "L84: health_status['warnings'].extend(details['warnings'])",
+      "L85: if 'recommendations' in details:",
+      "L86: health_status['recommendations'].extend(details['recommendations'])"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\test_smart_enrichment.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L2: from enrichment.ats_scorer import ATSScorer",
+      "L18: ENHANCED_SIDEBAR_AVAILABLE = True",
+      "L20: ENHANCED_SIDEBAR_AVAILABLE = False",
+      "L24: if ENHANCED_SIDEBAR_AVAILABLE:",
+      "L34: {'title': 'Software Engineer', 'description': 'Worked on team projects. Demonstrated leadership and communication.', 'start_date': '2020-01-01', 'end_date': '2021-01-01'},",
+      "L43: self.ats = ATSScorer(self.config.get('ats_keywords', []))",
+      "L48: self.assertIn('ats_score', enriched)",
+      "L59: results = ATSScorer.enrich_batch(profiles)",
+      "L63: self.assertIn('ats_score', enriched)",
+      "L97: def test_spacy_model_loading(self):"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\universal_data_ingestor.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L6: into the `ai_data_final` structure.",
+      "L10: - MSG (Emails, CVs attached to emails)",
+      "L39: # Import DataIngestionTracker for deduplication",
+      "L41: ai_data_final_path = Path(__file__).resolve().parents[2] / \"ai_data_final\"",
+      "L42: if str(ai_data_final_path) not in sys.path:",
+      "L43: sys.path.append(str(ai_data_final_path))",
+      "L44: from data_ingestion_tracker import DataIngestionTracker",
+      "L45: TRACKER_AVAILABLE = True",
+      "L48: logger.warning(f\"⚠️ Data Ingestion Tracker not available: {e}\")",
+      "L49: TRACKER_AVAILABLE = False"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\user_data_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L16: except ImportError:  # pragma: no cover - maintain compatibility if path not set",
+      "L166: \"\"\"Count how many data sources are available\"\"\"",
+      "L199: 'total_logins_today': max(0, int(registered_users * 0.3)),  # 30% daily activity",
+      "L200: 'failed_login_attempts': max(0, int(registered_users * 0.05)),  # 5% failed attempts",
+      "L209: 'failed_login_attempts': 0,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\web_intelligence_service.py",
+    "matched_terms": [
+      "ai",
+      "intelligence",
+      "ml",
+      "orchestrator",
+      "score"
+    ],
+    "matched_lines": [
+      "L2: Web Intelligence Service for IntelliCV Admin Portal",
+      "L3: Provides real web-based company research and competitive intelligence",
+      "L16: from shared_backend.services.web_search_orchestrator import two_tier_web_search as _two_tier_web_search  # type: ignore",
+      "L20: class WebIntelligenceService:",
+      "L21: \"\"\"Service to perform real web-based company research and intelligence gathering\"\"\"",
+      "L26: 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'",
+      "L68: response.raise_for_status()",
+      "L71: soup = BeautifulSoup(response.text, 'html.parser')",
+      "L98: 'confidence_score': len(search_results) * 10  # Basic confidence scoring",
+      "L108: triggered_from=\"admin_portal.services.web_intelligence_service.search_company_basic\","
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\zendesk_ai_agent.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "ml",
+      "model"
+    ],
+    "matched_lines": [
+      "L2: CareerTrojan — Zendesk AI Agent Worker",
+      "L4: Polls the AI job queue for pending Zendesk jobs and runs LLM-powered",
+      "L9: python -m services.backend_api.services.zendesk_ai_agent",
+      "L29: from services.backend_api.services.ai_queue_service import (",
+      "L30: claim_next,",
+      "L33: fail_job,",
+      "L47: logger = logging.getLogger(\"zendesk_ai_agent\")",
+      "L55: \"\"\"Return 'openai' or 'anthropic' based on env config.\"\"\"",
+      "L60: model = os.getenv(\"LLM_DEFAULT_MODEL\", \"gpt-4o\")",
+      "L61: if \"claude\" in model.lower() or \"anthropic\" in model.lower():"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\zendesk_bridge_service.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L16: subdomain = (os.getenv(\"ZENDESK_SUBDOMAIN\") or \"\").strip()",
+      "L17: if subdomain:",
+      "L18: return f\"https://{subdomain}.zendesk.com\"",
+      "L20: raise RuntimeError(\"Zendesk is not configured: set ZENDESK_BASE_URL or ZENDESK_SUBDOMAIN\")",
+      "L24: email = (os.getenv(\"ZENDESK_EMAIL\") or \"\").strip()",
+      "L27: if not email or not api_token:",
+      "L28: raise RuntimeError(\"Zendesk auth missing: set ZENDESK_EMAIL and ZENDESK_API_TOKEN\")",
+      "L30: return f\"{email}/token\", api_token",
+      "L46: \"tokens_remaining\",",
+      "L60: \"name\": str(payload.get(\"requester_name\") or payload.get(\"requester_email\") or \"CareerTrojan User\"),"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_chat_integration.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml",
+      "orchestrator",
+      "score",
+      "similarity"
+    ],
+    "matched_lines": [
+      "L2: AI Job Title Chat Integration Service",
+      "L5: Provides AI-powered chat functionality for job title descriptions, meanings,",
+      "L6: and career insights. Integrates with various AI services and maintains a",
+      "L9: Author: IntelliCV-AI Team",
+      "L22: from shared_backend.services.web_search_orchestrator import two_tier_web_search  # type: ignore",
+      "L32: # Try to import AI services (can be expanded with OpenAI, Anthropic, etc.)",
+      "L34: import openai",
+      "L35: OPENAI_AVAILABLE = True",
+      "L37: OPENAI_AVAILABLE = False",
+      "L39: class AIJobTitleChat:"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_chat_service.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L2: ai_chat_service.py",
+      "L4: Unified AI Chat Service for Perplexity and Gemini APIs",
+      "L7: using external AI services (Perplexity for web search, Gemini for analysis).",
+      "L9: Priority order: Perplexity → Gemini → Unavailable",
+      "L25: class AIChatService:",
+      "L26: \"\"\"Unified interface for Perplexity and Gemini AI chat services\"\"\"",
+      "L29: \"\"\"Initialize AI chat service with API keys\"\"\"",
+      "L32: self.perplexity_base_url = \"https://api.perplexity.ai/chat/completions\"",
+      "L36: self.gemini_base_url = \"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent\"",
+      "L38: # Service availability"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_data_manager.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml",
+      "model",
+      "score",
+      "training"
+    ],
+    "matched_lines": [
+      "L3: IntelliCV AI Data Manager - Modular Data Directory System",
+      "L6: Creates and manages intelligent data directory structure for AI processing:",
+      "L8: 📁 ai_data_main/           # Cleaned, processed data ready for production use",
+      "L10: ├── high_confidence/     # AI confidence > 90% (auto-approved)",
+      "L14: 📁 ai_data_pending/        # Data requiring AI interrogation and validation",
+      "L16: ├── low_confidence/      # AI confidence < 70% (manual review required)",
+      "L20: 📁 ai_learning/           # Learning system data and configuration",
+      "L24: └── training_data/      # Training datasets for AI models",
+      "L27: and intelligent processing pipelines for production AI systems.",
+      "L29: Author: IntelliCV AI Integration Team"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_feedback_loop.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml",
+      "model",
+      "orchestrator",
+      "score"
+    ],
+    "matched_lines": [
+      "L3: IntelliCV AI Feedback Loop System - Intelligent Research & Learning",
+      "L12: - Detect patterns in failed parsing attempts",
+      "L18: - Wikipedia and domain-specific knowledge extraction",
+      "L20: 💬 CHAT AI RESEARCH:",
+      "L21: - OpenAI/Claude queries for term definitions",
+      "L23: - Confidence scoring for AI responses",
+      "L29: - Retrain models with verified data",
+      "L34: - Scheduled research runs (daily/weekly)",
+      "L38: Author: IntelliCV AI Integration Team",
+      "L40: Environment: IntelliCV\\env310 with web scraping and AI integration"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_learning_tracker.py",
+    "matched_terms": [
+      "ai",
+      "score"
+    ],
+    "matched_lines": [
+      "L2: AI Learning Pattern Tracker",
+      "L3: Provides visibility into AI learning progress for admin dashboard",
+      "L13: class AILearningPatternTracker:",
+      "L15: Track and display AI learning patterns for admin visibility",
+      "L16: Shows concrete evidence of AI improvement over time",
+      "L20: self.db_path = Path(__file__).parent.parent / \"admin_portal\" / \"db\" / \"ai_learning_history.db\"",
+      "L52: failed INTEGER,",
+      "L60: # Confidence score history",
+      "L93: Track when AI encounters unknown pattern",
+      "L98: confidence: Initial confidence score (usually low for unknowns)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_model_loader.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "model",
+      "predict",
+      "trained",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: Centralized AI Model Loader",
+      "L5: Loads all trained models at startup and provides global access.",
+      "L14: class AIModelLoader:",
+      "L15: \"\"\"Central model loading and caching\"\"\"",
+      "L18: self.models_dir = Path(__file__).parent.parent / \"models\"",
+      "L19: self.models = {}",
+      "L22: def load_all_models(self):",
+      "L23: \"\"\"Load all available trained models\"\"\"",
+      "L25: return self.models",
+      "L27: logger.info(\"Loading AI models...\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\ai_router.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "engine",
+      "intelligence",
+      "trained"
+    ],
+    "matched_lines": [
+      "L3: AI Router - Intelligent Workload Distribution",
+      "L5: Routes AI workloads to the most appropriate engine based on:",
+      "L6: - Task type (parsing, chat, market intelligence)",
+      "L18: class AIRouter:",
+      "L19: \"\"\"Intelligently routes AI workloads to appropriate engines\"\"\"",
+      "L22: # Initialize available engines",
+      "L23: self.engines_available = self._detect_engines()",
+      "L25: def _detect_engines(self) -> Dict[str, bool]:",
+      "L26: \"\"\"Detect which AI engines are available\"\"\"",
+      "L27: engines = {}"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\statistical_analysis_engine.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "clustering",
+      "engine",
+      "ml",
+      "regression"
+    ],
+    "matched_lines": [
+      "L2: Statistical Analysis Engine",
+      "L9: 2. Regression Analysis",
+      "L17: 10. Bayesian Analysis (Naive)",
+      "L31: class StatisticalAnalysisEngine:",
+      "L49: # 2. Regression Analysis (Simple Linear)",
+      "L50: def linear_regression(self, x: List[float], y: List[float]) -> Dict[str, float]:",
+      "L89: # Welch-Satterthwaite equation for degrees of freedom",
+      "L140: # 8. Clustering (K-Means Simplified)",
+      "L145: # Initialize centroids randomly",
+      "L176: # 10. Bayesian Analysis (Naive likelihood)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\ai\\unified_ai_engine.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "clustering",
+      "embedding",
+      "engine",
+      "inference",
+      "intelligence",
+      "ml",
+      "model",
+      "predict",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L3: IntelliCV Unified AI Engine - Production Ready Intelligence System",
+      "L6: Combines ALL AI techniques into a single, cohesive engine:",
+      "L7: - Bayesian Inference Engine for pattern recognition and probability analysis",
+      "L8: - Advanced NLP Engine for semantic understanding and context analysis",
+      "L9: - LLM Integration Engine for content enhancement and generation",
+      "L10: - Fuzzy Logic Engine for handling uncertain and ambiguous data",
+      "L11: - AI Learning Table with configurable thresholds",
+      "L14: This engine replaces the scattered AI functionality across pages 08 and 09,",
+      "L15: providing a unified, production-ready AI system for the parser page 06.",
+      "L17: Author: IntelliCV AI Integration Team"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\analytics\\session_logging.py",
+    "matched_terms": [
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L4: - Exposes hooks for UI and enrichment orchestrator"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\analytics\\user_analytics.py",
+    "matched_terms": [
+      "ai",
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L3: Generate tuning recommendations based on enriched keywords and analytics from the orchestrator.",
+      "L5: enrichment_output: Dict from Hybrid AI Harness",
+      "L11: high_value = {'cloud', 'leadership', 'innovation', 'sustainability', 'strategy', 'ai', 'python', 'data', 'analytics'}",
+      "L19: - Exposes hooks for UI and enrichment orchestrator"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\blocker\\detector.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml",
+      "model",
+      "ranking",
+      "score"
+    ],
+    "matched_lines": [
+      "L7: Author: IntelliCV AI System",
+      "L22: - Job matching engine",
+      "L35: # MAIN DETECTION METHOD",
+      "L66: # Rank and score",
+      "L114: 'criticality_score': patterns['default_criticality'],",
+      "L163: 'criticality_score': criticality,",
+      "L184: 'criticality_score': 7.0,",
+      "L229: 'criticality_score': 7.0 if is_required else 4.5,",
+      "L277: 'criticality_score': 6.0 if is_required else 3.0,",
+      "L293: # RANKING & SCORING"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\blocker\\service.py",
+    "matched_terms": [
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L4: from services.backend_api.db.models import ApplicationBlocker, BlockerImprovementPlan",
+      "L25: ).order_by(ApplicationBlocker.criticality_score.desc()).all()"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\career_coach.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "engine",
+      "model",
+      "orchestrator",
+      "predict",
+      "regression",
+      "score",
+      "similarity"
+    ],
+    "matched_lines": [
+      "L1: \"\"\"Career Coach Service – Hybrid AI Orchestrator",
+      "L3: This module provides a *backend* career coaching engine that plugs",
+      "L4: directly into the existing hybrid AI stack in `admin_portal.ai`.",
+      "L29: from admin_portal.config import AIConfig",
+      "L30: from admin_portal.ai.nlp_engine import NLPEngine",
+      "L31: from admin_portal.ai.embeddings_engine import EmbeddingEngine",
+      "L32: from admin_portal.ai.bayesian_engine import BayesianJobClassifier",
+      "L33: from admin_portal.ai.regression_models import MatchScoreRegressor",
+      "L34: from admin_portal.ai.neural_matcher import NeuralMatchModelWrapper",
+      "L35: from admin_portal.ai.expert_rules import ExpertRuleEngine"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\interview_coach_service.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "predict",
+      "score"
+    ],
+    "matched_lines": [
+      "L16: \"marketing\", \"brand\", \"campaign\", \"cac\", \"seo\", \"sem\", \"content\", \"attribution\", \"channel\",",
+      "L22: \"software\", \"developer\", \"engineering manager\", \"code\", \"api\", \"backend\", \"frontend\", \"microservice\", \"deployment\", \"pr\",",
+      "L30: \"engineering\": [",
+      "L44: \"How does customer feedback move from insights into campaign decisions here?\",",
+      "L50: \"How do you balance deployment speed against security/compliance requirements?\",",
+      "L54: \"How does the team protect deep work time for engineers?\",",
+      "L56: \"Tell me about a failed engineering experiment and what leadership learned from it.\",",
+      "L70: \"engineering\": [",
+      "L74: \"How has supply-chain volatility changed vendor and material strategy?\",",
+      "L78: \"How do you convert company strategy into daily team priorities people can execute?\","
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\career\\quadrants_overlay.py",
+    "matched_terms": [
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L4: - Exposes hooks for UI and enrichment orchestrator"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_ai\\data_quality.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L6: \"\"\"Flag and correct data issues using AI.\"\"\"",
+      "L7: # Implementation will use ML/heuristics"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_ai\\feedback_learning.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: Feedback & Continuous Learning Module: Captures feedback and improves models.",
+      "L6: \"\"\"Ingest feedback and update models or data.\"\"\"",
+      "L7: # Implementation will use feedback loops, retraining"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_ai\\json_schema.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L6: \"\"\"Validate against schema and auto-populate missing fields.\"\"\"",
+      "L7: # Implementation will use jsonschema, AI for population"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_ai\\nlp_extraction.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L2: AI/NLP Extraction Module: Extracts companies, roles, products, locations, and relationships using spaCy.",
+      "L7: # Load spaCy model (en_core_web_sm for demo; use en_core_web_trf for production)",
+      "L26: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_ai\\semantic_enrichment.py",
+    "matched_terms": [
+      "ai",
+      "embedding",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: Semantic Enrichment Module: Generates embeddings for company data.",
+      "L5: def generate_embeddings(company_data: dict) -> dict:",
+      "L6: \"\"\"Generate semantic vectors for company descriptions.\"\"\"",
+      "L7: # Implementation will use OpenAI/HuggingFace"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_ai\\sentiment_analysis.py",
+    "matched_terms": [
+      "model"
+    ],
+    "matched_lines": [
+      "L7: # Implementation will use NLP sentiment models/APIs"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_ai\\__init__.py",
+    "matched_terms": [
+      "ai",
+      "embedding",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L2: IntelliCV-AI Company Intelligence Package",
+      "L4: This package provides modular, production-grade company intelligence and enrichment tools for the IntelliCV platform.",
+      "L7: - nlp_extraction: AI/NLP entity extraction (spaCy)",
+      "L8: - semantic_enrichment: Embedding generation",
+      "L16: Main API:",
+      "L17: - CompanyIntel: Robust, safe, and scalable company enrichment (see market_intelligence.py)",
+      "L23: # Optionally, expose CompanyIntel if placed here or importable from market_intelligence.py",
+      "L24: # from .company_intelligence import CompanyIntel"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence\\config.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L2: Configuration for Company Intelligence Parser",
+      "L11: AI_DATA_DIR = Path(os.getenv('AI_DATA_DIR', PROJECT_ROOT / 'ai_data'))",
+      "L12: COMPANY_DB = AI_DATA_DIR / 'companies' / 'company_intelligence_database.json'",
+      "L13: LOGOS_DIR = AI_DATA_DIR / 'companies' / 'logos'",
+      "L14: LOGS_DIR = AI_DATA_DIR / 'companies' / 'logs'"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence\\enrich.py",
+    "matched_terms": [
+      "ai",
+      "embedding",
+      "engine",
+      "intelligence",
+      "ml"
+    ],
+    "matched_lines": [
+      "L9: from tenacity import retry, wait_exponential, stop_after_attempt",
+      "L12: from ..company_ai.semantic_enrichment import generate_embeddings",
+      "L13: from ..company_ai.api_integration import expose_api_endpoints",
+      "L17: @retry(wait=wait_exponential(multiplier=1, min=4, max=60), stop=stop_after_attempt(5))",
+      "L31: Returns a dictionary with company intelligence fields.",
+      "L42: logger.warning(f\"[CACHE] Date parse failed for {company_name}: {e}\")",
+      "L48: logger.warning(f\"[WARN] Google search failed for {company_name}\")",
+      "L50: soup = BeautifulSoup(response.content, 'html.parser')",
+      "L62: embeddings = generate_embeddings(company_data)",
+      "L63: company_data['embeddings'] = embeddings"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\company_intelligence\\main.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L2: Main runner for Company Intelligence Parser (modular, robust, scalable)",
+      "L36: logger.info(\"[DONE] Company intelligence parsing complete.\")",
+      "L38: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ai_enrichment_orchestrator.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "clustering",
+      "embedding",
+      "engine",
+      "inference",
+      "ml",
+      "model",
+      "orchestrator",
+      "predict",
+      "regression",
+      "score",
+      "similarity",
+      "trained",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: AI Enrichment Orchestrator V3.0 - COMPREHENSIVE 100% MODEL COVERAGE",
+      "L4: Loads ALL AI/ML model types:",
+      "L5: ✓ 15 Statistical Methods (T-Tests, Chi-Square, ANOVA, Correlation, Regression, PCA, Factor Analysis, K-Means, DBSCAN, Hierarchical, Time Series, Survival, Bayesian)",
+      "L7: ✓ Bayesian Inference (Naive Bayes, Bayesian Networks, Hierarchical, MCMC)",
+      "L8: ✓ Expert Systems (Rule engines, Forward/Backward chaining, Knowledge graphs, CBR)",
+      "L9: ✓ NLP & LLM (Tokenization, NER, POS, Sentiment, Text Classification, Word2Vec, BERT, GPT, Topic Modeling)",
+      "L13: NO MOCK DATA - ALL predictions from real trained models",
+      "L28: from services.backend_api.services.enrichment.job_title_similarity import enrich_job_titles_with_similarity_and_migration",
+      "L32: class AIEnrichmentOrchestrator:",
+      "L34: V3.0: COMPREHENSIVE orchestrator with 100% model coverage."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\ats_scorer.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L17: # --- spaCy and rapidfuzz model loading at module level ---",
+      "L25: NLP_MODEL = None",
+      "L28: NLP_MODEL = spacy.load('en_core_web_sm')",
+      "L30: logging.warning(f\"spaCy model load failed: {e}\")",
+      "L31: NLP_MODEL = None",
+      "L35: class ATSScorer:",
+      "L37: Main enrichment and ATS scoring engine for user profiles.",
+      "L57: def contextual_score(self, profile: Dict[str, Any], job_target: Optional[str]) -> float:",
+      "L59: Compute a contextual ATS score for a user profile given a job target string.",
+      "L64: ATS score as a float between 0.0 and 1.0."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\config.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L13: logging.warning(f\"Failed to load enrichment config: {e}\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\education_enricher.py",
+    "matched_terms": [
+      "clustering",
+      "ranking"
+    ],
+    "matched_lines": [
+      "L3: - Analyzes education history for advanced insights (e.g., degree prestige, typical graduation age, field clustering)",
+      "L9: # Placeholder: implement enrichment logic (e.g., degree ranking, field mapping)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\experience_analyzer.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L30: logging.warning(f\"[ExperienceAnalyzer] Failed to parse dates for experience entry: {exp}. Error: {e}\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\job_description_enricher.py",
+    "matched_terms": [
+      "clustering",
+      "similarity"
+    ],
+    "matched_lines": [
+      "L3: - Enriches job descriptions with analytics (e.g., skill extraction, title linkage, requirements clustering)",
+      "L9: # Placeholder: implement enrichment logic (e.g., skill extraction, title similarity, requirements analysis)"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\job_title_similarity.py",
+    "matched_terms": [
+      "similarity"
+    ],
+    "matched_lines": [
+      "L2: Job Title Similarity and Migration Module",
+      "L3: - Computes similarity between job titles (fuzzy, semantic, and industry-aware)",
+      "L20: def job_title_similarity(title1: str, title2: str) -> float:",
+      "L22: Compute fuzzy similarity between two job titles.",
+      "L38: def enrich_job_titles_with_similarity_and_migration(job_titles: List[str], all_keywords: List[str]) -> Dict[str, any]:",
+      "L40: Enrich job titles with similarity matrix and detected industry migrations.",
+      "L42: similarity_matrix = {",
+      "L43: (t1, t2): job_title_similarity(t1, t2)",
+      "L49: \"similarity_matrix\": similarity_matrix,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\keyword_enricher.py",
+    "matched_terms": [
+      "bayes",
+      "bayesian",
+      "score",
+      "similarity"
+    ],
+    "matched_lines": [
+      "L3: - Integrates keyword extraction, similarity, and thesaurus building into the enrichment pipeline",
+      "L4: - Ready for LLM/NLP/Bayesian hybrid enrichment",
+      "L11: from services.backend_api.services.enrichment.job_title_similarity import detect_industry_migrations, job_title_similarity",
+      "L94: def score_pmi(",
+      "L99: Compute a simple PMI score for a given bigram using a corpus.",
+      "L141: Advanced keyword enrichment: keywords, acronyms, pseudo-acronyms, near-phrases, industry migrations, and job title similarity.",
+      "L154: # Job title similarity (if job_titles provided)",
+      "L155: similarity = {}",
+      "L158: similarity[jt] = {other: job_title_similarity(jt, other) for other in job_titles if other != jt}",
+      "L172: \"job_title_similarity\": similarity,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\quadrants_overlay.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L3: To be implemented as part of the hybrid AI enrichment harness plan."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\recruiter_simulator.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L3: To be implemented as part of the hybrid AI enrichment harness plan."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\session_logging.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L3: To be implemented as part of the hybrid AI enrichment harness plan."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\user_growth_benchmark.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L3: To be implemented as part of the hybrid AI enrichment harness plan.",
+      "L10: Analyze user growth, benchmark against peers, and provide progress metrics."
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\enrichment\\user_profile.py",
+    "matched_terms": [
+      "score"
+    ],
+    "matched_lines": [
+      "L21: ats_score: Optional[float] = field(default=None)",
+      "L54: \"ats_score\": self.ats_score,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\feedback\\feedback_logger.py",
+    "matched_terms": [
+      "ai",
+      "clustering",
+      "model",
+      "predict",
+      "score",
+      "similarity",
+      "training"
+    ],
+    "matched_lines": [
+      "L3: Logs user feedback for model retraining and improvement.",
+      "L6: Location: ai_data_final/feedback.jsonl",
+      "L30: Logs user feedback for model improvement and retraining.",
+      "L34: - ats_score: ATS score accuracy feedback",
+      "L36: - job_title_similarity: Job title similarity accuracy",
+      "L37: - clustering: Clustering assignment feedback",
+      "L46: If None, uses ai_data_final/feedback.jsonl",
+      "L49: # Auto-detect ai_data_final directory",
+      "L52: data_path = current / \"ai_data_final\"",
+      "L59: feedback_path = Path(\"ai_data_final/feedback.jsonl\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\model\\model_config.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L2: Model Config Module",
+      "L3: - Provides model registry, config toggles, and admin controls",
+      "L4: - Exposes hooks for orchestrator and admin UI",
+      "L6: def get_model_config():",
+      "L7: # Placeholder: implement model config logic",
+      "L8: return {\"models\": [], \"toggles\": {}}",
+      "L10: # TODO: Integrate with hybrid AI harness and admin dashboard"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\qa\\cleaner_validator.py",
+    "matched_terms": [
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L4: - Exposes hooks for orchestrator, UI, and admin"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\qa\\feedback_approval.py",
+    "matched_terms": [
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L4: - Exposes hooks for orchestrator, UI, and admin",
+      "L14: # TODO: Integrate with orchestrator, reporting, and admin UI"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\qa\\glossary.py",
+    "matched_terms": [
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L4: - Exposes hooks for orchestrator, UI, and admin"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\qa\\summary_reporting.py",
+    "matched_terms": [
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L4: - Exposes hooks for orchestrator, UI, and admin"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\services\\recruiter\\recruiter_simulator.py",
+    "matched_terms": [
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L4: - Exposes hooks for UI and enrichment orchestrator"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\utils\\file_parser.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L57: Convert an uploaded file (bytes) to plain text.",
+      "L62: file_bytes = await uploaded_file.read()",
+      "L69: # Plain text-like formats",
+      "L86: if suffix in {'.html', '.htm'}:",
+      "L87: html = file_bytes.decode('utf-8', errors='ignore')",
+      "L90: return BeautifulSoup(html, \"html.parser\").get_text(\"\\n\").strip()",
+      "L94: text = re.sub(r'<[^>]+>', ' ', html)",
+      "L105: raise ValueError(f\"Unable to read ZIP archive: {e}\")",
+      "L122: # In a real recursor we would call extract_text_from_upload again,",
+      "L140: raise RuntimeError(\"PyPDF2 not installed\")"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\utils\\mentor_application_snapshot.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L43: ai_chat_history: Optional[List[Dict[str, Any]]] = None,",
+      "L66: chat_history = ai_chat_history or []",
+      "L74: 'email': step1.get('email'),",
+      "L91: 'availability': (",
+      "L96: 'ai_recommendations': step2.get('ai_recommendations', []) or []",
+      "L99: 'ai_chat_history': chat_history,"
+    ]
+  },
+  {
+    "file": "services\\backend_api\\utils\\security.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L19: AUTH0_DOMAIN = os.getenv(\"AUTH0_DOMAIN\", \"\").strip()",
+      "L21: AUTH0_ISSUER = os.getenv(\"AUTH0_ISSUER\", \"\").strip() or (f\"https://{AUTH0_DOMAIN}/\" if AUTH0_DOMAIN else \"\")",
+      "L22: AUTH0_JWKS_URL = os.getenv(\"AUTH0_JWKS_URL\", \"\").strip() or (f\"https://{AUTH0_DOMAIN}/.well-known/jwks.json\" if AUTH0_DOMAIN else \"\")",
+      "L37: def verify_password(plain_password: str, hashed_password: str) -> bool:",
+      "L38: return pwd_context.verify(plain_password, hashed_password)",
+      "L54: raise TokenValidationError(\"AUTH0_JWKS_URL is not configured\")",
+      "L68: raise TokenValidationError(f\"Failed to fetch Auth0 JWKS: {exc}\")",
+      "L79: raise TokenValidationError(\"AUTH0_ISSUER is not configured\")",
+      "L84: raise TokenValidationError(f\"Invalid token header: {exc}\")",
+      "L88: raise TokenValidationError(\"Missing key id (kid) in token header\")"
+    ]
+  },
+  {
+    "file": "services\\shared\\config.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L11: CAREERTROJAN_DATA_ROOT – AI data directory",
+      "L29: _env_ai_data = os.getenv(\"CAREERTROJAN_AI_DATA\")",
+      "L31: if _env_ai_data:",
+      "L32: AI_DATA_DIR = Path(_env_ai_data)",
+      "L34: AI_DATA_DIR = Path(_env_data_root) / \"ai_data_final\"",
+      "L36: AI_DATA_DIR = Path(INTELLICV_ROOT / \"data\" / \"ai_data_final\")",
+      "L40: AI_DATA_ROOT = AI_DATA_DIR",
+      "L53: # AI DATA FINAL STRUCTURE",
+      "L56: AI_DATA_SUBDIRS = {",
+      "L57: \"analysis_reports\": AI_DATA_DIR / \"analysis_reports\","
+    ]
+  },
+  {
+    "file": "services\\shared\\paths.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "trained"
+    ],
+    "matched_lines": [
+      "L5: points to the data-root folder (containing `ai_data_final/`) or directly to",
+      "L6: the `ai_data_final/` directory itself.",
+      "L33: def _looks_like_ai_data_final(path: Path) -> bool:",
+      "L34: if path.name.casefold() == \"ai_data_final\":",
+      "L42: if expanded.name.casefold() == \"ai_data_final\":",
+      "L54: Path(r\"L:\\VS ai_data final - version\"),",
+      "L55: Path(r\"L:\\antigravity_version_ai_data_final\"),",
+      "L60: Path(\"/mnt/ai-data\"),",
+      "L63: project_root / \"data-mounts\" / \"ai-data\",",
+      "L77: if candidate.name.casefold() == \"ai_data_final\":"
+    ]
+  },
+  {
+    "file": "services\\shared\\security_policy.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L22: raise SecurityPolicyViolation(\"SECURITY_ALERT: Admin access attempted without 2FA Token.\")",
+      "L24: # STUB: In production, verify against TOTP provider (e.g. Google Authenticator / Authy)",
+      "L27: raise SecurityPolicyViolation(\"SECURITY_ALERT: Invalid 2FA Token provided.\")",
+      "L51: print(f\"[CRITICAL] Failed to set Read-Only on log: {e}\")"
+    ]
+  },
+  {
+    "file": "services\\shared\\training_data_loader.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: Shared training data loader for all model trainers.",
+      "L7: - Extracts text, skills, education, experience, email, and phone",
+      "L8: - Provides helpers for feature vectors and text corpora",
+      "L24: logger = logging.getLogger(\"training_data_loader\")",
+      "L27: EMAIL_RE = re.compile(r\"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\")",
+      "L44: class TrainingRecord:",
+      "L45: \"\"\"Canonical schema for training samples.\"\"\"",
+      "L54: email: str",
+      "L66: self.email,",
+      "L71: class TrainingDataLoader:"
+    ]
+  },
+  {
+    "file": "services\\shared\\auth\\security.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L5: def verify_password(plain_password, hashed_password):",
+      "L6: return pwd_context.verify(plain_password, hashed_password)"
+    ]
+  },
+  {
+    "file": "services\\shared\\config\\config.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L20: AI_DATA_PATH: Optional[str] = None",
+      "L24: ENABLE_AI_ENRICHMENT: bool = True"
+    ]
+  },
+  {
+    "file": "services\\shared\\portal-bridge\\main.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L20: raise HTTPException(status_code=401, detail=\"Invalid credentials\")"
+    ]
+  },
+  {
+    "file": "services\\shared\\registry\\registry.py",
+    "matched_terms": [
+      "ml"
+    ],
+    "matched_lines": [
+      "L1: import yaml",
+      "L21: \"\"\"Loads the registry from yaml files.\"\"\"",
+      "L23: default_path = os.path.join(os.path.dirname(__file__), 'defaults.yaml')",
+      "L26: self._config = yaml.safe_load(f) or {}"
+    ]
+  },
+  {
+    "file": "services\\shared\\registry\\test_registry.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L26: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\shared\\types\\models.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L1: from pydantic import BaseModel",
+      "L3: class User(BaseModel):",
+      "L5: email: str"
+    ]
+  },
+  {
+    "file": "services\\shared_backend\\main.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L49: raise HTTPException(status_code=500, detail=\"Data Root not mounted\")",
+      "L65: raise HTTPException(status_code=501, detail=\"User listing is not configured\")",
+      "L67: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai_orchestrator_enrichment.py",
+    "matched_terms": [
+      "ai",
+      "model",
+      "orchestrator",
+      "score",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: CareerTrojan — AI Orchestrator Enrichment Worker",
+      "L5: into ai_data_final to continuously improve the AI knowledge base.",
+      "L9: - Match accepted/rejected → update job_matching/ training data",
+      "L36: AI_DATA_ROOT = _paths.ai_data_final",
+      "L43: format=\"%(asctime)s [AI-ORCH] %(levelname)s %(message)s\",",
+      "L46: logging.FileHandler(LOG_DIR / \"ai_orchestrator.log\", encoding=\"utf-8\"),",
+      "L49: logger = logging.getLogger(\"ai_orchestrator\")",
+      "L51: # ── Enrichment Targets in ai_data_final ──────────────────────",
+      "L53: \"upload\":      AI_DATA_ROOT / \"parsed_resumes\",",
+      "L54: \"search\":      AI_DATA_ROOT / \"job_matching\","
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\processor.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L17: self.data_root = os.getenv(\"CAREERTROJAN_DATA_ROOT\", \"/data/ai_data_final\")",
+      "L19: self.output_dir = Path(self.data_root) / \"ai_data_final\"",
+      "L54: \"\"\"Parse a resume file into ai_data_final JSON.\"\"\"",
+      "L61: logger.error(f\"Parsing failed for {filename}: {exc}\")"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\worker.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L6: logger = logging.getLogger(\"ai-worker\")",
+      "L9: logger.info(\"Starting AI Worker...\")",
+      "L14: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\run_full_ingest.py",
+    "matched_terms": [
+      "ai",
+      "orchestrator"
+    ],
+    "matched_lines": [
+      "L6: 1. Consolidate all ai_data_final directories into a single canonical root.",
+      "L7: 2. Execute the admin_portal Complete Data Parser against automated_parser assets.",
+      "L8: 3. Bulk-ingest the parser outputs into ai_data_final using the automatic ingestion service.",
+      "L45: AutomaticDataIngestionService,",
+      "L49: get_ai_data_root,",
+      "L54: class AutomatedParserOrchestrator:",
+      "L59: self.ai_root = get_ai_data_root(ensure_exists=False)",
+      "L60: self.legacy_ai_dirs = [",
+      "L61: project_root / \"admin_portal\" / \"ai_data_final\",",
+      "L62: project_root / \"SANDBOX\" / \"Full system\" / \"admin_portal\" / \"ai_data_final\","
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\inference\\model_registry.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "inference",
+      "model",
+      "trained"
+    ],
+    "matched_lines": [
+      "L2: Model Registry - Unified Management of Trained AI Models",
+      "L6: - Track all trained model versions, metrics, and metadata",
+      "L7: - Load best/latest models for inference",
+      "L8: - Manage model deployment and versioning",
+      "L9: - Support A/B testing between model versions",
+      "L12: from model_registry import ModelRegistry",
+      "L13: registry = ModelRegistry()",
+      "L14: model = registry.get_model('bayesian_classifier', version='latest')",
+      "L25: class ModelRegistry:",
+      "L26: \"\"\"Central registry for all trained AI models\"\"\""
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\inference\\ollama_connector.py",
+    "matched_terms": [
+      "ai",
+      "embedding",
+      "inference",
+      "model"
+    ],
+    "matched_lines": [
+      "L5: Provides a unified interface to local LLM models via Ollama.",
+      "L8: - Embeddings (nomic-embed-text)",
+      "L9: - Health Checks & Model Pulling",
+      "L12: from services.ai_workers.inference.ollama_connector import OllamaConnector",
+      "L14: response = client.generate(\"Summarize this CV\", model=\"llama3\")",
+      "L37: def list_models(self) -> List[str]:",
+      "L38: \"\"\"List available local models\"\"\"",
+      "L42: models = res.json().get('models', [])",
+      "L43: return [m['name'] for m in models]",
+      "L46: logger.error(f\"Failed to list models: {e}\")"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\inference\\unified_ai_engine.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "engine",
+      "inference",
+      "ml",
+      "model",
+      "predict",
+      "regression",
+      "trained",
+      "unified_ai_engine",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: Unified AI Engine - Coordinated Inference Across All Models",
+      "L7: 1. Classic ML Models (Bayesian, Regression)",
+      "L10: - Execute inference across multiple models",
+      "L11: - Aggregate and reconcile predictions",
+      "L14: from unified_ai_engine import UnifiedAIEngine",
+      "L15: engine = UnifiedAIEngine()",
+      "L16: results = engine.ensemble_infer(\"Senior Python Developer...\")",
+      "L31: from model_registry import ModelRegistry",
+      "L35: from shared.real_ai_connector import RealAIDataConnector",
+      "L39: from real_ai_connector import RealAIDataConnector"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\orchestrator\\ai_training_orchestrator.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "clustering",
+      "embedding",
+      "engine",
+      "ml",
+      "model",
+      "orchestrator",
+      "predict",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: AI Training Orchestrator",
+      "L5: Comprehensive AI model training pipeline that integrates:",
+      "L6: 1. Data ingestion from ai_data_final",
+      "L7: 2. Statistical methods (embeddings, clustering, TF-IDF)",
+      "L8: 3. Model training (job matching, skill extraction, industry classification)",
+      "L10: 5. Model persistence and versioning",
+      "L13: - Sentence Transformers (embeddings)",
+      "L14: - TF-IDF vectorization",
+      "L15: - K-Means clustering",
+      "L16: - DBSCAN clustering"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\parser\\automated_parser_engine.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "ml"
+    ],
+    "matched_lines": [
+      "L2: Automated Parser Engine - Production Ready Data Extraction",
+      "L10: python automated_parser_engine.py",
+      "L14: from automated_parser_engine import AutomatedParserEngine",
+      "L15: parser = AutomatedParserEngine()",
+      "L39: class AutomatedParserEngine:",
+      "L45: def __init__(self, parser_root='automated_parser', output_root='ai_data_final'):",
+      "L56: self.failed_index_file = self.output_root / '_failed_sources.json'",
+      "L60: self.failed_sources = self._load_failed_sources()",
+      "L77: logger.info(f\"Loaded failed index entries: {len(self.failed_sources)}\")",
+      "L111: '.pdf', '.docx', '.doc', '.csv', '.xlsx', '.xls', '.zip', '.msg', '.eml', '.mbox',"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\shared\\real_ai_connector.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence",
+      "ranking"
+    ],
+    "matched_lines": [
+      "L2: Real AI Data Connector for Portal Bridge",
+      "L4: Connects portal_bridge to actual parsed AI data (ai_data_final/)",
+      "L5: Replaces all mock/demo data with real intelligence from 34k+ CVs",
+      "L10: - Real company intelligence",
+      "L24: class RealAIDataConnector:",
+      "L26: Connects to REAL AI data from ai_data_final directory.",
+      "L31: self.base_path = CareerTrojanPaths().ai_data_final",
+      "L103: This contains actual career patterns from 34,112 CVs!",
+      "L110: 'education_patterns': self.pattern_data.get('education_rankings', []),",
+      "L111: 'career_patterns': self.pattern_data.get('career_rankings', []),"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_all_models.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "embedding",
+      "engine",
+      "model",
+      "predict",
+      "regression",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: AI Model Training Pipeline for IntelliCV Platform",
+      "L5: This script trains all AI models on your 328k CV records:",
+      "L6: 1. Bayesian Classifier (sklearn) - Job categorization",
+      "L7: 2. TF-IDF Vectorizer - Text feature extraction",
+      "L8: 3. Sentence-BERT Embeddings - Semantic similarity",
+      "L9: 4. Statistical Models - Salary/experience prediction",
+      "L12: python train_all_models.py",
+      "L15: - admin_portal/models/*.pkl (trained model files)",
+      "L16: - training_report.json (performance metrics)",
+      "L29: from services.shared.training_data_loader import TrainingDataLoader"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_bayesian_models.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "inference",
+      "model",
+      "predict",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: ðŸŽ¯ Bayesian Model Training Module",
+      "L4: Trains all Bayesian inference models:",
+      "L5: - Naive Bayes Classifier (Gaussian, Multinomial, Bernoulli)",
+      "L6: - Bayesian Networks (DAG models)",
+      "L7: - Hierarchical Bayesian Models",
+      "L8: - Markov Chain Monte Carlo (MCMC)",
+      "L9: - Variational Inference",
+      "L22: from services.shared.training_data_loader import TrainingDataLoader",
+      "L31: class BayesianModelTrainer:",
+      "L32: \"\"\"Comprehensive Bayesian model trainer\"\"\""
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_ensemble_methods.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "ml",
+      "model",
+      "predict",
+      "regression",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L2: ðŸŽ² Ensemble Methods Training Module",
+      "L4: Trains all ensemble learning models:",
+      "L8: - Voting Classifiers",
+      "L21: from services.shared.training_data_loader import TrainingDataLoader",
+      "L30: class EnsembleTrainer:",
+      "L31: \"\"\"Comprehensive ensemble methods trainer\"\"\"",
+      "L35: self.data_path = CareerTrojanPaths().ai_data_final",
+      "L36: self.models_path = self.base_path / \"trained_models\" / \"ensemble\"",
+      "L37: self.models_path.mkdir(parents=True, exist_ok=True)",
+      "L38: self.loader = TrainingDataLoader(limit_per_source=5000)"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_expert_systems.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "inference",
+      "model",
+      "similarity",
+      "trained"
+    ],
+    "matched_lines": [
+      "L5: - Rule-based inference engines",
+      "L6: - Forward/Backward chaining",
+      "L34: self.data_path = CareerTrojanPaths().ai_data_final",
+      "L35: self.models_path = self.base_path / \"trained_models\" / \"expert\"",
+      "L36: self.models_path.mkdir(parents=True, exist_ok=True)",
+      "L39: logger.info(f\"Systems will be saved to: {self.models_path}\")",
+      "L41: def build_rule_engine(self):",
+      "L42: \"\"\"Build rule-based inference engine\"\"\"",
+      "L43: logger.info(\"\\nðŸ‘¨â€ðŸ« Building Rule-Based Inference Engine...\")",
+      "L177: \"inference_strategy\": {"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_full_ml_models.py",
+    "matched_terms": [
+      "ai",
+      "clustering",
+      "embedding",
+      "ml",
+      "model",
+      "predict",
+      "regression",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L3: Full ML Models Training Pipeline",
+      "L5: Trains remaining 6 ML models:",
+      "L6: 1. Linear Regression (salary prediction)",
+      "L7: 2. Logistic Regression (placement success)",
+      "L8: 3. Multiple Regression (job match scoring)",
+      "L9: 4. Random Forest Regressor (advanced predictions)",
+      "L11: 6. Hierarchical Clustering (dendrograms)",
+      "L13: Output: trained_models/ + ai_data_final/analytics/",
+      "L38: # ML libraries",
+      "L40: from sklearn.linear_model import LinearRegression, LogisticRegression"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_fuzzy_logic.py",
+    "matched_terms": [
+      "ai",
+      "clustering",
+      "inference",
+      "model",
+      "predict",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L7: - Fuzzy inference systems (Mamdani, Sugeno)",
+      "L8: - Fuzzy clustering (FCM)",
+      "L34: self.data_path = CareerTrojanPaths().ai_data_final",
+      "L35: self.models_path = self.base_path / \"trained_models\" / \"fuzzy\"",
+      "L36: self.models_path.mkdir(parents=True, exist_ok=True)",
+      "L39: logger.info(f\"Systems will be saved to: {self.models_path}\")",
+      "L92: \"match_score\": {",
+      "L135: with open(self.models_path / \"membership_functions.json\", 'w') as f:",
+      "L142: logger.error(f\"âŒ Membership functions failed: {e}\")",
+      "L146: \"\"\"Build Mamdani fuzzy inference system\"\"\""
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_hybrid_career_engine.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "clustering",
+      "embedding",
+      "engine",
+      "inference",
+      "ml",
+      "model",
+      "orchestrator",
+      "predict",
+      "regression",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L3: Hybrid Career Engine Training",
+      "L5: Orchestrates all 8 trained models into unified system:",
+      "L7: 8 Models Integrated:",
+      "L8: 1. Sentence Embeddings (384-dim semantic understanding)",
+      "L9: 2. Job Title Classifier (6 categories, 99.7% accuracy)",
+      "L10: 3. Linear Regression (salary prediction)",
+      "L11: 4. Logistic Regression (placement success)",
+      "L12: 5. Multiple Regression (job match scoring)",
+      "L13: 6. K-Means Clustering (10 clusters)",
+      "L14: 7. DBSCAN Clustering (67 clusters)"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_neural_networks.py",
+    "matched_terms": [
+      "ai",
+      "classifier",
+      "embedding",
+      "model",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: ðŸ§  Neural Network Training Module",
+      "L4: Trains all neural network architectures:",
+      "L22: from services.shared.training_data_loader import TrainingDataLoader",
+      "L32: class NeuralNetworkTrainer:",
+      "L33: \"\"\"Comprehensive neural network trainer\"\"\"",
+      "L37: self.data_path = CareerTrojanPaths().ai_data_final",
+      "L38: self.models_path = self.base_path / \"trained_models\" / \"neural\"",
+      "L39: self.models_path.mkdir(parents=True, exist_ok=True)",
+      "L40: self.loader = TrainingDataLoader(limit_per_source=10000)",
+      "L42: logger.info(f\"Neural Network Trainer initialized\")"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_nlp_llm_models.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "classifier",
+      "embedding",
+      "model",
+      "similarity",
+      "trained",
+      "training",
+      "vector"
+    ],
+    "matched_lines": [
+      "L2: ðŸ”¤ NLP & LLM Training Module",
+      "L4: Trains all NLP and LLM models:",
+      "L10: - Embedding Models (Word2Vec, GloVe, BERT)",
+      "L11: - Transformer models (GPT, T5, BART)",
+      "L12: - Semantic Similarity",
+      "L13: - Topic Modeling (LDA, NMF)",
+      "L26: from services.shared.training_data_loader import TrainingDataLoader",
+      "L35: class NLPLLMTrainer:",
+      "L36: \"\"\"Comprehensive NLP & LLM trainer\"\"\"",
+      "L40: self.data_path = CareerTrojanPaths().ai_data_final"
+    ]
+  },
+  {
+    "file": "services\\workers\\ai\\ai-workers\\training\\train_statistical_methods.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "clustering",
+      "ml",
+      "model",
+      "predict",
+      "regression",
+      "score",
+      "trained",
+      "training"
+    ],
+    "matched_lines": [
+      "L3: Complete Statistical Methods Training Pipeline",
+      "L8: 1. T-Tests, 2. Chi-Square, 3. ANOVA, 15. Bayesian Analysis",
+      "L10: GROUP 2: Regression (4 methods)",
+      "L11: 4. Correlation, 5. Linear Regression, 6. Multiple Regression, 7. Logistic Regression",
+      "L13: GROUP 3: Dimensionality & Clustering (4 methods)",
+      "L14: 8. PCA, 9. Factor Analysis, 10. K-Means, 11. DBSCAN, 12. Hierarchical Clustering",
+      "L19: Output: ai_data_final/analytics/ + statistical reports",
+      "L49: from sklearn.linear_model import LinearRegression, LogisticRegression",
+      "L52: STATS_AVAILABLE = True",
+      "L55: STATS_AVAILABLE = False"
+    ]
+  },
+  {
+    "file": "services\\workers\\enrichment\\main.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L6: DATA_ROOT = os.getenv(\"CAREERTROJAN_DATA_ROOT\", \"/data/ai_data_final\")",
+      "L9: LEARNING_STORES_DIR = os.path.join(WORKING_ROOT, \"ai_json\")",
+      "L50: # This ensures working_copy is updated, NOT ai_data_final directly.",
+      "L52: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\workers\\enrichment\\worker.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L14: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "services\\workers\\parser\\worker.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L14: if __name__ == \"__main__\":"
+    ]
+  },
+  {
+    "file": "shared_backend\\capability_tester.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L26: response = await client.get(url)",
+      "L27: response.raise_for_status()",
+      "L31: logger.error(f\"Google API call failed for query '{query}': {e}\")"
+    ]
+  },
+  {
+    "file": "shared_backend\\event_logger.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L37: logger.error(f\"Failed to log interaction: {e}\")"
+    ]
+  },
+  {
+    "file": "shared_backend\\main.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L10: DATA_ROOT = str(_paths.ai_data_final)",
+      "L22: # 2. Check for ai_data_final mount",
+      "L24: logger.critical(f\"CRITICAL: ai_data_final not found at {DATA_ROOT}. Runtime aborted.\")",
+      "L27: # 3. Check for specific directory markers in ai_data_final to ensure it's not empty/mock"
+    ]
+  },
+  {
+    "file": "shared_backend\\registry_loader.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L2: import yaml",
+      "L5: DATA_ROOT = os.getenv(\"CAREERTROJAN_DATA_ROOT\", \"/data/ai_data_final\")",
+      "L6: REGISTRY_PATH = os.path.join(DATA_ROOT, \"config\", \"registry.yaml\")",
+      "L15: Loads the capability registry from ai_data_final.",
+      "L20: self.config = yaml.safe_load(f)",
+      "L23: logger.error(f\"Failed to load registry: {e}\")"
+    ]
+  },
+  {
+    "file": "shared_backend\\registry\\capability_registry.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L2: import yaml",
+      "L18: cls._instance.config_path = os.path.join(cls._instance.data_root, \"config\", \"registry.yaml\")",
+      "L30: self.config = yaml.safe_load(f) or {}",
+      "L33: logger.error(f\"Failed to load registry yaml: {e}\")"
+    ]
+  },
+  {
+    "file": "tests\\api_probe.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L5: Pass/Fail for each route, grouped by router.",
+      "L28: (\"GET\",  \"/api/admin/v1/email/logs\", \"admin-email-logs\", None),",
+      "L29: (\"GET\",  \"/api/admin/v1/email/analytics\", \"admin-email-analytics\", None),",
+      "L30: (\"GET\",  \"/api/admin/v1/email/status\", \"admin-email-status\", None),",
+      "L38: (\"GET\",  \"/api/admin/v1/email/jobs\", \"admin-email-jobs\", None),",
+      "L42: (\"GET\",  \"/api/admin/v1/ai/enrichment/status\", \"admin-enrichment-status\", None),",
+      "L43: (\"GET\",  \"/api/admin/v1/ai/enrichment/jobs\", \"admin-enrichment-jobs\", None),",
+      "L44: (\"GET\",  \"/api/admin/v1/ai/content/status\", \"admin-content-status\", None),",
+      "L45: (\"GET\",  \"/api/admin/v1/ai/content/jobs\", \"admin-content-jobs\", None),",
+      "L69: # ── ai_data.py ──"
+    ]
+  },
+  {
+    "file": "tests\\api_probe_v2.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L25: (\"GET\",  \"/api/admin/v1/email/logs\", \"admin-email-logs\", None),",
+      "L26: (\"GET\",  \"/api/admin/v1/email/analytics\", \"admin-email-analytics\", None),",
+      "L27: (\"GET\",  \"/api/admin/v1/email/status\", \"admin-email-status\", None),",
+      "L35: (\"GET\",  \"/api/admin/v1/email/jobs\", \"admin-email-jobs\", None),",
+      "L39: (\"GET\",  \"/api/admin/v1/ai/enrichment/status\", \"admin-enrich-status\", None),",
+      "L40: (\"GET\",  \"/api/admin/v1/ai/enrichment/jobs\", \"admin-enrich-jobs\", None),",
+      "L41: (\"GET\",  \"/api/admin/v1/ai/content/status\", \"admin-content-status\", None),",
+      "L42: (\"GET\",  \"/api/admin/v1/ai/content/jobs\", \"admin-content-jobs\", None),",
+      "L66: # ── ai_data (skip heavy ones that scan thousands of files) ──",
+      "L67: (\"GET\",  \"/api/ai-data/v1/status\", \"ai-data-status\", None),"
+    ]
+  },
+  {
+    "file": "tests\\e2e\\test_runtime_smoke.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L50: def test_openapi_contains_critical_runtime_routes(test_client):"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_admin_email_integration_endpoints.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L4: from services.backend_api.main import app",
+      "L29: admin_router._email_dispatch_log.clear()",
+      "L34: admin_router._email_dispatch_log.clear()",
+      "L78: \"/api/admin/v1/email/send_test\",",
+      "L97: \"/api/admin/v1/email/send_bulk\",",
+      "L124: def test_email_logs_and_analytics(client, admin_headers):",
+      "L131: \"/api/admin/v1/email/send_test\",",
+      "L136: \"/api/admin/v1/email/send_bulk\",",
+      "L141: logs = client.get(\"/api/admin/v1/email/logs\", headers=admin_headers)",
+      "L146: analytics = client.get(\"/api/admin/v1/email/analytics\", headers=admin_headers)"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_api_endpoints.py",
+    "matched_terms": [
+      "ai",
+      "intelligence"
+    ],
+    "matched_lines": [
+      "L16: from services.backend_api.main import app",
+      "L59: # May fail if DB not available, but endpoint should respond",
+      "L73: # Should fail validation (422) or return success structure",
+      "L79: \"email\": \"test@example.com\",",
+      "L82: # Will fail login but endpoint should respond",
+      "L138: class TestDataIndexEndpoints:",
+      "L139: \"\"\"Test AI data indexing system endpoints.\"\"\"",
+      "L146: assert \"ai_data\" in data",
+      "L155: def test_ai_data_summary(self):",
+      "L156: \"\"\"GET /api/data-index/v1/ai-data/summary\"\"\""
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_auth_provider_modes.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L17: from services.backend_api.main import app",
+      "L20: client = TestClient(app, raise_server_exceptions=False)",
+      "L51: def _raise(_token):",
+      "L52: raise security.TokenValidationError(\"bad token\")",
+      "L54: monkeypatch.setattr(security, \"decode_access_token\", _raise)"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_contamination_trap.py",
+    "matched_terms": [
+      "ai",
+      "engine"
+    ],
+    "matched_lines": [
+      "L4: Feed a \"Sales Person\" profile to AI classification endpoints.",
+      "L6: FAIL: suggests \"Python Developer\" (hardcoded data leaking into AI).",
+      "L52: \"python developer\", \"software engineer\", \"backend developer\",",
+      "L53: \"data scientist\", \"devops\", \"machine learning engineer\", \"react developer\",",
+      "L60: \"\"\"Verify AIs don't suggest tech roles for a pure sales profile.\"\"\"",
+      "L97: \"\"\"Term cloud from sales-only data must not contain 'python' or 'react'.\"\"\"",
+      "L117: \"\"\"Network graph from a sales profile should contain sales skills, not tech.\"\"\""
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_gdpr_endpoints.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model"
+    ],
+    "matched_lines": [
+      "L2: Integration tests for GDPR endpoints and admin AI-loop endpoints.",
+      "L8: from services.backend_api.main import app",
+      "L9: from services.backend_api.db.connection import engine",
+      "L10: from services.backend_api.db.models import Base",
+      "L15: Base.metadata.create_all(bind=engine)",
+      "L39: def _get_auth_headers(email: str = \"gdpr-test@careertrojan.com\", role: str = \"user\"):",
+      "L41: token = security.create_access_token(data={\"sub\": email, \"role\": role})",
+      "L49: def _ensure_user(db, email=\"gdpr-test@careertrojan.com\", role=\"user\"):",
+      "L51: from services.backend_api.db.models import User",
+      "L52: user = db.query(User).filter(User.email == email).first()"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_http_endpoints.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L17: from services.backend_api.main import app",
+      "L19: client = TestClient(app, raise_server_exceptions=False)"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_observability.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model"
+    ],
+    "matched_lines": [
+      "L7: from services.backend_api.main import app",
+      "L8: from services.backend_api.db.connection import engine",
+      "L9: from services.backend_api.db.models import Base",
+      "L11: Base.metadata.create_all(bind=engine)"
+    ]
+  },
+  {
+    "file": "tests\\integration\\test_portal_bridge.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L9: Service location: services/shared/portal-bridge/main.py",
+      "L21: _bridge_main = os.path.join(",
+      "L23: \"services\", \"shared\", \"portal-bridge\", \"main.py\",",
+      "L25: _bridge_main = os.path.normpath(_bridge_main)",
+      "L26: _spec = importlib.util.spec_from_file_location(\"portal_bridge_main\", _bridge_main)",
+      "L85: assert \"detail\" in data",
+      "L86: assert data[\"detail\"] == \"Invalid credentials\"",
+      "L190: def test_openapi_available(self):",
+      "L215: if __name__ == \"__main__\":",
+      "L216: pytest.main([__file__, \"-v\"])"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_ai_queue.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: Tests for AI Agent Queue Service — CareerTrojan",
+      "L6: - Job enqueue / claim / complete / fail lifecycle",
+      "L9: - Edge cases (empty queue, race on claim)",
+      "L18: from services.backend_api.services.ai_queue_service import (",
+      "L19: claim_next,",
+      "L23: fail_job,",
+      "L81: # ── Claim ────────────────────────────────────────────────────",
+      "L83: class TestClaim:",
+      "L84: def test_claim_moves_to_processing(self, tmp_queue):",
+      "L86: env = claim_next(root=tmp_queue)"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_app_bootstrap.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L24: from services.backend_api.main import app",
+      "L28: from services.backend_api.main import app",
+      "L33: from services.backend_api.main import app",
+      "L45: from services.backend_api.main import app",
+      "L77: # ── Core domain endpoints ────────────────────────────────────────",
+      "L90: from services.backend_api.main import app",
+      "L106: \"\"\"Every /api/... route should contain /v1/ (legacy compat routes excluded).\"\"\"",
+      "L107: from services.backend_api.main import app",
+      "L109: LEGACY_PREFIXES = (\"/api/admin/integrations/\", \"/api/admin/email/\")"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_braintree.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: Tests for Braintree payment integration — CareerTrojan",
+      "L6: - Braintree service configuration checks",
+      "L12: - Graceful degradation when Braintree not configured",
+      "L26: from services.backend_api.main import app",
+      "L31: return TestClient(app, raise_server_exceptions=False)",
+      "L47: # UNIT: braintree_service configuration",
+      "L50: class TestBraintreeServiceConfig:",
+      "L51: \"\"\"Test the braintree_service module configuration logic.\"\"\"",
+      "L57: from services.backend_api.services import braintree_service as bs",
+      "L59: os.environ.pop(\"BRAINTREE_MERCHANT_ID\", None)"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_company_intel_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L9: ai_data = data_root / \"ai_data_final\"",
+      "L10: ai_data.mkdir(parents=True)",
+      "L16: monkeypatch.setenv(\"CAREERTROJAN_AI_DATA\", str(ai_data))",
+      "L22: \"ai_data\": ai_data,"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_covey_builder.py",
+    "matched_terms": [
+      "model",
+      "score"
+    ],
+    "matched_lines": [
+      "L1: from services.backend_api.models.spider_covey import SpiderAxis, SpiderProfile",
+      "L14: score=38,",
+      "L22: score=45,",
+      "L30: score=52,"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_data_index_service.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L2: Unit tests for the AI Data Index Service",
+      "L12: from services.backend_api.services.ai_data_index_service import (",
+      "L13: AIDataIndexService,",
+      "L14: AIDataIndexSummary,",
+      "L148: class TestAIDataIndexService:",
+      "L149: \"\"\"Test the main index service.\"\"\"",
+      "L154: ai_data_final = tmp_path / \"ai_data_final\"",
+      "L157: ai_data_final.mkdir(parents=True)",
+      "L161: profiles_dir = ai_data_final / \"profiles\"",
+      "L180: mock.ai_data_final = ai_data_final"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_gdpr_models.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L2: Unit tests for GDPR models and Tier 2 additions.",
+      "L9: class TestGDPRModels:",
+      "L10: \"\"\"Verify the new GDPR / audit DB models exist with correct columns.\"\"\"",
+      "L13: from services.backend_api.db.models import ConsentRecord",
+      "L23: from services.backend_api.db.models import AuditLog",
+      "L33: from services.backend_api.db.models import DataExportRequest",
+      "L42: def test_interaction_model_fields(self):",
+      "L43: from services.backend_api.db.models import Interaction",
+      "L54: from services.backend_api.db.models import Base",
+      "L72: from services.backend_api.main import app"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_models.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model"
+    ],
+    "matched_lines": [
+      "L2: Unit tests — DB models instantiation (no real DB needed).",
+      "L15: class TestModels:",
+      "L17: def test_user_model_fields(self):",
+      "L18: from services.backend_api.db.models import User",
+      "L19: u = User(email=\"a@b.com\", hashed_password=\"xxx\", full_name=\"Test\")",
+      "L20: assert u.email == \"a@b.com\"",
+      "L25: def test_job_model_fields(self):",
+      "L26: from services.backend_api.db.models import Job",
+      "L27: j = Job(title=\"Engineer\", company=\"ACME\", description=\"Build stuff\")",
+      "L28: assert j.title == \"Engineer\""
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_observability.py",
+    "matched_terms": [
+      "ai",
+      "ml"
+    ],
+    "matched_lines": [
+      "L13: # Should not raise",
+      "L30: # Should not raise",
+      "L33: def test_structlog_imported_in_main(self):",
+      "L34: \"\"\"main.py should use configure_logging, not bare logging.basicConfig.\"\"\"",
+      "L36: from services.backend_api import main",
+      "L37: src = inspect.getsource(main)",
+      "L51: from services.backend_api.main import app",
+      "L61: from services.backend_api.main import app",
+      "L66: from services.backend_api.main import app",
+      "L72: from services.backend_api.main import app"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_paths_resolution.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L16: \"CAREERTROJAN_AI_DATA\",",
+      "L22: \"CAREERTROJAN_MODELS\",",
+      "L25: monkeypatch.delenv(key, raising=False)",
+      "L30: def test_parent_data_root_resolves_ai_data_child(self, tmp_path, monkeypatch):",
+      "L32: ai_data_final = data_root / \"ai_data_final\"",
+      "L33: ai_data_final.mkdir(parents=True)",
+      "L40: assert resolved.ai_data_final == ai_data_final",
+      "L44: def test_ai_data_root_value_is_normalized_to_parent(self, tmp_path, monkeypatch):",
+      "L45: ai_data_final = tmp_path / \"dataset\" / \"ai_data_final\"",
+      "L46: ai_data_final.mkdir(parents=True)"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_profile_coach_routes.py",
+    "matched_terms": [
+      "ai",
+      "engine"
+    ],
+    "matched_lines": [
+      "L3: from services.backend_api.main import app",
+      "L6: client = TestClient(app, raise_server_exceptions=False)",
+      "L45: \"user_message\": \"I improved our bug workflow and mentored a junior engineer.\",",
+      "L121: \"differentiators\": [\"Turned around failing release process\"],",
+      "L127: \"I mentor newer engineers during incidents.\","
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_rewards.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L10: from services.backend_api.db.models import (",
+      "L22: from services.backend_api.main import app",
+      "L23: return TestClient(app, raise_server_exceptions=False)",
+      "L37: user.email = \"test@example.com\"",
+      "L94: for action, details in REWARD_ACTIONS.items():",
+      "L95: assert \"tokens\" in details",
+      "L96: assert details[\"tokens\"] > 0",
+      "L99: for action, details in REWARD_ACTIONS.items():",
+      "L100: assert \"description\" in details",
+      "L101: assert len(details[\"description\"]) > 0"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_security.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L21: plain = \"SuperSecret123!\"",
+      "L22: hashed = get_password_hash(plain)",
+      "L23: assert hashed != plain",
+      "L24: assert verify_password(plain, hashed)",
+      "L26: def test_wrong_password_fails(self):",
+      "L57: with pytest.raises(jose_jwt.ExpiredSignatureError):",
+      "L60: def test_invalid_secret_fails(self):",
+      "L65: with pytest.raises(jose_jwt.JWTError):",
+      "L117: with pytest.raises(security.TokenValidationError):"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_support_bridge.py",
+    "matched_terms": [
+      "ai",
+      "model"
+    ],
+    "matched_lines": [
+      "L8: from services.backend_api.main import app",
+      "L9: return TestClient(app, raise_server_exceptions=False)",
+      "L17: \"requester_email\": \"user@example.com\",",
+      "L52: \"requester_email\": \"billing@example.com\",",
+      "L56: \"tokens_remaining\": 42,",
+      "L74: \"requester_email\": \"feature@example.com\",",
+      "L93: \"requester_email\": \"webhook@example.com\",",
+      "L99: from services.backend_api.db import models",
+      "L102: ticket = db.query(models.SupportTicket).filter(models.SupportTicket.id == ticket_id).first()"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_support_stub.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L8: from services.backend_api.main import app",
+      "L9: return TestClient(app, raise_server_exceptions=False)",
+      "L22: response = client.get('/api/support/v1/widget-config?portal=admin&user_id=tester&user_email=test@example.com')",
+      "L55: providers = {item['provider'] for item in payload['available']}"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_v1_contract_routes.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "vector"
+    ],
+    "matched_lines": [
+      "L3: from services.backend_api.main import app",
+      "L6: client = TestClient(app, raise_server_exceptions=False)",
+      "L50: \"selected_target_role\": \"Engineering Manager\",",
+      "L132: def test_v1_user_vector_current_missing_resume_contract():",
+      "L133: response = client.get(\"/api/v1/user-vector/current\", params={\"user_id\": 909090})"
+    ]
+  },
+  {
+    "file": "tests\\unit\\test_webhooks.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model"
+    ],
+    "matched_lines": [
+      "L6: - Health endpoint availability",
+      "L7: - Braintree webhook signature verification stub",
+      "L28: from services.backend_api.main import app",
+      "L30: return TestClient(app, raise_server_exceptions=False)",
+      "L34: def db_engine():",
+      "L35: \"\"\"In-memory SQLite engine + tables for webhook DB operations.",
+      "L39: from sqlalchemy import create_engine",
+      "L41: from services.backend_api.db.models import Base",
+      "L43: engine = create_engine(",
+      "L48: Base.metadata.create_all(bind=engine)"
+    ]
+  },
+  {
+    "file": "tools\\discover_runtime_wiring.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "clustering",
+      "context_assembler",
+      "embedding",
+      "engine",
+      "feature_registry",
+      "governance",
+      "inference",
+      "intelligence",
+      "ml",
+      "model",
+      "orchestrator",
+      "predict",
+      "ranking",
+      "regression",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "unified_ai_engine",
+      "vector"
+    ],
+    "matched_lines": [
+      "L8: - Trace likely route -> service -> AI/module wiring",
+      "L9: - Detect AI/orchestrator/model signals",
+      "L20: discovery_output/ai_signals.json",
+      "L47: \"htmlcov\",",
+      "L53: AI_KEYWORDS = {",
+      "L54: \"ai\",",
+      "L55: \"model\",",
+      "L56: \"ml\",",
+      "L57: \"bayes\",",
+      "L58: \"bayesian\","
+    ]
+  },
+  {
+    "file": "tools\\enhance_training_data.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "score",
+      "training"
+    ],
+    "matched_lines": [
+      "L3: Enhance Training Data",
+      "L6: by training workflows.",
+      "L9: - ai_data_final/metadata/enhanced_keywords.json",
+      "L10: - ai_data_final/metadata/enriched_knowledge_graph.json",
+      "L11: - ai_data_final/metadata/expanded_case_base.json",
+      "L12: - ai_data_final/metadata/enhance_training_data_report.json",
+      "L56: \"data engineering\",",
+      "L193: \"technology\": [\"engineer\", \"developer\", \"data\", \"cloud\", \"devops\"],",
+      "L194: \"operations\": [\"operations\", \"logistics\", \"supply chain\", \"manager\"],",
+      "L248: def derive_match_score(row: dict) -> float:"
+    ]
+  },
+  {
+    "file": "tools\\e_drive_audit.py",
+    "matched_terms": [
+      "ai",
+      "ml",
+      "model",
+      "trained"
+    ],
+    "matched_lines": [
+      "L13: \"node_modules\", \".git\", \"__pycache__\", \"trained_models\",",
+      "L14: \"ai_data_final\", \"Klayiyo - sdk\", \".venv\", \".venv-j\", \"venv\",",
+      "L15: \"data-mounts\"  # exclude raw data dumps - they have email content with RE:\\\"",
+      "L17: EXTS = {\".py\", \".yaml\", \".yml\", \".env\", \".toml\", \".cfg\", \".ini\", \".json\", \".md\", \".txt\", \".sh\", \".ps1\", \".bat\"}",
+      "L19: # Match actual E:\\ drive paths (E:\\something), not regex fragments or email \"RE:\\\"\""
+    ]
+  },
+  {
+    "file": "tools\\fastapi_introspect_routes.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L6: python tools/fastapi_introspect_routes.py --app-import \"app.main:app\" --out \"./exports\"",
+      "L21: def main():",
+      "L23: ap.add_argument(\"--app-import\", required=True, help=\"e.g. app.main:app\")",
+      "L64: if __name__ == \"__main__\":",
+      "L65: main()"
+    ]
+  },
+  {
+    "file": "tools\\ingest_deep_v3.py",
+    "matched_terms": [
+      "ai",
+      "engine",
+      "model",
+      "trained"
+    ],
+    "matched_lines": [
+      "L5: Phased deep-ingest utility that mines parser + ai_data_final sources and",
+      "L67: EMAIL_RE = re.compile(r\"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\")",
+      "L75: \"email\": \"emails.json\",",
+      "L137: for email in EMAIL_RE.findall(text):",
+      "L138: item = make_entry(email, \"email\", 0.95)",
+      "L169: def mine_data_cloud_solutions(ai_data: Path, limit_files: int = 5000) -> List[Entry]:",
+      "L171: root = ai_data / \"data_cloud_solutions\"",
+      "L192: def mine_enhanced_job_titles_extended(ai_data: Path, limit_rows: int = 200000) -> List[Entry]:",
+      "L195: ai_data / \"enhanced_job_titles_database.json\",",
+      "L196: ai_data / \"job_titles\" / \"enhanced_job_titles_database.json\","
+    ]
+  },
+  {
+    "file": "tools\\join_endpoint_graph.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L27: def main():",
+      "L102: if __name__ == \"__main__\":",
+      "L103: main()"
+    ]
+  },
+  {
+    "file": "tools\\react_api_scan.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L19: def main():",
+      "L64: if __name__ == \"__main__\":",
+      "L65: main()"
+    ]
+  },
+  {
+    "file": "tools\\_test_import.py",
+    "matched_terms": [
+      "ai"
+    ],
+    "matched_lines": [
+      "L3: from services.backend_api.main import app"
+    ]
+  }
+]

@@ -1,0 +1,470 @@
+[
+  {
+    "file": "apps\\admin\\src\\lib\\api.ts",
+    "line_no": 13,
+    "method": "GET",
+    "path": "/admin/system/health",
+    "source": "api",
+    "inferred_component": "",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/health",
+      "/health"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AdminHome.tsx",
+    "line_no": 26,
+    "method": "GET",
+    "path": "/api/admin/v1/dashboard/snapshot",
+    "source": "fetch",
+    "inferred_component": "AdminHome",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/dashboard/snapshot"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AdminLogin.tsx",
+    "line_no": 20,
+    "method": "GET",
+    "path": "/api/auth/v1/login",
+    "source": "fetch",
+    "inferred_component": "AdminLogin",
+    "portal": "admin",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AdminLogin.tsx",
+    "line_no": 20,
+    "method": "POST",
+    "path": "/api/auth/v1/login",
+    "source": "fetch",
+    "inferred_component": "AdminLogin",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/auth/v1/login"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AdminPipelineOps.tsx",
+    "line_no": 25,
+    "method": "GET",
+    "path": "/api/intelligence/v1/pipeline/ops-summary",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/intelligence/v1/pipeline/ops-summary"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
+    "line_no": 36,
+    "method": "GET",
+    "path": "/api/admin/v1/ai/enrichment/jobs",
+    "source": "fetch",
+    "inferred_component": "AIEnrichment",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/ai/enrichment/jobs"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
+    "line_no": 37,
+    "method": "GET",
+    "path": "/api/admin/v1/ai/enrichment/status",
+    "source": "fetch",
+    "inferred_component": "AIEnrichment",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/ai/enrichment/status"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
+    "line_no": 58,
+    "method": "GET",
+    "path": "/api/admin/v1/ai/enrichment/run",
+    "source": "fetch",
+    "inferred_component": "AIEnrichment",
+    "portal": "admin",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
+    "line_no": 58,
+    "method": "POST",
+    "path": "/api/admin/v1/ai/enrichment/run",
+    "source": "fetch",
+    "inferred_component": "AIEnrichment",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/ai/enrichment/run"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\APIIntegration.tsx",
+    "line_no": 34,
+    "method": "GET",
+    "path": "/api/admin/v1/integrations/status",
+    "source": "fetch",
+    "inferred_component": "APIIntegration",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/integrations/status"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\APIIntegration.tsx",
+    "line_no": 76,
+    "method": "GET",
+    "path": "/api/admin/v1/integrations/reminders/non-live",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "admin",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\APIIntegration.tsx",
+    "line_no": 76,
+    "method": "POST",
+    "path": "/api/admin/v1/integrations/reminders/non-live",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/integrations/reminders/non-live"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\DataParser.tsx",
+    "line_no": 28,
+    "method": "GET",
+    "path": "/api/admin/v1/parsing/parse",
+    "source": "fetch",
+    "inferred_component": "DataParser",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/parsing/parse"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\DataParser.tsx",
+    "line_no": 28,
+    "method": "POST",
+    "path": "/api/admin/v1/parsing/parse",
+    "source": "fetch",
+    "inferred_component": "DataParser",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/parsing/parse"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 30,
+    "method": "GET",
+    "path": "/api/ai-data/v1/emails/summary",
+    "source": "fetch",
+    "inferred_component": "EmailIntegration",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/ai-data/v1/emails/summary"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 63,
+    "method": "GET",
+    "path": "/api/ai-data/v1/emails/tracking/summary",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/ai-data/v1/emails/tracking/summary"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 91,
+    "method": "GET",
+    "path": "/api/ai-data/v1/emails/tracking",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/ai-data/v1/emails/tracking"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 91,
+    "method": "POST",
+    "path": "/api/ai-data/v1/emails/tracking",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/ai-data/v1/emails/tracking"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\MarketIntelligence.tsx",
+    "line_no": 23,
+    "method": "GET",
+    "path": "/api/intelligence/v1/market",
+    "source": "fetch",
+    "inferred_component": "MarketIntelligence",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/intelligence/v1/market"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\MentorManagement.tsx",
+    "line_no": 27,
+    "method": "GET",
+    "path": "/api/mentorship/v1/applications/pending",
+    "source": "fetch",
+    "inferred_component": "MentorManagement",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/mentorship/v1/applications/pending"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\ServiceStatus.tsx",
+    "line_no": 35,
+    "method": "GET",
+    "path": "/api/admin/v1/system/health",
+    "source": "fetch",
+    "inferred_component": "ServiceStatus",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/health",
+      "/api/admin/v1/system/health",
+      "/health"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\ServiceStatus.tsx",
+    "line_no": 36,
+    "method": "GET",
+    "path": "/api/admin/v1/system/activity",
+    "source": "fetch",
+    "inferred_component": "ServiceStatus",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/system/activity"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\TokenManagement.tsx",
+    "line_no": 34,
+    "method": "GET",
+    "path": "/api/admin/v1/tokens/config",
+    "source": "fetch",
+    "inferred_component": "TokenManagement",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/tokens/config"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\TokenManagement.tsx",
+    "line_no": 35,
+    "method": "GET",
+    "path": "/api/admin/v1/tokens/usage",
+    "source": "fetch",
+    "inferred_component": "TokenManagement",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/tokens/usage"
+    ]
+  },
+  {
+    "file": "apps\\admin\\src\\pages\\UserManagement.tsx",
+    "line_no": 27,
+    "method": "GET",
+    "path": "/api/admin/v1/users",
+    "source": "fetch",
+    "inferred_component": "UserManagement",
+    "portal": "admin",
+    "matched_backend_routes": [
+      "/api/admin/v1/users"
+    ]
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\MentorLogin.tsx",
+    "line_no": 20,
+    "method": "GET",
+    "path": "/api/auth/v1/login",
+    "source": "fetch",
+    "inferred_component": "MentorLogin",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\MentorLogin.tsx",
+    "line_no": 20,
+    "method": "POST",
+    "path": "/api/auth/v1/login",
+    "source": "fetch",
+    "inferred_component": "MentorLogin",
+    "portal": "mentor",
+    "matched_backend_routes": [
+      "/api/auth/v1/login"
+    ]
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Create Agreement\\Create Agreement\\src\\services\\chatService.ts",
+    "line_no": 105,
+    "method": "POST",
+    "path": "/https:/api.openai.com/v1/chat/completions",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Create Agreement\\Create Agreement\\src\\services\\chatService.ts",
+    "line_no": 164,
+    "method": "GET",
+    "path": "/health",
+    "source": "apiService",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": [
+      "/health",
+      "/api/admin/v1/system/health",
+      "/api/coaching/v1/health",
+      "/api/credits/v1/health",
+      "/api/data-index/v1/health",
+      "/api/mentor/v1/health",
+      "/api/mentorship/v1/health",
+      "/api/payment/v1/health",
+      "/api/rewards/v1/health",
+      "/api/shared/v1/health",
+      "/api/support/v1/health",
+      "/api/webhooks/v1/health",
+      "/health",
+      "/api/v1/health",
+      "/api/v1/health"
+    ]
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Financial Dashboard\\Financial Dashboard\\src\\app\\App.tsx",
+    "line_no": 45,
+    "method": "GET",
+    "path": "/api/mentorship/v1/invoices",
+    "source": "fetch",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 32,
+    "method": "GET",
+    "path": "/make-server-f4611869/health",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": [
+      "/health",
+      "/health"
+    ]
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 39,
+    "method": "POST",
+    "path": "/make-server-f4611869/auth/signup",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 109,
+    "method": "POST",
+    "path": "/make-server-f4611869/auth/verify-2fa",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 151,
+    "method": "POST",
+    "path": "/make-server-f4611869/auth/check-2fa",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 180,
+    "method": "POST",
+    "path": "/make-server-f4611869/auth/validate-2fa",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 227,
+    "method": "GET",
+    "path": "/make-server-f4611869/sessions",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 261,
+    "method": "POST",
+    "path": "/make-server-f4611869/sessions",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 312,
+    "method": "PATCH",
+    "path": "/make-server-f4611869/sessions/:id",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 358,
+    "method": "DELETE",
+    "path": "/make-server-f4611869/sessions/:id",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  },
+  {
+    "file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 396,
+    "method": "GET",
+    "path": "/make-server-f4611869/activities",
+    "source": "app",
+    "inferred_component": "",
+    "portal": "mentor",
+    "matched_backend_routes": []
+  }
+]

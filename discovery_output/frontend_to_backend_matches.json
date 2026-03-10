@@ -1,0 +1,567 @@
+[
+  {
+    "frontend_file": "apps\\admin\\src\\lib\\api.ts",
+    "line_no": 13,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/admin/system/health",
+    "backend_matches": [
+      "/health",
+      "/health"
+    ],
+    "backend_files": [
+      "services\\backend_api\\main.py",
+      "services\\shared\\portal-bridge\\main.py"
+    ],
+    "backend_functions": [
+      "health",
+      "health_check"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": []
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\AdminHome.tsx",
+    "line_no": 26,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/dashboard/snapshot",
+    "backend_matches": [
+      "/api/admin/v1/dashboard/snapshot"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "dashboard_snapshot"
+    ],
+    "backend_ai_signals": [
+      "ai",
+      "model"
+    ],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\AdminLogin.tsx",
+    "line_no": 20,
+    "portal": "admin",
+    "method": "POST",
+    "frontend_path": "/api/auth/v1/login",
+    "backend_matches": [
+      "/api/auth/v1/login"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\auth.py"
+    ],
+    "backend_functions": [
+      "login"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.post"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\AdminPipelineOps.tsx",
+    "line_no": 25,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/intelligence/v1/pipeline/ops-summary",
+    "backend_matches": [
+      "/api/intelligence/v1/pipeline/ops-summary"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\intelligence.py"
+    ],
+    "backend_functions": [
+      "pipeline_ops_summary"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
+    "line_no": 36,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/ai/enrichment/jobs",
+    "backend_matches": [
+      "/api/admin/v1/ai/enrichment/jobs"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "enrichment_jobs"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
+    "line_no": 37,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/ai/enrichment/status",
+    "backend_matches": [
+      "/api/admin/v1/ai/enrichment/status"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "enrichment_status"
+    ],
+    "backend_ai_signals": [
+      "ai"
+    ],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\AIEnrichment.tsx",
+    "line_no": 58,
+    "portal": "admin",
+    "method": "POST",
+    "frontend_path": "/api/admin/v1/ai/enrichment/run",
+    "backend_matches": [
+      "/api/admin/v1/ai/enrichment/run"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "enrichment_run"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.post"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\APIIntegration.tsx",
+    "line_no": 34,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/integrations/status",
+    "backend_matches": [
+      "/api/admin/v1/integrations/status"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "integrations_status"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\APIIntegration.tsx",
+    "line_no": 76,
+    "portal": "admin",
+    "method": "POST",
+    "frontend_path": "/api/admin/v1/integrations/reminders/non-live",
+    "backend_matches": [
+      "/api/admin/v1/integrations/reminders/non-live"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "send_non_live_api_reminder"
+    ],
+    "backend_ai_signals": [
+      "ai"
+    ],
+    "likely_services": [
+      "router.post"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\DataParser.tsx",
+    "line_no": 28,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/parsing/parse",
+    "backend_matches": [
+      "/api/admin/v1/parsing/parse"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin_parsing.py"
+    ],
+    "backend_functions": [
+      "list_admin_parses"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\DataParser.tsx",
+    "line_no": 28,
+    "portal": "admin",
+    "method": "POST",
+    "frontend_path": "/api/admin/v1/parsing/parse",
+    "backend_matches": [
+      "/api/admin/v1/parsing/parse"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin_parsing.py"
+    ],
+    "backend_functions": [
+      "admin_parse_file"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "client.post",
+      "httpx.AsyncClient",
+      "router.post"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 30,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/ai-data/v1/emails/summary",
+    "backend_matches": [
+      "/api/ai-data/v1/emails/summary"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\ai_data.py"
+    ],
+    "backend_functions": [
+      "get_emails_summary"
+    ],
+    "backend_ai_signals": [
+      "ai"
+    ],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 63,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/ai-data/v1/emails/tracking/summary",
+    "backend_matches": [
+      "/api/ai-data/v1/emails/tracking/summary"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\ai_data.py"
+    ],
+    "backend_functions": [
+      "get_emails_tracking_summary"
+    ],
+    "backend_ai_signals": [
+      "ai"
+    ],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 91,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/ai-data/v1/emails/tracking",
+    "backend_matches": [
+      "/api/ai-data/v1/emails/tracking"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\ai_data.py"
+    ],
+    "backend_functions": [
+      "get_emails_tracking"
+    ],
+    "backend_ai_signals": [
+      "ai"
+    ],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\EmailIntegration.tsx",
+    "line_no": 91,
+    "portal": "admin",
+    "method": "POST",
+    "frontend_path": "/api/ai-data/v1/emails/tracking",
+    "backend_matches": [
+      "/api/ai-data/v1/emails/tracking"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\ai_data.py"
+    ],
+    "backend_functions": [
+      "create_emails_tracking_record"
+    ],
+    "backend_ai_signals": [
+      "ai"
+    ],
+    "likely_services": [
+      "router.post"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\MarketIntelligence.tsx",
+    "line_no": 23,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/intelligence/v1/market",
+    "backend_matches": [
+      "/api/intelligence/v1/market"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\intelligence.py"
+    ],
+    "backend_functions": [
+      "market_intel"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\MentorManagement.tsx",
+    "line_no": 27,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/mentorship/v1/applications/pending",
+    "backend_matches": [
+      "/api/mentorship/v1/applications/pending"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\mentorship.py"
+    ],
+    "backend_functions": [
+      "get_pending_applications"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get",
+      "service.get_pending_applications"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\ServiceStatus.tsx",
+    "line_no": 35,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/system/health",
+    "backend_matches": [
+      "/health",
+      "/api/admin/v1/system/health",
+      "/health"
+    ],
+    "backend_files": [
+      "services\\backend_api\\main.py",
+      "services\\backend_api\\routers\\admin.py",
+      "services\\shared\\portal-bridge\\main.py"
+    ],
+    "backend_functions": [
+      "health",
+      "health_check",
+      "system_health"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\ServiceStatus.tsx",
+    "line_no": 36,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/system/activity",
+    "backend_matches": [
+      "/api/admin/v1/system/activity"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "system_activity"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\TokenManagement.tsx",
+    "line_no": 34,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/tokens/config",
+    "backend_matches": [
+      "/api/admin/v1/tokens/config"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin_tokens.py"
+    ],
+    "backend_functions": [
+      "get_token_config"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\TokenManagement.tsx",
+    "line_no": 35,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/tokens/usage",
+    "backend_matches": [
+      "/api/admin/v1/tokens/usage"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin_tokens.py"
+    ],
+    "backend_functions": [
+      "get_token_usage"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\admin\\src\\pages\\UserManagement.tsx",
+    "line_no": 27,
+    "portal": "admin",
+    "method": "GET",
+    "frontend_path": "/api/admin/v1/users",
+    "backend_matches": [
+      "/api/admin/v1/users"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\admin.py"
+    ],
+    "backend_functions": [
+      "list_users"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.get"
+    ]
+  },
+  {
+    "frontend_file": "apps\\mentor\\src\\pages\\MentorLogin.tsx",
+    "line_no": 20,
+    "portal": "mentor",
+    "method": "POST",
+    "frontend_path": "/api/auth/v1/login",
+    "backend_matches": [
+      "/api/auth/v1/login"
+    ],
+    "backend_files": [
+      "services\\backend_api\\routers\\auth.py"
+    ],
+    "backend_functions": [
+      "login"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": [
+      "router.post"
+    ]
+  },
+  {
+    "frontend_file": "apps\\mentor\\src\\pages\\Create Agreement\\Create Agreement\\src\\services\\chatService.ts",
+    "line_no": 164,
+    "portal": "mentor",
+    "method": "GET",
+    "frontend_path": "/health",
+    "backend_matches": [
+      "/health",
+      "/api/admin/v1/system/health",
+      "/api/coaching/v1/health",
+      "/api/credits/v1/health",
+      "/api/data-index/v1/health",
+      "/api/mentor/v1/health",
+      "/api/mentorship/v1/health",
+      "/api/payment/v1/health",
+      "/api/rewards/v1/health",
+      "/api/shared/v1/health",
+      "/api/support/v1/health",
+      "/api/webhooks/v1/health",
+      "/health",
+      "/api/v1/health",
+      "/api/v1/health"
+    ],
+    "backend_files": [
+      "services\\backend_api\\main.py",
+      "services\\backend_api\\routers\\admin.py",
+      "services\\backend_api\\routers\\coaching.py",
+      "services\\backend_api\\routers\\credits.py",
+      "services\\backend_api\\routers\\data_index.py",
+      "services\\backend_api\\routers\\mentor.py",
+      "services\\backend_api\\routers\\mentorship.py",
+      "services\\backend_api\\routers\\payment.py",
+      "services\\backend_api\\routers\\rewards.py",
+      "services\\backend_api\\routers\\shared.py",
+      "services\\backend_api\\routers\\support.py",
+      "services\\backend_api\\routers\\webhooks.py",
+      "services\\shared\\portal-bridge\\main.py",
+      "services\\shared_backend\\main.py",
+      "shared_backend\\main.py"
+    ],
+    "backend_functions": [
+      "coaching_health",
+      "get_index_health",
+      "health",
+      "health_check",
+      "support_health",
+      "system_health",
+      "webhook_health"
+    ],
+    "backend_ai_signals": [
+      "ai"
+    ],
+    "likely_services": [
+      "braintree_service.is_configured",
+      "get_ai_data_index_service",
+      "router.get",
+      "service.get_state"
+    ]
+  },
+  {
+    "frontend_file": "apps\\mentor\\src\\pages\\Set up Sessions\\Setup Sessions\\supabase\\functions\\server\\index.tsx",
+    "line_no": 32,
+    "portal": "mentor",
+    "method": "GET",
+    "frontend_path": "/make-server-f4611869/health",
+    "backend_matches": [
+      "/health",
+      "/health"
+    ],
+    "backend_files": [
+      "services\\backend_api\\main.py",
+      "services\\shared\\portal-bridge\\main.py"
+    ],
+    "backend_functions": [
+      "health",
+      "health_check"
+    ],
+    "backend_ai_signals": [],
+    "likely_services": []
+  }
+]

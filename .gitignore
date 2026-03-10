@@ -55,6 +55,9 @@ working/
 logs/
 *.log
 
+# ── Runtime queue artifacts ──────────────────────────────────────────
+queue/pending/zendesk_*.json
+
 # ── IDE / Editor ─────────────────────────────────────────────────────
 .vscode/
 .idea/

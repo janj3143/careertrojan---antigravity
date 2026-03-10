@@ -6,8 +6,8 @@ Repository root: `J:\Codec - runtime version\Antigravity\careertrojan`
 
 - Route handlers discovered: **333**
 - Route handlers with AI-related call signals: **99**
-- Service-like functions discovered: **437**
-- Python files with AI/model/orchestration keywords: **288**
+- Service-like functions discovered: **440**
+- Python files with AI/model/orchestration keywords: **290**
 
 ## 1. Route to service discovery
 
@@ -1769,6 +1769,17 @@ Repository root: `J:\Codec - runtime version\Antigravity\careertrojan`
   - L55: "model",
   - L56: "ml",
 
+### `tools\discover_full_wiring.py`
+- Matched terms: ai, bayes, bayesian, classifier, clustering, context_assembler, embedding, engine, feature_registry, governance, inference, intelligence, ml, model, orchestrator, predict, ranking, regression, score, similarity, trained, training, unified_ai_engine, vector
+  - L10: - Detect likely service / AI hotspots
+  - L22: discovery_output/service_ai_hotspots.json
+  - L50: "htmlcov",
+  - L56: AI_KEYWORDS = {
+  - L57: "ai",
+  - L58: "model",
+  - L59: "ml",
+  - L60: "bayes",
+
 ### `services\backend_api\services\enrichment\ai_enrichment_orchestrator.py`
 - Matched terms: ai, bayes, bayesian, classifier, clustering, embedding, engine, inference, ml, model, orchestrator, predict, regression, score, similarity, trained, vector
   - L2: AI Enrichment Orchestrator V3.0 - COMPREHENSIVE 100% MODEL COVERAGE
@@ -2274,6 +2285,17 @@ Repository root: `J:\Codec - runtime version\Antigravity\careertrojan`
   - L12: - ai_data_final/metadata/enhance_training_data_report.json
   - L56: "data engineering",
   - L193: "technology": ["engineer", "developer", "data", "cloud", "devops"],
+
+### `tools\discover_signal_lifecycle.py`
+- Matched terms: ai, ml, model, predict, score
+  - L7: - Find likely model/rule consumers of those signals
+  - L43: "htmlcov",
+  - L62: "traits",
+  - L63: "score_inputs",
+  - L69: "fit_score",
+  - L86: "predict",
+  - L93: "score",
+  - L291: def main() -> int:
 
 ### `services\workers\ai_orchestrator_enrichment.py`
 - Matched terms: ai, model, orchestrator, score, training
@@ -3763,25 +3785,6 @@ Repository root: `J:\Codec - runtime version\Antigravity\careertrojan`
 - Matched terms: ai
   - L17: from services.backend_api.main import app
   - L19: client = TestClient(app, raise_server_exceptions=False)
-
-### `tests\integration\test_auth_provider_modes.py`
-- Matched terms: ai
-  - L17: from services.backend_api.main import app
-  - L20: client = TestClient(app, raise_server_exceptions=False)
-  - L51: def _raise(_token):
-  - L52: raise security.TokenValidationError("bad token")
-  - L54: monkeypatch.setattr(security, "decode_access_token", _raise)
-
-### `tests\integration\test_admin_email_integration_endpoints.py`
-- Matched terms: ai
-  - L4: from services.backend_api.main import app
-  - L29: admin_router._email_dispatch_log.clear()
-  - L34: admin_router._email_dispatch_log.clear()
-  - L78: "/api/admin/v1/email/send_test",
-  - L97: "/api/admin/v1/email/send_bulk",
-  - L124: def test_email_logs_and_analytics(client, admin_headers):
-  - L131: "/api/admin/v1/email/send_test",
-  - L136: "/api/admin/v1/email/send_bulk",
 
 ## 5. What to inspect manually next
 

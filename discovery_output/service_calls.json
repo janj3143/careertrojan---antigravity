@@ -8050,6 +8050,71 @@
     ]
   },
   {
+    "file": "tools\\discover_full_wiring.py",
+    "function_name": "iter_files",
+    "called_names": [
+      "Path",
+      "should_skip"
+    ],
+    "attribute_calls": [
+      "files.append",
+      "full.is_symlink",
+      "full.suffix.lower",
+      "os.walk",
+      "pruned.append"
+    ],
+    "ai_signals": [
+      "ml"
+    ]
+  },
+  {
+    "file": "tools\\discover_full_wiring.py",
+    "function_name": "infer_likely_services",
+    "called_names": [
+      "any",
+      "set",
+      "sorted"
+    ],
+    "attribute_calls": [
+      "candidates.append",
+      "name.lower"
+    ],
+    "ai_signals": []
+  },
+  {
+    "file": "tools\\discover_full_wiring.py",
+    "function_name": "_analyze_function",
+    "called_names": [
+      "BackendRoute",
+      "ServiceHotspot",
+      "any",
+      "dotted_name",
+      "get_constant_str",
+      "infer_ai_signals",
+      "infer_likely_services",
+      "isinstance",
+      "set",
+      "sorted",
+      "str"
+    ],
+    "attribute_calls": [
+      "ast.walk",
+      "attribute_calls.append",
+      "called_names.append",
+      "dec.func.attr.lower",
+      "method.upper",
+      "node.name.lower",
+      "self.file_path.relative_to",
+      "self.hotspots.append",
+      "self.router_prefixes.get",
+      "self.router_tags.get",
+      "self.routes.append"
+    ],
+    "ai_signals": [
+      "ai"
+    ]
+  },
+  {
     "file": "tools\\discover_runtime_wiring.py",
     "function_name": "_analyze_function",
     "called_names": [

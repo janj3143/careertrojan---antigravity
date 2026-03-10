@@ -4929,6 +4929,47 @@
     ]
   },
   {
+    "file": "tools\\discover_full_wiring.py",
+    "matched_terms": [
+      "ai",
+      "bayes",
+      "bayesian",
+      "classifier",
+      "clustering",
+      "context_assembler",
+      "embedding",
+      "engine",
+      "feature_registry",
+      "governance",
+      "inference",
+      "intelligence",
+      "ml",
+      "model",
+      "orchestrator",
+      "predict",
+      "ranking",
+      "regression",
+      "score",
+      "similarity",
+      "trained",
+      "training",
+      "unified_ai_engine",
+      "vector"
+    ],
+    "matched_lines": [
+      "L10: - Detect likely service / AI hotspots",
+      "L22: discovery_output/service_ai_hotspots.json",
+      "L50: \"htmlcov\",",
+      "L56: AI_KEYWORDS = {",
+      "L57: \"ai\",",
+      "L58: \"model\",",
+      "L59: \"ml\",",
+      "L60: \"bayes\",",
+      "L61: \"bayesian\",",
+      "L62: \"regression\","
+    ]
+  },
+  {
     "file": "tools\\discover_runtime_wiring.py",
     "matched_terms": [
       "ai",
@@ -4967,6 +5008,28 @@
       "L56: \"ml\",",
       "L57: \"bayes\",",
       "L58: \"bayesian\","
+    ]
+  },
+  {
+    "file": "tools\\discover_signal_lifecycle.py",
+    "matched_terms": [
+      "ai",
+      "ml",
+      "model",
+      "predict",
+      "score"
+    ],
+    "matched_lines": [
+      "L7: - Find likely model/rule consumers of those signals",
+      "L43: \"htmlcov\",",
+      "L62: \"traits\",",
+      "L63: \"score_inputs\",",
+      "L69: \"fit_score\",",
+      "L86: \"predict\",",
+      "L93: \"score\",",
+      "L291: def main() -> int:",
+      "L341: consumer_type=\"model_or_rule_candidate\",",
+      "L390: lines.append(\"2. Signal response: signal usage in predict/classify/rank/infer/evaluate/score contexts\")"
     ]
   },
   {

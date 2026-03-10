@@ -1,0 +1,11 @@
+{
+  "generated": "2026-03-10T11:24:12Z",
+  "file_count": 15137,
+  "python_files": 325,
+  "router_decorators": 318,
+  "mounted_routes": 320,
+  "ai_engine_modules": 17,
+  "test_related_files": 196,
+  "stub_signals": 4,
+  "out_dir": "reports/discovery"
+}

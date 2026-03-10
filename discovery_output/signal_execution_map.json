@@ -1,0 +1,189 @@
+[
+  {
+    "signal": "confidence",
+    "execution_in_file": "services/backend_api/routers/user_vector_v1.py",
+    "execution_in_function": "get_current_user_vector",
+    "affects": [
+      "return_payload"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence",
+    "execution_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "execution_in_function": "_research_openai",
+    "affects": [
+      "return_payload"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence",
+    "execution_in_file": "apps/user/src/components/visuals/CoveyPlanePlotly.tsx",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence",
+    "execution_in_file": "apps/user/src/components/visuals/QuadrantFitD3View.tsx",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence",
+    "execution_in_file": "apps/user/src/components/visuals/StructuralCapabilityRadarView.tsx",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence",
+    "execution_in_file": "apps/user/src/lib/api.ts",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence",
+    "execution_in_file": "apps/user/src/lib/chartLensTypes.ts",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence",
+    "execution_in_file": "apps/user/src/lib/types.ts",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "confidence_score",
+    "execution_in_file": "apps/user/src/lib/api.ts",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "feature_name",
+    "execution_in_file": "services/backend_api/routers/admin_tokens.py",
+    "execution_in_function": "update_token_cost",
+    "affects": [
+      "return_payload"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "features",
+    "execution_in_file": "apps/user/src/pages/Dashboard.tsx",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "impact",
+    "execution_in_file": "apps/user/src/components/visuals/CoveyPlanePlotly.tsx",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "impact",
+    "execution_in_file": "apps/user/src/lib/chartLensTypes.ts",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "market_signals",
+    "execution_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "execution_in_function": "get_dashboard_enrichment",
+    "affects": [
+      "return_payload"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "overlap",
+    "execution_in_file": "apps/user/src/lib/api.ts",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "overlap_skills",
+    "execution_in_file": "apps/user/src/lib/api.ts",
+    "execution_in_function": "file_scope",
+    "affects": [
+      "ui_visibility"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  },
+  {
+    "signal": "progression",
+    "execution_in_file": "services/backend_api/services/ai/ai_chat_integration.py",
+    "execution_in_function": "_generate_contextual_response",
+    "affects": [
+      "return_payload"
+    ],
+    "visible_in": [
+      "api_payload_or_ui"
+    ]
+  }
+]

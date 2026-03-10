@@ -1,0 +1,128 @@
+[
+  {
+    "signal": "avg_confidence",
+    "consumed_in_file": "services/ai_engine/unified_ai_engine.py",
+    "consumed_in_function": "ensemble_infer",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "avg_confidence",
+    "consumed_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "consumed_in_function": "_calculate_overall_scores",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "candidate_features",
+    "consumed_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "consumed_in_function": "predict_callback_probability",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "predict_callback_rate"
+  },
+  {
+    "signal": "confidence",
+    "consumed_in_file": "services/ai_engine/unified_ai_engine.py",
+    "consumed_in_function": "infer_job_category",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "confidence",
+    "consumed_in_file": "services/ai_engine/unified_ai_engine.py",
+    "consumed_in_function": "infer_salary_prediction",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "confidence",
+    "consumed_in_file": "services/backend_api/services/linkedin_industry_classifier.py",
+    "consumed_in_function": "classify_job_title",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "confidence",
+    "consumed_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "consumed_in_function": "predict_job_category",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "confidence_modifier",
+    "consumed_in_file": "services/ai_engine/expert_system.py",
+    "consumed_in_function": "evaluate_prediction",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "confidence_scores",
+    "consumed_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "consumed_in_function": "_calculate_overall_scores",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "confidences",
+    "consumed_in_file": "services/ai_engine/unified_ai_engine.py",
+    "consumed_in_function": "ensemble_infer",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "feature_names",
+    "consumed_in_file": "services/ai_engine/ai_training_orchestrator.py",
+    "consumed_in_function": "train_tfidf",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "subscript_use"
+  },
+  {
+    "signal": "feature_names",
+    "consumed_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "consumed_in_function": "_enrich_keywords_ml",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "subscript_use"
+  },
+  {
+    "signal": "features",
+    "consumed_in_file": "services/ai_engine/unified_ai_engine.py",
+    "consumed_in_function": "infer_salary_prediction",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "predict"
+  },
+  {
+    "signal": "features",
+    "consumed_in_file": "services/ai_engine/unified_ai_engine.py",
+    "consumed_in_function": "infer_salary_prediction",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "features",
+    "consumed_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "consumed_in_function": "_run_neural_predictions",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "predict"
+  },
+  {
+    "signal": "features",
+    "consumed_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "consumed_in_function": "_run_neural_predictions",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "features",
+    "consumed_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "consumed_in_function": "_run_bayesian_inference",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  },
+  {
+    "signal": "nlp_confidence",
+    "consumed_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "consumed_in_function": "_calculate_overall_scores",
+    "consumer_type": "model_or_rule_candidate",
+    "evidence": "response_fn_context"
+  }
+]

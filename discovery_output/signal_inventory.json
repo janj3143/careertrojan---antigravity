@@ -1,0 +1,485 @@
+[
+  {
+    "signal": "feature_names",
+    "extracted_in_file": "services/ai_engine/ai_training_orchestrator.py",
+    "extracted_in_function": "train_tfidf",
+    "extraction_type": "generic",
+    "line_hint": 290
+  },
+  {
+    "signal": "top_features_path",
+    "extracted_in_file": "services/ai_engine/ai_training_orchestrator.py",
+    "extracted_in_function": "train_tfidf",
+    "extraction_type": "generic",
+    "line_hint": 291
+  },
+  {
+    "signal": "confidence_modifier",
+    "extracted_in_file": "services/ai_engine/expert_system.py",
+    "extracted_in_function": "evaluate_prediction",
+    "extraction_type": "response",
+    "line_hint": 111
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/ai_engine/train_bayesian_models.py",
+    "extracted_in_function": "prepare_features",
+    "extraction_type": "generic",
+    "line_hint": 64
+  },
+  {
+    "signal": "feature_dict",
+    "extracted_in_file": "services/ai_engine/train_bayesian_models.py",
+    "extracted_in_function": "prepare_features",
+    "extraction_type": "generic",
+    "line_hint": 73
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/ai_engine/train_fuzzy_logic.py",
+    "extracted_in_function": "train_fcm_clusterer",
+    "extraction_type": "generic",
+    "line_hint": 308
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/ai_engine/train_neural_networks.py",
+    "extracted_in_function": "prepare_features",
+    "extraction_type": "generic",
+    "line_hint": 74
+  },
+  {
+    "signal": "feature_dict",
+    "extracted_in_file": "services/ai_engine/train_neural_networks.py",
+    "extracted_in_function": "prepare_features",
+    "extraction_type": "generic",
+    "line_hint": 85
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/ai_engine/unified_ai_engine.py",
+    "extracted_in_function": "infer_job_category",
+    "extraction_type": "response",
+    "line_hint": 188
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/ai_engine/unified_ai_engine.py",
+    "extracted_in_function": "infer_salary_prediction",
+    "extraction_type": "response",
+    "line_hint": 241
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/ai_engine/unified_ai_engine.py",
+    "extracted_in_function": "infer_salary_prediction",
+    "extraction_type": "response",
+    "line_hint": 248
+  },
+  {
+    "signal": "confidences",
+    "extracted_in_file": "services/ai_engine/unified_ai_engine.py",
+    "extracted_in_function": "ensemble_infer",
+    "extraction_type": "response",
+    "line_hint": 291
+  },
+  {
+    "signal": "avg_confidence",
+    "extracted_in_file": "services/ai_engine/unified_ai_engine.py",
+    "extracted_in_function": "ensemble_infer",
+    "extraction_type": "response",
+    "line_hint": 315
+  },
+  {
+    "signal": "feature_name",
+    "extracted_in_file": "services/backend_api/routers/admin_tokens.py",
+    "extracted_in_function": "update_token_cost",
+    "extraction_type": "generic",
+    "line_hint": 348
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/backend_api/routers/credits.py",
+    "extracted_in_function": "_get_plan_features",
+    "extraction_type": "generic",
+    "line_hint": 145
+  },
+  {
+    "signal": "overlap",
+    "extracted_in_file": "services/backend_api/routers/intelligence.py",
+    "extracted_in_function": "_extract_company_hits",
+    "extraction_type": "extraction",
+    "line_hint": 192
+  },
+  {
+    "signal": "overlap_skills",
+    "extracted_in_file": "services/backend_api/routers/intelligence.py",
+    "extracted_in_function": "_scan_profile_history",
+    "extraction_type": "generic",
+    "line_hint": 250
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/routers/user_vector_v1.py",
+    "extracted_in_function": "get_current_user_vector",
+    "extraction_type": "generic",
+    "line_hint": 52
+  },
+  {
+    "signal": "candidate_features",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "analyze_candidate_pool",
+    "extraction_type": "generic",
+    "line_hint": 88
+  },
+  {
+    "signal": "feature_summary",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "analyze_candidate_pool",
+    "extraction_type": "generic",
+    "line_hint": 89
+  },
+  {
+    "signal": "feature_summary",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "analyze_candidate_pool",
+    "extraction_type": "generic",
+    "line_hint": 97
+  },
+  {
+    "signal": "job_features",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "analyze_job_market",
+    "extraction_type": "generic",
+    "line_hint": 205
+  },
+  {
+    "signal": "feature_summary",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "analyze_job_market",
+    "extraction_type": "generic",
+    "line_hint": 206
+  },
+  {
+    "signal": "feature_summary",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "analyze_job_market",
+    "extraction_type": "generic",
+    "line_hint": 213
+  },
+  {
+    "signal": "candidate_features",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "calculate_candidate_job_matches",
+    "extraction_type": "generic",
+    "line_hint": 284
+  },
+  {
+    "signal": "job_features",
+    "extracted_in_file": "services/backend_api/services/advanced_analytics_service.py",
+    "extracted_in_function": "calculate_candidate_job_matches",
+    "extraction_type": "generic",
+    "line_hint": 287
+  },
+  {
+    "signal": "impact",
+    "extracted_in_file": "services/backend_api/services/covey_builder.py",
+    "extracted_in_function": "_compute_impact_potential",
+    "extraction_type": "generic",
+    "line_hint": 138
+  },
+  {
+    "signal": "impact",
+    "extracted_in_file": "services/backend_api/services/covey_builder.py",
+    "extracted_in_function": "_compute_impact_potential",
+    "extraction_type": "generic",
+    "line_hint": 139
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/covey_builder.py",
+    "extracted_in_function": "_compute_impact_potential",
+    "extraction_type": "generic",
+    "line_hint": 125
+  },
+  {
+    "signal": "high_impact",
+    "extracted_in_file": "services/backend_api/services/covey_builder.py",
+    "extracted_in_function": "_assign_quadrant",
+    "extraction_type": "generic",
+    "line_hint": 162
+  },
+  {
+    "signal": "confidence_values",
+    "extracted_in_file": "services/backend_api/services/covey_builder.py",
+    "extracted_in_function": "_action_to_covey_action",
+    "extraction_type": "generic",
+    "line_hint": 189
+  },
+  {
+    "signal": "action_confidence",
+    "extracted_in_file": "services/backend_api/services/covey_builder.py",
+    "extracted_in_function": "_action_to_covey_action",
+    "extraction_type": "generic",
+    "line_hint": 190
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/data_parser_service.py",
+    "extracted_in_function": "get_real_unknown_formats",
+    "extraction_type": "generic",
+    "line_hint": 127
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/data_parser_service.py",
+    "extracted_in_function": "get_real_unknown_formats",
+    "extraction_type": "generic",
+    "line_hint": 131
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/data_parser_service.py",
+    "extracted_in_function": "get_real_unknown_formats",
+    "extraction_type": "generic",
+    "line_hint": 143
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/data_parser_service.py",
+    "extracted_in_function": "get_real_unknown_formats",
+    "extraction_type": "generic",
+    "line_hint": 155
+  },
+  {
+    "signal": "progressions",
+    "extracted_in_file": "services/backend_api/services/job_title_enhancement_engine.py",
+    "extracted_in_function": "extract_career_progressions",
+    "extraction_type": "extraction",
+    "line_hint": 241
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/linkedin_industry_classifier.py",
+    "extracted_in_function": "classify_job_title",
+    "extraction_type": "response",
+    "line_hint": 549
+  },
+  {
+    "signal": "tech_indicators",
+    "extracted_in_file": "services/backend_api/services/linkedin_industry_classifier.py",
+    "extracted_in_function": "get_industry_insights",
+    "extraction_type": "generic",
+    "line_hint": 566
+  },
+  {
+    "signal": "confidence_score",
+    "extracted_in_file": "services/backend_api/services/web_intelligence_service.py",
+    "extracted_in_function": "validate_company_exists",
+    "extraction_type": "generic",
+    "line_hint": 428
+  },
+  {
+    "signal": "progression",
+    "extracted_in_file": "services/backend_api/services/ai/ai_chat_integration.py",
+    "extracted_in_function": "_generate_contextual_response",
+    "extraction_type": "generic",
+    "line_hint": 303
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_research_wikipedia",
+    "extraction_type": "generic",
+    "line_hint": 302
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_research_google",
+    "extraction_type": "generic",
+    "line_hint": 360
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_research_web_scrape",
+    "extraction_type": "generic",
+    "line_hint": 417
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_calculate_web_confidence",
+    "extraction_type": "generic",
+    "line_hint": 484
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_research_openai",
+    "extraction_type": "generic",
+    "line_hint": 612
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_calculate_ai_confidence",
+    "extraction_type": "generic",
+    "line_hint": 660
+  },
+  {
+    "signal": "vague_indicators",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_calculate_ai_confidence",
+    "extraction_type": "generic",
+    "line_hint": 686
+  },
+  {
+    "signal": "weighted_confidence",
+    "extracted_in_file": "services/backend_api/services/ai/ai_feedback_loop.py",
+    "extracted_in_function": "_consolidate_research_results",
+    "extraction_type": "generic",
+    "line_hint": 965
+  },
+  {
+    "signal": "confidence_trend",
+    "extracted_in_file": "services/backend_api/services/ai/ai_learning_tracker.py",
+    "extracted_in_function": "get_learning_metrics",
+    "extraction_type": "generic",
+    "line_hint": 307
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "predict_job_category",
+    "extraction_type": "response",
+    "line_hint": 379
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "analyze_sentiment",
+    "extraction_type": "generic",
+    "line_hint": 591
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "_update_learning_table",
+    "extraction_type": "generic",
+    "line_hint": 1223
+  },
+  {
+    "signal": "confidence_scores",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "_run_fuzzy_analysis",
+    "extraction_type": "generic",
+    "line_hint": 1343
+  },
+  {
+    "signal": "confidence_scores",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "_calculate_overall_scores",
+    "extraction_type": "response",
+    "line_hint": 1434
+  },
+  {
+    "signal": "nlp_confidence",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "_calculate_overall_scores",
+    "extraction_type": "response",
+    "line_hint": 1438
+  },
+  {
+    "signal": "avg_confidence",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "_calculate_overall_scores",
+    "extraction_type": "response",
+    "line_hint": 1445
+  },
+  {
+    "signal": "confidence",
+    "extracted_in_file": "services/backend_api/services/ai/unified_ai_engine.py",
+    "extracted_in_function": "_update_stats",
+    "extraction_type": "generic",
+    "line_hint": 1492
+  },
+  {
+    "signal": "total_impact",
+    "extracted_in_file": "services/backend_api/services/blocker/detector.py",
+    "extracted_in_function": "_calculate_overall_impact",
+    "extraction_type": "generic",
+    "line_hint": 351
+  },
+  {
+    "signal": "market_signals",
+    "extracted_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "extracted_in_function": "get_dashboard_enrichment",
+    "extraction_type": "generic",
+    "line_hint": 447
+  },
+  {
+    "signal": "feature_names",
+    "extracted_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "extracted_in_function": "_enrich_keywords_ml",
+    "extraction_type": "generic",
+    "line_hint": 637
+  },
+  {
+    "signal": "base_features",
+    "extracted_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "extracted_in_function": "_compute_role_fit_ml",
+    "extraction_type": "generic",
+    "line_hint": 724
+  },
+  {
+    "signal": "model_features",
+    "extracted_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "extracted_in_function": "_compute_role_fit_ml",
+    "extraction_type": "generic",
+    "line_hint": 725
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "extracted_in_function": "_run_neural_predictions",
+    "extraction_type": "response",
+    "line_hint": 944
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "extracted_in_function": "_run_bayesian_inference",
+    "extraction_type": "response",
+    "line_hint": 972
+  },
+  {
+    "signal": "features",
+    "extracted_in_file": "services/backend_api/services/enrichment/ai_enrichment_orchestrator.py",
+    "extracted_in_function": "_extract_neural_features",
+    "extraction_type": "extraction",
+    "line_hint": 1126
+  },
+  {
+    "signal": "feature_dict",
+    "extracted_in_file": "services/shared/training_data_loader.py",
+    "extracted_in_function": "build_feature_matrix",
+    "extraction_type": "generic",
+    "line_hint": 194
+  },
+  {
+    "signal": "portal_features",
+    "extracted_in_file": "shared_backend/registry_loader.py",
+    "extracted_in_function": "is_feature_enabled",
+    "extraction_type": "generic",
+    "line_hint": 34
+  },
+  {
+    "signal": "allowed_features",
+    "extracted_in_file": "shared_backend/registry/capability_registry.py",
+    "extracted_in_function": "is_feature_enabled",
+    "extraction_type": "generic",
+    "line_hint": 51
+  }
+]

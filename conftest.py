@@ -18,11 +18,42 @@ os.environ.setdefault("REDIS_URL", "redis://localhost:6379/0")
 os.environ.setdefault("SECRET_KEY", "test-secret-key-not-for-production")
 
 
+def _clear_rate_limiter_hits(app_instance):
+    """Walk ASGI middleware stack and clear in-memory rate limiter counters."""
+    obj = getattr(app_instance, "middleware_stack", app_instance)
+    for _ in range(30):
+        if hasattr(obj, "_hits"):
+            obj._hits.clear()
+            return
+        obj = getattr(obj, "app", None)
+        if obj is None:
+            return
+
+
 @pytest.fixture(scope="session")
 def app():
     """Create the FastAPI app instance (session-scoped to avoid repeated boot)."""
     from services.backend_api.main import app as _app
     return _app
+
+
+@pytest.fixture(scope="session", autouse=True)
+def reset_test_database_schema():
+    """Ensure test DB schema matches current models for each full test run."""
+    from services.backend_api.db.models import Base
+    from services.backend_api.db.connection import engine
+
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limiter_between_tests(app):
+    """Avoid cross-test throttling side effects from in-memory limiter state."""
+    _clear_rate_limiter_hits(app)
+    yield
+    _clear_rate_limiter_hits(app)
 
 
 @pytest.fixture(scope="session")

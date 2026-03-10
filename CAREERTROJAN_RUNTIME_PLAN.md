@@ -380,24 +380,24 @@ Removed from `C:\careertrojan\`:
 | # | Check | Status |
 |---|-------|--------|
 | 1 | Fix 3 duplicate route conflicts (admin stub, ai_gateway drift/stats, control_plane /health) | ✅ |
-| 2 | Endpoint count matches introspection report | ⬜ |
-| 3 | Zero legacy callsites in React (`migrate_react_api_prefixes.py --check`) | ⬜ |
+| 2 | Endpoint count matches introspection report | ✅ |
+| 3 | Zero legacy callsites in React (`migrate_react_api_prefixes.py --check`) | ✅ |
 | 4 | Contamination trap passes on fresh boot (3/3 tests green) | ✅ |
-| 5 | L: ↔ E: sync verified (< 5 s latency) | ⬜ |
+| 5 | L: ↔ E: sync verified (< 5 s latency) | ✅ |
 | 6 | Docker Compose `config` validates (exit 0) | ✅ |
 | 7 | `janj3143` test user can login (DB-level seed + JWT test) | ✅ |
-| 8 | Admin impersonation + audit log verified | ⬜ |
-| 9 | GDPR export + deletion tested end-to-end | ⬜ |
-| 10 | Braintree sandbox purchase flow succeeds | ⬜ |
-| 11 | Logo renders correctly on all three portals | ⬜ |
+| 8 | Admin impersonation + audit log verified | ✅ |
+| 9 | GDPR export + deletion tested end-to-end | ✅ |
+| 10 | Braintree sandbox purchase flow succeeds | ✅ |
+| 11 | Logo renders correctly on all three portals | ✅ |
 | 12 | Zero instances of "IntelliCV" in active codebase (6 files rebranded) | ✅ |
 | 13 | Full test suite green: **299 passed, 7 skipped, 0 failed** | ✅ |
-| 14 | Phase 8 cleanup complete (no legacy scripts) | ⬜ |
-| 15 | Helpdesk widget loads on all three portals (user/admin/mentor) | ⬜ |
+| 14 | Phase 8 cleanup complete (no legacy scripts) | ✅ |
+| 15 | Helpdesk widget loads on all three portals (user/admin/mentor) | ✅ |
 | 16 | Helpdesk SSO working — ticket auto-attaches to logged-in user | ⬜ |
 | 17 | Knowledge base seeded with initial articles (≥10 articles) | ⬜ |
-| 18 | "Help" nav entry present and functional on all portals | ⬜ |
-| 19 | Contextual help link works on at least one AI analysis page | ⬜ |
+| 18 | "Help" nav entry present and functional on all portals | ✅ |
+| 19 | Contextual help link works on at least one AI analysis page | ✅ |
 | 20 | Helpdesk SLAs and routing rules configured | ⬜ |
 
 ### Phase 10 Sprint Log (2026-02-27)

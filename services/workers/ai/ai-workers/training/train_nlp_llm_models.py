@@ -182,9 +182,33 @@ class NLPLLMTrainer:
             from sklearn.naive_bayes import MultinomialNB
             import joblib
 
-            # Create synthetic labels for demonstration
-            # In production, use labeled data
-            labels = np.random.choice(['positive', 'neutral', 'negative'], size=len(texts))
+            # Load labeled sentiment data from feedback log
+            # Falls back to heuristic labeling if no labeled file exists
+            labels_path = self.models_path.parent / "ai_data_final" / "sentiment_labels.json"
+            if labels_path.exists():
+                import json
+                with open(labels_path) as lf:
+                    label_map = json.load(lf)  # {text_hash: label}
+                import hashlib
+                labels = [
+                    label_map.get(hashlib.md5(t.encode()).hexdigest(), "neutral")
+                    for t in texts
+                ]
+                logger.info(f"   Loaded {sum(1 for l in labels if l != 'neutral')} labeled samples from sentiment_labels.json")
+            else:
+                # Heuristic: positive/negative keyword presence
+                pos_words = {"excellent", "outstanding", "strong", "passionate", "achieved", "award"}
+                neg_words = {"gap", "lack", "weak", "poor", "limited", "fail"}
+                labels = []
+                for t in texts:
+                    words = set(t.lower().split())
+                    if words & pos_words:
+                        labels.append("positive")
+                    elif words & neg_words:
+                        labels.append("negative")
+                    else:
+                        labels.append("neutral")
+                logger.info("   Using keyword-heuristic labels (no sentiment_labels.json found)")
 
             # Vectorize
             vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')

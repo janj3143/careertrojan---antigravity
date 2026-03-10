@@ -600,17 +600,36 @@ class EvaluationHarness:
         )
     
     def _run_calibration_test(self, gateway, tc: TestCase, start: float) -> TestResult:
-        """Run confidence calibration test."""
-        # Calibration tests are meta-tests that check historical data
-        # For now, return placeholder
+        """Run confidence calibration test against historical ground-truth data."""
         latency = (time.perf_counter() - start) * 1000
-        
+        passed = False
+        metrics = {}
+        actual_output = {}
+
+        try:
+            # Pull calibration stats from the calibrator (if available)
+            calibrator = getattr(gateway, "calibrator", None)
+            if calibrator and hasattr(calibrator, "get_calibration_stats"):
+                stats = calibrator.get_calibration_stats()
+                ece = stats.get("ece", 1.0)
+                sample_count = stats.get("sample_count", 0)
+                metrics = {"ece": ece, "sample_count": sample_count}
+                # Pass if ECE < 0.15 and we have at least 20 samples
+                passed = ece < 0.15 and sample_count >= 20
+                actual_output = {"ece": ece, "sample_count": sample_count}
+            else:
+                # No calibrator wired yet — fail explicitly
+                actual_output = {"note": "Calibrator not available — wire ConfidenceCalibrator"}
+                passed = False
+        except Exception as exc:
+            actual_output = {"error": str(exc)}
+
         return TestResult(
             test_id=tc.test_id,
-            passed=True,  # Placeholder
-            actual_output={"note": "Calibration tests require historical data"},
+            passed=passed,
+            actual_output=actual_output,
             expected_output=tc.expected_output,
-            metrics={},
+            metrics=metrics,
             latency_ms=latency,
         )
     

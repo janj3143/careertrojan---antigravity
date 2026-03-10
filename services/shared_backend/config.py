@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     CAREERTROJAN_DATA_ROOT: str
     CAREERTROJAN_WORKING_ROOT: str
     
-    # Database (Optional for Phase 3 start, required for persistence)
-    DATABASE_URL: str = "postgresql://user:pass@postgres:5432/careertrojan"
+    # Database — no defaults; require explicit config via env or .env
+    DATABASE_URL: str
     REDIS_URL: str = "redis://redis:6379/0"
 
     # Feature Flags

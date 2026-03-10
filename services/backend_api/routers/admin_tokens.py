@@ -2,101 +2,98 @@
 backend/api/routes/admin_tokens.py
 
 Admin token configuration + usage endpoints.
-
-NOTE: This file is a wiring scaffold for contracts + validation.
-You MUST replace TokenStore with your real DB/meters immediately.
+Wired to canonical plan_config.py for plan data and
+credit_system.CreditManager for usage data.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Any, Dict, List, Optional
+from datetime import datetime, timezone
+from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
 
 from services.backend_api.utils.auth_deps import require_admin
+from services.backend_api.db.connection import get_db
+from services.backend_api.db import models
 
 router = APIRouter(prefix="/api/admin/v1/tokens", tags=["admin-tokens"], dependencies=[Depends(require_admin)])
 
-# REQUIRED plan keys (must match canonical plan_config.py)
-PLAN_KEYS = ("free", "monthly", "annual", "elite")
 
-
-@dataclass
-class TokenStore:
-    # Replace with DB tables:
-    # - token_plans
-    # - token_usage_ledger
-    plans: Dict[str, Dict[str, Any]]
-    # Replace with query results (monthly rollup)
-    usage_rows: List[Dict[str, Any]]
-
-
-# ---- IMPORTANT ----
-# This store is empty by default and will throw 500 until you wire real storage.
-STORE = TokenStore(plans={}, usage_rows=[])
-
-
-def _require_plans() -> Dict[str, Any]:
-    if not STORE.plans:
-        raise HTTPException(
-            status_code=500,
-            detail="Token plans are not configured in backend storage yet.",
-        )
-    missing = [k for k in PLAN_KEYS if k not in STORE.plans]
-    if missing:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Token plans missing required keys: {missing}",
-        )
-    return STORE.plans
+def _get_plans_from_config() -> Dict[str, Dict[str, Any]]:
+    """Load plans from the canonical plan_config source of truth."""
+    try:
+        from services.backend_api.services.plan_config import PLANS
+    except ImportError:
+        raise HTTPException(status_code=503, detail="Plan config module not available.")
+    result: Dict[str, Dict[str, Any]] = {}
+    for key, cfg in PLANS.items():
+        result[key] = {
+            "tier": cfg.tier.value if hasattr(cfg.tier, "value") else str(cfg.tier),
+            "name": cfg.name,
+            "included_tokens_per_month": cfg.credits_per_month,
+            "price_monthly_usd": cfg.price_monthly_usd,
+            "price_annual_usd": cfg.price_annual_usd,
+            "interval": cfg.interval,
+            "max_applications": cfg.max_applications,
+            "max_coaching_sessions": cfg.max_coaching_sessions,
+            "max_resumes_stored": cfg.max_resumes_stored,
+            "features": cfg.features,
+        }
+    return result
 
 
 @router.get("/config")
 async def get_token_config() -> Dict[str, Any]:
-    plans = _require_plans()
-    return {"plans": plans, "as_of": datetime.utcnow().isoformat()}
+    plans = _get_plans_from_config()
+    return {"plans": plans, "as_of": datetime.now(timezone.utc).isoformat()}
 
 
 @router.put("/config")
 async def put_token_config(payload: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Validate submitted plan config against canonical plan_config.py.
+    NOTE: Plans are defined in plan_config.py; this endpoint validates
+    but does not persist overrides (future: DB-backed plan overrides).
+    """
     plans = payload.get("plans")
     if not isinstance(plans, dict) or not plans:
         raise HTTPException(status_code=400, detail="Payload must include non-empty 'plans' dict.")
 
-    # Validate keys
-    missing = [k for k in PLAN_KEYS if k not in plans]
-    extra = [k for k in plans.keys() if k not in PLAN_KEYS]
+    canonical = _get_plans_from_config()
+    plan_keys = tuple(canonical.keys())
+    missing = [k for k in plan_keys if k not in plans]
+    extra = [k for k in plans.keys() if k not in plan_keys]
     if missing:
         raise HTTPException(status_code=400, detail=f"Plans missing required keys: {missing}")
     if extra:
         raise HTTPException(status_code=400, detail=f"Plans include unknown keys: {extra}")
 
-    # Basic value checks
     for k, cfg in plans.items():
         if int(cfg.get("included_tokens_per_month", 0)) < 0:
             raise HTTPException(status_code=400, detail=f"{k}.included_tokens_per_month must be >= 0")
 
-    STORE.plans = plans
-    return {"plans": STORE.plans, "saved_at": datetime.utcnow().isoformat()}
+    return {"plans": plans, "validated_at": datetime.now(timezone.utc).isoformat(), "note": "Plan definitions are managed in plan_config.py"}
 
 
 @router.get("/usage")
-async def get_token_usage(month: Optional[str] = None) -> Dict[str, Any]:
-    _require_plans()
+async def get_token_usage(month: Optional[str] = None, db: Session = Depends(get_db)) -> Dict[str, Any]:
+    """Query credit usage from the DB-backed CreditUsageLog."""
+    _get_plans_from_config()  # ensure plans are loadable
 
-    if not STORE.usage_rows:
-        raise HTTPException(
-            status_code=500,
-            detail="Token usage ledger is empty/unwired. Populate from real metering store.",
-        )
-
-    rows = STORE.usage_rows
+    query = db.query(models.CreditUsageLog)
     if month:
-        rows = [r for r in rows if str(r.get("month")) == month]
+        query = query.filter(models.CreditUsageLog.created_at.like(f"{month}%"))
+    rows = query.order_by(models.CreditUsageLog.created_at.desc()).limit(500).all()
 
-    if not rows:
-        raise HTTPException(status_code=404, detail="No usage rows for requested month.")
+    usage = []
+    for r in rows:
+        usage.append({
+            "user_id": r.user_id,
+            "action_id": r.action_id,
+            "credits_consumed": r.credits_consumed,
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+        })
 
-    return {"orgs": rows, "month": month or "current"}
+    return {"usage": usage, "count": len(usage), "month": month or "all"}

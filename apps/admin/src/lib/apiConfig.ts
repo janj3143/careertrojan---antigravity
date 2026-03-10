@@ -23,6 +23,7 @@ export const API = {
   jobs: `${API_BASE}/api/jobs/v1`,
   taxonomy: `${API_BASE}/api/taxonomy/v1`,
   support: `${API_BASE}/api/support/v1`,  // Zendesk Support Bridge
+  help: `${API_BASE}/api/help/v1`,
 } as const;
 
 export const API_CONFIG = { baseUrl: API_BASE };

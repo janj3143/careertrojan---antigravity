@@ -1,6 +1,16 @@
 """
-CareerTrojan — AI Gateway
-=========================
+CareerTrojan — AI Gateway (Control Plane — DEPRECATED)
+=======================================================
+
+.. deprecated::
+    For new code, use the canonical gateway instead:
+
+        from services.ai_engine.ai_gateway import ai_gateway
+        result = ai_gateway.score_candidate(resume_text, skills, ...)
+
+    This control-plane gateway is retained for admin-specific features
+    (request logging, cost estimation, chart data) but its core scoring
+    delegates to the same UnifiedAIEngine via ``get_engine()``.
 
 SINGLE entry point for ALL AI intelligence calls across the platform.
 
@@ -376,7 +386,7 @@ class AIGateway:
                 text=text,
                 skills=skills or [],
                 experience_years=experience_years,
-                education_level=education_level,
+                education=education_level,
                 job_title=job_title,
             )
             

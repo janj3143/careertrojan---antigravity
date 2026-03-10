@@ -58,12 +58,24 @@ async def get_stats():
 
 @app.get("/api/v1/users")
 async def get_users():
-    """Get all users (Mock for now)"""
-    return [
-        {"id": "1", "name": "Admin User", "email": "admin@careertrojan.com", "role": "Admin", "status": "Active"},
-        {"id": "2", "name": "New User", "email": "user@gmail.com", "role": "User", "status": "Active"},
-        {"id": "3", "name": "Test Account", "email": "test@careertrojan.com", "role": "User", "status": "Inactive"}
-    ]
+    """Get all users from database."""
+    from services.backend_api.db.connection import get_db
+    from services.backend_api.db.models import User
+    db = next(get_db())
+    try:
+        users = db.query(User).limit(100).all()
+        return [
+            {
+                "id": str(u.id),
+                "name": getattr(u, "full_name", None) or getattr(u, "name", "Unknown"),
+                "email": u.email,
+                "role": getattr(u, "role", "User"),
+                "status": "Active" if getattr(u, "is_active", True) else "Inactive",
+            }
+            for u in users
+        ]
+    finally:
+        db.close()
 
 if __name__ == "__main__":
     import uvicorn

@@ -43,19 +43,19 @@ class TestTouchpoints:
     def test_evidence_empty_ids_returns_empty(self):
         import asyncio
         from services.backend_api.routers.touchpoints import get_evidence
-        result = asyncio.get_event_loop().run_until_complete(get_evidence(touchpoint_id=[], loader=None))
+        result = asyncio.run(get_evidence(touchpoint_id=[], loader=None))
         assert result == {"items": []}
 
     def test_touchnots_empty_ids_returns_empty(self):
         import asyncio
         from services.backend_api.routers.touchpoints import get_touchnots
-        result = asyncio.get_event_loop().run_until_complete(get_touchnots(touchpoint_id=[], loader=None))
+        result = asyncio.run(get_touchnots(touchpoint_id=[], loader=None))
         assert result == {"items": []}
 
     def test_evidence_with_unknown_ids(self):
         import asyncio
         from services.backend_api.routers.touchpoints import get_evidence
-        result = asyncio.get_event_loop().run_until_complete(
+        result = asyncio.run(
             get_evidence(touchpoint_id=["fake_1", "fake_2"], loader=None)
         )
         assert result["count"] == 2

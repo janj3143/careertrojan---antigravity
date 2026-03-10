@@ -245,9 +245,9 @@ class HybridCareerEngineOrchestrator:
             # Test 2: Check classification model
             if 'job_classifier' in self.models:
                 try:
-                    # Dummy test input
-                    dummy_input = np.random.rand(1, 100)
-                    prediction = self.models['job_classifier'].predict(dummy_input)
+                    # Smoke-test input to verify model is callable
+                    smoke_input = np.random.rand(1, 100)
+                    prediction = self.models['job_classifier'].predict(smoke_input)
                     test_results['classification_test'] = {
                         'prediction': str(prediction),
                         'status': 'âœ… Ready'

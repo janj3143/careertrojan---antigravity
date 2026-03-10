@@ -9,14 +9,21 @@ Author: CaReerTroJan System
 Date: February 2, 2026
 """
 
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Header
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone
+from sqlalchemy.orm import Session
 import logging
 
 from services.backend_api.utils.auth_deps import get_current_user, optional_user
 from services.backend_api.db import models
+from services.backend_api.db.connection import get_db
+from services.backend_api.services.idempotency import (
+    IdempotencyStore,
+    require_idempotency_key,
+)
 
 # Import credit system
 try:
@@ -114,8 +121,8 @@ class TeaserResponse(BaseModel):
 # HELPER FUNCTIONS
 # ============================================================================
 
-def _get_user_id(current_user: models.User = Depends(get_current_user)) -> str:
-    """Get current user ID from JWT auth context."""
+def _get_user_id(current_user: models.User) -> str:
+    """Extract user ID string from an authenticated User model."""
     return str(current_user.id)
 
 
@@ -155,12 +162,12 @@ def _get_plan_features(plan_config) -> List[str]:
 # ============================================================================
 
 @router.get("/plans", response_model=PlansResponse)
-async def get_plans():
+async def get_plans(current_user: models.User = Depends(get_current_user)):
     """Get all available plans with credit allocations"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = _get_user_id(current_user)
     user_credits = manager.get_user_credits(user_id)
     
     plans_list = []
@@ -202,12 +209,12 @@ async def get_action_costs():
 
 
 @router.get("/balance", response_model=BalanceResponse)
-async def get_balance():
+async def get_balance(current_user: models.User = Depends(get_current_user)):
     """Get user's current credit balance and usage"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = _get_user_id(current_user)
     summary = manager.get_usage_summary(user_id)
     
     return BalanceResponse(
@@ -222,12 +229,12 @@ async def get_balance():
 
 
 @router.get("/can-perform/{action_id}", response_model=CanPerformResponse)
-async def can_perform_action(action_id: str, is_preview: bool = False):
+async def can_perform_action(action_id: str, is_preview: bool = False, current_user: models.User = Depends(get_current_user)):
     """Check if user can perform an action"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = _get_user_id(current_user)
     
     can_perform, message, upgrade_info = manager.can_perform_action(
         user_id, action_id, is_preview
@@ -253,36 +260,73 @@ async def can_perform_action(action_id: str, is_preview: bool = False):
 
 
 @router.post("/consume", response_model=ConsumeResponse)
-async def consume_credits(request: ConsumeRequest):
-    """Consume credits for an action"""
+async def consume_credits(
+    request: ConsumeRequest,
+    idempotency_key: str = Depends(require_idempotency_key),
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    """Consume credits for an action.
+    
+    Requires ``Idempotency-Key`` header to prevent double-consumption.
+    """
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
-    
-    result = manager.consume_credits(
-        user_id=user_id,
-        action_id=request.action_id,
-        context=request.context,
-        is_preview=request.is_preview,
+    user_id = _get_user_id(current_user)
+
+    # ── Idempotency check ────────────────────────────────────
+    is_dup, cached = IdempotencyStore.check(
+        db, idempotency_key, "credits", user_id,
+        request_body=request.model_dump(),
     )
-    
-    return ConsumeResponse(
-        success=result["success"],
-        message=result["message"],
-        credits_consumed=result["credits_consumed"],
-        credits_remaining=result.get("credits_remaining", 0),
-        upgrade_info=result.get("upgrade_info"),
+    if is_dup:
+        if cached and "error" in cached:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=cached["error"])
+        if cached is not None:
+            return JSONResponse(content=cached, status_code=200)
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A request with this Idempotency-Key is already being processed",
+        )
+
+    idemp_record = IdempotencyStore.begin(
+        db, idempotency_key, "credits", user_id,
+        request_body=request.model_dump(),
     )
+
+    try:
+        result = manager.consume_credits(
+            user_id=user_id,
+            action_id=request.action_id,
+            context=request.context,
+            is_preview=request.is_preview,
+        )
+        
+        response = ConsumeResponse(
+            success=result["success"],
+            message=result["message"],
+            credits_consumed=result["credits_consumed"],
+            credits_remaining=result.get("credits_remaining", 0),
+            upgrade_info=result.get("upgrade_info"),
+        )
+        IdempotencyStore.complete(db, idemp_record, 200, response.model_dump())
+        return response
+    except HTTPException:
+        IdempotencyStore.fail(db, idemp_record)
+        raise
+    except Exception:
+        IdempotencyStore.fail(db, idemp_record)
+        raise
 
 
 @router.get("/usage")
-async def get_usage_details():
+async def get_usage_details(current_user: models.User = Depends(get_current_user)):
     """Get detailed usage breakdown"""
     _ensure_credit_system()
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = _get_user_id(current_user)
     
     return manager.get_usage_summary(user_id)
 
@@ -310,7 +354,7 @@ async def get_teaser(request: TeaserRequest):
 
 
 @router.post("/upgrade/{plan_tier}")
-async def upgrade_plan(plan_tier: str):
+async def upgrade_plan(plan_tier: str, current_user: models.User = Depends(get_current_user)):
     """Upgrade user to a new plan (simplified - would integrate with payment)"""
     _ensure_credit_system()
     
@@ -323,7 +367,7 @@ async def upgrade_plan(plan_tier: str):
         )
     
     manager = get_credit_manager()
-    user_id = _get_user_id()
+    user_id = _get_user_id(current_user)
     
     # In production, this would be called AFTER successful payment
     user_credits = manager.set_user_plan(user_id, tier)

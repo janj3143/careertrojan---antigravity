@@ -16,6 +16,7 @@ export const API = {
   payment: `${API_BASE}/api/payment/v1`,
   aiGateway: `${API_BASE}/api/ai`,  // AI Gateway (unified entry point)
   support: `${API_BASE}/api/support/v1`,  // Zendesk Support Bridge
+  help: `${API_BASE}/api/help/v1`,
 } as const;
 
 export const API_CONFIG = { baseUrl: API_BASE };

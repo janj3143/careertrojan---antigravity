@@ -10,11 +10,14 @@ Date: 27 February 2026
 """
 
 import os
+import json
+import uuid
 import logging
 import httpx
 from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from base64 import b64encode
+from pathlib import Path
 
 from sqlalchemy.orm import Session
 
@@ -27,6 +30,64 @@ ZENDESK_API_TOKEN = os.getenv("ZENDESK_API_TOKEN", "")
 ZENDESK_DEFAULT_GROUP_ID = os.getenv("ZENDESK_DEFAULT_GROUP_ID", "")
 ZENDESK_DEFAULT_FORM_ID = os.getenv("ZENDESK_DEFAULT_FORM_ID", "")
 ZENDESK_WEBHOOK_SECRET = os.getenv("ZENDESK_WEBHOOK_SECRET", "")
+
+# ── AI Agent Queue ────────────────────────────────────────────────────────────
+# Only active when ZENDESK_AI_AGENT_ENABLED=true in .env
+ZENDESK_AI_AGENT_ENABLED = os.getenv("ZENDESK_AI_AGENT_ENABLED", "false").lower() in ("true", "1", "yes")
+# Production: /opt/careertrojan/api/queue
+# Dev fallback: ./data/queue  (relative to project root)
+AI_QUEUE_DIR = os.getenv(
+    "ZENDESK_AI_QUEUE_DIR",
+    "/opt/careertrojan/api/queue" if os.path.isdir("/opt") else str(
+        Path(__file__).resolve().parents[3] / "data" / "queue"
+    ),
+)
+
+
+def enqueue_ai_job(
+    action: str,
+    ticket_id: int,
+    payload: Dict[str, Any],
+) -> Optional[str]:
+    """
+    Write a job file to the AI agent queue directory.
+
+    Returns None immediately if ZENDESK_AI_AGENT_ENABLED is not true.
+
+    The AI agent watches this directory and picks up .json files to process
+    (draft responses, classify tickets, enrich context, auto-triage, etc.).
+
+    Args:
+        action: Job type — "new_ticket", "admin_reply", "status_change", "classify"
+        ticket_id: Local ticket ID
+        payload: Full context for the AI agent
+
+    Returns:
+        job_id: Unique job identifier, or None if agent is disabled.
+    """
+    if not ZENDESK_AI_AGENT_ENABLED:
+        return None
+
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    job_id = f"zendesk_{ts}_{uuid.uuid4().hex}"
+
+    os.makedirs(AI_QUEUE_DIR, exist_ok=True)
+    job_path = os.path.join(AI_QUEUE_DIR, f"{job_id}.json")
+
+    job_envelope = {
+        "job_id": job_id,
+        "action": action,
+        "ticket_id": ticket_id,
+        "queued_at": datetime.now(timezone.utc).isoformat(),
+        "status": "pending",
+        "payload": payload,
+    }
+
+    with open(job_path, "w", encoding="utf-8") as f:
+        json.dump(job_envelope, f, ensure_ascii=False, indent=2, default=str)
+
+    logger.info("AI job queued: %s (action=%s, ticket=%s)", job_id, action, ticket_id)
+    return job_id
 
 # Category → Priority mapping
 CATEGORY_PRIORITY_MAP = {
@@ -128,6 +189,56 @@ class ZendeskClient:
             )
             response.raise_for_status()
             return response.json()
+
+    async def get_user(self, user_id: int) -> Optional[Dict[str, Any]]:
+        """Fetch a Zendesk user profile (requester, agent, etc.)."""
+        if not self.is_configured:
+            return None
+
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            response = await client.get(
+                f"{self.base_url}/users/{user_id}.json",
+                headers={"Authorization": self.auth_header},
+            )
+            if response.status_code == 404:
+                return None
+            response.raise_for_status()
+            return response.json().get("user")
+
+    async def get_ticket_comments(
+        self, ticket_id: int, sort_order: str = "asc"
+    ) -> List[Dict[str, Any]]:
+        """Fetch comments on a ticket (oldest-first by default)."""
+        if not self.is_configured:
+            return []
+
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            response = await client.get(
+                f"{self.base_url}/tickets/{ticket_id}/comments.json",
+                headers={"Authorization": self.auth_header},
+                params={"sort_order": sort_order},
+            )
+            response.raise_for_status()
+            return response.json().get("comments", [])
+
+    async def search_articles(
+        self, query: str, per_page: int = 3
+    ) -> List[Dict[str, Any]]:
+        """Search the Help Center for knowledge-base articles."""
+        if not self.is_configured:
+            return []
+
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            response = await client.get(
+                f"{ZENDESK_BASE_URL}/api/v2/help_center/articles/search.json",
+                headers={"Authorization": self.auth_header},
+                params={"query": query, "per_page": per_page},
+            )
+            if response.status_code == 404:
+                # Help Center may not be enabled
+                return []
+            response.raise_for_status()
+            return response.json().get("results", [])
 
 
 # Singleton client
@@ -262,6 +373,28 @@ class SupportService:
             local_ticket.id, zendesk_ticket_id, user_id, category,
         )
 
+        # Queue for AI agent processing (auto-classify, draft response, etc.)
+        try:
+            enqueue_ai_job(
+                action="new_ticket",
+                ticket_id=local_ticket.id,
+                payload={
+                    "subject": subject,
+                    "description": description,
+                    "category": category,
+                    "priority": priority,
+                    "portal": portal,
+                    "user_email": user_email,
+                    "subscription_tier": subscription_tier,
+                    "tokens_remaining": tokens_remaining,
+                    "request_id": request_id,
+                    "resume_version_id": resume_version_id,
+                    "zendesk_ticket_id": zendesk_ticket_id,
+                },
+            )
+        except Exception:
+            logger.warning("Failed to enqueue AI job for ticket %s", local_ticket.id, exc_info=True)
+
         return {
             "ticket_id": local_ticket.id,
             "zendesk_ticket_id": zendesk_ticket_id,
@@ -370,19 +503,169 @@ class SupportService:
         return {"updated": True, "ticket_id": ticket.id, "status": ticket.status}
 
 
-def verify_zendesk_webhook(signature: str, body: bytes) -> bool:
+    async def list_all_tickets(
+        self,
+        status_filter: Optional[str] = None,
+        category: Optional[str] = None,
+        priority: Optional[str] = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> Dict[str, Any]:
+        """List all tickets (admin view) with optional filters."""
+        from services.backend_api.db.models import SupportTicket, User
+
+        query = self.db.query(SupportTicket)
+        if status_filter:
+            query = query.filter(SupportTicket.status == status_filter)
+        if category:
+            query = query.filter(SupportTicket.category == category)
+        if priority:
+            query = query.filter(SupportTicket.priority == priority)
+
+        total = query.count()
+        tickets = (
+            query.order_by(SupportTicket.created_at.desc())
+            .offset(offset)
+            .limit(min(limit, 200))
+            .all()
+        )
+
+        items = []
+        for t in tickets:
+            user = self.db.query(User).filter(User.id == t.user_id).first()
+            items.append({
+                "ticket_id": t.id,
+                "zendesk_ticket_id": t.zendesk_ticket_id,
+                "zendesk_url": t.zendesk_url,
+                "user_id": t.user_id,
+                "user_email": user.email if user else None,
+                "subject": t.subject,
+                "status": t.status,
+                "priority": t.priority,
+                "category": t.category,
+                "portal": t.portal,
+                "subscription_tier": t.subscription_tier,
+                "created_at": t.created_at.isoformat() if t.created_at else None,
+                "updated_at": t.updated_at.isoformat() if t.updated_at else None,
+                "resolved_at": t.resolved_at.isoformat() if t.resolved_at else None,
+                "last_comment_at": t.last_comment_at.isoformat() if t.last_comment_at else None,
+            })
+
+        return {"tickets": items, "total": total, "limit": limit, "offset": offset}
+
+    async def admin_reply_to_ticket(
+        self,
+        ticket_id: int,
+        comment: str,
+        admin_email: str,
+        public: bool = True,
+        new_status: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Admin replies to a ticket — pushes comment to Zendesk and updates local record.
+
+        Args:
+            ticket_id: Local ticket ID
+            comment: Reply text
+            admin_email: For audit trail
+            public: Whether the reply is visible to the requester
+            new_status: Optionally change ticket status (e.g. 'pending', 'solved')
+        """
+        from services.backend_api.db.models import SupportTicket
+
+        ticket = self.db.query(SupportTicket).filter(SupportTicket.id == ticket_id).first()
+        if not ticket:
+            return {"error": "Ticket not found"}
+
+        result = {"ticket_id": ticket.id, "local_updated": True}
+
+        # Push to Zendesk if we have a linked ticket
+        if ticket.zendesk_ticket_id:
+            zendesk_resp = await zendesk_client.add_comment(
+                ticket_id=ticket.zendesk_ticket_id,
+                comment=comment,
+                public=public,
+            )
+            if "error" in zendesk_resp:
+                result["zendesk_error"] = zendesk_resp["error"]
+            else:
+                result["zendesk_synced"] = True
+
+            # Optionally update status in Zendesk
+            if new_status and "error" not in zendesk_resp:
+                await zendesk_client.update_ticket_status(ticket.zendesk_ticket_id, new_status)
+
+        # Update local record
+        ticket.updated_at = datetime.now(timezone.utc)
+        ticket.last_comment_at = datetime.now(timezone.utc)
+        if new_status:
+            ticket.status = new_status
+            if new_status in ("solved", "closed"):
+                ticket.resolved_at = datetime.now(timezone.utc)
+
+        self.db.commit()
+
+        logger.info(
+            "Admin reply on ticket %s by %s (public=%s, status=%s)",
+            ticket_id, admin_email, public, new_status,
+        )
+
+        # Queue for AI agent (log the reply for context, trigger follow-up analysis)
+        try:
+            enqueue_ai_job(
+                action="admin_reply",
+                ticket_id=ticket.id,
+                payload={
+                    "comment": comment,
+                    "admin_email": admin_email,
+                    "public": public,
+                    "new_status": new_status,
+                    "zendesk_ticket_id": ticket.zendesk_ticket_id,
+                    "subject": ticket.subject,
+                    "category": ticket.category,
+                    "current_status": ticket.status,
+                },
+            )
+        except Exception:
+            logger.warning("Failed to enqueue AI job for reply on ticket %s", ticket_id, exc_info=True)
+
+        result["status"] = ticket.status
+        return result
+
+
+def verify_zendesk_webhook(signature: str, body: bytes, timestamp: str = "") -> bool:
     """
-    Verify Zendesk webhook signature (if configured).
-    
-    Zendesk webhooks can use:
-    - Shared secret in header
-    - HMAC signature
-    
-    For now, we use a simple shared secret approach.
+    Verify Zendesk webhook signature using HMAC-SHA256.
+
+    Zendesk signs webhooks by computing:
+        HMAC-SHA256(signing_secret, timestamp + body)
+    and sending the base64-encoded result in X-Zendesk-Webhook-Signature.
+    The timestamp is sent in X-Zendesk-Webhook-Signature-Timestamp.
+
+    See: https://developer.zendesk.com/documentation/webhooks/verifying/
     """
+    import hashlib
+    import hmac
+    from base64 import b64decode, b64encode
+
     if not ZENDESK_WEBHOOK_SECRET:
         # No secret configured — allow (development mode)
+        logger.warning("Zendesk webhook verification skipped — no secret configured")
         return True
 
-    # Simple shared secret check
-    return signature == ZENDESK_WEBHOOK_SECRET
+    if not signature:
+        logger.warning("Zendesk webhook missing signature header")
+        return False
+
+    try:
+        # Zendesk HMAC: sign(secret, timestamp + body)
+        signing_key = ZENDESK_WEBHOOK_SECRET.encode("utf-8")
+        sign_payload = timestamp.encode("utf-8") + body
+        expected = hmac.new(signing_key, sign_payload, hashlib.sha256).digest()
+        expected_b64 = b64encode(expected).decode("utf-8")
+
+        # Constant-time comparison to prevent timing attacks
+        return hmac.compare_digest(expected_b64, signature)
+    except Exception:
+        logger.exception("Zendesk webhook signature verification failed")
+        return False

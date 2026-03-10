@@ -1,5 +1,11 @@
 import os
 import logging
+from pathlib import Path
+
+# ── Load .env BEFORE any other import touches os.getenv() ─────────────────
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=False)
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from services.backend_api.middleware.interaction_logger import InteractionLoggerMiddleware
@@ -33,6 +39,15 @@ from services.backend_api.routers import admin_email_campaigns  # SendGrid/Klavi
 from services.backend_api.routers import contacts  # ContactsDB (30K+ contacts) API
 from services.backend_api.routers import admin_data_index  # Data index management (parser + AI data)
 from services.backend_api.routers import support  # Zendesk Support Bridge
+from services.backend_api.routers import governance  # Route Governance
+
+# ── Career Compass + Profile Coach module routers (spec §20) ─────
+from services.backend_api.routers.career_compass import router as career_compass_router
+from services.backend_api.routers.user_vector import router as user_vector_router
+from services.backend_api.routers.market_signal import router as market_signal_router
+from services.backend_api.routers.profile_builder import router as profile_builder_router
+from services.backend_api.routers.mentor_search import router as mentor_search_router
+from services.backend_api.routers.help import router as help_router
 
 # Setup Structured Logging (structlog → JSON lines)
 configure_logging()
@@ -100,24 +115,45 @@ app.include_router(taxonomy.router)
 app.include_router(sessions.router)       # Session history, sync status, consolidated user view
 
 # ── Optional/Placeholder Routers ─────────────────────────────
-try: app.include_router(payment.router)
-except: pass
-try: app.include_router(rewards.router)
-except: pass
-try: app.include_router(mentor.router)
-except: pass
+try:
+    app.include_router(payment.router)
+except Exception as exc:
+    logger.error("Failed to mount payment router: %s", exc)
+try:
+    app.include_router(rewards.router)
+except Exception as exc:
+    logger.error("Failed to mount rewards router: %s", exc)
+try:
+    app.include_router(mentor.router)
+except Exception as exc:
+    logger.error("Failed to mount mentor router: %s", exc)
 
 # ── Visual / Mapping / Analytics Routers ─────────────────────
 app.include_router(insights.router)       # Quadrant, word-cloud, graph, cohort
 app.include_router(touchpoints.router)    # Evidence & touch-not lookups
 app.include_router(mapping.router)        # Live endpoint map, visual registry
+
+# -- New GenAI Integrations -----------------------------------
+from services.backend_api.routers.profile_coach import router as profile_coach_router
+app.include_router(profile_coach_router)
 app.include_router(analytics.router)      # System statistics & dashboard data
+
+# ── Career Compass Module (spec §20 — full route tree) ───────
+app.include_router(career_compass_router)
+app.include_router(user_vector_router)
+app.include_router(market_signal_router)
+app.include_router(profile_builder_router)
+app.include_router(mentor_search_router)
+
+# ── Help Icon System (contextual page help) ──────────────────
+app.include_router(help_router)
 
 # ── GDPR / Data Rights ──────────────────────────────────────
 app.include_router(gdpr.router)           # Consent, data export, account deletion, audit log
 
 # ── Support Bridge (Zendesk) ─────────────────────────────────
 app.include_router(support.router)        # Support tickets, Zendesk integration, webhooks
+app.include_router(support.webhooks_router)  # Webhook alias: /api/webhooks/v1/zendesk
 
 # ── API Health Check ─────────────────────────────────────────
 app.include_router(api_health.router)     # Live endpoint probing, run-all, summary
@@ -125,6 +161,12 @@ app.include_router(admin_email_campaigns.router)  # SendGrid/Klaviyo/Resend emai
 app.include_router(contacts.router)       # ContactsDB (30K+ contacts) API
 
 # ── Root-level Kubernetes-style probes (no prefix) ───────────
+@app.get("/health", tags=["probes"])
+def health():
+    """Simple health endpoint for Zendesk / uptime monitors."""
+    return {"status": "ok"}
+
+
 @app.get("/healthz", tags=["probes"], include_in_schema=False)
 async def _liveness():
     """Root liveness probe — returns instantly."""
@@ -144,22 +186,36 @@ async def _readiness():
         db.close()
 
 # ── Payment Webhooks ─────────────────────────────────────────
-try: app.include_router(webhooks.router)     # Braintree webhook notifications
-except Exception: pass
+try:
+    app.include_router(webhooks.router)     # Braintree webhook notifications
+except Exception as exc:
+    logger.error("Failed to mount webhooks router: %s", exc)
 
 # ── Admin Extension Routers ──────────────────────────────────
-try: app.include_router(admin_abuse.router)
-except Exception: pass
-try: app.include_router(admin_parsing.router)
-except Exception: pass
-try: app.include_router(admin_tokens.router)
-except Exception: pass
-try: app.include_router(anti_gaming.router)
-except Exception: pass
-try: app.include_router(logs.router)
-except Exception: pass
-try: app.include_router(telemetry.router)
-except Exception: pass
+try:
+    app.include_router(admin_abuse.router)
+except Exception as exc:
+    logger.error("Failed to mount admin_abuse router: %s", exc)
+try:
+    app.include_router(admin_parsing.router)
+except Exception as exc:
+    logger.error("Failed to mount admin_parsing router: %s", exc)
+try:
+    app.include_router(admin_tokens.router)
+except Exception as exc:
+    logger.error("Failed to mount admin_tokens router: %s", exc)
+try:
+    app.include_router(anti_gaming.router)
+except Exception as exc:
+    logger.error("Failed to mount anti_gaming router: %s", exc)
+try:
+    app.include_router(logs.router)
+except Exception as exc:
+    logger.error("Failed to mount logs router: %s", exc)
+try:
+    app.include_router(telemetry.router)
+except Exception as exc:
+    logger.error("Failed to mount telemetry router: %s", exc)
 
 # ── Admin Tools (Consolidated Stubs) ─────────────────────────
 app.include_router(admin_tools.router)
@@ -169,6 +225,32 @@ app.include_router(admin_data_index.router)
 
 # ── AI Control Plane (Admin Dashboard for ML Observability) ──
 app.include_router(admin_ai_control_plane.router)
+
+# ── Route Governance (Drift Detection + Policy Enforcement) ──
+app.include_router(governance.router)
+
+# ── Route Governance Startup Check ────────────────────────────────────
+@app.on_event("startup")
+async def _governance_check():
+    """Run route governance policy check at startup and warn on errors."""
+    if os.environ.get("TESTING"):
+        return
+    try:
+        from services.backend_api.governance.route_governance import quick_summary
+        result = quick_summary(app)
+        if result["policy_errors"] > 0:
+            logger.warning(
+                "Route governance: %d policy ERRORS, %d warnings across %d routes (checksum=%s)",
+                result["policy_errors"], result["policy_warnings"],
+                result["total_routes"], result["checksum"],
+            )
+        else:
+            logger.info(
+                "Route governance: CLEAN — %d routes, %d warnings (checksum=%s)",
+                result["total_routes"], result["policy_warnings"], result["checksum"],
+            )
+    except Exception as e:
+        logger.warning("Route governance check failed (non-fatal): %s", e)
 
 # ── Test User Bootstrap (Phase 1) ─────────────────────────────────────
 @app.on_event("startup")

@@ -41,31 +41,58 @@ router = APIRouter(tags=["admin-tools"], dependencies=[Depends(require_admin)])
 def list_filesystem(path: str = "/"):
     """
     List files and directories at given path.
-    Used by Datasets Browser.
+    Used by Datasets Browser. Scoped to data roots only.
     """
-    return {
-        "ok": True,
-        "path": path,
-        "items": [
-            {"name": "resumes", "type": "directory", "size": 0, "modified": "2026-02-10T10:00:00Z"},
-            {"name": "parsed", "type": "directory", "size": 0, "modified": "2026-02-10T09:00:00Z"},
-            {"name": "exports", "type": "directory", "size": 0, "modified": "2026-02-09T12:00:00Z"},
-            {"name": "config.json", "type": "file", "size": 1024, "modified": "2026-02-08T14:00:00Z"}
-        ],
-        "total": 4
-    }
+    import os
+    allowed_roots = [
+        os.getenv("CAREERTROJAN_DATA_ROOT", "/data/ai_data_final"),
+        os.getenv("CAREERTROJAN_WORKING_ROOT", "/data/working_copy"),
+    ]
+    # Resolve and validate path is under an allowed root
+    resolved = os.path.realpath(path)
+    if not any(resolved.startswith(os.path.realpath(r)) for r in allowed_roots):
+        raise HTTPException(status_code=403, detail="Path outside allowed data roots")
+    if not os.path.isdir(resolved):
+        raise HTTPException(status_code=404, detail="Directory not found")
+
+    items = []
+    try:
+        for entry in sorted(os.scandir(resolved), key=lambda e: e.name):
+            stat = entry.stat()
+            items.append({
+                "name": entry.name,
+                "type": "directory" if entry.is_dir() else "file",
+                "size": stat.st_size if entry.is_file() else 0,
+                "modified": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+            })
+    except PermissionError:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
+    return {"ok": True, "path": path, "items": items[:500], "total": len(items)}
 
 
 @router.get("/fs/read")
 def read_file_content(path: str):
-    """Read file contents."""
-    return {
-        "ok": True,
-        "path": path,
-        "content": "File content would be here...",
-        "size": 1024,
-        "encoding": "utf-8"
-    }
+    """Read file contents. Scoped to allowed data roots."""
+    import os
+    allowed_roots = [
+        os.getenv("CAREERTROJAN_DATA_ROOT", "/data/ai_data_final"),
+        os.getenv("CAREERTROJAN_WORKING_ROOT", "/data/working_copy"),
+    ]
+    resolved = os.path.realpath(path)
+    if not any(resolved.startswith(os.path.realpath(r)) for r in allowed_roots):
+        raise HTTPException(status_code=403, detail="Path outside allowed data roots")
+    if not os.path.isfile(resolved):
+        raise HTTPException(status_code=404, detail="File not found")
+    stat = os.stat(resolved)
+    if stat.st_size > 5 * 1024 * 1024:  # 5 MB limit
+        raise HTTPException(status_code=413, detail="File too large (>5MB)")
+    try:
+        with open(resolved, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read()
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+    return {"ok": True, "path": path, "content": content, "size": stat.st_size, "encoding": "utf-8"}
 
 
 # ============================================================================
@@ -73,40 +100,40 @@ def read_file_content(path: str):
 # ============================================================================
 
 @router.get("/ontology/keywords")
-def get_keywords():
+def get_keywords(category: Optional[str] = None, limit: int = 200):
     """
-    Get keyword ontology for resume/job matching.
-    Used by Keyword Ontology page.
+    Get keyword ontology from collocation engine gazetteers.
     """
-    return {
-        "ok": True,
-        "keywords": [
-            {"id": "kw_1", "term": "Python", "category": "programming", "weight": 1.0, "synonyms": ["py", "python3"]},
-            {"id": "kw_2", "term": "Machine Learning", "category": "skills", "weight": 0.9, "synonyms": ["ML", "AI"]},
-            {"id": "kw_3", "term": "FastAPI", "category": "frameworks", "weight": 0.8, "synonyms": ["fast-api"]},
-            {"id": "kw_4", "term": "React", "category": "frontend", "weight": 0.85, "synonyms": ["ReactJS", "React.js"]}
-        ],
-        "categories": ["programming", "skills", "frameworks", "frontend", "backend", "devops"],
-        "total": 4
-    }
+    try:
+        from services.ai_engine.collocation_data_loader import get_all_gazetteers
+        gaz = get_all_gazetteers()
+        keywords = []
+        categories_seen = set()
+        for cat, info in gaz.get("categories", {}).items():
+            if category and cat != category:
+                continue
+            categories_seen.add(cat)
+            for idx, term in enumerate(info.get("sample", []) if limit <= 10 else (info.get("sample", [])[:limit])):
+                keywords.append({"id": f"{cat}_{idx}", "term": term, "category": cat, "weight": 1.0, "synonyms": []})
+        return {"ok": True, "keywords": keywords[:limit], "categories": sorted(categories_seen), "total": len(keywords)}
+    except Exception as exc:
+        logger.warning("Collocation engine not available: %s", exc)
+        return {"ok": True, "keywords": [], "categories": [], "total": 0, "note": "collocation engine not loaded"}
 
 
 @router.get("/ontology/phrases")
-def get_phrases():
+def get_phrases(limit: int = 200):
     """
-    Get phrase patterns for resume parsing.
-    Used by Phrase Manager page.
+    Get known phrases from collocation engine.
     """
-    return {
-        "ok": True,
-        "phrases": [
-            {"id": "ph_1", "pattern": "X+ years of experience", "type": "experience", "examples": ["5+ years of experience", "3+ years of experience"]},
-            {"id": "ph_2", "pattern": "Bachelor's in X", "type": "education", "examples": ["Bachelor's in Computer Science"]},
-            {"id": "ph_3", "pattern": "Led a team of X", "type": "leadership", "examples": ["Led a team of 5", "Led a team of engineers"]}
-        ],
-        "types": ["experience", "education", "leadership", "technical", "achievement"],
-        "total": 3
-    }
+    try:
+        from services.ai_engine.collocation_engine import collocation_engine as ce
+        phrases_list = sorted(ce.known_phrases)[:limit]
+        items = [{"id": f"ph_{i}", "pattern": p, "type": "learned", "examples": []} for i, p in enumerate(phrases_list)]
+        return {"ok": True, "phrases": items, "types": ["seed", "learned", "gazetteer"], "total": len(ce.known_phrases)}
+    except Exception as exc:
+        logger.warning("Collocation engine not available: %s", exc)
+        return {"ok": True, "phrases": [], "types": [], "total": 0, "note": "collocation engine not loaded"}
 
 
 # ============================================================================
@@ -116,42 +143,33 @@ def get_phrases():
 @router.get("/models/registry")
 def get_model_registry():
     """
-    Get AI model registry and configurations.
-    Used by Model Registry page.
+    Get AI model registry — discovers trained models on disk + configured LLM providers.
     """
-    return {
-        "ok": True,
-        "models": [
-            {
-                "id": "gpt-4-turbo",
-                "provider": "openai",
-                "name": "GPT-4 Turbo",
+    import os, glob
+    models = []
+    # 1. Discover trained .pkl / .h5 models from disk
+    data_root = os.getenv("CAREERTROJAN_DATA_ROOT", "./data/ai_data_final")
+    models_dir = os.path.join(data_root, "trained_models")
+    if os.path.isdir(models_dir):
+        for fp in sorted(glob.glob(os.path.join(models_dir, "*"))):
+            name = os.path.basename(fp)
+            ext = os.path.splitext(name)[1]
+            size_kb = round(os.path.getsize(fp) / 1024, 1)
+            models.append({
+                "id": name,
+                "provider": "local",
+                "name": name.replace("_", " ").replace(ext, "").title(),
                 "status": "active",
-                "max_tokens": 128000,
-                "cost_per_1k_tokens": 0.01,
-                "use_cases": ["resume_analysis", "job_matching", "coaching"]
-            },
-            {
-                "id": "claude-3-sonnet",
-                "provider": "anthropic",
-                "name": "Claude 3 Sonnet",
-                "status": "active",
-                "max_tokens": 200000,
-                "cost_per_1k_tokens": 0.003,
-                "use_cases": ["document_parsing", "qa"]
-            },
-            {
-                "id": "text-embedding-3-small",
-                "provider": "openai",
-                "name": "Text Embedding 3 Small",
-                "status": "active",
-                "dimensions": 1536,
-                "cost_per_1k_tokens": 0.00002,
-                "use_cases": ["semantic_search", "similarity"]
-            }
-        ],
-        "total": 3
-    }
+                "format": ext.lstrip("."),
+                "size_kb": size_kb,
+                "use_cases": [],
+            })
+    # 2. Configured LLM providers
+    if os.getenv("OPENAI_API_KEY"):
+        models.append({"id": "gpt-4-turbo", "provider": "openai", "name": "GPT-4 Turbo", "status": "active"})
+    if os.getenv("ANTHROPIC_API_KEY"):
+        models.append({"id": "claude-3-sonnet", "provider": "anthropic", "name": "Claude 3 Sonnet", "status": "active"})
+    return {"ok": True, "models": models, "total": len(models)}
 
 
 # ============================================================================
@@ -159,30 +177,33 @@ def get_model_registry():
 # ============================================================================
 
 @router.get("/email/analytics")
-def get_email_analytics():
+def get_email_analytics(days: int = 7):
     """
-    Get email sending analytics.
-    Used by Email Analytics page.
+    Get email sending analytics from DB.
     """
-    now = datetime.utcnow()
-    return {
-        "ok": True,
-        "period": "7d",
-        "stats": {
-            "sent": 1250,
-            "delivered": 1220,
-            "opened": 890,
-            "clicked": 234,
-            "bounced": 30,
-            "unsubscribed": 5
-        },
-        "open_rate": 0.73,
-        "click_rate": 0.19,
-        "daily": [
-            {"date": (now - timedelta(days=i)).strftime("%Y-%m-%d"), "sent": 180, "opened": 130}
-            for i in range(7)
-        ]
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        cutoff = (datetime.utcnow() - timedelta(days=days)).isoformat()
+        total = db.execute("SELECT count(*) FROM email_sends WHERE created_at >= :c", {"c": cutoff}).scalar() or 0
+        by_status = db.execute(
+            "SELECT status, count(*) FROM email_sends WHERE created_at >= :c GROUP BY status", {"c": cutoff}
+        ).fetchall()
+        stats = {r[0]: r[1] for r in by_status} if by_status else {}
+        daily = []
+        for i in range(days):
+            d = (datetime.utcnow() - timedelta(days=i)).strftime("%Y-%m-%d")
+            cnt = db.execute(
+                "SELECT count(*) FROM email_sends WHERE created_at::date = :d", {"d": d}
+            ).scalar() or 0
+            daily.append({"date": d, "sent": cnt})
+        sent = stats.get("sent", 0) + stats.get("delivered", 0) + stats.get("pending", 0)
+        return {"ok": True, "period": f"{days}d", "stats": stats, "total_sent": total, "daily": daily}
+    except Exception as exc:
+        logger.warning("email analytics query failed: %s", exc)
+        return {"ok": True, "period": f"{days}d", "stats": {}, "total_sent": 0, "daily": [], "note": "email_sends table not available"}
+    finally:
+        db.close()
 
 
 @router.get("/email/captured")
@@ -191,15 +212,35 @@ def get_captured_emails():
     Get captured/queued emails for review.
     Used by Email Capture page.
     """
-    return {
-        "ok": True,
-        "emails": [
-            {"id": "em_1", "to": "user@example.com", "subject": "Welcome to CareerTrojan", "status": "sent", "created_at": "2026-02-10T10:00:00Z"},
-            {"id": "em_2", "to": "another@example.com", "subject": "Your Resume Score", "status": "pending", "created_at": "2026-02-10T11:00:00Z"}
-        ],
-        "total": 2,
-        "pending_count": 1
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        # Query email_campaigns or email_queue table for recent sends
+        rows = db.execute(
+            """SELECT id, recipient_email, subject, status, created_at
+               FROM email_sends ORDER BY created_at DESC LIMIT 50"""
+        ).fetchall()
+        emails = [
+            {
+                "id": str(r[0]),
+                "to": r[1],
+                "subject": r[2],
+                "status": r[3],
+                "created_at": r[4].isoformat() if r[4] else None,
+            }
+            for r in rows
+        ] if rows else []
+        return {
+            "ok": True,
+            "emails": emails,
+            "total": len(emails),
+            "pending_count": sum(1 for e in emails if e["status"] == "pending"),
+        }
+    except Exception as exc:
+        logger.warning("email_sends table not available yet: %s", exc)
+        return {"ok": True, "emails": [], "total": 0, "pending_count": 0}
+    finally:
+        db.close()
 
 
 # ============================================================================
@@ -207,33 +248,28 @@ def get_captured_emails():
 # ============================================================================
 
 @router.get("/eval/runs")
-def get_evaluation_runs():
+def get_evaluation_runs(limit: int = 50):
     """
-    Get AI evaluation/testing runs.
-    Used by Evaluation Harness page.
+    Get AI evaluation runs from control plane evaluation history.
     """
-    return {
-        "ok": True,
-        "runs": [
-            {
-                "id": "eval_001",
-                "name": "Resume Parser Accuracy Test",
-                "status": "completed",
-                "started_at": "2026-02-10T08:00:00Z",
-                "completed_at": "2026-02-10T08:30:00Z",
-                "metrics": {"accuracy": 0.94, "f1_score": 0.92, "samples": 500}
-            },
-            {
-                "id": "eval_002",
-                "name": "Job Match Quality Test",
-                "status": "running",
-                "started_at": "2026-02-10T12:00:00Z",
-                "completed_at": None,
-                "metrics": {"progress": 0.45}
-            }
-        ],
-        "total": 2
-    }
+    try:
+        from services.ai_engine.control_plane.evaluation import EvaluationPipeline
+        ep = EvaluationPipeline()
+        history = getattr(ep, "history", [])[-limit:]
+        runs = []
+        for i, entry in enumerate(reversed(history)):
+            runs.append({
+                "id": f"eval_{i:03d}",
+                "name": entry.get("test_name", "unnamed"),
+                "status": "completed" if entry.get("passed") else "failed",
+                "started_at": entry.get("timestamp"),
+                "completed_at": entry.get("completed_at"),
+                "metrics": entry.get("metrics", {}),
+            })
+        return {"ok": True, "runs": runs, "total": len(runs)}
+    except Exception as exc:
+        logger.warning("Evaluation history not available: %s", exc)
+        return {"ok": True, "runs": [], "total": 0, "note": "evaluation pipeline not available"}
 
 
 # ============================================================================
@@ -241,35 +277,68 @@ def get_evaluation_runs():
 # ============================================================================
 
 @router.get("/runs/parser")
-def get_parser_runs():
+def get_parser_runs(limit: int = 50):
     """
-    Get resume parser processing runs.
-    Used by Parser Runs page.
+    Get parser processing runs from interaction logs.
     """
-    return {
-        "ok": True,
-        "runs": [
-            {"id": "run_p1", "type": "batch", "status": "completed", "processed": 50, "errors": 2, "started_at": "2026-02-10T06:00:00Z", "duration_sec": 120},
-            {"id": "run_p2", "type": "single", "status": "completed", "processed": 1, "errors": 0, "started_at": "2026-02-10T11:30:00Z", "duration_sec": 3}
-        ],
-        "total": 2
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, session_id, status_code, response_time_ms, created_at
+               FROM interactions WHERE action_type = 'cv_upload'
+               ORDER BY created_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        runs = []
+        for r in (rows or []):
+            runs.append({
+                "id": f"run_p{r[0]}",
+                "type": "single",
+                "status": "completed" if r[2] and r[2] < 400 else "failed",
+                "processed": 1,
+                "errors": 0 if r[2] and r[2] < 400 else 1,
+                "started_at": r[4].isoformat() if r[4] else None,
+                "duration_sec": round(r[3] / 1000, 2) if r[3] else 0,
+            })
+        return {"ok": True, "runs": runs, "total": len(runs)}
+    except Exception as exc:
+        logger.warning("parser runs query failed: %s", exc)
+        return {"ok": True, "runs": [], "total": 0, "note": "interactions table not available"}
+    finally:
+        db.close()
 
 
 @router.get("/runs/enrichment")
-def get_enrichment_runs():
+def get_enrichment_runs(limit: int = 50):
     """
-    Get AI enrichment processing runs.
-    Used by Enrichment Runs page.
+    Get AI enrichment processing runs from interaction logs.
     """
-    return {
-        "ok": True,
-        "runs": [
-            {"id": "run_e1", "type": "resume_enhance", "status": "completed", "items": 25, "tokens_used": 45000, "started_at": "2026-02-10T07:00:00Z"},
-            {"id": "run_e2", "type": "skill_extraction", "status": "completed", "items": 100, "tokens_used": 12000, "started_at": "2026-02-09T14:00:00Z"}
-        ],
-        "total": 2
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, session_id, status_code, response_time_ms, metadata_json, created_at
+               FROM interactions WHERE action_type IN ('enrichment', 'ai_enrichment', 'skill_extraction')
+               ORDER BY created_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        runs = []
+        for r in (rows or []):
+            runs.append({
+                "id": f"run_e{r[0]}",
+                "type": "enrichment",
+                "status": "completed" if r[2] and r[2] < 400 else "failed",
+                "items": 1,
+                "started_at": r[5].isoformat() if r[5] else None,
+                "duration_sec": round(r[3] / 1000, 2) if r[3] else 0,
+            })
+        return {"ok": True, "runs": runs, "total": len(runs)}
+    except Exception as exc:
+        logger.warning("enrichment runs query failed: %s", exc)
+        return {"ok": True, "runs": [], "total": 0, "note": "interactions table not available"}
+    finally:
+        db.close()
 
 
 # ============================================================================
@@ -279,40 +348,40 @@ def get_enrichment_runs():
 @router.get("/prompts/registry")
 def get_prompts_registry():
     """
-    Get prompt templates registry.
-    Used by Prompt Registry page.
+    Get prompt templates — discovers .py inference modules with system_prompt strings.
     """
-    return {
-        "ok": True,
-        "prompts": [
-            {
-                "id": "prompt_resume_analyze",
-                "name": "Resume Analysis",
-                "version": "2.1",
-                "model": "gpt-4-turbo",
-                "category": "parsing",
-                "last_updated": "2026-02-08T10:00:00Z"
-            },
-            {
-                "id": "prompt_job_match",
-                "name": "Job Matching",
-                "version": "1.5",
-                "model": "gpt-4-turbo",
-                "category": "matching",
-                "last_updated": "2026-02-05T14:00:00Z"
-            },
-            {
-                "id": "prompt_interview_coach",
-                "name": "Interview Coach",
-                "version": "3.0",
-                "model": "claude-3-sonnet",
-                "category": "coaching",
-                "last_updated": "2026-02-10T09:00:00Z"
-            }
-        ],
-        "categories": ["parsing", "matching", "coaching", "feedback"],
-        "total": 3
-    }
+    import os, glob
+    prompts = []
+    ai_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "workers", "ai", "ai-workers", "inference")
+    ai_root = os.path.normpath(ai_root)
+    if os.path.isdir(ai_root):
+        for fp in sorted(glob.glob(os.path.join(ai_root, "*.py"))):
+            name = os.path.basename(fp).replace(".py", "").replace("_", " ").title()
+            stat = os.stat(fp)
+            prompts.append({
+                "id": os.path.basename(fp),
+                "name": name,
+                "version": "1.0",
+                "model": "varies",
+                "category": "inference",
+                "last_updated": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+            })
+    # Also check training scripts
+    train_root = os.path.join(os.path.dirname(ai_root), "training")
+    if os.path.isdir(train_root):
+        for fp in sorted(glob.glob(os.path.join(train_root, "*.py"))):
+            name = os.path.basename(fp).replace(".py", "").replace("_", " ").title()
+            stat = os.stat(fp)
+            prompts.append({
+                "id": os.path.basename(fp),
+                "name": name,
+                "version": "1.0",
+                "model": "varies",
+                "category": "training",
+                "last_updated": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+            })
+    categories = sorted(set(p["category"] for p in prompts))
+    return {"ok": True, "prompts": prompts, "categories": categories, "total": len(prompts)}
 
 
 # ============================================================================
@@ -320,39 +389,68 @@ def get_prompts_registry():
 # ============================================================================
 
 @router.get("/audit/admin")
-def get_admin_audit_log():
+def get_admin_audit_log(limit: int = 50):
     """
-    Get admin action audit log.
-    Used by Admin Audit page.
+    Get admin action audit log from DB.
     """
-    now = datetime.utcnow()
-    return {
-        "ok": True,
-        "events": [
-            {"id": "aud_1", "admin_id": "admin_1", "action": "user_disable", "target": "user_123", "timestamp": (now - timedelta(hours=2)).isoformat(), "ip": "192.168.1.1"},
-            {"id": "aud_2", "admin_id": "admin_1", "action": "config_update", "target": "rate_limits", "timestamp": (now - timedelta(hours=5)).isoformat(), "ip": "192.168.1.1"},
-            {"id": "aud_3", "admin_id": "admin_2", "action": "export_data", "target": "users_report", "timestamp": (now - timedelta(days=1)).isoformat(), "ip": "192.168.1.2"}
-        ],
-        "total": 3
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, actor_id, action, resource_type, resource_id, detail, ip_address, created_at
+               FROM audit_log WHERE actor_id IS NOT NULL
+               ORDER BY created_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        events = []
+        for r in (rows or []):
+            events.append({
+                "id": f"aud_{r[0]}",
+                "admin_id": str(r[1]) if r[1] else None,
+                "action": r[2],
+                "target": f"{r[3]}:{r[4]}" if r[3] else r[4],
+                "detail": r[5],
+                "ip": r[6],
+                "timestamp": r[7].isoformat() if r[7] else None,
+            })
+        return {"ok": True, "events": events, "total": len(events)}
+    except Exception as exc:
+        logger.warning("audit_log query failed: %s", exc)
+        return {"ok": True, "events": [], "total": 0, "note": "audit_log table not available"}
+    finally:
+        db.close()
 
 
 @router.get("/audit/users")
-def get_user_audit_log():
+def get_user_audit_log(limit: int = 50):
     """
-    Get user activity audit log.
-    Used by User Audit page.
+    Get user activity audit log from interactions table.
     """
-    now = datetime.utcnow()
-    return {
-        "ok": True,
-        "events": [
-            {"id": "ua_1", "user_id": "user_456", "action": "resume_upload", "details": "uploaded resume.pdf", "timestamp": (now - timedelta(hours=1)).isoformat()},
-            {"id": "ua_2", "user_id": "user_789", "action": "profile_update", "details": "updated bio", "timestamp": (now - timedelta(hours=3)).isoformat()},
-            {"id": "ua_3", "user_id": "user_456", "action": "job_apply", "details": "applied to Senior Dev", "timestamp": (now - timedelta(hours=4)).isoformat()}
-        ],
-        "total": 3
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, user_id, action_type, path, status_code, created_at
+               FROM interactions WHERE user_id IS NOT NULL
+               ORDER BY created_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        events = []
+        for r in (rows or []):
+            events.append({
+                "id": f"ua_{r[0]}",
+                "user_id": str(r[1]) if r[1] else None,
+                "action": r[2] or "request",
+                "details": r[3] or "",
+                "status_code": r[4],
+                "timestamp": r[5].isoformat() if r[5] else None,
+            })
+        return {"ok": True, "events": events, "total": len(events)}
+    except Exception as exc:
+        logger.warning("interactions query failed: %s", exc)
+        return {"ok": True, "events": [], "total": 0, "note": "interactions table not available"}
+    finally:
+        db.close()
 
 
 # ============================================================================
@@ -362,51 +460,44 @@ def get_user_audit_log():
 @router.get("/analytics/fairness")
 def get_fairness_analytics():
     """
-    Get bias and fairness metrics.
-    Used by Bias and Fairness page.
+    Get bias and fairness metrics from drift detection module.
     """
-    return {
-        "ok": True,
-        "metrics": {
-            "demographic_parity": 0.94,
-            "equal_opportunity": 0.91,
-            "calibration_score": 0.89
-        },
-        "by_dimension": {
-            "gender": {"parity": 0.96, "samples": 1000},
-            "age_group": {"parity": 0.92, "samples": 1000},
-            "location": {"parity": 0.95, "samples": 1000}
-        },
-        "recommendations": [
-            "Consider reviewing age group scoring weights",
-            "Location bias within acceptable range"
-        ]
-    }
+    try:
+        from services.ai_engine.control_plane.drift import DriftDetector
+        dd = DriftDetector()
+        report = dd.get_latest_report() if hasattr(dd, "get_latest_report") else {}
+        return {
+            "ok": True,
+            "metrics": report.get("fairness", {}),
+            "by_dimension": report.get("dimensions", {}),
+            "recommendations": report.get("recommendations", []),
+            "source": "drift_detector",
+        }
+    except Exception as exc:
+        logger.warning("fairness analytics not available: %s", exc)
+        return {"ok": True, "metrics": {}, "by_dimension": {}, "recommendations": [], "note": "drift detector not available"}
 
 
 @router.get("/analytics/scoring")
 def get_scoring_analytics():
     """
-    Get resume scoring analytics.
-    Used by Scoring Analytics page.
+    Get resume scoring distribution from calibration module.
     """
-    return {
-        "ok": True,
-        "distribution": {
-            "0-20": 50,
-            "21-40": 120,
-            "41-60": 350,
-            "61-80": 420,
-            "81-100": 180
-        },
-        "average_score": 62.5,
-        "median_score": 65,
-        "top_skills_impact": [
-            {"skill": "Python", "avg_boost": 8.5},
-            {"skill": "Leadership", "avg_boost": 7.2},
-            {"skill": "Cloud", "avg_boost": 6.8}
-        ]
-    }
+    try:
+        from services.ai_engine.control_plane.calibration import ConfidenceCalibrator
+        cal = ConfidenceCalibrator()
+        stats = cal.get_calibration_stats() if hasattr(cal, "get_calibration_stats") else {}
+        return {
+            "ok": True,
+            "distribution": stats.get("distribution", {}),
+            "average_score": stats.get("mean", 0),
+            "median_score": stats.get("median", 0),
+            "total_samples": stats.get("total_samples", 0),
+            "source": "calibration_module",
+        }
+    except Exception as exc:
+        logger.warning("scoring analytics not available: %s", exc)
+        return {"ok": True, "distribution": {}, "average_score": 0, "median_score": 0, "note": "calibration module not available"}
 
 
 # ============================================================================
@@ -439,198 +530,313 @@ def get_admin_about():
 @router.get("/admin/backup")
 def get_admin_backup():
     """
-    Get backup status for admin tools.
-    Used by Backup & Restore in tools section.
+    Get backup status — scans backup directory.
     """
+    import os
+    backup_dir = os.getenv("CAREERTROJAN_BACKUP_DIR", "/backups/careertrojan")
+    if not os.path.isdir(backup_dir):
+        return {"ok": True, "last_backup": None, "backup_location": backup_dir, "backups": [], "note": "backup directory not found"}
+    backups = []
+    for entry in sorted(os.scandir(backup_dir), key=lambda e: e.stat().st_mtime, reverse=True)[:20]:
+        stat = entry.stat()
+        backups.append({
+            "name": entry.name,
+            "size_mb": round(stat.st_size / (1024 * 1024), 1),
+            "created_at": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+        })
     return {
         "ok": True,
-        "last_backup": "2026-02-10T02:00:00Z",
-        "backup_location": "/backups/careertrojan",
-        "retention_policy": "30 days",
-        "auto_backup": True,
-        "schedule": "daily at 02:00 UTC"
+        "backup_location": backup_dir,
+        "last_backup": backups[0]["created_at"] if backups else None,
+        "backups": backups,
+        "total": len(backups),
     }
 
 
 @router.get("/admin/data-health")
 def get_data_health():
     """
-    Get data roots health status.
-    Used by Data Roots Health page.
+    Get data roots health status — live filesystem scan.
     """
-    return {
-        "ok": True,
-        "roots": [
-            {"path": "/data/ai_data_final", "status": "healthy", "size_gb": 2.5, "files": 15000, "last_scan": "2026-02-10T10:00:00Z"},
-            {"path": "/data/user_uploads", "status": "healthy", "size_gb": 1.2, "files": 3500, "last_scan": "2026-02-10T10:00:00Z"},
-            {"path": "/data/exports", "status": "warning", "size_gb": 0.8, "files": 250, "last_scan": "2026-02-10T10:00:00Z", "warning": "Cleanup recommended"}
-        ]
-    }
+    import os
+    roots_config = [
+        (os.getenv("CAREERTROJAN_DATA_ROOT", "/data/ai_data_final"), "ai_data"),
+        (os.getenv("CAREERTROJAN_USER_DATA", "/data/user_uploads"), "user_uploads"),
+        (os.getenv("CAREERTROJAN_WORKING_ROOT", "/data/working_copy"), "working"),
+    ]
+    roots = []
+    for root_path, label in roots_config:
+        entry = {"path": root_path, "label": label}
+        if not os.path.isdir(root_path):
+            entry.update({"status": "missing", "size_gb": 0, "files": 0})
+        else:
+            total_size = 0
+            file_count = 0
+            try:
+                for dirpath, _dirs, files in os.walk(root_path):
+                    for f in files:
+                        fp = os.path.join(dirpath, f)
+                        try:
+                            total_size += os.path.getsize(fp)
+                            file_count += 1
+                        except OSError:
+                            pass
+            except Exception:
+                pass
+            entry.update({
+                "status": "healthy",
+                "size_gb": round(total_size / (1024 ** 3), 2),
+                "files": file_count,
+                "last_scan": datetime.utcnow().isoformat(),
+            })
+        roots.append(entry)
+    return {"ok": True, "roots": roots}
 
 
 @router.get("/admin/diagnostics")
 def get_admin_diagnostics():
     """
-    Get system diagnostics.
-    Used by Diagnostics page in tools section.
+    Get live system diagnostics.
     """
-    import platform
-    import sys
-    
+    import platform, sys, os
+    # Memory via psutil if available
+    mem_info = {}
+    try:
+        import psutil
+        mem = psutil.virtual_memory()
+        mem_info = {
+            "total_mb": round(mem.total / (1024**2)),
+            "used_mb": round(mem.used / (1024**2)),
+            "available_mb": round(mem.available / (1024**2)),
+        }
+    except ImportError:
+        mem_info = {"note": "psutil not installed"}
+
+    # DB check
+    db_status = "unknown"
+    try:
+        from services.backend_api.db.connection import SessionLocal
+        sess = SessionLocal()
+        sess.execute("SELECT 1")
+        db_status = "healthy"
+        sess.close()
+    except Exception as exc:
+        db_status = f"error: {exc}"
+
+    # Redis check
+    cache_status = "unknown"
+    try:
+        from services.backend_api.db.connection import redis_client
+        redis_client.ping()
+        cache_status = "healthy"
+    except Exception as exc:
+        cache_status = f"error: {exc}"
+
     return {
         "ok": True,
         "system": {
             "os": platform.system(),
             "platform": platform.platform(),
             "python": sys.version,
-            "architecture": platform.machine()
+            "architecture": platform.machine(),
+            "cpu_count": os.cpu_count() or 0,
         },
-        "memory": {
-            "total_mb": 16384,
-            "used_mb": 8192,
-            "available_mb": 8192
-        },
-        "disk": {
-            "total_gb": 500,
-            "used_gb": 250,
-            "free_gb": 250
-        },
-        "services": {
-            "database": "healthy",
-            "cache": "healthy",
-            "ai_engine": "healthy",
-            "parser": "healthy"
-        }
+        "memory": mem_info,
+        "services": {"database": db_status, "cache": cache_status},
     }
 
 
 @router.get("/admin/api-explorer")
 def get_admin_api_explorer():
     """
-    Get API explorer data.
-    Used by API Explorer page in tools section.
+    Get API explorer data — live from OpenAPI schema.
     """
-    return {
-        "ok": True,
-        "openapi_url": "/openapi.json",
-        "docs_url": "/docs",
-        "redoc_url": "/redoc",
-        "total_endpoints": 195,
-        "by_category": {
-            "auth": 8,
-            "user": 5,
-            "admin": 25,
-            "mentor": 12,
-            "jobs": 4,
-            "resume": 5,
-            "payment": 15,
-            "ops": 15,
-            "coaching": 10,
-            "analytics": 8
+    try:
+        from services.backend_api.main import app
+        total = 0
+        by_tag: Dict[str, int] = {}
+        for route in getattr(app, "routes", []):
+            methods = getattr(route, "methods", set())
+            if not methods:
+                continue
+            tags = getattr(route, "tags", []) or ["untagged"]
+            for tag in tags:
+                by_tag[tag] = by_tag.get(tag, 0) + len(methods)
+            total += len(methods)
+        return {
+            "ok": True,
+            "openapi_url": "/openapi.json",
+            "docs_url": "/docs",
+            "redoc_url": "/redoc",
+            "total_endpoints": total,
+            "by_category": by_tag,
         }
-    }
+    except Exception as exc:
+        logger.warning("api-explorer introspection failed: %s", exc)
+        return {"ok": True, "openapi_url": "/openapi.json", "docs_url": "/docs", "redoc_url": "/redoc", "total_endpoints": 0, "by_category": {}}
 
 
 @router.get("/admin/exports")
-def get_admin_exports():
+def get_admin_exports(limit: int = 50):
     """
-    Get export jobs and history.
-    Used by Exports page in tools section.
+    Get export jobs from DataExportRequest table.
     """
-    return {
-        "ok": True,
-        "exports": [
-            {"id": "exp_1", "type": "users", "format": "csv", "status": "completed", "size_kb": 450, "created_at": "2026-02-10T12:00:00Z"},
-            {"id": "exp_2", "type": "analytics", "format": "json", "status": "completed", "size_kb": 1200, "created_at": "2026-02-09T12:00:00Z"},
-            {"id": "exp_3", "type": "resumes", "format": "zip", "status": "processing", "size_kb": 0, "created_at": "2026-02-10T14:00:00Z"}
-        ],
-        "total": 3
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, user_id, status, file_path, requested_at, completed_at
+               FROM data_export_requests ORDER BY requested_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        exports = []
+        for r in (rows or []):
+            size_kb = 0
+            if r[3]:
+                try:
+                    size_kb = round(os.path.getsize(r[3]) / 1024, 1)
+                except OSError:
+                    pass
+            exports.append({
+                "id": str(r[0]),
+                "user_id": str(r[1]) if r[1] else None,
+                "status": r[2],
+                "file_path": r[3],
+                "size_kb": size_kb,
+                "requested_at": r[4].isoformat() if r[4] else None,
+                "completed_at": r[5].isoformat() if r[5] else None,
+            })
+        return {"ok": True, "exports": exports, "total": len(exports)}
+    except Exception as exc:
+        logger.warning("data_export_requests query failed: %s", exc)
+        return {"ok": True, "exports": [], "total": 0, "note": "data_export_requests table not available"}
+    finally:
+        db.close()
 
 
 @router.get("/admin/logs-viewer")
-def get_admin_logs():
+def get_admin_logs(level: str = "all", limit: int = 100):
     """
-    Get system logs for viewer.
-    Used by Logs Viewer page in tools section.
+    Get system logs from log file — real log reader.
     """
-    now = datetime.utcnow()
+    import os, json as _json
+    log_path = os.getenv("CAREERTROJAN_LOG_FILE", "/app/logs/backend.log")
+    logs = []
+    levels_seen = set()
+    try:
+        if os.path.isfile(log_path):
+            with open(log_path, "r") as f:
+                tail_lines = f.readlines()[-limit * 2:]
+            for line in tail_lines:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = _json.loads(line)
+                except _json.JSONDecodeError:
+                    entry = {"timestamp": "", "level": "INFO", "service": "backend", "message": line}
+                entry_level = entry.get("level", "INFO").upper()
+                levels_seen.add(entry_level)
+                if level != "all" and entry_level != level.upper():
+                    continue
+                logs.append(entry)
+    except Exception as exc:
+        logger.warning("Could not read log file %s: %s", log_path, exc)
+
     return {
         "ok": True,
-        "logs": [
-            {"timestamp": (now - timedelta(minutes=i*5)).isoformat(), "level": ["INFO", "WARN", "ERROR", "DEBUG"][i % 4], "service": "backend", "message": f"Log entry {i+1}"}
-            for i in range(20)
-        ],
-        "levels": ["DEBUG", "INFO", "WARN", "ERROR"],
-        "services": ["backend", "worker", "scheduler", "parser"]
+        "logs": logs[-limit:],
+        "levels": sorted(levels_seen) if levels_seen else ["DEBUG", "INFO", "WARN", "ERROR"],
+        "services": ["backend"],
+        "total": len(logs),
     }
 
 
 @router.get("/admin/notifications")
-def get_admin_notifications():
+def get_admin_notifications(limit: int = 20):
     """
-    Get admin notifications.
-    Used by Notifications page in tools section.
+    Get admin notifications from recent audit log events.
     """
-    return {
-        "ok": True,
-        "notifications": [
-            {"id": "n1", "type": "info", "title": "System Update", "message": "v1.2.0 deployed", "read": False, "created_at": "2026-02-10T10:00:00Z"},
-            {"id": "n2", "type": "warning", "title": "High Memory Usage", "message": "Memory above 80%", "read": True, "created_at": "2026-02-10T09:00:00Z"},
-            {"id": "n3", "type": "success", "title": "Backup Complete", "message": "Daily backup succeeded", "read": True, "created_at": "2026-02-10T02:00:00Z"}
-        ],
-        "unread_count": 1
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, action, resource_type, detail, created_at
+               FROM audit_log ORDER BY created_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        notifications = []
+        for r in (rows or []):
+            ntype = "info"
+            action = r[1] or ""
+            if "delete" in action or "error" in action:
+                ntype = "warning"
+            elif "export" in action or "complete" in action:
+                ntype = "success"
+            notifications.append({
+                "id": f"n{r[0]}",
+                "type": ntype,
+                "title": action.replace("_", " ").title(),
+                "message": r[3] or f"{r[2] or ''} {action}",
+                "read": True,
+                "created_at": r[4].isoformat() if r[4] else None,
+            })
+        return {"ok": True, "notifications": notifications, "unread_count": 0}
+    except Exception as exc:
+        logger.warning("notifications query failed: %s", exc)
+        return {"ok": True, "notifications": [], "unread_count": 0, "note": "audit_log table not available"}
+    finally:
+        db.close()
 
 
 @router.get("/admin/resume-viewer")
-def get_resume_viewer_data():
+def get_resume_viewer_data(resume_id: Optional[str] = None):
     """
-    Get resume JSON data for viewer.
-    Used by Resume JSON Viewer page.
+    Get resume JSON data for viewer. Fetches from DB if resume_id given.
     """
-    return {
-        "ok": True,
-        "sample_resume": {
-            "id": "resume_sample",
-            "contact": {
-                "name": "John Doe",
-                "email": "john@example.com",
-                "phone": "555-0100"
-            },
-            "summary": "Experienced software engineer...",
-            "skills": ["Python", "React", "FastAPI", "PostgreSQL"],
-            "experience": [
-                {"title": "Senior Developer", "company": "TechCorp", "years": "2022-present"}
-            ],
-            "education": [
-                {"degree": "BS Computer Science", "school": "MIT", "year": "2018"}
-            ]
-        }
-    }
+    if not resume_id:
+        return {"ok": True, "sample_resume": None, "message": "Provide ?resume_id= to load a resume"}
+    try:
+        from services.backend_api.db.connection import get_db
+        db = next(get_db())
+        row = db.execute(
+            "SELECT id, user_id, parsed_json, created_at FROM resumes WHERE id = :rid",
+            {"rid": resume_id},
+        ).fetchone()
+        db.close()
+        if not row:
+            raise HTTPException(status_code=404, detail="Resume not found")
+        import json as _json
+        parsed = _json.loads(row[2]) if row[2] else {}
+        return {"ok": True, "sample_resume": parsed, "resume_id": str(row[0]), "user_id": str(row[1])}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.warning("Resume viewer query failed: %s", exc)
+        return {"ok": False, "error": str(exc)}
 
 
 @router.get("/admin/route-map")
 def get_admin_route_map():
     """
-    Get route map for admin tools.
-    Used by Route Map page in tools section.
+    Get live route map from FastAPI app object.
     """
-    return {
-        "ok": True,
-        "routes": {
-            "admin": 25,
-            "user": 5,
-            "auth": 8,
-            "mentor": 12,
-            "ops": 15,
-            "jobs": 4,
-            "resume": 5,
-            "payment": 15,
-            "coaching": 10
-        },
-        "total": 195
-    }
+    try:
+        from services.backend_api.main import app
+        by_tag: Dict[str, int] = {}
+        total = 0
+        for route in getattr(app, "routes", []):
+            methods = getattr(route, "methods", set())
+            if not methods:
+                continue
+            tags = getattr(route, "tags", []) or ["untagged"]
+            for tag in tags:
+                by_tag[tag] = by_tag.get(tag, 0) + len(methods)
+            total += len(methods)
+        return {"ok": True, "routes": by_tag, "total": total}
+    except Exception as exc:
+        logger.warning("route-map introspection failed: %s", exc)
+        return {"ok": True, "routes": {}, "total": 0, "note": "could not introspect app"}
 
 
 @router.get("/admin/config")

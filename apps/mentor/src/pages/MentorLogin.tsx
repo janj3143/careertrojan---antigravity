@@ -45,7 +45,7 @@ export default function MentorLogin() {
                 <div className="text-center mb-8">
                     <div className="inline-flex flex-col items-center justify-center mb-4">
                         <img
-                            src="/logo.png"
+                            src="/static/logo.png"
                             alt="CareerTrojan Logo"
                             className="h-16 w-auto mb-2"
                             onError={(e) => {

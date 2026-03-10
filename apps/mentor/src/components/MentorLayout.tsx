@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMentorAuth } from '../context/MentorAuthContext';
-import { LogOut, Home, Users, DollarSign, Calendar, MessageSquare, Settings } from 'lucide-react';
+import { LogOut, Home, Users, DollarSign, Calendar, MessageSquare, Settings, HelpCircle } from 'lucide-react';
+import SupportModal from './support/SupportModal';
 
 export default function MentorLayout({ children }: { children: React.ReactNode }) {
     const { user, logout } = useMentorAuth();
     const navigate = useNavigate();
+    const [showHelp, setShowHelp] = useState(false);
 
     const handleLogout = () => {
         logout();
@@ -20,7 +22,7 @@ export default function MentorLayout({ children }: { children: React.ReactNode }
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-3">
                             <img
-                                src="/logo.png"
+                                src="/static/logo.png"
                                 alt="CareerTrojan Logo"
                                 className="h-8 w-auto"
                                 onError={(e) => {
@@ -56,6 +58,14 @@ export default function MentorLayout({ children }: { children: React.ReactNode }
                     <div className="flex items-center gap-4">
                         <span className="text-sm text-slate-400">{user?.full_name || user?.email}</span>
                         <button
+                            onClick={() => setShowHelp(true)}
+                            className="flex items-center gap-2 px-3 py-2 hover:bg-slate-700 rounded transition"
+                            aria-label="Get Help"
+                        >
+                            <HelpCircle size={18} />
+                            <span>Help</span>
+                        </button>
+                        <button
                             onClick={handleLogout}
                             className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded transition"
                         >
@@ -70,6 +80,9 @@ export default function MentorLayout({ children }: { children: React.ReactNode }
             <main className="p-6">
                 {children}
             </main>
+
+            {/* Support Modal */}
+            <SupportModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
         </div>
     );
 }

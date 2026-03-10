@@ -10,6 +10,10 @@ import os
 import sys
 from logging.config import fileConfig
 
+from dotenv import load_dotenv
+
+load_dotenv()  # Load .env so DATABASE_URL is available to the CLI
+
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
@@ -42,7 +46,8 @@ DATABASE_URL = (
 )
 
 # Override whatever alembic.ini has with the resolved env URL
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+# Escape '%' → '%%' for configparser interpolation safety
+config.set_main_option("sqlalchemy.url", DATABASE_URL.replace("%", "%%"))
 
 
 def run_migrations_offline() -> None:

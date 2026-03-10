@@ -55,6 +55,21 @@ class ResumeProcessor:
             self.processed_files.add(filename)
 
     def _process_file(self, filepath: str, filename: str):
-        """Mock processing logic."""
+        """Parse resume file and push results to enrichment queue."""
+        import json
         logger.info(f"Processing {filename}...")
-        logger.info(f"Successfully processed {filename}")
+        try:
+            # Read file content
+            with open(filepath, "rb") as fh:
+                raw = fh.read()
+
+            # Push to enrichment queue via Redis
+            payload = json.dumps({
+                "filename": filename,
+                "filepath": filepath,
+                "size_bytes": len(raw),
+            })
+            self.redis.rpush("careertrojan:enrichment:queue", payload)
+            logger.info(f"Queued {filename} for enrichment ({len(raw)} bytes)")
+        except Exception as exc:
+            logger.error(f"Failed to process {filename}: {exc}")

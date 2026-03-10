@@ -28,6 +28,7 @@ const RewardsPage            = lazy(() => import('./pages/RewardsPage'));
 const VisualisationsHub      = lazy(() => import('./pages/VisualisationsHub'));
 const ConsolidationPage      = lazy(() => import('./pages/ConsolidationPage'));
 const PrivacyPolicy          = lazy(() => import('./pages/PrivacyPolicy'));
+const CareerCompassPage      = lazy(() => import('./pages/CareerCompassPage'));
 
 // ── Lazy: mobile-only pages ──────────────────────────────
 const MobileQuickDash  = lazy(() => import('./components/mobile/MobileQuickDash'));
@@ -87,6 +88,7 @@ export default function App() {
                             <Route path="/dual-career" element={<PrivateRoute><DualCareer /></PrivateRoute>} />
                             <Route path="/rewards" element={<PrivateRoute><RewardsPage /></PrivateRoute>} />
                             <Route path="/visuals" element={<PrivateRoute><VisualisationsHub /></PrivateRoute>} />
+                            <Route path="/compass" element={<PrivateRoute><CareerCompassPage /></PrivateRoute>} />
                             <Route path="/consolidation" element={<PrivateRoute><ConsolidationPage /></PrivateRoute>} />
                         </Routes>
                     </Suspense>

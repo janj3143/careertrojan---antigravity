@@ -4,7 +4,7 @@ or falls back to environment variables for local dev.
 
 Usage:
     from services.backend_api.utils.secrets import get_secret
-    jwt_key = get_secret("secret_key", env_fallback="SECRET_KEY", default="changeme")
+    jwt_key = get_secret("secret_key", env_fallback="SECRET_KEY")
 """
 
 import os

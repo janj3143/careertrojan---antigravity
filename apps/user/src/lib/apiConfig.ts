@@ -30,6 +30,14 @@ export const API = {
   aiData: `${API_BASE}/api/ai_data/v1`,
   aiGateway: `${API_BASE}/api/ai`,  // AI Gateway (unified entry point)
   support: `${API_BASE}/api/support/v1`,  // Zendesk Support Bridge
+  // Career Compass + Profile Coach module (spec §20)
+  careerCompass: `${API_BASE}/api/career-compass/v1`,
+  profileCoach: `${API_BASE}/api/profile-coach/v1`,
+  userVector: `${API_BASE}/api/user-vector/v1`,
+  market: `${API_BASE}/api/market/v1`,
+  profileBuilder: `${API_BASE}/api/profile/v1`,
+  mentorSearch: `${API_BASE}/api/mentors/v1`,
+  help: `${API_BASE}/api/help/v1`,
 } as const;
 
 /** Legacy alias — prefer named imports above */

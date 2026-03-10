@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { HelpCircle } from "lucide-react";
 import { VISUAL_COMPONENTS } from "../components/visuals/registry";
 import { API } from '../lib/apiConfig';
 import { getEvidence, getTouchnots } from '../lib/api';
 import { useSelectionStore } from '../lib/selection_store';
+import SupportModal from '../components/support/SupportModal';
 
 interface VisualEntry {
     id: string;
@@ -119,6 +121,7 @@ export default function VisualisationsHub() {
     const [selectedVisual, setSelectedVisual] = useState<string>(FALLBACK_REGISTRY[0].id);
     const [loading, setLoading] = useState(true);
     const [panelOpen, setPanelOpen] = useState(true);
+    const [showHelp, setShowHelp] = useState(false);
     const { selection } = useSelectionStore();
 
     useEffect(() => {
@@ -173,12 +176,21 @@ export default function VisualisationsHub() {
                             Component: <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">{activeVisual?.react_component}</code>
                         </p>
                     </div>
-                    <button
-                        onClick={() => setPanelOpen(!panelOpen)}
-                        className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
-                    >
-                        {panelOpen ? "Hide" : "Show"} Touch-Points
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => setShowHelp(true)}
+                            className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-colors"
+                        >
+                            <HelpCircle size={16} />
+                            <span>Need help?</span>
+                        </button>
+                        <button
+                            onClick={() => setPanelOpen(!panelOpen)}
+                            className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
+                        >
+                            {panelOpen ? "Hide" : "Show"} Touch-Points
+                        </button>
+                    </div>
                 </div>
 
                 <div className="flex-1 p-6 overflow-auto">
@@ -206,6 +218,9 @@ export default function VisualisationsHub() {
                     </div>
                 </div>
             )}
+
+            {/* Contextual Support Modal */}
+            <SupportModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
         </div>
     );
 }

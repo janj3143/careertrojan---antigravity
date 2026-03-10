@@ -87,11 +87,14 @@ class TestLegacyCleanup:
         import os
         assert not os.path.exists("apps/admin/services/test_smart_enrichment.py")
 
-    def test_streamlit_demos_renamed(self):
+    def test_streamlit_demos_removed_from_react_portal(self):
+        """User portal converted to React — legacy Streamlit demos no longer exist."""
         import os
-        # Old names should not exist
+        # All Streamlit Python demos should be removed (portal is now React/TS)
         assert not os.path.exists("apps/user/test_advanced_features.py")
         assert not os.path.exists("apps/user/test_resume_upload.py")
-        # New names should exist
-        assert os.path.exists("apps/user/demo_advanced_features.py")
-        assert os.path.exists("apps/user/demo_resume_upload.py")
+        assert not os.path.exists("apps/user/demo_advanced_features.py")
+        assert not os.path.exists("apps/user/demo_resume_upload.py")
+        # Verify it's now a React/Vite project
+        assert os.path.exists("apps/user/vite.config.ts")
+        assert os.path.exists("apps/user/src")

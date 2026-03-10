@@ -3,12 +3,15 @@ import httpx
 import shutil
 import os
 import json
+import logging
 from pathlib import Path
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from pydantic import BaseModel
-from typing import Optional, Any
+from typing import Optional, Any, List
 from services.backend_api.utils.file_parser import extract_text_from_upload
 from services.backend_api.routers.auth import get_current_user as require_user
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/resume/v1", tags=["resume"])
 
@@ -243,10 +246,75 @@ def parse(auth=Depends(require_user)):
 
 @router.post("/enrich")
 def enrich(auth=Depends(require_user)):
-    return {
-        "ok": False,
-        "error": {
-            "code": "NOT_IMPLEMENTED",
-            "message": "AI enrichment service coming soon"
+    """
+    Run AI enrichment on the user's latest uploaded resume.
+
+    Loads the most recent parsed resume, builds a user_profile dict,
+    then delegates to AIEnrichmentOrchestrator.get_dashboard_enrichment().
+
+    Returns enrichment payload matching the API v1 contract:
+      { ok: true, data: { enrichment: { keywords, skills_detected, ... } } }
+    """
+    user_id = str(auth.id)
+    db = load_resume_db()
+
+    # ── find latest resume for this user ──────────────────────────────
+    user_resumes = [r for r in db.values() if r.get("user_id") == user_id]
+    if not user_resumes:
+        raise HTTPException(
+            status_code=404,
+            detail="No resume found – upload one first via POST /resume/upload",
+        )
+
+    latest = sorted(
+        user_resumes,
+        key=lambda x: x.get("uploaded_at", ""),
+        reverse=True,
+    )[0]
+
+    # ── build user_profile dict expected by the orchestrator ──────────
+    parsed = latest.get("parsed_json") or {}
+    raw_text = latest.get("raw_text", "")
+
+    user_profile = {
+        "name": parsed.get("name") or auth.username,
+        "skills": parsed.get("skills", latest.get("skills", [])),
+        "experience": parsed.get("experience", []),
+        "education": parsed.get("education", []),
+        "certifications": parsed.get("certifications", []),
+        "raw_text": raw_text,
+    }
+
+    job_titles: List[str] = parsed.get("job_titles", [])
+
+    # ── run the AI enrichment orchestrator ────────────────────────────
+    try:
+        from services.backend_api.services.enrichment.ai_enrichment_orchestrator import (
+            AIEnrichmentOrchestrator,
+        )
+
+        orchestrator = AIEnrichmentOrchestrator()
+        enrichment = orchestrator.get_dashboard_enrichment(
+            user_profile=user_profile,
+            job_titles=job_titles if job_titles else None,
+        )
+    except Exception as exc:
+        logger.exception("AI enrichment failed – returning partial result")
+        enrichment = {
+            "keywords": [],
+            "error": str(exc),
         }
+
+    # ── normalise for the frontend contract ───────────────────────────
+    # smoke_test_platform.py expects  data['data']['enrichment'].get('keywords')
+    # and  data['data']['enrichment'].get('skills_detected')
+    if "skills_detected" not in enrichment:
+        enrichment["skills_detected"] = user_profile.get("skills", [])
+
+    return {
+        "ok": True,
+        "data": {
+            "resume_id": latest.get("resume_id"),
+            "enrichment": enrichment,
+        },
     }

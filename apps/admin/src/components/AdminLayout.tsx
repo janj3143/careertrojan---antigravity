@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
-import { LogOut, Home, Settings, Users, Database, BarChart3, Wrench } from 'lucide-react';
+import { LogOut, Home, Settings, Users, Database, BarChart3, Wrench, HelpCircle } from 'lucide-react';
+import SupportModal from './support/SupportModal';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const { user, logout } = useAdminAuth();
     const navigate = useNavigate();
+    const [showHelp, setShowHelp] = useState(false);
 
     const handleLogout = () => {
         logout();
@@ -45,6 +47,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <div className="flex items-center gap-4">
                         <span className="text-sm text-slate-400">{user?.email}</span>
                         <button
+                            onClick={() => setShowHelp(true)}
+                            className="flex items-center gap-2 px-3 py-2 hover:bg-slate-700 rounded transition"
+                            aria-label="Get Help"
+                        >
+                            <HelpCircle size={18} />
+                            <span>Help</span>
+                        </button>
+                        <button
                             onClick={handleLogout}
                             className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded transition"
                         >
@@ -59,6 +69,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <main className="p-6">
                 {children}
             </main>
+
+            {/* Support Modal */}
+            <SupportModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
         </div>
     );
 }

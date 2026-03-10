@@ -21,17 +21,24 @@ Date: February 2, 2026
 Updated: February 9, 2026 — Braintree integration
 """
 
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, HTTPException, Depends, Header, status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone
 from enum import Enum
+from sqlalchemy.orm import Session
 import logging
 import uuid
 import os
 
 from services.backend_api.utils.auth_deps import get_current_user
 from services.backend_api.db import models as db_models
+from services.backend_api.db.connection import get_db
+from services.backend_api.services.idempotency import (
+    IdempotencyStore,
+    require_idempotency_key,
+)
 
 # ── Canonical plan config (single source of truth) ──
 from services.backend_api.services.plan_config import (
@@ -146,11 +153,38 @@ class CancelSubscriptionOut(BaseModel):
 
 
 # ============================================================================
-# IN-MEMORY STORAGE (Replace with database in production)
+# DB HELPERS (subscriptions + payment history)
 # ============================================================================
 
-_user_subscriptions: Dict[str, Dict[str, Any]] = {}
-_payment_history: Dict[str, List[Dict[str, Any]]] = {}
+
+def _safe_user_int(user_id: str) -> int:
+    """Convert user_id string to int for DB FK, raising 400 if invalid."""
+    try:
+        return int(user_id)
+    except (ValueError, TypeError):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid user ID",
+        )
+
+
+def _get_active_subscription(
+    db: Session, user_id: str
+) -> Optional[db_models.Subscription]:
+    """Return the most recent active subscription for a user (or None)."""
+    try:
+        uid = int(user_id)
+    except (ValueError, TypeError):
+        return None
+    return (
+        db.query(db_models.Subscription)
+        .filter(
+            db_models.Subscription.user_id == uid,
+            db_models.Subscription.status.in_(["active", "past_due"]),
+        )
+        .order_by(db_models.Subscription.created_at.desc())
+        .first()
+    )
 
 
 # ============================================================================
@@ -203,7 +237,10 @@ def _process_braintree_payment(
 # ============================================================================
 
 @router.get("/plans", response_model=PlansListOut)
-async def get_plans(user_id: str = Depends(_get_user_id_from_token)):
+async def get_plans(
+    user_id: str = Depends(_get_user_id_from_token),
+    db: Session = Depends(get_db),
+):
     """
     Get all available subscription plans
     
@@ -211,7 +248,8 @@ async def get_plans(user_id: str = Depends(_get_user_id_from_token)):
     """
     plans_list = [PlanOut(**plan) for plan in PLANS.values()]
     
-    current_plan = _user_subscriptions.get(user_id, {}).get("plan_id", "free")
+    sub = _get_active_subscription(db, user_id)
+    current_plan = sub.plan_id if sub else "free"
     
     return PlansListOut(plans=plans_list, current_plan=current_plan)
 
@@ -228,13 +266,60 @@ async def get_plan(plan_id: str):
 
 
 @router.post("/process", response_model=PaymentProcessOut)
-async def process_payment(payload: PaymentProcessIn, user_id: str = Depends(_get_user_id_from_token)):
+async def process_payment(
+    payload: PaymentProcessIn,
+    user_id: str = Depends(_get_user_id_from_token),
+    idempotency_key: str = Depends(require_idempotency_key),
+    db: Session = Depends(get_db),
+):
     """
     Process a subscription payment via Braintree.
+    
+    Requires ``Idempotency-Key`` header to prevent double charges.
     
     - For free tier: No payment required
     - For paid tiers: Requires Braintree nonce (from Drop-in UI) or vaulted token
     """
+    # ── Idempotency check ────────────────────────────────────
+    is_dup, cached = IdempotencyStore.check(
+        db, idempotency_key, "payment", user_id,
+        request_body=payload.model_dump(),
+    )
+    if is_dup:
+        if cached and "error" in cached:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=cached["error"])
+        if cached is not None:
+            return JSONResponse(content=cached, status_code=200)
+        # Still processing — tell client to wait
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A request with this Idempotency-Key is already being processed",
+        )
+
+    idemp_record = IdempotencyStore.begin(
+        db, idempotency_key, "payment", user_id,
+        request_body=payload.model_dump(),
+    )
+
+    try:
+        result = await _do_process_payment(payload, user_id, db)
+        # Cache the successful response
+        IdempotencyStore.complete(db, idemp_record, 200, result.model_dump())
+        return result
+    except HTTPException:
+        IdempotencyStore.fail(db, idemp_record)
+        raise
+    except Exception:
+        IdempotencyStore.fail(db, idemp_record)
+        raise
+
+
+async def _do_process_payment(
+    payload: PaymentProcessIn,
+    user_id: str,
+    db: Session = None,
+) -> PaymentProcessOut:
+    """Core payment logic — extracted so idempotency wrapper stays clean."""
     if payload.plan_id not in PLANS:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -245,12 +330,23 @@ async def process_payment(payload: PaymentProcessIn, user_id: str = Depends(_get
     
     # Free tier - no payment needed
     if payload.plan_id == "free":
-        _user_subscriptions[user_id] = {
-            "plan_id": "free",
-            "subscription_id": None,
-            "started_at": datetime.now(timezone.utc).isoformat(),
-            "next_billing": None
-        }
+        # Deactivate any existing paid subscription
+        if db:
+            old = _get_active_subscription(db, user_id)
+            if old:
+                old.status = "canceled"
+                old.canceled_at = datetime.now(timezone.utc)
+            # Create a free-tier subscription row
+            new_sub = db_models.Subscription(
+                user_id=_safe_user_int(user_id),
+                plan_id="free",
+                gateway="none",
+                status="active",
+                amount=0.0,
+                started_at=datetime.now(timezone.utc),
+            )
+            db.add(new_sub)
+            db.commit()
         return PaymentProcessOut(
             success=True,
             subscription_id=None,
@@ -304,28 +400,43 @@ async def process_payment(payload: PaymentProcessIn, user_id: str = Depends(_get
     else:
         next_billing = None
     
-    # Store subscription
-    _user_subscriptions[user_id] = {
-        "plan_id": payload.plan_id,
-        "subscription_id": subscription_id,
-        "started_at": now.isoformat(),
-        "next_billing": next_billing.isoformat() if next_billing else None,
-        "braintree_transaction_id": payment_result.get("transaction_id")
-    }
-    
-    # Store payment history
-    if user_id not in _payment_history:
-        _payment_history[user_id] = []
-    
-    _payment_history[user_id].append({
-        "transaction_id": payment_result.get("transaction_id", f"tx_{uuid.uuid4().hex[:16]}"),
-        "plan_id": payload.plan_id,
-        "amount": final_amount,
-        "currency": plan["currency"],
-        "status": "completed",
-        "created_at": now.isoformat(),
-        "description": f"Subscription to {plan['name']}"
-    })
+    # Persist subscription to DB
+    if db:
+        old = _get_active_subscription(db, user_id)
+        if old:
+            old.status = "canceled"
+            old.canceled_at = now
+
+        new_sub = db_models.Subscription(
+            user_id=_safe_user_int(user_id),
+            plan_id=payload.plan_id,
+            gateway="braintree",
+            gateway_subscription_id=subscription_id,
+            gateway_customer_id=user_id,
+            status="active",
+            amount=final_amount,
+            currency=plan["currency"],
+            interval=plan["interval"],
+            started_at=now,
+            next_billing_date=next_billing,
+        )
+        db.add(new_sub)
+
+        # Persist payment transaction
+        tx = db_models.PaymentTransaction(
+            user_id=_safe_user_int(user_id),
+            gateway="braintree",
+            gateway_transaction_id=payment_result.get("transaction_id", f"tx_{uuid.uuid4().hex[:16]}"),
+            transaction_type="charge",
+            amount=final_amount,
+            currency=plan["currency"],
+            status="submitted_for_settlement",
+            plan_id=payload.plan_id,
+            promo_code=payload.promo_code,
+            description=f"Subscription to {plan['name']}",
+        )
+        db.add(tx)
+        db.commit()
     
     # ── CRITICAL: Allocate credits after successful payment ──
     try:
@@ -350,64 +461,93 @@ async def process_payment(payload: PaymentProcessIn, user_id: str = Depends(_get
 
 
 @router.get("/history", response_model=PaymentHistoryOut)
-async def get_payment_history(user_id: str = Depends(_get_user_id_from_token)):
+async def get_payment_history(
+    user_id: str = Depends(_get_user_id_from_token),
+    db: Session = Depends(get_db),
+):
     """Get user's payment history"""
-    transactions = _payment_history.get(user_id, [])
-    
-    total_spent = sum(t["amount"] for t in transactions if t["status"] == "completed")
+    rows = (
+        db.query(db_models.PaymentTransaction)
+        .filter(db_models.PaymentTransaction.user_id == _safe_user_int(user_id))
+        .order_by(db_models.PaymentTransaction.created_at.desc())
+        .limit(200)
+        .all()
+    )
+    transactions = [
+        PaymentHistoryItem(
+            transaction_id=r.gateway_transaction_id or str(r.id),
+            plan_id=r.plan_id or "",
+            amount=r.amount,
+            currency=r.currency or "USD",
+            status=r.status or "unknown",
+            created_at=r.created_at.isoformat() if r.created_at else "",
+            description=r.description or "",
+        )
+        for r in rows
+    ]
+    total_spent = sum(t.amount for t in transactions if t.status in ("completed", "submitted_for_settlement", "settled"))
     
     return PaymentHistoryOut(
-        transactions=[PaymentHistoryItem(**t) for t in transactions],
+        transactions=transactions,
         total_spent=total_spent
     )
 
 
 @router.get("/subscription")
-async def get_current_subscription(user_id: str = Depends(_get_user_id_from_token)):
+async def get_current_subscription(
+    user_id: str = Depends(_get_user_id_from_token),
+    db: Session = Depends(get_db),
+):
     """Get user's current subscription details"""
-    subscription = _user_subscriptions.get(user_id)
+    sub = _get_active_subscription(db, user_id)
     
-    if not subscription:
+    if not sub:
+        plan = PLANS.get("free", {})
         return {
             "plan_id": "free",
-            "plan_name": "Free Trial",
+            "plan_name": plan.get("name", "Free Trial"),
             "active": True,
-            "next_billing": None
+            "next_billing": None,
+            "features": plan.get("features", []),
+            "credits_per_month": plan.get("credits_per_month", 15),
         }
     
-    plan = PLANS.get(subscription["plan_id"], PLANS["free"])
+    plan = PLANS.get(sub.plan_id, PLANS.get("free", {}))
     
     return {
-        "plan_id": subscription["plan_id"],
-        "plan_name": plan["name"],
-        "subscription_id": subscription.get("subscription_id"),
-        "active": True,
-        "started_at": subscription["started_at"],
-        "next_billing": subscription.get("next_billing"),
-        "features": plan["features"],
-        "token_limit": plan["token_limit"]
+        "plan_id": sub.plan_id,
+        "plan_name": plan.get("name", sub.plan_id),
+        "subscription_id": sub.gateway_subscription_id,
+        "active": sub.status == "active",
+        "started_at": sub.started_at.isoformat() if sub.started_at else None,
+        "next_billing": sub.next_billing_date.isoformat() if sub.next_billing_date else None,
+        "features": plan.get("features", []),
+        "credits_per_month": plan.get("credits_per_month", 15),
     }
 
 
 @router.post("/cancel", response_model=CancelSubscriptionOut)
-async def cancel_subscription(user_id: str = Depends(_get_user_id_from_token)):
+async def cancel_subscription(
+    user_id: str = Depends(_get_user_id_from_token),
+    db: Session = Depends(get_db),
+):
     """Cancel current subscription (effective at end of billing period)"""
-    subscription = _user_subscriptions.get(user_id)
+    sub = _get_active_subscription(db, user_id)
     
-    if not subscription or subscription["plan_id"] == "free":
+    if not sub or sub.plan_id == "free":
         return CancelSubscriptionOut(
             success=False,
             message="No active paid subscription to cancel"
         )
     
-    # Mark for cancellation (stays active until next_billing)
-    subscription["cancelled"] = True
-    subscription["cancelled_at"] = datetime.now(timezone.utc).isoformat()
+    sub.status = "canceled"
+    sub.canceled_at = datetime.now(timezone.utc)
+    db.commit()
     
     return CancelSubscriptionOut(
         success=True,
         message="Subscription cancelled. Access continues until end of billing period.",
-        effective_date=subscription.get("next_billing")
+        effective_date=sub.next_billing_date.isoformat() if sub.next_billing_date else None,
     )
 
 
@@ -505,14 +645,51 @@ async def get_transaction(transaction_id: str):
 
 
 @router.post("/refund/{transaction_id}")
-async def refund_transaction(transaction_id: str, amount: Optional[str] = None):
-    """Refund a settled transaction (full or partial)."""
+async def refund_transaction(
+    transaction_id: str,
+    amount: Optional[str] = None,
+    user_id: str = Depends(_get_user_id_from_token),
+    idempotency_key: str = Depends(require_idempotency_key),
+    db: Session = Depends(get_db),
+):
+    """Refund a settled transaction (full or partial).
+    
+    Requires authentication and ``Idempotency-Key`` header.
+    """
     if not BRAINTREE_AVAILABLE or not braintree_service.is_configured():
         raise HTTPException(status_code=503, detail="Payment gateway not configured")
-    result = braintree_service.refund_transaction(transaction_id, amount)
-    if not result["success"]:
-        raise HTTPException(status_code=400, detail=result.get("error", "Refund failed"))
-    return result
+
+    # ── Idempotency check ────────────────────────────────────
+    req_body = {"transaction_id": transaction_id, "amount": amount}
+    is_dup, cached = IdempotencyStore.check(
+        db, idempotency_key, "refund", user_id, request_body=req_body,
+    )
+    if is_dup:
+        if cached and "error" in cached:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=cached["error"])
+        if cached is not None:
+            return JSONResponse(content=cached, status_code=200)
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A request with this Idempotency-Key is already being processed",
+        )
+
+    idemp_record = IdempotencyStore.begin(
+        db, idempotency_key, "refund", user_id, request_body=req_body,
+    )
+
+    try:
+        result = braintree_service.refund_transaction(transaction_id, amount)
+        if not result["success"]:
+            IdempotencyStore.fail(db, idemp_record)
+            raise HTTPException(status_code=400, detail=result.get("error", "Refund failed"))
+        IdempotencyStore.complete(db, idemp_record, 200, result)
+        return result
+    except HTTPException:
+        raise
+    except Exception:
+        IdempotencyStore.fail(db, idemp_record)
+        raise
 
 
 @router.get("/gateway-info")

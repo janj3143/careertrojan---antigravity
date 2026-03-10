@@ -3,8 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
     Menu, X, Home, LayoutDashboard, FileText, Briefcase, Brain,
-    Users, Award, CreditCard, User, LogOut, BarChart3, Rocket
+    Users, Award, CreditCard, User, LogOut, BarChart3, Rocket, HelpCircle
 } from 'lucide-react';
+import SupportModal from '../support/SupportModal';
 
 const NAV_ITEMS = [
     { to: '/', icon: Home, label: 'Home', auth: false },
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
 
 export default function MobileNav() {
     const [open, setOpen] = useState(false);
+    const [showHelp, setShowHelp] = useState(false);
     const location = useLocation();
     const { isAuthenticated, user, logout } = useAuth();
 
@@ -114,6 +116,14 @@ export default function MobileNav() {
 
                 {/* Auth actions */}
                 <div className="border-t px-4 py-3">
+                    {/* Help Button - always visible */}
+                    <button
+                        onClick={() => { setOpen(false); setShowHelp(true); }}
+                        className="flex items-center gap-3 w-full px-2 py-3 text-sm font-medium text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors touch-target mb-2"
+                    >
+                        <HelpCircle className="w-5 h-5" />
+                        <span>Help & Support</span>
+                    </button>
                     {isAuthenticated ? (
                         <button
                             onClick={logout}
@@ -137,6 +147,9 @@ export default function MobileNav() {
 
             {/* Spacer for fixed header on mobile */}
             <div className="lg:hidden h-14" />
+
+            {/* Support Modal */}
+            <SupportModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
         </>
     );
 }

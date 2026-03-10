@@ -14,31 +14,54 @@ logger = logging.getLogger(__name__)
 # --- Public Stats ---
 @router.get("/stats/public")
 async def get_public_stats():
-    return {
-        "active_users": 1250,
-        "resumes_optimized": 5400,
-        "success_rate": 89
-    }
+    """Return live aggregate stats from database."""
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        user_count = db.execute("SELECT count(*) FROM users WHERE is_active = true").scalar() or 0
+        resume_count = db.execute("SELECT count(*) FROM resumes").scalar() or 0
+        return {
+            "active_users": user_count,
+            "resumes_optimized": resume_count,
+            "success_rate": 89  # TODO: compute from outcome_tracker
+        }
+    except Exception:
+        return {"active_users": 0, "resumes_optimized": 0, "success_rate": 0}
+    finally:
+        db.close()
 
-# --- Processing (Stubbed) ---
+# --- Processing (Worker Dispatch) ---
 class ProcessOptions(BaseModel):
     pdfs: bool = True
     full_scan: bool = True
 
-def _fake_ingestion(job_id: str):
-    import time
-    time.sleep(1) # Sim work
-    logger.info(f"Job {job_id} finished")
+def _run_ingestion(job_id: str):
+    """Dispatch ingestion job to parser worker via Redis queue."""
+    import json
+    try:
+        from services.backend_api.db.connection import redis_client
+        payload = json.dumps({"job_id": job_id, "type": "ingestion"})
+        redis_client.rpush("careertrojan:parser:queue", payload)
+        logger.info(f"Job {job_id} dispatched to parser worker")
+    except Exception as e:
+        logger.error(f"Job {job_id} dispatch failed: {e}")
 
 @router.post("/processing/start")
 async def start_processing(options: ProcessOptions, background_tasks: BackgroundTasks):
     job_id = str(uuid.uuid4())
-    background_tasks.add_task(_fake_ingestion, job_id)
+    background_tasks.add_task(_run_ingestion, job_id)
     return {"job_id": job_id, "status": "started"}
 
 @router.get("/processing/status")
 async def processing_status():
-    return {"status": "idle", "last_job": "success"}
+    """Get processing status from Redis queue."""
+    try:
+        from services.backend_api.db.connection import redis_client
+        pending = redis_client.llen("careertrojan:parser:queue") or 0
+        status = "processing" if pending > 0 else "idle"
+        return {"status": status, "pending_jobs": pending}
+    except Exception:
+        return {"status": "unknown", "pending_jobs": 0}
 
 # --- Security: Immutable Audit Logs ---
 @router.post("/logs/lock")
@@ -103,21 +126,33 @@ def get_logs(
     offset: int = 0
 ):
     """
-    Retrieve system logs for admin review.
+    Retrieve system logs from log file.
     """
-    from datetime import datetime, timedelta
-    now = datetime.utcnow()
-    
-    # Demo log entries
-    logs = [
-        {"timestamp": (now - timedelta(minutes=i*5)).isoformat(), "level": "INFO" if i % 3 != 0 else "WARN", "message": f"System event #{100-i}", "source": "backend"}
-        for i in range(limit)
-    ]
-    
+    import os, json
+    log_path = os.getenv("CAREERTROJAN_LOG_FILE", "/app/logs/backend.log")
+    logs = []
+    try:
+        if os.path.isfile(log_path):
+            with open(log_path, "r") as f:
+                lines = f.readlines()[-(offset + limit):]
+            for line in lines[offset:offset + limit]:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = json.loads(line)
+                except json.JSONDecodeError:
+                    entry = {"message": line, "level": "INFO", "timestamp": "", "source": "backend"}
+                if level != "all" and entry.get("level", "").upper() != level.upper():
+                    continue
+                logs.append(entry)
+    except Exception as exc:
+        logger.warning("Could not read log file %s: %s", log_path, exc)
+
     return {
         "ok": True,
-        "logs": logs,
-        "total": 500,
+        "logs": logs[-limit:],
+        "total": len(logs),
         "filters": {"level": level}
     }
 
@@ -125,19 +160,27 @@ def get_logs(
 @router.get("/backup")
 def get_backup_status():
     """
-    Get current backup status and history.
+    Get backup status — scans backup directory.
     """
+    import os
+    backup_dir = os.getenv("CAREERTROJAN_BACKUP_DIR", "/backups/careertrojan")
+    if not os.path.isdir(backup_dir):
+        return {"ok": True, "backup_dir": backup_dir, "backups": [], "note": "backup directory not found"}
+    backups = []
+    for entry in sorted(os.scandir(backup_dir), key=lambda e: e.stat().st_mtime, reverse=True)[:20]:
+        stat = entry.stat()
+        backups.append({
+            "id": entry.name,
+            "created_at": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+            "size_mb": round(stat.st_size / (1024 * 1024), 1),
+            "status": "completed",
+        })
     return {
         "ok": True,
-        "last_backup": "2026-02-10T02:00:00Z",
-        "next_scheduled": "2026-02-11T02:00:00Z",
-        "backup_size_mb": 156,
+        "last_backup": backups[0]["created_at"] if backups else None,
+        "backup_size_mb": sum(b["size_mb"] for b in backups),
         "retention_days": 30,
-        "backups": [
-            {"id": "bkp_001", "created_at": "2026-02-10T02:00:00Z", "size_mb": 156, "status": "completed"},
-            {"id": "bkp_002", "created_at": "2026-02-09T02:00:00Z", "size_mb": 154, "status": "completed"},
-            {"id": "bkp_003", "created_at": "2026-02-08T02:00:00Z", "size_mb": 152, "status": "completed"}
-        ]
+        "backups": backups,
     }
 
 
@@ -157,32 +200,52 @@ def trigger_backup():
 @router.get("/diagnostics")
 def get_diagnostics():
     """
-    Get system diagnostics and health metrics.
+    Get live system diagnostics and health metrics.
     """
-    import platform
-    import sys
-    
+    import platform, sys, psutil, os
+    from services.backend_api.db.connection import SessionLocal
+
+    # Real system metrics via psutil (fallback to safe defaults)
+    try:
+        mem = psutil.virtual_memory()
+        mem_total = round(mem.total / (1024 * 1024))
+        mem_used = round(mem.used / (1024 * 1024))
+    except Exception:
+        mem_total, mem_used = 0, 0
+
+    # DB connectivity
+    db_status = "disconnected"
+    try:
+        db = SessionLocal()
+        db.execute("SELECT 1")
+        db_status = "connected"
+        db.close()
+    except Exception:
+        pass
+
+    # Redis connectivity
+    cache_status = "disconnected"
+    try:
+        from services.backend_api.db.connection import redis_client
+        redis_client.ping()
+        cache_status = "connected"
+    except Exception:
+        pass
+
     return {
         "ok": True,
         "system": {
             "python_version": sys.version,
             "platform": platform.platform(),
-            "cpu_count": 4,  # Demo
-            "memory_usage_mb": 512
+            "cpu_count": os.cpu_count() or 0,
+            "memory_total_mb": mem_total,
+            "memory_used_mb": mem_used,
         },
-        "database": {
-            "status": "connected",
-            "pool_size": 10,
-            "active_connections": 3
-        },
-        "cache": {
-            "status": "connected",
-            "hit_rate": 0.89
-        },
+        "database": {"status": db_status},
+        "cache": {"status": cache_status},
         "services": {
             "ai_engine": "healthy",
             "parser": "healthy",
-            "scheduler": "healthy"
         }
     }
 
@@ -190,41 +253,61 @@ def get_diagnostics():
 @router.get("/route-map")
 def get_route_map():
     """
-    Get registered API routes for debugging.
+    Get registered API routes — live from app object.
     """
-    # Return a summary - the full map is in mapping router
-    return {
-        "ok": True,
-        "total_routes": 195,
-        "by_module": {
-            "auth": 8,
-            "user": 5,
-            "admin": 12,
-            "mentor": 10,
-            "jobs": 3,
-            "resume": 4,
-            "payment": 15,
-            "ops": 12,
-            "coaching": 10
-        },
-        "health_endpoint": "/health"
-    }
+    try:
+        from services.backend_api.main import app
+        by_module: Dict[str, int] = {}
+        total = 0
+        for route in getattr(app, "routes", []):
+            methods = getattr(route, "methods", set())
+            if not methods:
+                continue
+            tags = getattr(route, "tags", []) or ["untagged"]
+            for tag in tags:
+                by_module[tag] = by_module.get(tag, 0) + len(methods)
+            total += len(methods)
+        return {"ok": True, "total_routes": total, "by_module": by_module, "health_endpoint": "/health"}
+    except Exception as exc:
+        logger.warning("route-map failed: %s", exc)
+        return {"ok": True, "total_routes": 0, "by_module": {}, "health_endpoint": "/health"}
 
 
 @router.get("/notifications")
-def get_admin_notifications():
+def get_admin_notifications(limit: int = 20):
     """
-    Get system notifications for admin dashboard.
+    Get system notifications from recent audit log entries.
     """
-    return {
-        "ok": True,
-        "notifications": [
-            {"id": "n1", "type": "info", "title": "System Update", "message": "Backend v1.2 deployed", "created_at": "2026-02-10T10:00:00Z", "read": False},
-            {"id": "n2", "type": "warning", "title": "High Load", "message": "CPU usage above 80%", "created_at": "2026-02-10T09:30:00Z", "read": True},
-            {"id": "n3", "type": "success", "title": "Backup Complete", "message": "Daily backup succeeded", "created_at": "2026-02-10T02:00:00Z", "read": True}
-        ],
-        "unread_count": 1
-    }
+    from services.backend_api.db.connection import get_db
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, action, resource_type, detail, created_at
+               FROM audit_log ORDER BY created_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        notifications = []
+        for r in (rows or []):
+            ntype = "info"
+            action = r[1] or ""
+            if "delete" in action or "error" in action:
+                ntype = "warning"
+            elif "export" in action or "complete" in action:
+                ntype = "success"
+            notifications.append({
+                "id": f"n{r[0]}",
+                "type": ntype,
+                "title": action.replace("_", " ").title(),
+                "message": r[3] or f"{r[2] or ''} {action}",
+                "read": True,
+                "created_at": r[4].isoformat() if r[4] else None,
+            })
+        return {"ok": True, "notifications": notifications, "unread_count": 0}
+    except Exception as exc:
+        logger.warning("notifications query failed: %s", exc)
+        return {"ok": True, "notifications": [], "unread_count": 0}
+    finally:
+        db.close()
 
 
 @router.get("/config")
@@ -264,17 +347,41 @@ def update_system_config(updates: Dict[str, Any]):
 
 
 @router.get("/exports")
-def get_exports():
+def get_exports(limit: int = 50):
     """
-    List available data exports.
+    List data exports from DataExportRequest table.
     """
-    return {
-        "ok": True,
-        "exports": [
-            {"id": "exp_001", "type": "users", "created_at": "2026-02-10T12:00:00Z", "size_kb": 450, "status": "ready", "download_url": "/api/ops/v1/exports/exp_001/download"},
-            {"id": "exp_002", "type": "analytics", "created_at": "2026-02-09T12:00:00Z", "size_kb": 1200, "status": "ready", "download_url": "/api/ops/v1/exports/exp_002/download"}
-        ]
-    }
+    from services.backend_api.db.connection import get_db
+    import os
+    db = next(get_db())
+    try:
+        rows = db.execute(
+            """SELECT id, user_id, status, file_path, requested_at, completed_at
+               FROM data_export_requests ORDER BY requested_at DESC LIMIT :lim""",
+            {"lim": limit},
+        ).fetchall()
+        exports = []
+        for r in (rows or []):
+            size_kb = 0
+            if r[3]:
+                try:
+                    size_kb = round(os.path.getsize(r[3]) / 1024, 1)
+                except OSError:
+                    pass
+            exports.append({
+                "id": str(r[0]),
+                "type": "export",
+                "status": r[2] or "unknown",
+                "size_kb": size_kb,
+                "created_at": r[4].isoformat() if r[4] else None,
+                "download_url": f"/api/ops/v1/exports/{r[0]}/download" if r[2] == "completed" else None,
+            })
+        return {"ok": True, "exports": exports}
+    except Exception as exc:
+        logger.warning("exports query failed: %s", exc)
+        return {"ok": True, "exports": [], "note": "data_export_requests table not available"}
+    finally:
+        db.close()
 
 
 @router.post("/exports")
@@ -294,16 +401,20 @@ def create_export(export_type: str = "full"):
 @router.get("/api-explorer")
 def get_api_explorer_data():
     """
-    Get data for API explorer tool.
+    Get data for API explorer — live from app object.
     """
-    return {
-        "ok": True,
-        "openapi_url": "/openapi.json",
-        "docs_url": "/docs",
-        "redoc_url": "/redoc",
-        "endpoints_count": 195,
-        "tags": ["auth", "user", "admin", "mentor", "jobs", "resume", "payment", "ops", "coaching", "analytics"]
-    }
+    try:
+        from services.backend_api.main import app
+        tags = set()
+        total = 0
+        for route in getattr(app, "routes", []):
+            if getattr(route, "methods", None):
+                total += len(route.methods)
+                for t in (getattr(route, "tags", []) or []):
+                    tags.add(t)
+        return {"ok": True, "openapi_url": "/openapi.json", "docs_url": "/docs", "redoc_url": "/redoc", "endpoints_count": total, "tags": sorted(tags)}
+    except Exception:
+        return {"ok": True, "openapi_url": "/openapi.json", "docs_url": "/docs", "redoc_url": "/redoc", "endpoints_count": 0, "tags": []}
 
 
 @router.get("/about")
@@ -334,35 +445,63 @@ def get_about():
 @router.get("/blob")
 def get_blob_storage_info():
     """
-    Get blob storage status and usage.
+    Get blob/file storage usage — scans upload directories.
     """
+    import os
+    upload_roots = {
+        "resumes": os.getenv("CAREERTROJAN_RESUME_DIR", "/data/user_uploads/resumes"),
+        "avatars": os.getenv("CAREERTROJAN_AVATAR_DIR", "/data/user_uploads/avatars"),
+        "exports": os.getenv("CAREERTROJAN_EXPORT_DIR", "/data/exports"),
+    }
+    buckets = []
+    total_size = 0
+    total_files = 0
+    for name, root in upload_roots.items():
+        if not os.path.isdir(root):
+            buckets.append({"name": name, "size_mb": 0, "count": 0, "status": "missing"})
+            continue
+        size = 0
+        count = 0
+        for dp, _dirs, files in os.walk(root):
+            for f in files:
+                try:
+                    size += os.path.getsize(os.path.join(dp, f))
+                    count += 1
+                except OSError:
+                    pass
+        size_mb = round(size / (1024 * 1024), 1)
+        buckets.append({"name": name, "size_mb": size_mb, "count": count})
+        total_size += size_mb
+        total_files += count
     return {
         "ok": True,
-        "provider": "local",  # or "azure", "s3"
-        "total_size_mb": 2048,
-        "used_size_mb": 512,
-        "free_size_mb": 1536,
-        "file_count": 1250,
-        "buckets": [
-            {"name": "resumes", "size_mb": 300, "count": 800},
-            {"name": "avatars", "size_mb": 50, "count": 200},
-            {"name": "exports", "size_mb": 162, "count": 250}
-        ]
+        "provider": "local",
+        "total_size_mb": round(total_size, 1),
+        "used_size_mb": round(total_size, 1),
+        "file_count": total_files,
+        "buckets": buckets,
     }
 
 
 @router.get("/queue")
 def get_queue_status():
     """
-    Get background job queue status.
+    Get background job queue status from Redis.
     """
-    return {
-        "ok": True,
-        "queues": [
-            {"name": "default", "pending": 5, "processing": 2, "completed_today": 150, "failed_today": 3},
-            {"name": "ai_processing", "pending": 12, "processing": 4, "completed_today": 89, "failed_today": 1},
-            {"name": "email", "pending": 0, "processing": 0, "completed_today": 45, "failed_today": 0}
-        ],
-        "workers": 4,
-        "worker_status": "healthy"
-    }
+    queues_config = [
+        ("careertrojan:parser:queue", "parser"),
+        ("careertrojan:enrichment:queue", "enrichment"),
+        ("careertrojan:email:queue", "email"),
+    ]
+    queues = []
+    try:
+        from services.backend_api.db.connection import redis_client
+        for key, name in queues_config:
+            pending = redis_client.llen(key) or 0
+            queues.append({"name": name, "pending": pending, "key": key})
+        return {"ok": True, "queues": queues, "redis": "connected"}
+    except Exception as exc:
+        logger.warning("queue status failed: %s", exc)
+        for _, name in queues_config:
+            queues.append({"name": name, "pending": 0, "key": "unknown"})
+        return {"ok": True, "queues": queues, "redis": "disconnected"}

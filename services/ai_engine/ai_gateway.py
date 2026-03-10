@@ -891,10 +891,10 @@ class AIGateway:
         if request.task_type == TaskType.SCORE:
             # Use the ensemble scoring
             result = self._unified_engine.score_candidate(
-                resume_text=payload.get("resume_text", ""),
+                text=payload.get("resume_text", ""),
                 skills=payload.get("skills", []),
                 experience_years=payload.get("experience_years", 0),
-                education_level=payload.get("education", "unknown"),
+                education=payload.get("education", "unknown"),
             )
             return result.to_dict(), result.confidence, list(result.engine_results.keys())
         
@@ -918,7 +918,7 @@ class AIGateway:
             # Build combined text for scoring
             combined_text = f"{candidate.get('resume_text', '')} REQUIREMENTS: {job.get('description', '')}"
             result = self._unified_engine.score_candidate(
-                resume_text=combined_text,
+                text=combined_text,
                 skills=candidate.get("skills", []),
                 experience_years=candidate.get("experience_years", 0),
             )

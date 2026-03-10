@@ -13,9 +13,15 @@ Tests cover:
 """
 
 import os
+import uuid
 import pytest
 from unittest.mock import patch, MagicMock
 from fastapi.testclient import TestClient
+
+
+def _idemp_headers():
+    """Return a fresh Idempotency-Key header dict."""
+    return {"Idempotency-Key": str(uuid.uuid4())}
 
 
 # ── Fixtures ──────────────────────────────────────────────────────────────
@@ -35,12 +41,8 @@ def client():
     # Reset rate limiter counters
     _clear_rate_limiter(app)
 
-    # Reset in-memory payment state so tests are isolated
-    payment._user_subscriptions.clear()
-    payment._payment_history.clear()
-
     # Provide a fake user-id so endpoints don't require a real JWT
-    app.dependency_overrides[_get_user_id_from_token] = lambda: "test-user-1"
+    app.dependency_overrides[_get_user_id_from_token] = lambda: "99901"
     try:
         yield TestClient(app, raise_server_exceptions=False)
     finally:
@@ -148,7 +150,7 @@ class TestPaymentEndpoints:
     def test_process_free_plan_no_payment_needed(self, client):
         resp = client.post("/api/payment/v1/process", json={
             "plan_id": "free"
-        })
+        }, headers=_idemp_headers())
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
@@ -157,7 +159,7 @@ class TestPaymentEndpoints:
     def test_process_paid_plan_requires_payment_method(self, client):
         resp = client.post("/api/payment/v1/process", json={
             "plan_id": "monthly"
-        })
+        }, headers=_idemp_headers())
         assert resp.status_code == 400
         body = resp.json()
         msg = body.get("error", {}).get("message", "") or body.get("detail", "")
@@ -171,7 +173,7 @@ class TestPaymentEndpoints:
                 resp = client.post("/api/payment/v1/process", json={
                     "plan_id": "monthly",
                     "payment_method_nonce": "fake-valid-nonce"
-                })
+                }, headers=_idemp_headers())
         assert resp.status_code == 503
         data = resp.json()
         msg = (data.get("error", {}).get("message", "") or data.get("detail", "")).lower()
@@ -186,14 +188,14 @@ class TestPaymentEndpoints:
                     "plan_id": "annual",
                     "payment_method_nonce": "fake-nonce",
                     "promo_code": "LAUNCH20"
-                })
+                }, headers=_idemp_headers())
         assert resp.status_code == 503
 
     def test_invalid_plan_returns_400(self, client):
         resp = client.post("/api/payment/v1/process", json={
             "plan_id": "diamond",
             "payment_method_nonce": "nonce"
-        })
+        }, headers=_idemp_headers())
         assert resp.status_code == 400
 
     def test_payment_history_returns_empty_initially(self, client):

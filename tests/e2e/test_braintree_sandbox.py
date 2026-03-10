@@ -348,9 +348,15 @@ class TestHTTPEndpoints:
             if obj is None:
                 break
 
-        payment._user_subscriptions.clear()
-        payment._payment_history.clear()
-        return TestClient(app, raise_server_exceptions=False)
+        payment  # noqa: F841 (imported for potential future use)
+        
+        # Override auth dependency to allow E2E tests without real JWT
+        from services.backend_api.routers.payment import _get_user_id_from_token
+        app.dependency_overrides[_get_user_id_from_token] = lambda: "99902"
+        try:
+            yield TestClient(app, raise_server_exceptions=False)
+        finally:
+            app.dependency_overrides.pop(_get_user_id_from_token, None)
 
     def test_client_token_endpoint(self, client):
         """GET /client-token should return a real Braintree client token."""
@@ -363,10 +369,11 @@ class TestHTTPEndpoints:
 
     def test_process_payment_with_nonce(self, client):
         """POST /process with a fake nonce should create a real sandbox transaction."""
+        import uuid
         resp = client.post("/api/payment/v1/process", json={
             "plan_id": "monthly",
             "payment_method_nonce": "fake-valid-nonce",
-        })
+        }, headers={"Idempotency-Key": str(uuid.uuid4())})
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
@@ -376,11 +383,12 @@ class TestHTTPEndpoints:
 
     def test_process_payment_with_promo(self, client):
         """POST /process with promo code applies 20% discount on real transaction."""
+        import uuid
         resp = client.post("/api/payment/v1/process", json={
             "plan_id": "annual",
             "payment_method_nonce": "fake-valid-visa-nonce",
             "promo_code": "LAUNCH20",
-        })
+        }, headers={"Idempotency-Key": str(uuid.uuid4())})
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
@@ -390,10 +398,11 @@ class TestHTTPEndpoints:
 
     def test_process_declined_nonce(self, client):
         """POST /process with declined nonce should return 402."""
+        import uuid
         resp = client.post("/api/payment/v1/process", json={
             "plan_id": "monthly",
             "payment_method_nonce": "fake-processor-declined-nonce",
-        })
+        }, headers={"Idempotency-Key": str(uuid.uuid4())})
         assert resp.status_code == 402
         print(f"  ✓ /process with declined nonce → 402")
 
